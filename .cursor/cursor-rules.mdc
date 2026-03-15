@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+---
+
+## Project Overview
+
+This project is a mini-erp focused on invoice management for devs in Brazil that works for companies offshore
+
+## Tech Stack
+
+- React 19+ with TypeScript
+- Tailwind CSS v4
+- Bun
+- Biome
+
+## Scripts
+
+- bun run dev: starts dev server
+- bun run build: builds project with vite+nitro
+
+## Warnings
+
+- do not run bun scripts unless told to
+- do not run the integrated browser unless told to
+
+## React Component Rules
+
+- Only put one React component per file, except for small helper
+  components
+- Filenames must be written in PascalCase, for example DataTable.tsx
+- Folders must be written in kebab-case, for example data-table
+- Always use named exports for components, types, and utilities
+- Do not use default exports
+- Explicitly declare true properties, like isActive={true}
+- Extract every type into a types.ts file
+- Use consts with arrow functions instead of regular functions
+- Don't use forwardRef for components that need ref forwarding. Use React 19 approach for ref as a prop.
+
+## Code Quality
+
+- Do not add comments to code unless explicitly asked or very needed (e.g., complex business logic, non-obvious workarounds)
+- Use semantic HTML elements
+- Don't use `export * ...` or `import * ...`

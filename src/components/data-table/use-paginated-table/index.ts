@@ -1,0 +1,1 @@
+export { usePaginatedTable } from './usePaginatedTable';
