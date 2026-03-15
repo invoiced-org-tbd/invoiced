@@ -1,31 +1,25 @@
-import { ensureAuthSessionQueryOptions } from '@/api/auth';
-import { getCompanyQueryOptions } from '@/api/company';
 import { AccountDrawer } from '@/components/account-drawer';
 import { Sidebar } from '@/components/sidebar';
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 import { AuthenticatedSidebar } from './-lib/components/authenticated-sidebar';
+import { useCompany } from '@/hooks/use-company';
 
 export const Route = createFileRoute('/_auth/app')({
-	beforeLoad: async ({ context }) => {
-		const session = await context.queryClient.ensureQueryData(
-			ensureAuthSessionQueryOptions(),
-		);
-
-		const company = await context.queryClient.ensureQueryData(
-			getCompanyQueryOptions({
-				userId: session.user.id,
-			}),
-		);
-		if (company) {
-			return;
-		}
-
-		throw redirect({ to: '/create-company', replace: true });
-	},
 	component: AppLayout,
 });
 
 function AppLayout() {
+	const { company } = useCompany();
+
+	if (!company) {
+		return (
+			<Navigate
+				to='/create-company'
+				replace
+			/>
+		);
+	}
+
 	return (
 		<Sidebar.Root>
 			<AuthenticatedSidebar />

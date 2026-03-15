@@ -1,4 +1,4 @@
-import { getAuthSessionQueryOptions } from '@/api/auth';
+import { getAuthSessionQueryOptions } from '@/api/auth/getAuthSession';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const useUser = () => {

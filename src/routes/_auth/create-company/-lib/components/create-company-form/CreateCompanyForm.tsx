@@ -1,4 +1,4 @@
-import { createCompanyMutationOptions } from '@/api/company';
+import { createCompanyMutationOptions } from '@/api/company/createCompany';
 import { useAppForm } from '@/hooks/use-app-form';
 import { useUser } from '@/hooks/use-user';
 import { useMutation } from '@tanstack/react-query';

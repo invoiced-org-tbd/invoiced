@@ -1,20 +1,23 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
-import { getAuthSessionQueryOptions } from '@/api/auth';
+import { createFileRoute, Navigate } from '@tanstack/react-router';
+import { getAuthSessionQueryOptions } from '@/api/auth/getAuthSession';
 import { LandingPage } from './-lib/components/landing-page';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/')({
-	beforeLoad: async ({ context }) => {
-		const session = await context.queryClient.ensureQueryData(
-			getAuthSessionQueryOptions(),
-		);
-
-		if (session) {
-			throw redirect({ to: '/app' });
-		}
-	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
+	const { data: session } = useSuspenseQuery(getAuthSessionQueryOptions());
+
+	if (session) {
+		return (
+			<Navigate
+				to='/app'
+				replace
+			/>
+		);
+	}
+
 	return <LandingPage />;
 }

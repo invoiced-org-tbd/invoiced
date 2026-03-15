@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useUser } from '../use-user';
-import { getCompanyQueryOptions } from '@/api/company';
+import { getCompanyQueryOptions } from '@/api/company/getCompany';
 
 export const useCompany = () => {
 	const user = useUser();
@@ -11,6 +11,6 @@ export const useCompany = () => {
 		}),
 	);
 
-	// biome-ignore lint/style/noNonNullAssertion: company is guaranteed to be not null since we check in the beforeLoad
+	// biome-ignore lint/style/noNonNullAssertion: company is guaranteed to be not null since we check before loading the route outlet
 	return { company: company! };
 };

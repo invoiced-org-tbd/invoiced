@@ -1,21 +1,21 @@
-import { ensureAuthSessionQueryOptions } from '@/api/auth';
-import { getCompanyQueryOptions } from '@/api/company';
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { useCompany } from '@/hooks/use-company';
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth/create-company')({
-	beforeLoad: async ({ context }) => {
-		const session = await context.queryClient.ensureQueryData(
-			ensureAuthSessionQueryOptions(),
-		);
-
-		const company = await context.queryClient.ensureQueryData(
-			getCompanyQueryOptions({
-				userId: session.user.id,
-			}),
-		);
-
-		if (company) {
-			throw redirect({ to: '/app', replace: true });
-		}
-	},
+	component: CreateCompanyLayout,
 });
+
+function CreateCompanyLayout() {
+	const { company } = useCompany();
+
+	if (company) {
+		return (
+			<Navigate
+				to='/app'
+				replace
+			/>
+		);
+	}
+
+	return <Outlet />;
+}
