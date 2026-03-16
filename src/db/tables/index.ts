@@ -1,3 +1,4 @@
+export { addressTable } from './addressTable';
 export { accountTable } from './accountTable';
 export { companyTable } from './companyTable';
 export { contractAutoSendConfigurationItemTable } from './contractAutoSendConfigurationItemTable';
