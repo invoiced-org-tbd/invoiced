@@ -197,7 +197,6 @@ export const MultiSelectInput = ({
 							aria-controls={listboxId}
 							className={cn(
 								fieldInputVariants({
-									height: 'min',
 									focusMode: 'focusVisible',
 								}),
 								'flex items-center justify-between gap-2',
@@ -287,7 +286,6 @@ export const MultiSelectInput = ({
 									placeholder='Search options...'
 									className={cn(
 										fieldInputVariants({
-											height: 'fixed',
 											focusMode: 'focusVisible',
 										}),
 										'rounded-md text-sm px-2',

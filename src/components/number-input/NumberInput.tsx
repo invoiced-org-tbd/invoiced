@@ -149,7 +149,6 @@ export const NumberInput = (baseProps: NumberInputProps) => {
 						}}
 						className={cn(
 							fieldInputVariants({
-								height: 'fixed',
 								focusMode: 'focusVisible',
 							}),
 							'placeholder:text-muted-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',

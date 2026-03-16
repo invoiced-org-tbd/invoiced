@@ -50,7 +50,6 @@ export const DataTableFilter = <TData,>({
 					placeholder='Type to filter...'
 					className={cn(
 						fieldInputVariants({
-							height: 'fixed',
 							focusMode: 'focusVisible',
 						}),
 						'text-xs',

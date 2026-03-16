@@ -71,7 +71,6 @@ const Input = ({
 				disabled={disabled}
 				className={cn(
 					fieldInputVariants({
-						height: 'fixed',
 						focusMode: 'focus',
 					}),
 					'data-placeholder:text-muted-foreground',

@@ -55,7 +55,6 @@ export const TextInput = ({
 						onChange={handleChange}
 						className={cn(
 							fieldInputVariants({
-								height: 'fixed',
 								focusMode: 'focusVisible',
 							}),
 							'placeholder:text-muted-foreground',
