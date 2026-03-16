@@ -9,4 +9,18 @@ export const relations = defineRelations(tables, (r) => ({
 			to: r.userTable.id,
 		}),
 	},
+
+	contractTable: {
+		company: r.one.companyTable({
+			from: r.contractTable.companyId,
+			to: r.companyTable.id,
+		}),
+	},
+
+	contractRoleTable: {
+		contract: r.one.contractTable({
+			from: r.contractRoleTable.contractId,
+			to: r.contractTable.id,
+		}),
+	},
 }));
