@@ -28,7 +28,7 @@ const deleteUserAccountServerFn = createServerFn({
 
 		return createSuccessResponse({
 			data: null,
-			message: t('server.user.accountDeletedSuccess'),
+			message: t('auth.server.accountDeletedSuccess'),
 		});
 	} catch (error) {
 		throw createErrorResponse({

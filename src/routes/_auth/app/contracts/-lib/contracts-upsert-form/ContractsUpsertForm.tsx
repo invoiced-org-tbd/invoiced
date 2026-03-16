@@ -20,7 +20,10 @@ export const ContractsUpsertForm = ({
 	onSuccess,
 }: ContractsUpsertFormProps) => {
 	const { t } = useTranslate();
-	const defaultValues = useContractsUpsertFormDefaultValues({ editId });
+	const { defaultValues, isLoadingEditContract } =
+		useContractsUpsertFormDefaultValues({
+			editId,
+		});
 
 	const { mutateAsync: createContract } = useMutation(
 		createContractMutationOptions(),
@@ -36,7 +39,7 @@ export const ContractsUpsertForm = ({
 		},
 		onSubmit: async ({ value }) => {
 			if (editId) {
-				await updateContract({ id: editId, data: value });
+				await updateContract({ editId, data: value });
 			} else {
 				await createContract(value);
 			}
@@ -46,13 +49,16 @@ export const ContractsUpsertForm = ({
 	});
 
 	return (
-		<form.Root form={form}>
+		<form.Root
+			form={form}
+			isLoading={isLoadingEditContract}
+		>
 			<form.Group>
 				<form.Group>
 					<form.AppField
 						name='description'
 						children={(field) => (
-							<field.TextInput label={t('contracts.description')} />
+							<field.TextInput label={t('contracts.form.descriptionLabel')} />
 						)}
 					/>
 				</form.Group>
@@ -61,22 +67,18 @@ export const ContractsUpsertForm = ({
 					<form.AppField
 						name='role.description'
 						children={(field) => (
-							<field.TextInput label={t('contracts.role.description')} />
+							<field.TextInput
+								label={t('contracts.form.role.descriptionLabel')}
+							/>
 						)}
 					/>
 					<form.AppField
 						name='role.rate'
 						children={(field) => (
 							<field.NumberInput
-								label={t('contracts.role.rate')}
+								label={t('contracts.form.role.rateLabel')}
 								mode='currency'
 							/>
-						)}
-					/>
-					<form.AppField
-						name='role.email'
-						children={(field) => (
-							<field.TextInput label={t('contracts.role.email')} />
 						)}
 					/>
 				</form.Group>
@@ -85,19 +87,25 @@ export const ContractsUpsertForm = ({
 					<form.AppField
 						name='client.companyName'
 						children={(field) => (
-							<field.TextInput label={t('contracts.client.companyName')} />
+							<field.TextInput
+								label={t('contracts.form.client.companyNameLabel')}
+							/>
 						)}
 					/>
 					<form.AppField
 						name='client.responsibleName'
 						children={(field) => (
-							<field.TextInput label={t('contracts.client.responsibleName')} />
+							<field.TextInput
+								label={t('contracts.form.client.responsibleNameLabel')}
+							/>
 						)}
 					/>
 					<form.AppField
 						name='client.responsibleEmail'
 						children={(field) => (
-							<field.TextInput label={t('contracts.client.responsibleEmail')} />
+							<field.TextInput
+								label={t('contracts.form.client.responsibleEmailLabel')}
+							/>
 						)}
 					/>
 				</form.Group>

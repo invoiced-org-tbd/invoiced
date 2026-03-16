@@ -27,6 +27,11 @@ export const enTranslations = {
 	},
 	entity: {
 		notFound: '{entity} not found',
+		deletedSuccess: '{entity} has been deleted',
+		addTitle: 'Add {entity}',
+		editTitle: 'Edit {entity}',
+		deleteTitle: 'Delete {entity}',
+		deleteConfirmation: 'Are you sure you want to delete this {entity}?',
 	},
 	validation: {
 		required: 'This field is required',
@@ -84,7 +89,6 @@ export const enTranslations = {
 			areYouSure: 'Are you sure?',
 			deleteMyAccount: 'Delete my account',
 			deleteAccount: 'Delete Account',
-			notImplemented: 'Not implemented',
 		},
 	},
 	auth: {
@@ -92,6 +96,10 @@ export const enTranslations = {
 		sidebar: {
 			management: 'Management',
 			contracts: 'Contracts',
+		},
+		server: {
+			accountUpdatedSuccess: 'Your account has been updated',
+			accountDeletedSuccess: 'Your account has been deleted',
 		},
 	},
 	landing: {
@@ -116,41 +124,30 @@ export const enTranslations = {
 		notFound: 'Not Found',
 		error: 'Error',
 	},
-	server: {
-		user: {
-			accountUpdatedSuccess: 'User account updated successfully',
-			accountDeletedSuccess: 'User account deleted successfully',
-		},
-	},
-	login: {
-		title: 'Login Page',
-	},
 	dashboard: {
 		message: 'Welcome back, {name}.',
 	},
 	contracts: {
+		name: 'Contract',
 		title: 'Contracts',
-		newContract: 'New Contract',
-		description: 'Description',
-		role: {
-			description: 'Role Description',
-			rate: 'Rate',
-			email: 'Email',
-		},
-		client: {
-			companyName: 'Company Name',
-			responsibleName: 'Responsible Name',
-			responsibleEmail: 'Responsible Email',
-		},
-		autoSendConfiguration: {
-			title: 'Auto Send Configuration',
-			dayOfMonth: 'Day of Month',
-			percentage: 'Percentage',
-			enabled: 'Enabled',
-		},
-		upsertDrawer: {
-			createTitle: 'Create Contract',
-			editTitle: 'Edit Contract',
+		form: {
+			descriptionLabel: 'Description',
+			role: {
+				descriptionLabel: 'Role Description',
+				rateLabel: 'Rate',
+				emailLabel: 'Email',
+			},
+			client: {
+				companyNameLabel: 'Company Name',
+				responsibleNameLabel: 'Responsible Name',
+				responsibleEmailLabel: 'Responsible Email',
+			},
+			autoSendConfiguration: {
+				title: 'Auto Send Configuration',
+				dayOfMonthLabel: 'Day of Month',
+				percentageLabel: 'Percentage',
+				enabledLabel: 'Enabled',
+			},
 		},
 	},
 } as const;

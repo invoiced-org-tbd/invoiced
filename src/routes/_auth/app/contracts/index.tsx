@@ -6,10 +6,12 @@ import { getContractsQueryOptions } from '@/api/contract/getContracts';
 import { zodValidator } from '@tanstack/zod-adapter';
 import z from 'zod';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer';
+import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog';
 
 const contractsSearchSchema = z.object({
 	isCreating: z.boolean().optional(),
 	editId: z.string().optional(),
+	deleteId: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_auth/app/contracts/')({
@@ -34,6 +36,7 @@ function RouteComponent() {
 			</Page.Content>
 
 			<ContractsUpsertDrawer />
+			<ContractsDeleteDialog />
 		</Page.Root>
 	);
 }

@@ -7,7 +7,6 @@ export const contractRoleTable = s.sqliteTable('contractRole', {
 
 	description: s.text().notNull(),
 	rate: s.integer({ mode: 'number' }).notNull(),
-	email: s.text().notNull(),
 
 	contractId: contractIdColumn(),
 	createdAt: u.createdAtColumn(),

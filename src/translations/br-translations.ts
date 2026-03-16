@@ -27,6 +27,14 @@ export const brTranslations = {
 		removeItem: 'Remover item',
 		unknownError: 'Ocorreu um erro desconhecido',
 	},
+	entity: {
+		notFound: '{entity} nao encontrado',
+		deletedSuccess: '{entity} excluido com sucesso',
+		addTitle: 'Adicionar {entity}',
+		editTitle: 'Editar {entity}',
+		deleteTitle: 'Excluir {entity}',
+		deleteConfirmation: 'Tem certeza de que deseja excluir este {entity}?',
+	},
 	validation: {
 		required: 'Este campo e obrigatorio',
 		invalidType: 'Valor invalido',
@@ -84,7 +92,6 @@ export const brTranslations = {
 			areYouSure: 'Tem certeza?',
 			deleteMyAccount: 'Excluir minha conta',
 			deleteAccount: 'Excluir conta',
-			notImplemented: 'Nao implementado',
 		},
 	},
 	auth: {
@@ -92,6 +99,10 @@ export const brTranslations = {
 		sidebar: {
 			management: 'Gestao',
 			contracts: 'Contratos',
+		},
+		server: {
+			accountUpdatedSuccess: 'Sua conta foi atualizada',
+			accountDeletedSuccess: 'Sua conta foi excluida',
 		},
 	},
 	landing: {
@@ -118,41 +129,30 @@ export const brTranslations = {
 		notFound: 'Nao encontrado',
 		error: 'Erro',
 	},
-	server: {
-		user: {
-			accountUpdatedSuccess: 'Conta atualizada',
-			accountDeletedSuccess: 'Conta excluida',
-		},
-	},
-	login: {
-		title: 'Página de login',
-	},
 	dashboard: {
 		message: 'Bem-vindo de volta, {name}.',
 	},
 	contracts: {
+		name: 'Contrato',
 		title: 'Contratos',
-		newContract: 'Novo contrato',
-		description: 'Descricao',
-		role: {
-			description: 'Descricao do cargo',
-			rate: 'Valor',
-			email: 'E-mail',
-		},
-		client: {
-			companyName: 'Nome da empresa',
-			responsibleName: 'Nome do responsavel',
-			responsibleEmail: 'E-mail do responsavel',
-		},
-		autoSendConfiguration: {
-			title: 'Configuracao de envio automatico',
-			enabled: 'Habilitado',
-			dayOfMonth: 'Dia do mes',
-			percentage: 'Percentual',
-		},
-		upsertDrawer: {
-			createTitle: 'Criar contrato',
-			editTitle: 'Editar contrato',
+		form: {
+			descriptionLabel: 'Descricao',
+			role: {
+				descriptionLabel: 'Descricao do cargo',
+				rateLabel: 'Valor',
+				emailLabel: 'E-mail',
+			},
+			client: {
+				companyNameLabel: 'Nome da empresa',
+				responsibleNameLabel: 'Nome do responsavel',
+				responsibleEmailLabel: 'E-mail do responsavel',
+			},
+			autoSendConfiguration: {
+				title: 'Configuracao de envio automatico',
+				dayOfMonthLabel: 'Dia do mes',
+				percentageLabel: 'Percentual',
+				enabledLabel: 'Habilitado',
+			},
 		},
 	},
 } as const satisfies TranslationsShape;

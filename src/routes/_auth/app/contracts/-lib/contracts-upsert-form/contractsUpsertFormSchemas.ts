@@ -5,7 +5,6 @@ import z from 'zod';
 const contractRoleFormSchema = z.object({
 	description: z.string().min(1),
 	rate: z.number().min(0),
-	email: z.email(),
 });
 
 const contractClientFormSchema = z.object({
@@ -39,36 +38,37 @@ export const useContractsUpsertFormDefaultValues = ({
 	editId,
 }: {
 	editId?: string;
-}): ContractsUpsertFormSchema => {
-	const { data: editContract } = useQuery({
+}) => {
+	const { data: editContract, isFetching } = useQuery({
 		...getEditContractByIdQueryOptions({ id: editId ?? '' }),
 		enabled: !!editId,
 	});
 
 	if (editContract) {
-		return editContract;
+		return { defaultValues: editContract, isLoadingEditContract: isFetching };
 	}
 
 	return {
-		description: '',
-		role: {
+		defaultValues: {
 			description: '',
-			rate: undefined as unknown as number,
-			email: '',
-		},
-		client: {
-			companyName: '',
-			responsibleName: '',
-			responsibleEmail: '',
-		},
-		autoSendConfiguration: {
-			enabled: false,
-			items: [
-				{
-					dayOfMonth: 1,
-					percentage: 100,
-				},
-			],
+			role: {
+				description: '',
+				rate: undefined as unknown as number,
+			},
+			client: {
+				companyName: '',
+				responsibleName: '',
+				responsibleEmail: '',
+			},
+			autoSendConfiguration: {
+				enabled: false,
+				items: [
+					{
+						dayOfMonth: 1,
+						percentage: 100,
+					},
+				],
+			},
 		},
 	};
 };

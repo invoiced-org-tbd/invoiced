@@ -31,8 +31,12 @@ export const ContractsUpsertDrawer = () => {
 				<Drawer.Header>
 					<Drawer.Title>
 						{isCreating
-							? t('contracts.upsertDrawer.createTitle')
-							: t('contracts.upsertDrawer.editTitle')}
+							? t('entity.addTitle', {
+									entity: t('contracts.name'),
+								})
+							: t('entity.editTitle', {
+									entity: t('contracts.name'),
+								})}
 					</Drawer.Title>
 				</Drawer.Header>
 

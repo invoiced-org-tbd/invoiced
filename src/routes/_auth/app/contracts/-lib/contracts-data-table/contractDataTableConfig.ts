@@ -5,7 +5,10 @@ import type {
 	DataTableToolbarAction,
 } from '@/components/data-table';
 import { getTableAddToolbarAction } from '@/components/data-table/data-table-toolbar/baseTableToolbarActions';
-import { useGetTableEditRowAction } from '@/components/data-table/use-data-table/baseTableRowActions';
+import {
+	useGetTableDeleteRowAction,
+	useGetTableEditRowAction,
+} from '@/components/data-table/use-data-table/baseTableRowActions';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { getRouteApi } from '@tanstack/react-router';
 
@@ -19,7 +22,7 @@ export const useContractDataTableColumns = (): DataTableColumn<
 	return [
 		{
 			accessorKey: 'description',
-			header: t('contracts.description'),
+			header: t('contracts.form.descriptionLabel'),
 		},
 	];
 };
@@ -32,7 +35,9 @@ export const useContractDataTableToolbarActions = (): DataTableToolbarAction<
 
 	return [
 		getTableAddToolbarAction({
-			label: t('contracts.newContract'),
+			label: t('entity.addTitle', {
+				entity: t('contracts.name'),
+			}),
 			onClick: () => {
 				navigate({
 					search: (prev) => ({
@@ -51,6 +56,8 @@ export const useContractDataTableRowActions = (): DataTableRowAction<
 	const navigate = contractsRouteApi.useNavigate();
 	const { getTableEditRowAction } =
 		useGetTableEditRowAction<GetContractsResponse[number]>();
+	const { getTableDeleteRowAction } =
+		useGetTableDeleteRowAction<GetContractsResponse[number]>();
 
 	return [
 		getTableEditRowAction({
@@ -59,6 +66,16 @@ export const useContractDataTableRowActions = (): DataTableRowAction<
 					search: (prev) => ({
 						...prev,
 						editId: data.id,
+					}),
+				});
+			},
+		}),
+		getTableDeleteRowAction({
+			onClick: (data) => {
+				navigate({
+					search: (prev) => ({
+						...prev,
+						deleteId: data.id,
 					}),
 				});
 			},

@@ -42,7 +42,7 @@ const updateUserAccountServerFn = createServerFn({
 
 			return createSuccessResponse({
 				data: user,
-				message: t('server.user.accountUpdatedSuccess'),
+				message: t('auth.server.accountUpdatedSuccess'),
 			});
 		} catch (error) {
 			throw createErrorResponse({

@@ -57,7 +57,7 @@ const getEditContractByIdServerFn = createServerFn({
 					return createSuccessResponse({
 						data: null,
 						message: t('entity.notFound', {
-							entity: t('contracts.title'),
+							entity: t('contracts.name'),
 						}),
 					});
 				}

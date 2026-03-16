@@ -50,7 +50,6 @@ const createContractServerFn = createServerFn({
 						contractId: contract.id,
 						description: data.role.description,
 						rate: data.role.rate,
-						email: data.role.email,
 					})
 					.returning();
 

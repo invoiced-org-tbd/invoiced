@@ -23,7 +23,7 @@ import { contractQueryKeys } from './contractApiUtils';
 import { getServerT } from '@/translations/server';
 
 const updateContractParams = z.object({
-	id: z.string(),
+	editId: z.string(),
 	data: contractsUpsertFormSchema,
 });
 
@@ -33,7 +33,7 @@ const updateContractServerFn = createServerFn({
 	method: 'POST',
 })
 	.inputValidator(updateContractParams)
-	.handler(async ({ data: { data, id } }) => {
+	.handler(async ({ data: { data, editId } }) => {
 		try {
 			const {
 				data: { user, locale },
@@ -47,14 +47,17 @@ const updateContractServerFn = createServerFn({
 						description: data.description,
 					})
 					.where(
-						and(eq(contractTable.id, id), eq(contractTable.userId, user.id)),
+						and(
+							eq(contractTable.id, editId),
+							eq(contractTable.userId, user.id),
+						),
 					)
 					.returning();
 
 				if (!contract) {
 					throw new ServerError({
 						message: t('entity.notFound', {
-							entity: t('contracts.title'),
+							entity: t('contracts.name'),
 						}),
 					});
 				}
@@ -64,9 +67,8 @@ const updateContractServerFn = createServerFn({
 					.set({
 						description: data.role.description,
 						rate: data.role.rate,
-						email: data.role.email,
 					})
-					.where(eq(contractRoleTable.id, id))
+					.where(eq(contractRoleTable.contractId, editId))
 					.returning();
 
 				const [client] = await tx
@@ -76,7 +78,7 @@ const updateContractServerFn = createServerFn({
 						responsibleName: data.client.responsibleName,
 						responsibleEmail: data.client.responsibleEmail,
 					})
-					.where(eq(contractClientTable.id, id))
+					.where(eq(contractClientTable.contractId, editId))
 					.returning();
 
 				const [autoSendConfiguration] = await tx
@@ -84,7 +86,7 @@ const updateContractServerFn = createServerFn({
 					.set({
 						enabled: data.autoSendConfiguration.enabled,
 					})
-					.where(eq(contractAutoSendConfigurationTable.id, id))
+					.where(eq(contractAutoSendConfigurationTable.contractId, editId))
 					.returning();
 
 				await tx

@@ -1,0 +1,1 @@
+export { ContractsDeleteDialog } from './ContractsDeleteDialog';

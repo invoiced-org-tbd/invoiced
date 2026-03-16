@@ -11,13 +11,13 @@ export const ContractAutoSendConfigurationForm = withFieldGroup({
 
 		return (
 			<group.Group>
-				<p>{t('contracts.autoSendConfiguration.title')}</p>
+				<p>{t('contracts.form.autoSendConfiguration.title')}</p>
 
 				<group.AppField
 					name='enabled'
 					children={(field) => (
 						<field.Switch
-							label={t('contracts.autoSendConfiguration.enabled')}
+							label={t('contracts.form.autoSendConfiguration.enabledLabel')}
 						/>
 					)}
 				/>
@@ -34,7 +34,7 @@ export const ContractAutoSendConfigurationForm = withFieldGroup({
 											children={(field) => (
 												<field.NumberInput
 													label={t(
-														'contracts.autoSendConfiguration.dayOfMonth',
+														'contracts.form.autoSendConfiguration.dayOfMonthLabel',
 													)}
 												/>
 											)}
@@ -44,7 +44,7 @@ export const ContractAutoSendConfigurationForm = withFieldGroup({
 											children={(field) => (
 												<field.NumberInput
 													label={t(
-														'contracts.autoSendConfiguration.percentage',
+														'contracts.form.autoSendConfiguration.percentageLabel',
 													)}
 													mode='percentage'
 												/>
