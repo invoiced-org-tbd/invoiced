@@ -107,6 +107,7 @@ export const brTranslations = {
 	server: {
 		user: {
 			accountUpdatedSuccess: 'Conta atualizada',
+			accountDeletedSuccess: 'Conta excluida',
 		},
 	},
 	login: {

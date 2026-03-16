@@ -106,6 +106,7 @@ export const enTranslations = {
 	server: {
 		user: {
 			accountUpdatedSuccess: 'User account updated successfully',
+			accountDeletedSuccess: 'User account deleted successfully',
 		},
 	},
 	login: {

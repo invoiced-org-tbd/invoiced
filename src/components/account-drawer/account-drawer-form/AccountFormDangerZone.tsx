@@ -1,23 +1,23 @@
 import { Button } from '@/components/button';
 import { ToggleSection } from '@/components/toggle-section';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { deleteUserAccountMutationOptions } from '@/api/user/deleteUserAccount';
 import { useMutation } from '@tanstack/react-query';
-import { getRouteApi } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { toast } from 'sonner';
+import { useNavigate } from '@tanstack/react-router';
 
-const loginRouteApi = getRouteApi('/');
 export const AccountFormDangerZone = () => {
-	const navigate = loginRouteApi.useNavigate();
+	const navigate = useNavigate();
 	const { t } = useTranslate();
+	const queryClient = useQueryClient();
 
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
 	const { mutateAsync: deleteAccount, isPending } = useMutation({
-		mutationFn: async () => {
-			toast.error(t('account.dangerZone.notImplemented'));
-		},
+		...deleteUserAccountMutationOptions(),
 		onSuccess: () => {
+			queryClient.clear();
 			navigate({ to: '/' });
 		},
 	});
@@ -25,7 +25,9 @@ export const AccountFormDangerZone = () => {
 	return (
 		<ToggleSection.Root variant='destructive'>
 			<ToggleSection.Header>
-				<ToggleSection.Title>{t('account.dangerZone.title')}</ToggleSection.Title>
+				<ToggleSection.Title>
+					{t('account.dangerZone.title')}
+				</ToggleSection.Title>
 				<ToggleSection.Description>
 					{t('account.dangerZone.description')}
 				</ToggleSection.Description>
@@ -34,9 +36,7 @@ export const AccountFormDangerZone = () => {
 			<ToggleSection.Content>
 				<div className='flex flex-col gap-4 pt-1'>
 					<div>
-						<p className=''>
-							{t('account.dangerZone.intro')}
-						</p>
+						<p className=''>{t('account.dangerZone.intro')}</p>
 
 						<ul className='list-disc space-y-0.5 pl-4'>
 							<li>{t('account.dangerZone.itemDataRemoved')}</li>
