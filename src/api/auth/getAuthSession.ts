@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth';
+import { createQueryOptions } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -6,8 +7,6 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
 import { authQueryKeys, SESSION_STALE_TIME } from './authApiUtils';
-import { queryOptions } from '@tanstack/react-query';
-import { handleQueryFn } from '@/utils/queryOptionsUtils';
 
 const getAuthSessionServerFn = createServerFn({ method: 'GET' }).handler(
 	async () => {
@@ -23,9 +22,9 @@ const getAuthSessionServerFn = createServerFn({ method: 'GET' }).handler(
 );
 
 export const getAuthSessionQueryOptions = () =>
-	queryOptions({
+	createQueryOptions({
 		queryKey: authQueryKeys.session(),
-		queryFn: () => handleQueryFn(() => getAuthSessionServerFn()),
+		queryFn: () => getAuthSessionServerFn(),
 		staleTime: SESSION_STALE_TIME,
 		gcTime: SESSION_STALE_TIME,
 	});

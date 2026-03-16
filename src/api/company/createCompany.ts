@@ -2,14 +2,13 @@ import { db } from '@/db/client';
 import { companyTable } from '@/db/tables';
 import { createCompanyFormSchema } from '@/routes/_auth/create-company/-lib/components/create-company-form/createCompanyFormSchema';
 import {
-	handleMutationFn,
+	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
-import { mutationOptions } from '@tanstack/react-query';
 import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
 import { companyQueryKeys, insertCompany } from './companyApiUtils';
@@ -49,9 +48,8 @@ const createCompanyServerFn = createServerFn({
 	});
 
 export const createCompanyMutationOptions = () =>
-	mutationOptions({
-		mutationFn: (data: CreateCompanyParams) =>
-			handleMutationFn(() => createCompanyServerFn({ data })),
+	createMutationOptions({
+		mutationFn: (data: CreateCompanyParams) => createCompanyServerFn({ data }),
 		onSuccess: (...args) => {
 			invalidateOnSuccess({
 				args,

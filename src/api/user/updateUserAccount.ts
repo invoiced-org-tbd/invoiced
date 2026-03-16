@@ -2,14 +2,13 @@ import { accountFormSchema } from '@/components/account-drawer/account-drawer-fo
 import { db } from '@/db/client';
 import { userTable } from '@/db/tables';
 import {
-	handleMutationFn,
+	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
-import { mutationOptions } from '@tanstack/react-query';
 import { createServerFn } from '@tanstack/react-start';
 import { eq } from 'drizzle-orm';
 import z from 'zod';
@@ -49,9 +48,9 @@ const updateUserAccountServerFn = createServerFn({
 	});
 
 export const updateUserAccountMutationOptions = () =>
-	mutationOptions({
+	createMutationOptions({
 		mutationFn: (data: UpdateUserAccountParams) =>
-			handleMutationFn(() => updateUserAccountServerFn({ data })),
+			updateUserAccountServerFn({ data }),
 		onSuccess: (...args) => {
 			invalidateOnSuccess({
 				args,

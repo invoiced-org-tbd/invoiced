@@ -1,5 +1,5 @@
 import { companyTable } from '@/db/tables';
-import type { WithUserId } from '@/utils/queryOptionsUtils';
+import type { WithUserId } from '@/utils/typesUtils';
 import { createInsertSchema, createSelectSchema } from 'drizzle-orm/zod';
 import type z from 'zod';
 

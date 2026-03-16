@@ -1,10 +1,9 @@
 import { db } from '@/db/client';
-import { handleQueryFn } from '@/utils/queryOptionsUtils';
+import { createQueryOptions } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
-import { queryOptions } from '@tanstack/react-query';
 import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
 import { companyQueryKeys, selectCompany } from './companyApiUtils';
@@ -37,12 +36,10 @@ const getCompanyServerFn = createServerFn({
 	});
 
 export const getCompanyQueryOptions = ({ userId }: GetCompanyParams) =>
-	queryOptions({
+	createQueryOptions({
 		queryKey: companyQueryKeys.get({ userId }),
 		queryFn: () =>
-			handleQueryFn(() =>
-				getCompanyServerFn({
-					data: { userId },
-				}),
-			),
+			getCompanyServerFn({
+				data: { userId },
+			}),
 	});
