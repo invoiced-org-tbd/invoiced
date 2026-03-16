@@ -1,22 +1,20 @@
 import { Button } from '@/components/button';
 import { ToggleSection } from '@/components/toggle-section';
+import { deleteUserAccountMutationOptions } from '@/api/user/deleteUserAccount';
 import { useMutation } from '@tanstack/react-query';
-import { getRouteApi } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
-const loginRouteApi = getRouteApi('/');
 export const AccountFormDangerZone = () => {
-	const navigate = loginRouteApi.useNavigate();
+	const queryClient = useQueryClient();
 
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
 	const { mutateAsync: deleteAccount, isPending } = useMutation({
-		mutationFn: async () => {
-			toast.error('Not implemented');
-		},
+		...deleteUserAccountMutationOptions(),
 		onSuccess: () => {
-			navigate({ to: '/' });
+			queryClient.clear();
+			window.location.href = '/';
 		},
 	});
 
