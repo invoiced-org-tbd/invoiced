@@ -5,8 +5,6 @@ import type { sidebarMenuButtonVariants } from './consts';
 export type SidebarContextValue = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
-	isMobile: boolean;
-	setIsMobile: (isMobile: boolean) => void;
 	toggleSidebar: () => void;
 };
 

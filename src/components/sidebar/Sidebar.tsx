@@ -1,11 +1,8 @@
 import { Button } from '@/components/button';
-import { useIsMobile } from '@/hooks/use-is-mobile';
 import { cn } from '@/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react';
-import { useEffect } from 'react';
 import {
-	SIDEBAR_KEYBOARD_SHORTCUT,
 	SIDEBAR_WIDTH,
 	SIDEBAR_WIDTH_ICON,
 	sidebarMenuButtonVariants,
@@ -25,29 +22,6 @@ import type {
 import { useSidebar } from './useSidebar';
 
 const Root = ({ className, style, children, ...props }: SidebarRootProps) => {
-	const isMobile = useIsMobile();
-	const setIsMobile = useSidebar((s) => s.setIsMobile);
-	const toggleSidebar = useSidebar((s) => s.toggleSidebar);
-
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (
-				event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-				(event.metaKey || event.ctrlKey)
-			) {
-				event.preventDefault();
-				toggleSidebar();
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyDown);
-		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, [toggleSidebar]);
-
-	useEffect(() => {
-		setIsMobile(isMobile);
-	}, [isMobile, setIsMobile]);
-
 	return (
 		<div
 			data-slot='sidebar-wrapper'
@@ -72,31 +46,26 @@ const Panel = ({
 	children,
 	...props
 }: SidebarPanelProps) => {
-	const isMobile = useSidebar((s) => s.isMobile);
 	const open = useSidebar((s) => s.open);
 	const state = open ? 'expanded' : 'collapsed';
 
-	if (isMobile) {
-		return null;
-	}
-
 	return (
 		<div
-			className='group peer text-sidebar-foreground hidden md:block'
+			className='group peer text-sidebar-foreground block'
 			data-state={state}
 			data-collapsible={state === 'collapsed' ? collapsible : ''}
 			data-slot='sidebar'
 		>
 			<div
 				data-slot='sidebar-gap'
-				className='relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[collapsible=icon]:w-(--sidebar-width-icon)'
+				className='relative w-(--sidebar-width-icon) bg-transparent transition-[width] duration-200 ease-linear md:w-(--sidebar-width) md:group-data-[collapsible=offcanvas]:w-0 md:group-data-[collapsible=icon]:w-(--sidebar-width-icon)'
 			/>
 			<div
 				data-slot='sidebar-container'
 				className={cn(
-					'fixed inset-y-0 left-0 z-10 hidden h-svh w-(--sidebar-width) border-r transition-[left,right,width] duration-200 ease-linear md:flex',
-					'group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]',
-					'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
+					'fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width-icon) border-r transition-[left,right,width] duration-200 ease-linear md:w-(--sidebar-width)',
+					'md:group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]',
+					'md:group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
 					'overflow-hidden',
 					className,
 				)}
@@ -153,7 +122,7 @@ const GroupLabel = ({
 			data-slot='sidebar-group-label'
 			data-sidebar='group-label'
 			className={cn(
-				'text-sidebar-foreground/70 h-5 px-2 text-xs font-medium [&>svg]:size-4 [&>svg]:shrink-0 group-data-[state=collapsed]:hidden',
+				'text-sidebar-foreground/70 h-5 px-2 text-xs font-medium max-md:hidden [&>svg]:size-4 [&>svg]:shrink-0 group-data-[state=collapsed]:hidden',
 				className,
 			)}
 			{...props}

@@ -33,13 +33,13 @@ export const SidebarUserMenu = () => {
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild>
 				<Sidebar.MenuButton
-					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
+					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground max-md:mx-auto max-md:size-8 max-md:w-8 max-md:justify-center max-md:gap-0 max-md:p-0'
 					size='lg'
 				>
 					<span
 						data-size='default'
 						data-slot='avatar'
-						className='relative flex size-8 shrink-0 select-none items-center justify-center overflow-hidden rounded-lg bg-sidebar-accent text-sidebar-accent-foreground'
+						className='relative flex size-7 shrink-0 select-none items-center justify-center overflow-hidden rounded-lg bg-sidebar-accent text-sidebar-accent-foreground md:size-8'
 					>
 						{user.image ? (
 							<img
@@ -53,12 +53,12 @@ export const SidebarUserMenu = () => {
 						)}
 					</span>
 
-					<div className='grid flex-1 text-left text-sm leading-tight'>
+					<div className='hidden flex-1 text-left text-sm leading-tight md:grid'>
 						<span className='truncate font-medium'>{displayName}</span>
 						<span className='truncate text-xs'>{user.email}</span>
 					</div>
 
-					<ChevronsUpDownIcon className='ml-auto size-4' />
+					<ChevronsUpDownIcon className='ml-auto hidden size-4 md:block' />
 				</Sidebar.MenuButton>
 			</DropdownMenu.Trigger>
 

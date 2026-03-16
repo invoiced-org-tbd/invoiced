@@ -7,8 +7,6 @@ export const useSidebar = create<SidebarContextValue>()(
 		(set) => ({
 			open: false,
 			setOpen: (open) => set({ open }),
-			isMobile: false,
-			setIsMobile: (isMobile) => set({ isMobile }),
 			toggleSidebar: () => set((state) => ({ open: !state.open })),
 		}),
 		{
