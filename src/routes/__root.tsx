@@ -1,5 +1,6 @@
 import { Toaster } from '@/components/toaster';
 import { Tooltip } from '@/components/tooltip';
+import { useSyncZodErrorMap } from '@/hooks/use-language/useSyncZodErrorMap';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
@@ -35,6 +36,8 @@ function RootErrorComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	useSyncZodErrorMap();
+
 	return (
 		<html
 			lang='en'

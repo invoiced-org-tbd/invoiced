@@ -24,6 +24,12 @@ export const brTranslations = {
 		toggleOptions: 'Alternar opcoes',
 		selectAll: 'Selecionar tudo',
 	},
+	validation: {
+		required: 'Este campo e obrigatorio',
+		invalidType: 'Valor invalido',
+		invalidEmail: 'Digite um e-mail valido',
+		minCharacters: 'Digite pelo menos {minimum} caracteres',
+	},
 	a11y: {
 		inputAction: 'Acao do campo',
 		toggleSidebar: 'Alternar barra lateral',

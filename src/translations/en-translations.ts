@@ -22,6 +22,12 @@ export const enTranslations = {
 		toggleOptions: 'Toggle options',
 		selectAll: 'Select all',
 	},
+	validation: {
+		required: 'This field is required',
+		invalidType: 'Invalid value',
+		invalidEmail: 'Please enter a valid email address',
+		minCharacters: 'Please enter at least {minimum} characters',
+	},
 	a11y: {
 		inputAction: 'Input action',
 		toggleSidebar: 'Toggle Sidebar',
