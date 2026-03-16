@@ -1,8 +1,8 @@
 {
 	"version": "7",
 	"dialect": "sqlite",
-	"id": "21feb99f-b06f-4a54-8cb0-ec26c7841419",
-	"prevIds": ["00000000-0000-0000-0000-000000000000"],
+	"id": "2a61d9c0-1e43-4d6c-8e65-2e0bcb72141d",
+	"prevIds": ["21feb99f-b06f-4a54-8cb0-ec26c7841419"],
 	"ddl": [
 		{
 			"name": "account",
@@ -509,6 +509,38 @@
 		{
 			"columns": [
 				{
+					"value": "providerId",
+					"isExpression": false
+				},
+				{
+					"value": "accountId",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "account_providerId_accountId_uidx",
+			"entityType": "indexes",
+			"table": "account"
+		},
+		{
+			"columns": [
+				{
+					"value": "userId",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "company_userId_uidx",
+			"entityType": "indexes",
+			"table": "company"
+		},
+		{
+			"columns": [
+				{
 					"value": "userId",
 					"isExpression": false
 				}
@@ -523,14 +555,64 @@
 		{
 			"columns": [
 				{
-					"value": "identifier",
+					"value": "expiresAt",
 					"isExpression": false
 				}
 			],
 			"isUnique": false,
 			"where": null,
 			"origin": "manual",
-			"name": "verification_identifier_idx",
+			"name": "session_expiresAt_idx",
+			"entityType": "indexes",
+			"table": "session"
+		},
+		{
+			"columns": [
+				{
+					"value": "userId",
+					"isExpression": false
+				},
+				{
+					"value": "expiresAt",
+					"isExpression": false
+				}
+			],
+			"isUnique": false,
+			"where": null,
+			"origin": "manual",
+			"name": "session_userId_expiresAt_idx",
+			"entityType": "indexes",
+			"table": "session"
+		},
+		{
+			"columns": [
+				{
+					"value": "identifier",
+					"isExpression": false
+				},
+				{
+					"value": "value",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "verification_identifier_value_uidx",
+			"entityType": "indexes",
+			"table": "verification"
+		},
+		{
+			"columns": [
+				{
+					"value": "expiresAt",
+					"isExpression": false
+				}
+			],
+			"isUnique": false,
+			"where": null,
+			"origin": "manual",
+			"name": "verification_expiresAt_idx",
 			"entityType": "indexes",
 			"table": "verification"
 		},

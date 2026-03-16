@@ -25,5 +25,10 @@ export const accountTable = s.sqliteTable(
 		createdAt: u.createdAtColumn(),
 		updatedAt: u.updatedAtColumn(),
 	},
-	(table) => [s.index('account_userId_idx').on(table.userId)],
+	(table) => [
+		s.index('account_userId_idx').on(table.userId),
+		s
+			.uniqueIndex('account_providerId_accountId_uidx')
+			.on(table.providerId, table.accountId),
+	],
 );

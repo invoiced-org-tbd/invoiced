@@ -7,11 +7,7 @@ import type {
 	PageTitleProps,
 } from './types';
 
-const Root = ({
-	children,
-	className,
-	...props
-}: PageRootProps) => {
+const Root = ({ children, className, ...props }: PageRootProps) => {
 	return (
 		<main
 			className={cn('min-h-0 flex-1 p-8', className)}

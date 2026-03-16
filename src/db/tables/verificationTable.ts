@@ -13,5 +13,10 @@ export const verificationTable = s.sqliteTable(
 		createdAt: u.createdAtColumn(),
 		updatedAt: u.updatedAtColumn(),
 	},
-	(table) => [s.index('verification_identifier_idx').on(table.identifier)],
+	(table) => [
+		s
+			.uniqueIndex('verification_identifier_value_uidx')
+			.on(table.identifier, table.value),
+		s.index('verification_expiresAt_idx').on(table.expiresAt),
+	],
 );
