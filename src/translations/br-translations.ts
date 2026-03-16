@@ -23,6 +23,8 @@ export const brTranslations = {
 		falseLabel: 'Falso',
 		toggleOptions: 'Alternar opcoes',
 		selectAll: 'Selecionar tudo',
+		addItem: 'Adicionar item',
+		removeItem: 'Remover item',
 	},
 	validation: {
 		required: 'Este campo e obrigatorio',
@@ -73,8 +75,10 @@ export const brTranslations = {
 			title: 'Zona de perigo',
 			description: 'Excluir conta permanentemente',
 			intro: 'Antes de excluir sua conta, revise o que acontece em seguida:',
-			itemDataRemoved: 'Todos os dados do perfil e preferencias salvas serao removidos.',
-			itemSessionsSignedOut: 'Sessoes conectadas serao encerradas imediatamente.',
+			itemDataRemoved:
+				'Todos os dados do perfil e preferencias salvas serao removidos.',
+			itemSessionsSignedOut:
+				'Sessoes conectadas serao encerradas imediatamente.',
 			itemCannotUndo: 'Esta acao nao pode ser desfeita apos a confirmacao.',
 			areYouSure: 'Tem certeza?',
 			deleteMyAccount: 'Excluir minha conta',
@@ -86,16 +90,19 @@ export const brTranslations = {
 		dashboardTitle: 'Painel',
 		sidebar: {
 			management: 'Gestao',
+			contracts: 'Contratos',
 		},
 	},
 	landing: {
 		backgroundAlt: 'Fundo abstrato verde suave',
 		signInWithGoogle: 'Entrar com Google',
-		terms: 'Ao continuar, voce concorda com os termos e politica de privacidade do app.',
+		terms:
+			'Ao continuar, voce concorda com os termos e politica de privacidade do app.',
 	},
 	createCompany: {
 		title: 'Criar nova empresa',
-		description: 'Complete os dados da sua empresa para criar uma nova empresa.',
+		description:
+			'Complete os dados da sua empresa para criar uma nova empresa.',
 		backgroundAlt: 'Fundo abstrato verde suave',
 		logoAlt: 'Logo da empresa',
 		form: {
@@ -121,5 +128,30 @@ export const brTranslations = {
 	},
 	dashboard: {
 		message: 'Bem-vindo de volta, {name}.',
+	},
+	contracts: {
+		title: 'Contratos',
+		newContract: 'Novo contrato',
+		description: 'Descricao',
+		role: {
+			description: 'Descricao do cargo',
+			rate: 'Valor',
+			email: 'E-mail',
+		},
+		client: {
+			companyName: 'Nome da empresa',
+			responsibleName: 'Nome do responsavel',
+			responsibleEmail: 'E-mail do responsavel',
+		},
+		autoSendConfiguration: {
+			title: 'Configuracao de envio automatico',
+			enabled: 'Habilitado',
+			dayOfMonth: 'Dia do mes',
+			percentage: 'Percentual',
+		},
+		upsertDrawer: {
+			createTitle: 'Criar contrato',
+			editTitle: 'Editar contrato',
+		},
 	},
 } as const satisfies TranslationsShape;

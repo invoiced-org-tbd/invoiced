@@ -4,23 +4,38 @@ import * as tables from './tables';
 export const relations = defineRelations(tables, (r) => ({
 	companyTable: {
 		owner: r.one.userTable({
-			alias: 'owner',
 			from: r.companyTable.userId,
 			to: r.userTable.id,
 		}),
 	},
 
-	contractTable: {
-		company: r.one.companyTable({
-			from: r.contractTable.companyId,
-			to: r.companyTable.id,
+	userTable: {
+		contracts: r.many.contractTable({
+			from: r.userTable.id,
+			to: r.contractTable.userId,
 		}),
 	},
 
-	contractRoleTable: {
-		contract: r.one.contractTable({
-			from: r.contractRoleTable.contractId,
-			to: r.contractTable.id,
+	contractTable: {
+		autoSendConfiguration: r.one.contractAutoSendConfigurationTable({
+			from: r.contractTable.id,
+			to: r.contractAutoSendConfigurationTable.contractId,
+		}),
+		client: r.one.contractClientTable({
+			from: r.contractTable.id,
+			to: r.contractClientTable.contractId,
+		}),
+		role: r.one.contractRoleTable({
+			from: r.contractTable.id,
+			to: r.contractRoleTable.contractId,
+		}),
+	},
+
+	contractAutoSendConfigurationTable: {
+		items: r.many.contractAutoSendConfigurationItemTable({
+			from: r.contractAutoSendConfigurationTable.id,
+			to: r.contractAutoSendConfigurationItemTable
+				.contractAutoSendConfigurationId,
 		}),
 	},
 }));

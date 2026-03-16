@@ -67,7 +67,9 @@ export const DataTableFooter = <TData,>({
 						</DropdownMenu.Trigger>
 
 						<DropdownMenu.Content align='start'>
-							<DropdownMenu.Label>{t('dataTable.footer.rowsPerPage')}</DropdownMenu.Label>
+							<DropdownMenu.Label>
+								{t('dataTable.footer.rowsPerPage')}
+							</DropdownMenu.Label>
 							<DropdownMenu.Separator />
 							<DropdownMenu.RadioGroup
 								value={`${currentPageSize}`}
@@ -131,7 +133,9 @@ export const DataTableFooter = <TData,>({
 									align='center'
 									className='max-h-56 overflow-y-auto'
 								>
-									<DropdownMenu.Label>{t('a11y.selectPage')}</DropdownMenu.Label>
+									<DropdownMenu.Label>
+										{t('a11y.selectPage')}
+									</DropdownMenu.Label>
 									<DropdownMenu.Separator />
 									<DropdownMenu.RadioGroup
 										value={`${currentPageIndex}`}

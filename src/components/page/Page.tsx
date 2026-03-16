@@ -55,8 +55,15 @@ const Description = ({
 	);
 };
 
-const Content = ({ children, ...props }: PageContentProps) => {
-	return <section {...props}>{children}</section>;
+const Content = ({ children, className, ...props }: PageContentProps) => {
+	return (
+		<section
+			className={cn('py-4', className)}
+			{...props}
+		>
+			{children}
+		</section>
+	);
 };
 
 export const Page = {

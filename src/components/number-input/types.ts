@@ -15,7 +15,7 @@ type NumberInputFormatProps = Omit<
 export type NumberInputProps = BaseInputProps<
 	number,
 	NumberInputFormatProps & {
-		mode?: 'integer' | 'float' | 'currency';
+		mode?: 'integer' | 'float' | 'currency' | 'percentage';
 		stepper?: number;
 		defaultValue?: number;
 		min?: number;

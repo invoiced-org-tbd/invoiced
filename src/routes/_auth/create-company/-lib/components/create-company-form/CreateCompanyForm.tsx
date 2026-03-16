@@ -25,10 +25,7 @@ export const CreateCompanyForm = () => {
 			onChange: createCompanyFormSchema,
 		},
 		onSubmit: async ({ value }) => {
-			await createCompany({
-				email: value.email,
-				name: value.name,
-			});
+			await createCompany(value);
 
 			navigate({
 				to: '/app',

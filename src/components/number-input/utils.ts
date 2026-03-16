@@ -22,6 +22,14 @@ const currencyModeProps: Partial<NumericFormatProps> = {
 	allowLeadingZeros: false,
 };
 
+const percentageModeProps: Partial<NumericFormatProps> = {
+	suffix: '%',
+	decimalScale: 2,
+	fixedDecimalScale: true,
+	allowLeadingZeros: false,
+	allowNegative: false,
+};
+
 const modePropsMap: Record<
 	NonNullable<NumberInputProps['mode']>,
 	Partial<NumericFormatProps>
@@ -29,6 +37,7 @@ const modePropsMap: Record<
 	integer: integerModeProps,
 	float: floatModeProps,
 	currency: currencyModeProps,
+	percentage: percentageModeProps,
 };
 
 export const getNumberInputModeProps = (

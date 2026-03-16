@@ -1,13 +1,13 @@
 import * as s from 'drizzle-orm/sqlite-core';
 import * as u from './utils';
-import { companyIdColumn } from './companyTable';
+import { userIdColumn } from './userTable';
 
 export const contractTable = s.sqliteTable('contract', {
 	id: u.idColumn(),
 
 	description: s.text().notNull(),
 
-	companyId: companyIdColumn(),
+	userId: userIdColumn(),
 	createdAt: u.createdAtColumn(),
 	updatedAt: u.updatedAtColumn(),
 });

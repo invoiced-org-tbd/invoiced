@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth';
 import { createMutationOptions } from '@/utils/queryOptionsUtils';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -35,6 +36,10 @@ const deleteUserAccountServerFn = createServerFn({
 		});
 	}
 });
+
+export type DeleteUserAccountResponse = ExtractServerFnData<
+	typeof deleteUserAccountServerFn
+>;
 
 export const deleteUserAccountMutationOptions = () =>
 	createMutationOptions({

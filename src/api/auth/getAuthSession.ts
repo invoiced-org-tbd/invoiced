@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -20,6 +21,10 @@ const getAuthSessionServerFn = createServerFn({ method: 'GET' }).handler(
 		}
 	},
 );
+
+export type GetAuthSessionResponse = ExtractServerFnData<
+	typeof getAuthSessionServerFn
+>;
 
 export const getAuthSessionQueryOptions = () =>
 	createQueryOptions({

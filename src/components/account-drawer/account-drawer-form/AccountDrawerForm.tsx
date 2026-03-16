@@ -27,9 +27,7 @@ export const AccountDrawerForm = () => {
 		validators: {
 			onChange: accountFormSchema,
 			onSubmit: async ({ value }) => {
-				await updateUserAccount({
-					name: value.name,
-				});
+				await updateUserAccount(value);
 
 				setIsOpen(false);
 			},

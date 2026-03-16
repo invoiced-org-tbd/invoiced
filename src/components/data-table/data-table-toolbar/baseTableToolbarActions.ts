@@ -8,7 +8,7 @@ type TableToolbarActionButtonProps<TData> = Partial<
 	label: DataTableToolbarActionButton<TData>['label'];
 };
 
-export const getTableAddRowAction = <TData>(
+export const getTableAddToolbarAction = <TData>(
 	props: TableToolbarActionButtonProps<TData>,
 ): DataTableToolbarActionButton<TData> => {
 	return {

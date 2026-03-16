@@ -1,10 +1,12 @@
 import { accountFormSchema } from '@/components/account-drawer/account-drawer-form/accountFormSchemas';
 import { db } from '@/db/client';
 import { userTable } from '@/db/tables';
+import { getServerT } from '@/translations/server';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -12,10 +14,9 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { eq } from 'drizzle-orm';
 import type z from 'zod';
-import { getServerT } from '@/translations/server';
-import { userQueryKeys } from './userApiUtils';
 import { authQueryKeys } from '../auth/authApiUtils';
 import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
+import { userQueryKeys } from './userApiUtils';
 
 const updateUserAccountParams = accountFormSchema.clone();
 type UpdateUserAccountParams = z.infer<typeof updateUserAccountParams>;
@@ -49,6 +50,10 @@ const updateUserAccountServerFn = createServerFn({
 			});
 		}
 	});
+
+export type UpdateUserAccountResponse = ExtractServerFnData<
+	typeof updateUserAccountServerFn
+>;
 
 export const updateUserAccountMutationOptions = () =>
 	createMutationOptions({

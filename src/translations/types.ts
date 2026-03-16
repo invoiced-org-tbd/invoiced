@@ -9,7 +9,9 @@ type JoinPath<Start extends string, End extends string> = `${Start}.${End}`;
 export type TranslationPath<T extends TranslationDictionary> = {
 	[K in keyof T & string]:
 		| (T[K] extends string ? K : never)
-		| (T[K] extends TranslationDictionary ? JoinPath<K, TranslationPath<T[K]>> : never);
+		| (T[K] extends TranslationDictionary
+				? JoinPath<K, TranslationPath<T[K]>>
+				: never);
 }[keyof T & string];
 
 export type TranslationValueAtPath<
@@ -27,11 +29,14 @@ export type TranslationValueAtPath<
 			: never
 		: never;
 
-export type InterpolationKeys<T extends string> = T extends `${string}{${infer Param}}${infer Rest}`
-	? Param | InterpolationKeys<Rest>
-	: never;
+export type InterpolationKeys<T extends string> =
+	T extends `${string}{${infer Param}}${infer Rest}`
+		? Param | InterpolationKeys<Rest>
+		: never;
 
-export type TranslationParams<T extends string> = [InterpolationKeys<T>] extends [never]
+export type TranslationParams<T extends string> = [
+	InterpolationKeys<T>,
+] extends [never]
 	? never
 	: Record<InterpolationKeys<T>, string | number>;
 
@@ -48,10 +53,8 @@ export type TranslationSchema<T> = {
 export type BaseTranslations = typeof enTranslations;
 export type TranslationsShape = TranslationSchema<BaseTranslations>;
 export type TranslationKey = TranslationPath<BaseTranslations>;
-export type TranslationMessage<P extends TranslationKey> = TranslationValueAtPath<
-	BaseTranslations,
-	P
->;
+export type TranslationMessage<P extends TranslationKey> =
+	TranslationValueAtPath<BaseTranslations, P>;
 export type TranslationArguments<P extends TranslationKey> =
 	TranslationParams<TranslationMessage<P>> extends never
 		? [path: P]

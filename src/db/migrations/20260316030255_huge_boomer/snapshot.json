@@ -1,8 +1,8 @@
 {
 	"version": "7",
 	"dialect": "sqlite",
-	"id": "0a7295af-847c-428f-b3b9-fb8ae090376f",
-	"prevIds": ["2a61d9c0-1e43-4d6c-8e65-2e0bcb72141d"],
+	"id": "fa429ea9-eb55-46b2-9707-9bb75a75d8fd",
+	"prevIds": ["0a7295af-847c-428f-b3b9-fb8ae090376f"],
 	"ddl": [
 		{
 			"name": "account",
@@ -318,7 +318,7 @@
 			"autoincrement": false,
 			"default": null,
 			"generated": null,
-			"name": "companyId",
+			"name": "userId",
 			"entityType": "columns",
 			"table": "contract"
 		},
@@ -586,13 +586,13 @@
 			"table": "contractRole"
 		},
 		{
-			"columns": ["companyId"],
-			"tableTo": "company",
+			"columns": ["userId"],
+			"tableTo": "user",
 			"columnsTo": ["id"],
 			"onUpdate": "NO ACTION",
 			"onDelete": "CASCADE",
 			"nameExplicit": false,
-			"name": "fk_contract_companyId_company_id_fk",
+			"name": "fk_contract_userId_user_id_fk",
 			"entityType": "fks",
 			"table": "contract"
 		},

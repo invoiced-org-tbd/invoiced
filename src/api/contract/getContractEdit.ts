@@ -1,0 +1,63 @@
+import { createServerFn } from '@tanstack/react-start';
+import z from 'zod';
+import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
+import { db } from '@/db/client';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
+import {
+	createErrorResponse,
+	createSuccessResponse,
+} from '@/utils/serverFnsUtils';
+import { createQueryOptions } from '@/utils/queryOptionsUtils';
+import { contractQueryKeys } from './contractApiUtils';
+
+const getContractEditParams = z.object({
+	id: z.string(),
+});
+
+export type GetContractEditParams = z.infer<typeof getContractEditParams>;
+
+const getContractEditServerFn = createServerFn({
+	method: 'GET',
+})
+	.inputValidator(getContractEditParams)
+	.handler(async ({ data }) => {
+		try {
+			const {
+				data: { user },
+			} = await ensureAuthSessionServerFn();
+
+			const contract = await db.query.contractTable.findFirst({
+				where: {
+					id: data.id,
+					userId: user.id,
+				},
+				with: {
+					role: true,
+					client: true,
+					autoSendConfiguration: {
+						with: {
+							items: true,
+						},
+					},
+				},
+			});
+
+			return createSuccessResponse({
+				data: contract,
+			});
+		} catch (error) {
+			throw createErrorResponse({
+				error,
+			});
+		}
+	});
+
+export type GetContractEditResponse = ExtractServerFnData<
+	typeof getContractEditServerFn
+>;
+
+export const getContractEditQueryOptions = (params: GetContractEditParams) =>
+	createQueryOptions({
+		queryKey: contractQueryKeys.edit(params),
+		queryFn: () => getContractEditServerFn({ data: params }),
+	});

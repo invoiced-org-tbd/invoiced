@@ -26,6 +26,11 @@ export type ErrorResponse = {
 	message: string;
 };
 
+export type ExtractServerFnData<
+	// biome-ignore lint/suspicious/noExplicitAny: fn signature is unknown
+	TServerFn extends (...args: any) => Promise<SuccessResponse<unknown>>,
+> = Awaited<ReturnType<TServerFn>>['data'];
+
 type CreateSuccessResponseParams<T> = {
 	data: T;
 	message?: string;

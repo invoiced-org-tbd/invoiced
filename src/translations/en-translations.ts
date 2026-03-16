@@ -21,6 +21,8 @@ export const enTranslations = {
 		falseLabel: 'False',
 		toggleOptions: 'Toggle options',
 		selectAll: 'Select all',
+		addItem: 'Add item',
+		removeItem: 'Remove item',
 	},
 	validation: {
 		required: 'This field is required',
@@ -85,6 +87,7 @@ export const enTranslations = {
 		dashboardTitle: 'Dashboard',
 		sidebar: {
 			management: 'Management',
+			contracts: 'Contracts',
 		},
 	},
 	landing: {
@@ -120,5 +123,30 @@ export const enTranslations = {
 	},
 	dashboard: {
 		message: 'Welcome back, {name}.',
+	},
+	contracts: {
+		title: 'Contracts',
+		newContract: 'New Contract',
+		description: 'Description',
+		role: {
+			description: 'Role Description',
+			rate: 'Rate',
+			email: 'Email',
+		},
+		client: {
+			companyName: 'Company Name',
+			responsibleName: 'Responsible Name',
+			responsibleEmail: 'Responsible Email',
+		},
+		autoSendConfiguration: {
+			title: 'Auto Send Configuration',
+			dayOfMonth: 'Day of Month',
+			percentage: 'Percentage',
+			enabled: 'Enabled',
+		},
+		upsertDrawer: {
+			createTitle: 'Create Contract',
+			editTitle: 'Edit Contract',
+		},
 	},
 } as const;

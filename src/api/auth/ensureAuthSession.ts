@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth';
 import { LANGUAGE_COOKIE_NAME, resolveLanguage } from '@/translations/server';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import { createSuccessResponse } from '@/utils/serverFnsUtils';
 import { redirect } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
@@ -21,6 +22,10 @@ export const ensureAuthSessionServerFn = createServerFn({
 
 	return createSuccessResponse({ data: { ...session, locale } });
 });
+
+export type EnsureAuthSessionResponse = ExtractServerFnData<
+	typeof ensureAuthSessionServerFn
+>;
 
 export const ensureAuthSessionQueryOptions = () =>
 	createQueryOptions({

@@ -1,5 +1,8 @@
 export { accountTable } from './accountTable';
 export { companyTable } from './companyTable';
+export { contractAutoSendConfigurationItemTable } from './contractAutoSendConfigurationItemTable';
+export { contractAutoSendConfigurationTable } from './contractAutoSendConfigurationTable';
+export { contractClientTable } from './contractClientTable';
 export { contractRoleTable } from './contractRoleTable';
 export { contractTable } from './contractTable';
 export { sessionTable } from './sessionTable';

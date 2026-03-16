@@ -116,6 +116,8 @@ export const useResolveDataTableColumn = <TData,>({
 	baseColumns,
 	rowActions,
 }: ResolveDataTableColumnParams<TData>) => {
+	'use no memo';
+
 	const { createRowActionsColumn } = useCreateRowActionsColumn<TData>();
 	const columns: ColumnDef<TData>[] = [];
 

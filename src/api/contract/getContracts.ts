@@ -6,10 +6,10 @@ import {
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import { companyQueryKeys } from './companyApiUtils';
 import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
+import { contractQueryKeys } from './contractApiUtils';
 
-const getCompanyServerFn = createServerFn({
+const getContractsServerFn = createServerFn({
 	method: 'GET',
 }).handler(async () => {
 	try {
@@ -17,14 +17,17 @@ const getCompanyServerFn = createServerFn({
 			data: { user },
 		} = await ensureAuthSessionServerFn();
 
-		const company = await db.query.companyTable.findFirst({
+		const contracts = await db.query.contractTable.findMany({
 			where: {
 				userId: user.id,
+			},
+			with: {
+				role: true,
 			},
 		});
 
 		return createSuccessResponse({
-			data: company,
+			data: contracts,
 		});
 	} catch (error) {
 		throw createErrorResponse({
@@ -33,10 +36,12 @@ const getCompanyServerFn = createServerFn({
 	}
 });
 
-export type GetCompanyResponse = ExtractServerFnData<typeof getCompanyServerFn>;
+export type GetContractsResponse = ExtractServerFnData<
+	typeof getContractsServerFn
+>;
 
-export const getCompanyQueryOptions = () =>
+export const getContractsQueryOptions = () =>
 	createQueryOptions({
-		queryKey: companyQueryKeys.get(),
-		queryFn: () => getCompanyServerFn(),
+		queryKey: contractQueryKeys.get(),
+		queryFn: () => getContractsServerFn(),
 	});

@@ -46,10 +46,7 @@ const getTooSmallMessage = (language: Language, issue: ZodIssue) => {
 	});
 };
 
-const getInvalidFormatMessage = (
-	language: Language,
-	issue: ZodIssue,
-) => {
+const getInvalidFormatMessage = (language: Language, issue: ZodIssue) => {
 	if (!('format' in issue) || issue.format !== 'email') {
 		return undefined;
 	}
