@@ -2,14 +2,13 @@ import * as s from 'drizzle-orm/sqlite-core';
 import * as u from './utils';
 
 export const addressOwnerTypeValues = ['company', 'contractClient'] as const;
-export type AddressOwnerType = (typeof addressOwnerTypeValues)[number];
 
 export const addressTable = s.sqliteTable(
 	'address',
 	{
 		id: u.idColumn(),
 
-		addressableType: s.text().$type<AddressOwnerType>().notNull(),
+		addressableType: s.text({ enum: addressOwnerTypeValues }).notNull(),
 		addressableId: s.text().notNull(),
 
 		street1: s.text().notNull(),

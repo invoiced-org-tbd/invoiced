@@ -8,6 +8,21 @@ export const relations = defineRelations(tables, (r) => ({
 			to: r.userTable.id,
 			optional: false,
 		}),
+		// Polymorphic owner relation (resolved by addressableType at query level).
+		address: r.one.addressTable({
+			from: r.companyTable.id,
+			to: r.addressTable.addressableId,
+			optional: true,
+		}),
+	},
+
+	contractClientTable: {
+		// Polymorphic owner relation (resolved by addressableType at query level).
+		address: r.one.addressTable({
+			from: r.contractClientTable.id,
+			to: r.addressTable.addressableId,
+			optional: true,
+		}),
 	},
 
 	userTable: {
@@ -40,6 +55,20 @@ export const relations = defineRelations(tables, (r) => ({
 			from: r.contractAutoSendConfigurationTable.id,
 			to: r.contractAutoSendConfigurationItemTable
 				.contractAutoSendConfigurationId,
+		}),
+	},
+
+	addressTable: {
+		// Polymorphic inverse relations share the same id column.
+		company: r.one.companyTable({
+			from: r.addressTable.addressableId,
+			to: r.companyTable.id,
+			optional: true,
+		}),
+		contractClient: r.one.contractClientTable({
+			from: r.addressTable.addressableId,
+			to: r.contractClientTable.id,
+			optional: true,
 		}),
 	},
 }));
