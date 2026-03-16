@@ -5,6 +5,7 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import {
 	HeadContent,
 	Scripts,
@@ -65,6 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						tanstackQueryDevtoolsConfig,
 					]}
 				/>
+				<SpeedInsights />
 				<Analytics />
 				<Scripts />
 			</body>

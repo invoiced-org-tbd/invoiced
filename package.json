@@ -36,6 +36,7 @@
 		"@tanstack/react-table": "^8.21.3",
 		"@types/node": "^25.5.0",
 		"@vercel/analytics": "^2.0.1",
+		"@vercel/speed-insights": "^2.0.0",
 		"babel-plugin-react-compiler": "^1.0.0",
 		"better-auth": "^1.5.5",
 		"class-variance-authority": "^0.7.1",
