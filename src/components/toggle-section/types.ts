@@ -2,7 +2,9 @@ import type { ComponentProps } from 'react';
 import type { VariantProps } from 'class-variance-authority';
 import type { toggleSectionVariants } from './consts';
 
-export type ToggleSectionVariantProps = VariantProps<typeof toggleSectionVariants>;
+export type ToggleSectionVariantProps = VariantProps<
+	typeof toggleSectionVariants
+>;
 export type ToggleSectionVariant = NonNullable<
 	ToggleSectionVariantProps['variant']
 >;

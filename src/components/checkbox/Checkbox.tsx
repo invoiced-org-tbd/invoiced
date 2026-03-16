@@ -25,7 +25,7 @@ const CheckboxControl = ({
 					shape: 'square',
 					size: 'checkbox',
 				}),
-				'border-input dark:bg-input/30 data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary data-checked:border-primary aria-invalid:aria-checked:border-primary bg-transparent transition-colors group-has-disabled/field:opacity-50',
+				'border-input dark:bg-input/30 data-checked:bg-primary text-primary-foreground dark:data-checked:bg-primary data-checked:border-primary aria-invalid:aria-checked:border-primary bg-transparent transition-colors group-has-disabled/field:opacity-50',
 				className,
 			)}
 			checked={value}

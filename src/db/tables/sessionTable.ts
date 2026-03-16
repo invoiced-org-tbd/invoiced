@@ -16,5 +16,9 @@ export const sessionTable = s.sqliteTable(
 		createdAt: u.createdAtColumn(),
 		updatedAt: u.updatedAtColumn(),
 	},
-	(table) => [s.index('session_userId_idx').on(table.userId)],
+	(table) => [
+		s.index('session_userId_idx').on(table.userId),
+		s.index('session_expiresAt_idx').on(table.expiresAt),
+		s.index('session_userId_expiresAt_idx').on(table.userId, table.expiresAt),
+	],
 );
