@@ -8,6 +8,8 @@ import type {
 } from '@tanstack/react-query';
 import type { SuccessResponse } from './serverFnsUtils';
 import { toast } from 'sonner';
+import { useLanguage } from '@/hooks/use-language/useLanguage';
+import { translate } from '@/translations/translate';
 
 type InvalidateOnSuccessParams = {
 	args: Parameters<
@@ -27,18 +29,19 @@ export const invalidateOnSuccess = ({
 };
 
 const handleError = (error: unknown) => {
-	let message = 'An unknown error occurred';
+	let message = '';
 
-	if (error instanceof Error) {
-		message = error.message;
-	} else if (typeof error === 'string') {
-		message = error;
-	} else if (
-		typeof error === 'object' &&
-		error !== null &&
-		'message' in error
-	) {
-		message = String(error.message);
+	if (error) {
+		if (error instanceof Error) {
+			message = error.message;
+		} else if (typeof error === 'string') {
+			message = error;
+		}
+	}
+
+	if (!message) {
+		const language = useLanguage.getState().language;
+		message = translate(language, 'common.unknownError');
 	}
 
 	toast.error(message);

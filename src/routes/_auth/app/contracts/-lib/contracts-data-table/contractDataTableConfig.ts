@@ -49,15 +49,16 @@ export const useContractDataTableRowActions = (): DataTableRowAction<
 	GetContractsResponse[number]
 >[] => {
 	const navigate = contractsRouteApi.useNavigate();
-	const { getTableEditRowAction } = useGetTableEditRowAction();
+	const { getTableEditRowAction } =
+		useGetTableEditRowAction<GetContractsResponse[number]>();
 
 	return [
 		getTableEditRowAction({
-			onClick: () => {
+			onClick: (data) => {
 				navigate({
 					search: (prev) => ({
 						...prev,
-						isEditing: true,
+						editId: data.id,
 					}),
 				});
 			},

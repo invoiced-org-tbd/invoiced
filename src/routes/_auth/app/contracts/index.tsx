@@ -9,6 +9,7 @@ import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer';
 
 const contractsSearchSchema = z.object({
 	isCreating: z.boolean().optional(),
+	editId: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_auth/app/contracts/')({

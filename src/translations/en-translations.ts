@@ -23,6 +23,10 @@ export const enTranslations = {
 		selectAll: 'Select all',
 		addItem: 'Add item',
 		removeItem: 'Remove item',
+		unknownError: 'An unknown error occurred',
+	},
+	entity: {
+		notFound: '{entity} not found',
 	},
 	validation: {
 		required: 'This field is required',

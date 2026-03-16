@@ -25,6 +25,7 @@ export const brTranslations = {
 		selectAll: 'Selecionar tudo',
 		addItem: 'Adicionar item',
 		removeItem: 'Remover item',
+		unknownError: 'Ocorreu um erro desconhecido',
 	},
 	validation: {
 		required: 'Este campo e obrigatorio',

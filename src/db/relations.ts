@@ -6,6 +6,7 @@ export const relations = defineRelations(tables, (r) => ({
 		owner: r.one.userTable({
 			from: r.companyTable.userId,
 			to: r.userTable.id,
+			optional: false,
 		}),
 	},
 
@@ -20,14 +21,17 @@ export const relations = defineRelations(tables, (r) => ({
 		autoSendConfiguration: r.one.contractAutoSendConfigurationTable({
 			from: r.contractTable.id,
 			to: r.contractAutoSendConfigurationTable.contractId,
+			optional: false,
 		}),
 		client: r.one.contractClientTable({
 			from: r.contractTable.id,
 			to: r.contractClientTable.contractId,
+			optional: false,
 		}),
 		role: r.one.contractRoleTable({
 			from: r.contractTable.id,
 			to: r.contractRoleTable.contractId,
+			optional: false,
 		}),
 	},
 

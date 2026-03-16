@@ -7,21 +7,24 @@ const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
 
 export const ContractsUpsertDrawer = () => {
 	const { t } = useTranslate();
-	const { isCreating } = contractsRouteApi.useSearch();
+	const { isCreating, editId } = contractsRouteApi.useSearch();
 	const navigate = contractsRouteApi.useNavigate();
+
+	const isOpen = isCreating || !!editId;
 
 	const handleClose = () => {
 		navigate({
 			search: (prev) => ({
 				...prev,
 				isCreating: undefined,
+				editId: undefined,
 			}),
 		});
 	};
 
 	return (
 		<Drawer.Root
-			open={isCreating}
+			open={isOpen}
 			onOpenChange={handleClose}
 		>
 			<Drawer.Content>
@@ -34,7 +37,10 @@ export const ContractsUpsertDrawer = () => {
 				</Drawer.Header>
 
 				<Drawer.Body>
-					<ContractsUpsertForm />
+					<ContractsUpsertForm
+						editId={editId}
+						onSuccess={handleClose}
+					/>
 				</Drawer.Body>
 			</Drawer.Content>
 		</Drawer.Root>

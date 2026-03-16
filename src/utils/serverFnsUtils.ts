@@ -17,6 +17,21 @@ export const HTTP_STATUS_CODES = {
 export type HTTPStatusCode =
 	(typeof HTTP_STATUS_CODES)[keyof typeof HTTP_STATUS_CODES];
 
+export class ServerError extends Error {
+	statusCode!: HTTPStatusCode;
+
+	constructor({
+		message,
+		statusCode,
+	}: {
+		message: string;
+		statusCode?: HTTPStatusCode;
+	}) {
+		super(message);
+		this.statusCode = statusCode ?? HTTP_STATUS_CODES.BAD_REQUEST;
+	}
+}
+
 export type SuccessResponse<T> = {
 	data: T;
 	message?: string;
@@ -56,17 +71,15 @@ export const createErrorResponse = ({
 }: CreateErrorResponseParams): ErrorResponse => {
 	setResponseStatus(statusCode);
 
-	let errorMessage = 'An error occurred';
+	let errorMessage = '';
 	if (error instanceof Error) {
+		if (error instanceof ServerError) {
+			statusCode = error.statusCode;
+		}
+
 		errorMessage = error.message;
 	} else if (typeof error === 'string') {
 		errorMessage = error;
-	} else if (
-		typeof error === 'object' &&
-		error !== null &&
-		'message' in error
-	) {
-		errorMessage = String(error.message);
 	}
 
 	return { message: errorMessage };

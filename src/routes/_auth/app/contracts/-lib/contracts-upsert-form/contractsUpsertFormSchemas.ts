@@ -1,3 +1,5 @@
+import { getEditContractByIdQueryOptions } from '@/api/contract/getEditContractById';
+import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
 
 const contractRoleFormSchema = z.object({
@@ -33,28 +35,40 @@ export type ContractsUpsertFormSchema = z.infer<
 	typeof contractsUpsertFormSchema
 >;
 
-export const useContractsUpsertFormDefaultValues =
-	(): ContractsUpsertFormSchema => {
-		return {
+export const useContractsUpsertFormDefaultValues = ({
+	editId,
+}: {
+	editId?: string;
+}): ContractsUpsertFormSchema => {
+	const { data: editContract } = useQuery({
+		...getEditContractByIdQueryOptions({ id: editId ?? '' }),
+		enabled: !!editId,
+	});
+
+	if (editContract) {
+		return editContract;
+	}
+
+	return {
+		description: '',
+		role: {
 			description: '',
-			role: {
-				description: '',
-				rate: undefined as unknown as number,
-				email: '',
-			},
-			client: {
-				companyName: '',
-				responsibleName: '',
-				responsibleEmail: '',
-			},
-			autoSendConfiguration: {
-				enabled: false,
-				items: [
-					{
-						dayOfMonth: 1,
-						percentage: 100,
-					},
-				],
-			},
-		};
+			rate: undefined as unknown as number,
+			email: '',
+		},
+		client: {
+			companyName: '',
+			responsibleName: '',
+			responsibleEmail: '',
+		},
+		autoSendConfiguration: {
+			enabled: false,
+			items: [
+				{
+					dayOfMonth: 1,
+					percentage: 100,
+				},
+			],
+		},
 	};
+};

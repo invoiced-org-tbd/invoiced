@@ -3,22 +3,30 @@ import { Drawer } from '@/components/drawer';
 import { useAppForm } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
-import { getRouteApi } from '@tanstack/react-router';
+import { ContractAutoSendConfigurationForm } from './ContractAutoSendConfigurationForm';
 import {
 	contractsUpsertFormSchema,
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
-import { ContractAutoSendConfigurationForm } from './ContractAutoSendConfigurationForm';
+import { updateContractMutationOptions } from '@/api/contract/updateContract';
 
-const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
+export type ContractsUpsertFormProps = {
+	editId?: string;
+	onSuccess: () => void;
+};
 
-export const ContractsUpsertForm = () => {
+export const ContractsUpsertForm = ({
+	editId,
+	onSuccess,
+}: ContractsUpsertFormProps) => {
 	const { t } = useTranslate();
-	const navigate = contractsRouteApi.useNavigate();
-	const defaultValues = useContractsUpsertFormDefaultValues();
+	const defaultValues = useContractsUpsertFormDefaultValues({ editId });
 
 	const { mutateAsync: createContract } = useMutation(
 		createContractMutationOptions(),
+	);
+	const { mutateAsync: updateContract } = useMutation(
+		updateContractMutationOptions(),
 	);
 
 	const form = useAppForm({
@@ -27,14 +35,13 @@ export const ContractsUpsertForm = () => {
 			onChange: contractsUpsertFormSchema,
 		},
 		onSubmit: async ({ value }) => {
-			await createContract(value);
+			if (editId) {
+				await updateContract({ id: editId, data: value });
+			} else {
+				await createContract(value);
+			}
 
-			navigate({
-				search: (prev) => ({
-					...prev,
-					isCreating: undefined,
-				}),
-			});
+			onSuccess();
 		},
 	});
 
