@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import { BaseField } from '../base-field';
 import { useBaseField } from '../base-field/useBaseField';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { InputItem } from '../base-field/types';
 import type { SelectInputProps } from './types';
 import { isInputItem } from '../base-field/utils';
@@ -17,12 +18,15 @@ export const SelectInput = <TItem extends InputItem>({
 	readOnly,
 	allowEmpty,
 	items,
-	placeholder = 'Select an option...',
-	emptyMessage = 'No options found',
+	placeholder,
+	emptyMessage,
 	itemRender,
 	buttons,
 	...props
 }: SelectInputProps<TItem>) => {
+	const { t } = useTranslate();
+	const resolvedPlaceholder = placeholder ?? t('select.placeholder');
+	const resolvedEmptyMessage = emptyMessage ?? t('select.emptyMessage');
 	const baseId = useId();
 	const id = props.id ?? baseId;
 
@@ -35,7 +39,7 @@ export const SelectInput = <TItem extends InputItem>({
 	});
 
 	const handleChange = (item: unknown) => {
-		if (required || readOnly) {
+		if (readOnly) {
 			return;
 		}
 
@@ -63,12 +67,12 @@ export const SelectInput = <TItem extends InputItem>({
 					id={id}
 				>
 					<Select.Input
-						placeholder={placeholder}
+						placeholder={resolvedPlaceholder}
 						buttons={buttons}
 						{...inputProps}
 					/>
 					<Select.Content>
-						<Select.Empty>{emptyMessage}</Select.Empty>
+						<Select.Empty>{resolvedEmptyMessage}</Select.Empty>
 
 						<Select.List>
 							{(item: TItem) => {

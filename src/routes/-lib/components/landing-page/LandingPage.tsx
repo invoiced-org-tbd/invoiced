@@ -1,9 +1,12 @@
 import { Button } from '@/components/button';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { authClient } from '@/lib/authClient';
 import { appConfig } from '@/utils/appConfig';
 import type { LinkProps } from '@tanstack/react-router';
 
 export const LandingPage = () => {
+	const { t } = useTranslate();
+
 	const handleGoogleSignIn = async () => {
 		await authClient.signIn.social({
 			provider: 'google',
@@ -22,7 +25,7 @@ export const LandingPage = () => {
 				<section className='hidden w-5/12 bg-muted md:block lg:w-5/8'>
 					<img
 						src='/soft-green-bg.png'
-						alt='Soft green abstract background'
+						alt={t('landing.backgroundAlt')}
 						className='h-full w-full object-cover rounded-xl'
 					/>
 				</section>
@@ -48,12 +51,11 @@ export const LandingPage = () => {
 							size='md'
 							className='mt-6 w-full'
 						>
-							Sign in with Google
+							{t('landing.signInWithGoogle')}
 						</Button>
 
 						<p className='mt-4 text-center text-xs text-muted-foreground'>
-							By continuing, you agree to your app&apos;s terms and privacy
-							policy.
+							{t('landing.terms')}
 						</p>
 					</div>
 				</section>

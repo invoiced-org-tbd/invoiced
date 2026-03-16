@@ -1,10 +1,12 @@
 import { Drawer } from '../drawer';
 import { AccountDrawerForm } from './account-drawer-form';
 import { useAccountDrawer } from '@/hooks/use-account-drawer/useAccountDrawer';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 
 export const AccountDrawer = () => {
 	const isOpen = useAccountDrawer((state) => state.isOpen);
 	const setIsOpen = useAccountDrawer((state) => state.setIsOpen);
+	const { t } = useTranslate();
 
 	return (
 		<Drawer.Root
@@ -13,7 +15,7 @@ export const AccountDrawer = () => {
 		>
 			<Drawer.Content>
 				<Drawer.Header>
-					<Drawer.Title>Account</Drawer.Title>
+					<Drawer.Title>{t('account.drawerTitle')}</Drawer.Title>
 				</Drawer.Header>
 
 				<AccountDrawerForm />

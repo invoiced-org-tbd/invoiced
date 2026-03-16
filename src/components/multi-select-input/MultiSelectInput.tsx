@@ -9,6 +9,7 @@ import type { InputButton } from '../base-field/types';
 import { useBaseField } from '../base-field/useBaseField';
 import { Checkbox } from '../checkbox';
 import { Popover } from '../popover';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import type {
 	MultiSelectInputGroup,
@@ -53,7 +54,7 @@ export const MultiSelectInput = ({
 	required,
 	readOnly,
 	options,
-	placeholder = 'Select options...',
+	placeholder,
 	searchable = true,
 	hideSelectAll = false,
 	maxCount = 3,
@@ -62,6 +63,8 @@ export const MultiSelectInput = ({
 	className,
 	...props
 }: MultiSelectInputProps) => {
+	const { t } = useTranslate();
+	const resolvedPlaceholder = placeholder ?? t('multiSelect.placeholder');
 	const baseId = useId();
 	const id = props.id ?? baseId;
 	const listboxId = `${id}-listbox`;
@@ -169,7 +172,7 @@ export const MultiSelectInput = ({
 	const defaultTriggerButton: InputButton = {
 		side: 'right',
 		icon: MultiSelectChevronIcon,
-		label: 'Toggle options',
+		label: t('common.toggleOptions'),
 		onClick: () => {
 			setIsPopoverOpen((previousState) => !previousState);
 		},
@@ -237,7 +240,9 @@ export const MultiSelectInput = ({
 													event.stopPropagation();
 													toggleOption(option);
 												}}
-												aria-label={`Remove ${option.label}`}
+												aria-label={t('a11y.removeOption', {
+													option: option.label,
+												})}
 											>
 												<XIcon className='size-3' />
 											</button>
@@ -245,12 +250,14 @@ export const MultiSelectInput = ({
 									))}
 
 									{hiddenSelectedCount > 0 && (
-										<Badge variant='outline'>+{hiddenSelectedCount} more</Badge>
+										<Badge variant='outline'>
+											{t('multiSelect.more', { count: hiddenSelectedCount })}
+										</Badge>
 									)}
 								</div>
 							) : (
 								<span className='text-muted-foreground text-left flex-1'>
-									{placeholder}
+									{resolvedPlaceholder}
 								</span>
 							)}
 
@@ -284,7 +291,7 @@ export const MultiSelectInput = ({
 									type='text'
 									value={searchValue}
 									onChange={(event) => setSearchValue(event.target.value)}
-									placeholder='Search options...'
+									placeholder={t('multiSelect.searchPlaceholder')}
 									className={cn(
 										fieldInputVariants({
 											height: 'fixed',
@@ -318,7 +325,7 @@ export const MultiSelectInput = ({
 											value={hasSelectedAll}
 											className='pointer-events-none'
 										/>
-										<span>Select all</span>
+										<span>{t('common.selectAll')}</span>
 									</div>
 								)}
 
@@ -404,7 +411,7 @@ export const MultiSelectInput = ({
 									? filteredOptions.every((group) => group.options.length === 0)
 									: filteredOptions.length === 0) && (
 									<p className='text-muted-foreground p-2 text-sm'>
-										{placeholder}
+										{resolvedPlaceholder}
 									</p>
 								)}
 							</div>
@@ -417,7 +424,7 @@ export const MultiSelectInput = ({
 										onClick={handleClear}
 										className='hover:bg-accent rounded-md px-2 py-1 text-sm'
 									>
-										Clear
+										{t('common.clear')}
 									</button>
 								)}
 								<button
@@ -426,7 +433,7 @@ export const MultiSelectInput = ({
 									onClick={() => setIsPopoverOpen(false)}
 									className='hover:bg-accent rounded-md px-2 py-1 text-sm'
 								>
-									Close
+									{t('common.close')}
 								</button>
 							</div>
 						</div>

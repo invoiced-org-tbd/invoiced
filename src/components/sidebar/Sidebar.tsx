@@ -1,4 +1,5 @@
 import { Button } from '@/components/button';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react';
@@ -188,6 +189,7 @@ const MenuButton = ({
 const Trigger = ({ className, onClick, ...props }: SidebarTriggerProps) => {
 	const toggleSidebar = useSidebar((s) => s.toggleSidebar);
 	const open = useSidebar((s) => s.open);
+	const { t } = useTranslate();
 
 	const Icon = open ? PanelLeftCloseIcon : PanelLeftOpenIcon;
 
@@ -206,7 +208,7 @@ const Trigger = ({ className, onClick, ...props }: SidebarTriggerProps) => {
 			{...props}
 		>
 			<Icon />
-			<span className='sr-only'>Toggle Sidebar</span>
+			<span className='sr-only'>{t('a11y.toggleSidebar')}</span>
 		</Button>
 	);
 };

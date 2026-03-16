@@ -1,6 +1,7 @@
 import { LoaderCircleIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Table } from '@/components/table';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { DataTableBody } from './data-table-body';
 import { DataTableFooter } from './data-table-footer';
 import { DataTableHeader } from './data-table-header';
@@ -10,9 +11,10 @@ import { useDataTable } from './use-data-table';
 
 export const DataTable = <TData,>(props: DataTableProps<TData>) => {
 	'use no memo';
+	const { t } = useTranslate();
 
 	const {
-		emptyMessage = 'No results.',
+		emptyMessage = t('dataTable.emptyMessage'),
 		className,
 		toolbarActions,
 		pagination,

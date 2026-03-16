@@ -1,0 +1,117 @@
+export const enTranslations = {
+	common: {
+		name: 'Name',
+		email: 'Email',
+		submit: 'Submit',
+		cancel: 'Cancel',
+		clear: 'Clear',
+		close: 'Close',
+		edit: 'Edit',
+		delete: 'Delete',
+		account: 'Account',
+		goBack: 'Go back',
+		logOut: 'Log out',
+		lightMode: 'Light mode',
+		darkMode: 'Dark mode',
+		english: 'English',
+		portuguese: 'Portuguese',
+		yes: 'Yes',
+		no: 'No',
+		trueLabel: 'True',
+		falseLabel: 'False',
+		toggleOptions: 'Toggle options',
+		selectAll: 'Select all',
+	},
+	a11y: {
+		inputAction: 'Input action',
+		toggleSidebar: 'Toggle Sidebar',
+		openColumnFilter: 'Open column filter',
+		toggleColumnSorting: 'Toggle column sorting',
+		selectPageSize: 'Select page size',
+		goToPage: 'Go to page {page}',
+		selectPage: 'Select page',
+		removeOption: 'Remove {option}',
+	},
+	dataTable: {
+		filter: {
+			title: 'Filter',
+			inputPlaceholder: 'Type to filter...',
+			clearButton: 'Clear filter',
+		},
+		footer: {
+			rows: 'Rows: {count}',
+			rowsPerPage: 'Rows per page',
+			page: 'Page {page}',
+		},
+		emptyMessage: 'No results.',
+		rowActions: 'Row actions',
+	},
+	multiSelect: {
+		placeholder: 'Select options...',
+		searchPlaceholder: 'Search options...',
+		more: '+{count} more',
+	},
+	select: {
+		placeholder: 'Select an option...',
+		emptyMessage: 'No options found',
+	},
+	account: {
+		drawerTitle: 'Account',
+		form: {
+			emailDescription: 'Managed by your Google account',
+			saveChanges: 'Save Changes',
+		},
+		dangerZone: {
+			title: 'Danger Zone',
+			description: 'Delete account permanently',
+			intro: 'Before deleting your account, review what happens next:',
+			itemDataRemoved:
+				'All your profile data and saved preferences are removed.',
+			itemSessionsSignedOut: 'Connected sessions are signed out immediately.',
+			itemCannotUndo: 'This action cannot be undone after confirmation.',
+			areYouSure: 'Are you sure?',
+			deleteMyAccount: 'Delete my account',
+			deleteAccount: 'Delete Account',
+			notImplemented: 'Not implemented',
+		},
+	},
+	auth: {
+		dashboardTitle: 'Dashboard',
+		sidebar: {
+			management: 'Management',
+		},
+	},
+	landing: {
+		backgroundAlt: 'Soft green abstract background',
+		signInWithGoogle: 'Sign in with Google',
+		terms: "By continuing, you agree to your app's terms and privacy policy.",
+	},
+	createCompany: {
+		title: 'Create new Company',
+		description: 'Complete your company details to create a new company.',
+		backgroundAlt: 'Soft green abstract background',
+		logoAlt: 'Company logo',
+		form: {
+			nameLabel: 'Company Name',
+			namePlaceholder: 'Acme Inc.',
+			nameDescription: 'Use your business name',
+			emailPlaceholder: 'john@acmeinc.com',
+			submit: 'Create Company',
+		},
+	},
+	root: {
+		notFound: 'Not Found',
+		error: 'Error',
+	},
+	server: {
+		user: {
+			accountUpdatedSuccess: 'User account updated successfully',
+		},
+	},
+	login: {
+		title: 'Login Page',
+	},
+	dashboard: {
+		message: 'Welcome back, {name}.',
+	},
+} as const;

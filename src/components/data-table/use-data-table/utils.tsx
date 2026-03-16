@@ -13,7 +13,7 @@ import type {
 	DataTableAccessorKeyColumn,
 	DataTableFormatStyle,
 } from '../data-table-cell-render/types';
-import { createRowActionsColumn } from '../utils';
+import { useCreateRowActionsColumn } from '../utils';
 import { DataTableCellRender } from '../data-table-cell-render';
 import type { ReactNode } from 'react';
 import { toTitleCase } from '@/utils/stringUtils';
@@ -112,10 +112,11 @@ type ResolveDataTableColumnParams<TData> = {
 	baseColumns: DataTableColumn<TData>[];
 	rowActions: DataTableRowAction<TData>[];
 };
-export const resolveDataTableColumn = <TData,>({
+export const useResolveDataTableColumn = <TData,>({
 	baseColumns,
 	rowActions,
 }: ResolveDataTableColumnParams<TData>) => {
+	const { createRowActionsColumn } = useCreateRowActionsColumn<TData>();
 	const columns: ColumnDef<TData>[] = [];
 
 	for (const column of baseColumns) {

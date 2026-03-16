@@ -1,5 +1,6 @@
 import { Separator } from '@/components/separator';
 import { useFormContext } from '@/hooks/use-app-form';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
@@ -104,6 +105,7 @@ const FormSeparator = ({
 
 const FormSubmitButton = (props: FormSubmitButtonProps) => {
 	const form = useFormContext();
+	const { t } = useTranslate();
 
 	return (
 		<form.Subscribe
@@ -122,7 +124,7 @@ const FormSubmitButton = (props: FormSubmitButtonProps) => {
 						disabled={isDisabled}
 						isLoading={isLoading}
 					>
-						{props.children ?? 'Submit'}
+						{props.children ?? t('common.submit')}
 					</Button>
 				);
 			}}
@@ -132,6 +134,7 @@ const FormSubmitButton = (props: FormSubmitButtonProps) => {
 
 const FormCancelButton = (props: FormCancelButtonProps) => {
 	const form = useFormContext();
+	const { t } = useTranslate();
 
 	return (
 		<form.Subscribe
@@ -148,7 +151,7 @@ const FormCancelButton = (props: FormCancelButtonProps) => {
 						{...props}
 						disabled={isDisabled}
 					>
-						{props.children ?? 'Cancel'}
+						{props.children ?? t('common.cancel')}
 					</Button>
 				);
 			}}

@@ -1,12 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { Sidebar } from '@/components/sidebar';
 import { SidebarUserMenu } from '../sidebar-user-menu';
-import { authenticatedSidebarNavItems } from './consts';
+import { useAuthenticatedSidebarNavItems } from './consts';
 import type { SidebarNavLinkItem } from './types';
 import { useCompany } from '@/hooks/use-company';
 
 export const AuthenticatedSidebar = () => {
 	const { company } = useCompany();
+	const authenticatedSidebarNavItems = useAuthenticatedSidebarNavItems();
 
 	return (
 		<Sidebar.Panel

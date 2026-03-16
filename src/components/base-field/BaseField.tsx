@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Button } from '../button';
 import { inputButtonClassName, inputButtonsSideClassName } from './consts';
 import { Label } from '@/components/label';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import type {
 	BaseFieldControlProps,
@@ -169,6 +170,7 @@ const InputButtons = ({
 	onButtonClick,
 	...props
 }: BaseFieldInputButtonsProps) => {
+	const { t } = useTranslate();
 	const sideButtons = buttons.filter((button) => button.side === side);
 	const hasChildren = !!props.children;
 	if (!sideButtons.length && !hasChildren) {
@@ -202,7 +204,7 @@ const InputButtons = ({
 						disabled={disabled || readOnly || button.disabled}
 						isOutlined={button.isOutlined ?? true}
 						className={inputButtonClassName}
-						aria-label={button.label ?? 'Input action'}
+						aria-label={button.label ?? t('a11y.inputAction')}
 						onClick={(event) => {
 							if (onButtonClick) {
 								onButtonClick(event, button);

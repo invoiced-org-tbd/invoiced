@@ -18,7 +18,7 @@ import {
 import type { UseDataTableParams } from './types';
 import {
 	hasDataTableColumnFiltersChanged,
-	resolveDataTableColumn,
+	useResolveDataTableColumn,
 	resolveDataTableColumnFilters,
 	resolveDataTableSingleColumnSorting,
 	toServerDataTableFilters,
@@ -152,7 +152,7 @@ export const useDataTable = <TData>({
 		setTableColumnFilters(nextColumnFilters);
 	};
 
-	const columns = resolveDataTableColumn({
+	const columns = useResolveDataTableColumn({
 		baseColumns,
 		rowActions: rowActions ?? [],
 	});

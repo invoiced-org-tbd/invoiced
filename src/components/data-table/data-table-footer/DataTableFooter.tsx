@@ -1,5 +1,6 @@
 import { Button } from '@/components/button';
 import { DropdownMenu } from '@/components/dropdown-menu';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import type { DataTableFooterProps } from './types';
 import { DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS } from '../consts';
@@ -9,6 +10,7 @@ export const DataTableFooter = <TData,>({
 	pagination,
 }: DataTableFooterProps<TData>) => {
 	'use no memo'; // React Compiler + TanStack Table compatibility workaround.
+	const { t } = useTranslate();
 
 	const pageSizeOptions =
 		pagination?.pageSizeOptions ?? DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS;
@@ -58,14 +60,14 @@ export const DataTableFooter = <TData,>({
 								size='xs'
 								variant='secondary'
 								className='h-7 px-2 w-min'
-								aria-label='Select page size'
+								aria-label={t('a11y.selectPageSize')}
 							>
-								Rows: {currentPageSize}
+								{t('dataTable.footer.rows', { count: currentPageSize })}
 							</Button>
 						</DropdownMenu.Trigger>
 
 						<DropdownMenu.Content align='start'>
-							<DropdownMenu.Label>Rows per page</DropdownMenu.Label>
+							<DropdownMenu.Label>{t('dataTable.footer.rowsPerPage')}</DropdownMenu.Label>
 							<DropdownMenu.Separator />
 							<DropdownMenu.RadioGroup
 								value={`${currentPageSize}`}
@@ -102,7 +104,7 @@ export const DataTableFooter = <TData,>({
 									disabled={isCurrentPage}
 									onClick={() => table.setPageIndex(pageIndex)}
 									className={cn(isCurrentPage && 'cursor-default')}
-									aria-label={`Go to page ${pageIndex + 1}`}
+									aria-label={t('a11y.goToPage', { page: pageIndex + 1 })}
 									aria-current={isCurrentPage ? 'page' : undefined}
 								>
 									{pageIndex + 1}
@@ -119,7 +121,7 @@ export const DataTableFooter = <TData,>({
 										variant='secondary'
 										isIcon={true}
 										className='h-7 min-w-7 px-2'
-										aria-label='Select page'
+										aria-label={t('a11y.selectPage')}
 									>
 										...
 									</Button>
@@ -129,7 +131,7 @@ export const DataTableFooter = <TData,>({
 									align='center'
 									className='max-h-56 overflow-y-auto'
 								>
-									<DropdownMenu.Label>Select page</DropdownMenu.Label>
+									<DropdownMenu.Label>{t('a11y.selectPage')}</DropdownMenu.Label>
 									<DropdownMenu.Separator />
 									<DropdownMenu.RadioGroup
 										value={`${currentPageIndex}`}
@@ -142,7 +144,9 @@ export const DataTableFooter = <TData,>({
 												key={pageIndex}
 												value={`${pageIndex}`}
 											>
-												Page {pageIndex + 1}
+												{t('dataTable.footer.page', {
+													page: pageIndex + 1,
+												})}
 											</DropdownMenu.RadioItem>
 										))}
 									</DropdownMenu.RadioGroup>

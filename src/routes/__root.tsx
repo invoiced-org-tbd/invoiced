@@ -1,5 +1,6 @@
 import { Toaster } from '@/components/toaster';
 import { Tooltip } from '@/components/tooltip';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
 import {
@@ -18,10 +19,20 @@ export type AppRouterContext = {
 export const Route = createRootRouteWithContext<AppRouterContext>()({
 	head: () => getRootRouteHead(),
 	scripts: () => getRootRouteScripts(),
-	notFoundComponent: () => <div>Not Found</div>,
-	errorComponent: () => <div>Error</div>,
+	notFoundComponent: RootNotFoundComponent,
+	errorComponent: RootErrorComponent,
 	shellComponent: RootDocument,
 });
+
+function RootNotFoundComponent() {
+	const { t } = useTranslate();
+	return <div>{t('root.notFound')}</div>;
+}
+
+function RootErrorComponent() {
+	const { t } = useTranslate();
+	return <div>{t('root.error')}</div>;
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (

@@ -1,5 +1,6 @@
 import { format as formatDate } from 'date-fns';
 import type { FC } from 'react';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type {
 	DataTableCellRenderProps,
 	DataTableCulumnFormat,
@@ -131,6 +132,7 @@ const DateCell = ({ data, format }: CellProps<'date'>) => {
 };
 
 const BooleanCell = ({ data, format }: CellProps<'boolean'>) => {
+	const { t } = useTranslate();
 	const value = Boolean(data);
 	const style = format.style || 'checkbox';
 
@@ -139,13 +141,15 @@ const BooleanCell = ({ data, format }: CellProps<'boolean'>) => {
 			return <Checkbox value={value} />;
 		}
 		case 'yesNo': {
-			return <span>{value ? 'Yes' : 'No'}</span>;
+			return <span>{value ? t('common.yes') : t('common.no')}</span>;
 		}
 		case 'switch': {
 			return <Switch value={value} />;
 		}
 		case 'trueFalse': {
-			return <span>{value ? 'True' : 'False'}</span>;
+			return (
+				<span>{value ? t('common.trueLabel') : t('common.falseLabel')}</span>
+			);
 		}
 	}
 	return assertNever(style);

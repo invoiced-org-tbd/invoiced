@@ -1,6 +1,7 @@
 import { Drawer } from '@/components/drawer';
 import { TextInput } from '@/components/text-input';
 import { useAppForm } from '@/hooks/use-app-form';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useUser } from '@/hooks/use-user/useUser';
 import { AccountFormDangerZone } from './AccountFormDangerZone';
 import {
@@ -13,6 +14,7 @@ import { useAccountDrawer } from '@/hooks/use-account-drawer/useAccountDrawer';
 
 export const AccountDrawerForm = () => {
 	const user = useUser();
+	const { t } = useTranslate();
 	const setIsOpen = useAccountDrawer((state) => state.setIsOpen);
 	const defaultValues = useAccountFormDefaultValues();
 
@@ -26,7 +28,6 @@ export const AccountDrawerForm = () => {
 			onChange: accountFormSchema,
 			onSubmit: async ({ value }) => {
 				await updateUserAccount({
-					id: user.id,
 					name: value.name,
 				});
 
@@ -41,13 +42,13 @@ export const AccountDrawerForm = () => {
 				<form.Group>
 					<form.AppField
 						name='name'
-						children={(field) => <field.TextInput label='Name' />}
+						children={(field) => <field.TextInput label={t('common.name')} />}
 					/>
 					<TextInput
-						label='Email'
+						label={t('common.email')}
 						readOnly
 						value={user.email}
-						description='Managed by your Google account'
+						description={t('account.form.emailDescription')}
 					/>
 				</form.Group>
 
@@ -62,7 +63,7 @@ export const AccountDrawerForm = () => {
 						})}
 						children={({ isDefaultValue }) => (
 							<form.SubmitButton disabled={isDefaultValue}>
-								Save Changes
+								{t('account.form.saveChanges')}
 							</form.SubmitButton>
 						)}
 					/>

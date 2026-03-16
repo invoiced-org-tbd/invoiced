@@ -1,6 +1,6 @@
 import { createCompanyMutationOptions } from '@/api/company/createCompany';
 import { useAppForm } from '@/hooks/use-app-form';
-import { useUser } from '@/hooks/use-user';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
 import {
@@ -11,7 +11,7 @@ import {
 const appRouteApi = getRouteApi('/_auth/app');
 
 export const CreateCompanyForm = () => {
-	const user = useUser();
+	const { t } = useTranslate();
 	const navigate = appRouteApi.useNavigate();
 
 	const { mutateAsync: createCompany } = useMutation(
@@ -26,8 +26,8 @@ export const CreateCompanyForm = () => {
 		},
 		onSubmit: async ({ value }) => {
 			await createCompany({
-				...value,
-				userId: user.id,
+				email: value.email,
+				name: value.name,
 			});
 
 			navigate({
@@ -44,9 +44,9 @@ export const CreateCompanyForm = () => {
 						name='name'
 						children={(field) => (
 							<field.TextInput
-								label='Company Name'
-								placeholder='Acme Inc.'
-								description='Use your business name'
+								label={t('createCompany.form.nameLabel')}
+								placeholder={t('createCompany.form.namePlaceholder')}
+								description={t('createCompany.form.nameDescription')}
 							/>
 						)}
 					/>
@@ -54,14 +54,16 @@ export const CreateCompanyForm = () => {
 						name='email'
 						children={(field) => (
 							<field.TextInput
-								label='Email'
-								placeholder='john@acmeinc.com'
+								label={t('common.email')}
+								placeholder={t('createCompany.form.emailPlaceholder')}
 							/>
 						)}
 					/>
 				</form.Group>
 
-				<form.SubmitButton className='w-full'>Create Company</form.SubmitButton>
+				<form.SubmitButton className='w-full'>
+					{t('createCompany.form.submit')}
+				</form.SubmitButton>
 			</form.Group>
 		</form.Root>
 	);

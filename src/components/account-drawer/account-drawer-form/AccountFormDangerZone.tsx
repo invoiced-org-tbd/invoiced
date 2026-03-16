@@ -1,5 +1,6 @@
 import { Button } from '@/components/button';
 import { ToggleSection } from '@/components/toggle-section';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
 import { useState } from 'react';
@@ -8,12 +9,13 @@ import { toast } from 'sonner';
 const loginRouteApi = getRouteApi('/');
 export const AccountFormDangerZone = () => {
 	const navigate = loginRouteApi.useNavigate();
+	const { t } = useTranslate();
 
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
 	const { mutateAsync: deleteAccount, isPending } = useMutation({
 		mutationFn: async () => {
-			toast.error('Not implemented');
+			toast.error(t('account.dangerZone.notImplemented'));
 		},
 		onSuccess: () => {
 			navigate({ to: '/' });
@@ -23,9 +25,9 @@ export const AccountFormDangerZone = () => {
 	return (
 		<ToggleSection.Root variant='destructive'>
 			<ToggleSection.Header>
-				<ToggleSection.Title>Danger Zone</ToggleSection.Title>
+				<ToggleSection.Title>{t('account.dangerZone.title')}</ToggleSection.Title>
 				<ToggleSection.Description>
-					Delete account permanently
+					{t('account.dangerZone.description')}
 				</ToggleSection.Description>
 			</ToggleSection.Header>
 
@@ -33,19 +35,21 @@ export const AccountFormDangerZone = () => {
 				<div className='flex flex-col gap-4 pt-1'>
 					<div>
 						<p className=''>
-							Before deleting your account, review what happens next:
+							{t('account.dangerZone.intro')}
 						</p>
 
 						<ul className='list-disc space-y-0.5 pl-4'>
-							<li>All your profile data and saved preferences are removed.</li>
-							<li>Connected sessions are signed out immediately.</li>
-							<li>This action cannot be undone after confirmation.</li>
+							<li>{t('account.dangerZone.itemDataRemoved')}</li>
+							<li>{t('account.dangerZone.itemSessionsSignedOut')}</li>
+							<li>{t('account.dangerZone.itemCannotUndo')}</li>
 						</ul>
 					</div>
 
 					{isConfirmationOpen ? (
 						<div className='flex gap-2 items-center'>
-							<p className='text-sm font-medium text-nowrap'>Are you sure?</p>
+							<p className='text-sm font-medium text-nowrap'>
+								{t('account.dangerZone.areYouSure')}
+							</p>
 
 							<Button
 								variant='secondary'
@@ -53,7 +57,7 @@ export const AccountFormDangerZone = () => {
 								disabled={isPending}
 								size='xxs'
 							>
-								Cancel
+								{t('common.cancel')}
 							</Button>
 							<Button
 								variant='destructive'
@@ -61,7 +65,7 @@ export const AccountFormDangerZone = () => {
 								isLoading={isPending}
 								size='xxs'
 							>
-								Delete my account
+								{t('account.dangerZone.deleteMyAccount')}
 							</Button>
 						</div>
 					) : (
@@ -69,7 +73,7 @@ export const AccountFormDangerZone = () => {
 							variant='destructive'
 							onClick={() => setIsConfirmationOpen(true)}
 						>
-							Delete Account
+							{t('account.dangerZone.deleteAccount')}
 						</Button>
 					)}
 				</div>

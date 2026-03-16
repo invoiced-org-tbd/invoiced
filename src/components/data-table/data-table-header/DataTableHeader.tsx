@@ -1,5 +1,6 @@
 import { Button } from '@/components/button';
 import { Table } from '@/components/table';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { flexRender } from '@tanstack/react-table';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -11,6 +12,7 @@ export const DataTableHeader = <TData,>({
 	table,
 }: DataTableHeaderProps<TData>) => {
 	'use no memo'; // React Compiler + TanStack Table compatibility workaround.
+	const { t } = useTranslate();
 
 	return (
 		<Table.Header>
@@ -45,7 +47,7 @@ export const DataTableHeader = <TData,>({
 													isIcon={true}
 													variant='secondary'
 													isGhost={!isSorted}
-													aria-label='Toggle column sorting'
+													aria-label={t('a11y.toggleColumnSorting')}
 													onClick={header.column.getToggleSortingHandler()}
 												>
 													{sortState === 'asc' ? (

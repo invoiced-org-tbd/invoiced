@@ -1,4 +1,4 @@
-export { authenticatedSidebarNavItems } from './consts';
+export { useAuthenticatedSidebarNavItems } from './consts';
 export { AuthenticatedSidebar } from './AuthenticatedSidebar';
 export type {
 	AuthenticatedSidebarNavItem,

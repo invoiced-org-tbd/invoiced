@@ -41,6 +41,7 @@
 		"date-fns": "^4.1.0",
 		"drizzle-orm": "1.0.0-beta.15-859cf75",
 		"framer-motion": "^12.36.0",
+		"js-cookie": "^3.0.5",
 		"lucide-react": "^0.545.0",
 		"nitro": "npm:nitro-nightly@latest",
 		"radix-ui": "^1.4.3",
@@ -57,6 +58,7 @@
 		"zustand": "^5.0.11"
 	},
 	"devDependencies": {
+		"@types/js-cookie": "^3.0.6",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^5.2.0",

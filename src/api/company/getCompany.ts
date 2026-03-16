@@ -5,41 +5,35 @@ import {
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import type z from 'zod';
-import { companyQueryKeys, selectCompany } from './companyApiUtils';
-
-const getCompanyParams = selectCompany.pick({
-	userId: true,
-});
-type GetCompanyParams = z.infer<typeof getCompanyParams>;
+import { companyQueryKeys } from './companyApiUtils';
+import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 
 const getCompanyServerFn = createServerFn({
 	method: 'GET',
-})
-	.inputValidator(getCompanyParams)
-	.handler(async ({ data: { userId } }) => {
-		try {
-			const company = await db.query.companyTable.findFirst({
-				where: {
-					userId,
-				},
-			});
+}).handler(async () => {
+	try {
+		const {
+			data: { user },
+		} = await ensureAuthSessionServerFn();
 
-			return createSuccessResponse({
-				data: company,
-			});
-		} catch (error) {
-			throw createErrorResponse({
-				error,
-			});
-		}
-	});
+		const company = await db.query.companyTable.findFirst({
+			where: {
+				userId: user.id,
+			},
+		});
 
-export const getCompanyQueryOptions = ({ userId }: GetCompanyParams) =>
+		return createSuccessResponse({
+			data: company,
+		});
+	} catch (error) {
+		throw createErrorResponse({
+			error,
+		});
+	}
+});
+
+export const getCompanyQueryOptions = () =>
 	createQueryOptions({
-		queryKey: companyQueryKeys.get({ userId }),
-		queryFn: () =>
-			getCompanyServerFn({
-				data: { userId },
-			}),
+		queryKey: companyQueryKeys.get(),
+		queryFn: () => getCompanyServerFn(),
 	});

@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@/components/button';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { ChevronLeftIcon } from 'lucide-react';
 import { useLogOut } from '@/hooks/use-log-out';
 import { CreateCompanyForm } from './-lib/components/create-company-form';
@@ -10,6 +11,7 @@ export const Route = createFileRoute('/_auth/create-company/')({
 
 function RouteComponent() {
 	const { handleLogOut } = useLogOut();
+	const { t } = useTranslate();
 
 	return (
 		<div className='h-screen w-full overflow-hidden flex items-center justify-center'>
@@ -22,7 +24,7 @@ function RouteComponent() {
 				<section className='hidden w-5/12 bg-muted md:block lg:w-5/8'>
 					<img
 						src='/soft-green-bg.png'
-						alt='Soft green abstract background'
+						alt={t('createCompany.backgroundAlt')}
 						className='h-full w-full object-cover rounded-xl'
 					/>
 				</section>
@@ -38,21 +40,21 @@ function RouteComponent() {
 								onClick={() => handleLogOut()}
 							>
 								<ChevronLeftIcon className='size-4' />
-								<span>Go back</span>
+								<span>{t('common.goBack')}</span>
 							</Button>
 						</div>
 
 						<header className='text-center flex flex-col items-center'>
 							<img
 								src='/logo.png'
-								alt='Company logo'
+								alt={t('createCompany.logoAlt')}
 								className='size-20'
 							/>
 							<h1 className='text-2xl font-semibold text-foreground'>
-								Create new Company
+								{t('createCompany.title')}
 							</h1>
 							<p className='text-sm text-muted-foreground'>
-								Complete your company details to create a new company.
+								{t('createCompany.description')}
 							</p>
 						</header>
 

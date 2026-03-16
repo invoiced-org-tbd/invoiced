@@ -1,12 +1,11 @@
 import { companyTable } from '@/db/tables';
-import type { WithUserId } from '@/utils/typesUtils';
 import { createInsertSchema, createSelectSchema } from 'drizzle-orm/zod';
 import type z from 'zod';
 
 const baseKey = 'companies';
 export const companyQueryKeys = {
 	base: () => [baseKey],
-	get: ({ userId }: WithUserId) => [baseKey, userId],
+	get: () => [baseKey],
 };
 
 export const selectCompany = createSelectSchema(companyTable);

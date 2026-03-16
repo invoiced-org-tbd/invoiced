@@ -10,15 +10,11 @@ import {
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import z from 'zod';
-import { companyQueryKeys, insertCompany } from './companyApiUtils';
+import type z from 'zod';
+import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
+import { companyQueryKeys } from './companyApiUtils';
 
-const createCompanyParams = z.object({
-	...createCompanyFormSchema.shape,
-	...insertCompany.pick({
-		userId: true,
-	}).shape,
-});
+const createCompanyParams = createCompanyFormSchema.clone();
 
 type CreateCompanyParams = z.infer<typeof createCompanyParams>;
 
@@ -28,12 +24,16 @@ const createCompanyServerFn = createServerFn({
 	.inputValidator(createCompanyParams)
 	.handler(async ({ data }) => {
 		try {
+			const {
+				data: { user },
+			} = await ensureAuthSessionServerFn();
+
 			const company = await db
 				.insert(companyTable)
 				.values({
 					email: data.email,
 					name: data.name,
-					userId: data.userId,
+					userId: user.id,
 				})
 				.returning();
 

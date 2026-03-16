@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { Combobox as ComboboxPrimitive } from '@base-ui/react';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
@@ -42,15 +43,17 @@ const Input = ({
 	className,
 	disabled = false,
 	buttons = [],
-	placeholder = 'Select an option...',
+	placeholder,
 	style: inputStyle,
 	...props
 }: SelectInputProps) => {
+	const { t } = useTranslate();
+	const resolvedPlaceholder = placeholder ?? t('select.placeholder');
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
 	const defaultTriggerButton: InputButton = {
 		side: 'right',
 		icon: SelectChevronIcon,
-		label: 'Toggle options',
+		label: t('common.toggleOptions'),
 		onClick: () => {
 			triggerRef.current?.click();
 		},
@@ -78,7 +81,7 @@ const Input = ({
 					className,
 				)}
 				style={{ ...paddingStyle, ...inputStyle }}
-				placeholder={placeholder}
+				placeholder={resolvedPlaceholder}
 				{...props}
 			/>
 			<ComboboxPrimitive.Trigger

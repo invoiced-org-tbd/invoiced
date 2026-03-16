@@ -1,6 +1,7 @@
 import {
 	BadgeCheckIcon,
 	ChevronsUpDownIcon,
+	LanguagesIcon,
 	LogOutIcon,
 	MoonIcon,
 	SunIcon,
@@ -8,18 +9,23 @@ import {
 import { DropdownMenu } from '@/components/dropdown-menu';
 import { Sidebar } from '@/components/sidebar';
 import { useAccountDrawer } from '@/hooks/use-account-drawer';
+import { useLanguage } from '@/hooks/use-language/useLanguage';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useTheme } from '@/hooks/use-theme';
 import { useLogOut } from '@/hooks/use-log-out';
 import { useUser } from '@/hooks/use-user';
 
 export const SidebarUserMenu = () => {
 	const user = useUser();
+	const { t } = useTranslate();
 
 	const { handleLogOut } = useLogOut();
 
 	const setIsAccountDrawerOpen = useAccountDrawer((state) => state.setIsOpen);
 	const toggleTheme = useTheme((state) => state.toggleTheme);
 	const theme = useTheme((state) => state.theme);
+	const language = useLanguage((state) => state.language);
+	const setLanguage = useLanguage((state) => state.setLanguage);
 
 	const displayName = user.name ?? user.email;
 	const initials = displayName
@@ -97,18 +103,24 @@ export const SidebarUserMenu = () => {
 
 				<DropdownMenu.Item onSelect={() => setIsAccountDrawerOpen(true)}>
 					<BadgeCheckIcon />
-					Account
+					{t('common.account')}
 				</DropdownMenu.Item>
 				<DropdownMenu.Item onSelect={() => toggleTheme()}>
 					{theme === 'light' ? <SunIcon /> : <MoonIcon />}
-					{theme === 'light' ? 'Light mode' : 'Dark mode'}
+					{theme === 'light' ? t('common.lightMode') : t('common.darkMode')}
+				</DropdownMenu.Item>
+				<DropdownMenu.Item
+					onSelect={() => setLanguage(language === 'en' ? 'br' : 'en')}
+				>
+					<LanguagesIcon />
+					{language === 'en' ? t('common.english') : t('common.portuguese')}
 				</DropdownMenu.Item>
 
 				<DropdownMenu.Separator />
 
 				<DropdownMenu.Item onSelect={() => handleLogOut()}>
 					<LogOutIcon />
-					Log out
+					{t('common.logOut')}
 				</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>

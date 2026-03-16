@@ -1,6 +1,7 @@
 import { Button } from '@/components/button';
 import { fieldInputVariants } from '@/components/base-field';
 import { Popover } from '@/components/popover';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { FilterIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DataTableFilterProps } from './types';
@@ -9,6 +10,7 @@ export const DataTableFilter = <TData,>({
 	column,
 }: DataTableFilterProps<TData>) => {
 	'use no memo'; // React Compiler + TanStack Table compatibility workaround.
+	const { t } = useTranslate();
 
 	const columnFilterValue = column.getFilterValue();
 	const isFiltered = column.getIsFiltered();
@@ -26,8 +28,8 @@ export const DataTableFilter = <TData,>({
 					variant={isFiltered ? 'primary' : 'secondary'}
 					isGhost={true}
 					className={cn('shrink-0')}
-					aria-label='Open column filter'
-					title='Open column filter'
+					aria-label={t('a11y.openColumnFilter')}
+					title={t('a11y.openColumnFilter')}
 				>
 					<FilterIcon
 						className={cn(
@@ -39,7 +41,7 @@ export const DataTableFilter = <TData,>({
 			</Popover.Trigger>
 
 			<Popover.Content className='w-56'>
-				<Popover.Title>Filter</Popover.Title>
+				<Popover.Title>{t('dataTable.filter.title')}</Popover.Title>
 				<input
 					type='text'
 					data-slot='data-table-filter-input'
@@ -47,7 +49,7 @@ export const DataTableFilter = <TData,>({
 					onChange={(event) => {
 						column.setFilterValue(event.target.value);
 					}}
-					placeholder='Type to filter...'
+					placeholder={t('dataTable.filter.inputPlaceholder')}
 					className={cn(
 						fieldInputVariants({
 							height: 'fixed',
@@ -65,7 +67,7 @@ export const DataTableFilter = <TData,>({
 							column.setFilterValue('');
 						}}
 					>
-						Clear filter
+						{t('dataTable.filter.clearButton')}
 					</Button>
 				</div>
 			</Popover.Content>
