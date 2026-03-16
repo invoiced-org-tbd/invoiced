@@ -4,6 +4,7 @@ import { useSyncZodErrorMap } from '@/hooks/use-language/useSyncZodErrorMap';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import {
 	HeadContent,
 	Scripts,
@@ -64,6 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						tanstackQueryDevtoolsConfig,
 					]}
 				/>
+				<Analytics />
 				<Scripts />
 			</body>
 		</html>
