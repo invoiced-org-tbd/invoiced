@@ -3,20 +3,15 @@ import { cva } from 'class-variance-authority';
 // Reuse these variants for future DateInput/NumberInput components by choosing
 // the appropriate height, padding, and focus mode without coupling to markup.
 export const fieldInputVariants = cva(
-	'dark:bg-input/30 border-input aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 disabled:bg-input/50 dark:disabled:bg-input/80 rounded-lg border bg-transparent px-2.5 py-1 text-base md:text-sm transition-colors outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full min-w-0 shadow-xs',
+	'dark:bg-input/30 border-input aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 disabled:bg-input/50 dark:disabled:bg-input/80 rounded-lg border bg-transparent h-8 px-2.5 py-1 text-base md:text-sm transition-colors outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full min-w-0 shadow-xs',
 	{
 		variants: {
-			height: {
-				fixed: 'h-8',
-				min: 'min-h-8',
-			},
 			focusMode: {
 				focusVisible: 'focus-visible:border-primary',
 				focus: 'focus:border-primary',
 			},
 		},
 		defaultVariants: {
-			height: 'fixed',
 			focusMode: 'focusVisible',
 		},
 	},
