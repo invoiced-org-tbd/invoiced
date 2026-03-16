@@ -1,7 +1,4 @@
-import type {
-	DefaultError,
-	SkipToken,
-} from '@tanstack/query-core';
+import type { DefaultError, SkipToken } from '@tanstack/query-core';
 import { mutationOptions, queryOptions } from '@tanstack/react-query';
 import type {
 	MutationOptions,

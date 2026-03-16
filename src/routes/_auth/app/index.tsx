@@ -21,5 +21,5 @@ function RouteComponent() {
 				</div>
 			</Page.Content>
 		</Page.Root>
-	)
+	);
 }
