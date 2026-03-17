@@ -1,4 +1,5 @@
 import { getEditContractByIdQueryOptions } from '@/api/contract/getEditContractById';
+import { clientT } from '@/utils/languageUtils';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
 
@@ -18,10 +19,61 @@ const contractAutoSendConfigurationItemFormSchema = z.object({
 	percentage: z.number().min(1).max(100),
 });
 
-const contractAutoSendConfigurationFormSchema = z.object({
-	enabled: z.boolean(),
-	items: z.array(contractAutoSendConfigurationItemFormSchema),
-});
+const contractAutoSendConfigurationFormSchema = z
+	.object({
+		enabled: z.boolean(),
+		items: z.array(contractAutoSendConfigurationItemFormSchema),
+	})
+	.superRefine((data, ctx) => {
+		if (data.enabled) {
+			if (data.items.length === 0) {
+				ctx.addIssue({
+					code: 'too_small',
+					minimum: 1,
+					origin: 'array',
+					path: ['items'],
+					message: clientT(
+						'contracts.form.autoSendConfiguration.atLeastOneItemRequired',
+					),
+				});
+			}
+
+			const totalPercentage = data.items.reduce(
+				(acc, item) => acc + item.percentage,
+				0,
+			);
+			if (totalPercentage !== 100) {
+				ctx.addIssue({
+					code: 'too_big',
+					maximum: 100,
+					origin: 'number',
+					path: ['items', 'percentage'],
+					message: clientT(
+						'contracts.form.autoSendConfiguration.percentageMustBe100',
+					),
+				});
+			}
+
+			const conflictingDays = data.items.filter((item, index) =>
+				data.items.some(
+					(otherItem, otherIndex) =>
+						otherIndex !== index && item.dayOfMonth === otherItem.dayOfMonth,
+				),
+			);
+			if (conflictingDays.length > 0) {
+				ctx.addIssue({
+					code: 'custom',
+					path: ['items'],
+					message: clientT(
+						'contracts.form.autoSendConfiguration.conflictingDaysLabel',
+						{
+							days: conflictingDays.map((item) => item.dayOfMonth).join(', '),
+						},
+					),
+				});
+			}
+		}
+	});
 
 const contractGeneralFormSchema = z.object({
 	description: z.string().min(1),

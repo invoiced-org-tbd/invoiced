@@ -44,7 +44,7 @@ export const ContractsUpsertDrawer = () => {
 				<Drawer.Body>
 					<ContractsUpsertForm
 						editId={editId}
-						onSuccess={handleClose}
+						onClose={handleClose}
 					/>
 				</Drawer.Body>
 			</Drawer.Content>

@@ -8,16 +8,16 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
 import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
-import { getServerT } from '@/translations/server';
+import { getServerT } from '@/utils/languageUtils';
 
 const deleteUserAccountServerFn = createServerFn({
 	method: 'POST',
 }).handler(async () => {
 	try {
 		const {
-			data: { locale },
+			data: { language },
 		} = await ensureAuthSessionServerFn();
-		const t = getServerT(locale);
+		const t = getServerT(language);
 
 		const headers = getRequestHeaders();
 

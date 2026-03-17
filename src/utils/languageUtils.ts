@@ -1,10 +1,13 @@
 import type { Language } from '@/hooks/use-language/types';
-import { translate } from './translate';
+import { useLanguage } from '@/hooks/use-language/useLanguage';
+import { translate } from '@/translations/translate';
 import type {
 	TranslationFunction,
 	TranslationKey,
 	TranslationRuntimeParams,
-} from './types';
+} from '@/translations/types';
+import { createIsomorphicFn } from '@tanstack/react-start';
+import { getCookie } from '@tanstack/react-start/server';
 
 export const LANGUAGE_COOKIE_NAME = 'app_locale';
 
@@ -32,3 +35,16 @@ export const getServerT = (language: Language): TranslationFunction => {
 	return ((...args: [TranslationKey, TranslationRuntimeParams?]) =>
 		runTranslate(language, args[0], args[1])) as TranslationFunction;
 };
+
+export const clientT = (...args: [TranslationKey, TranslationRuntimeParams?]) =>
+	translate(getLanguage(), ...(args as [never]));
+
+export const getLanguage = createIsomorphicFn()
+	.client(() => {
+		const language = useLanguage.getState().language;
+		return language;
+	})
+	.server(() => {
+		const language = resolveLanguage(getCookie(LANGUAGE_COOKIE_NAME));
+		return language;
+	});

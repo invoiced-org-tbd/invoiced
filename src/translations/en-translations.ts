@@ -24,6 +24,7 @@ export const enTranslations = {
 		addItem: 'Add item',
 		removeItem: 'Remove item',
 		unknownError: 'An unknown error occurred',
+		day: 'Day',
 	},
 	entity: {
 		notFound: '{entity} not found',
@@ -146,8 +147,22 @@ export const enTranslations = {
 				title: 'Auto Send Configuration',
 				dayOfMonthLabel: 'Day of Month',
 				percentageLabel: 'Percentage',
-				enabledLabel: 'Enabled',
+				dayOfMonthPrefix: 'Every ',
+				conflictingDaysLabel: 'Conflicting days: {days}',
+				totalLabel: 'Total: {total}% (must equal 100%)',
+				configureLabel: 'Configure auto send configuration',
+				rulesTitle: 'Auto-Send Rules',
+				rulesDescription: 'Define schedule and percentage split',
+				atLeastOneItemRequired:
+					'Auto send configuration, if enabled, must have at least one item',
+				percentageMustBe100: 'The total percentage must be equal to 100%',
 			},
+		},
+		tabs: {
+			general: 'General',
+			role: 'Role',
+			client: 'Client',
+			autoSendConfiguration: 'Auto send configuration',
 		},
 	},
 } as const;

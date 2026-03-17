@@ -1,7 +1,7 @@
 import { accountFormSchema } from '@/components/account-drawer/account-drawer-form/accountFormSchemas';
 import { db } from '@/db/client';
 import { userTable } from '@/db/tables';
-import { getServerT } from '@/translations/server';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -28,9 +28,9 @@ const updateUserAccountServerFn = createServerFn({
 	.handler(async ({ data }) => {
 		try {
 			const {
-				data: { user: sessionUser, locale },
+				data: { user: sessionUser, language },
 			} = await ensureAuthSessionServerFn();
-			const t = getServerT(locale);
+			const t = getServerT(language);
 
 			const [user] = await db
 				.update(userTable)

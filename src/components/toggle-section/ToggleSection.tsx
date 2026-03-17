@@ -144,7 +144,7 @@ const Content = ({ className, ...props }: ToggleSectionContentProps) => {
 		>
 			<div
 				data-slot='toggle-section-content'
-				className={cn('text-sm', className)}
+				className={cn('text-sm pt-2', className)}
 				{...props}
 			/>
 		</motion.div>
@@ -155,7 +155,10 @@ const Footer = ({ className, ...props }: ToggleSectionFooterProps) => {
 	return (
 		<div
 			data-slot='toggle-section-footer'
-			className={cn('mt-3 border-t border-current/10 pt-3 text-sm', className)}
+			className={cn(
+				'mt-3 border-t border-current/10 pt-3 text-sm text-muted-foreground',
+				className,
+			)}
 			{...props}
 		/>
 	);

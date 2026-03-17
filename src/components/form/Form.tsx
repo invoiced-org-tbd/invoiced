@@ -12,6 +12,7 @@ import type {
 	FormSeparatorProps,
 	FormSetProps,
 	FormSubmitButtonProps,
+	FormSubSetProps,
 } from './types';
 import type { FormRootContextValue } from './utils';
 import { FormRootContext } from './utils';
@@ -54,7 +55,7 @@ const FormSet = ({ className, ...props }: FormSetProps) => {
 		<fieldset
 			data-slot='field-set'
 			className={cn(
-				'gap-4 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3 flex flex-col',
+				'p-2 gap-4 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3 flex flex-col',
 				className,
 			)}
 			{...props}
@@ -68,6 +69,19 @@ const Group = ({ className, ...props }: FormGroupProps) => {
 			data-slot='field-group'
 			className={cn(
 				'gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4 group/field-group @container/field-group flex w-full flex-col',
+				className,
+			)}
+			{...props}
+		/>
+	);
+};
+
+const SubSet = ({ className, ...props }: FormSubSetProps) => {
+	return (
+		<section
+			data-slot='field-sub-set'
+			className={cn(
+				'p-2 gap-4 flex flex-col border rounded-lg border-border',
 				className,
 			)}
 			{...props}
@@ -163,6 +177,7 @@ export const Form = {
 	Root: FormRoot,
 	Set: FormSet,
 	Group,
+	SubSet,
 	Separator: FormSeparator,
 	SubmitButton: FormSubmitButton,
 	CancelButton: FormCancelButton,

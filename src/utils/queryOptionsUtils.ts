@@ -8,8 +8,8 @@ import type {
 } from '@tanstack/react-query';
 import type { SuccessResponse } from './serverFnsUtils';
 import { toast } from 'sonner';
-import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { translate } from '@/translations/translate';
+import { getLanguage } from './languageUtils';
 
 type InvalidateOnSuccessParams = {
 	args: Parameters<
@@ -40,7 +40,7 @@ const handleError = (error: unknown) => {
 	}
 
 	if (!message) {
-		const language = useLanguage.getState().language;
+		const language = getLanguage();
 		message = translate(language, 'common.unknownError');
 	}
 

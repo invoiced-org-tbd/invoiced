@@ -20,7 +20,7 @@ import { and, eq } from 'drizzle-orm';
 import z from 'zod';
 import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { contractQueryKeys } from './contractApiUtils';
-import { getServerT } from '@/translations/server';
+import { getServerT } from '@/utils/languageUtils';
 
 const updateContractParams = z.object({
 	editId: z.string(),
@@ -36,9 +36,9 @@ const updateContractServerFn = createServerFn({
 	.handler(async ({ data: { data, editId } }) => {
 		try {
 			const {
-				data: { user, locale },
+				data: { user, language },
 			} = await ensureAuthSessionServerFn();
-			const t = getServerT(locale);
+			const t = getServerT(language);
 
 			const contract = await db.transaction(async (tx) => {
 				const [contract] = await tx

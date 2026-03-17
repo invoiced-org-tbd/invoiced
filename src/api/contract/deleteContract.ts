@@ -1,6 +1,6 @@
 import { db } from '@/db/client';
 import { contractTable } from '@/db/tables';
-import { getServerT } from '@/translations/server';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -30,9 +30,9 @@ const deleteContractServerFn = createServerFn({
 	.handler(async ({ data }) => {
 		try {
 			const {
-				data: { user, locale },
+				data: { user, language },
 			} = await ensureAuthSessionServerFn();
-			const t = getServerT(locale);
+			const t = getServerT(language);
 
 			const [contract] = await db
 				.delete(contractTable)

@@ -26,6 +26,7 @@ export const brTranslations = {
 		addItem: 'Adicionar item',
 		removeItem: 'Remover item',
 		unknownError: 'Ocorreu um erro desconhecido',
+		day: 'Dia',
 	},
 	entity: {
 		notFound: '{entity} nao encontrado',
@@ -151,8 +152,22 @@ export const brTranslations = {
 				title: 'Configuracao de envio automatico',
 				dayOfMonthLabel: 'Dia do mes',
 				percentageLabel: 'Percentual',
-				enabledLabel: 'Habilitado',
+				dayOfMonthPrefix: 'Todo ',
+				conflictingDaysLabel: 'Dias conflitantes: {days}',
+				totalLabel: 'Total: {total}% (deve ser igual a 100%)',
+				configureLabel: 'Configurar configuracao de envio automatico',
+				rulesTitle: 'Regras de envio automatico',
+				rulesDescription: 'Defina o cronograma e o percentual de divisao',
+				atLeastOneItemRequired:
+					'Configuração de envio automático, se ativada, deve ter pelo menos um item',
+				percentageMustBe100: 'O percentual total deve ser igual a 100%',
 			},
+		},
+		tabs: {
+			general: 'Geral',
+			role: 'Cargo',
+			client: 'Cliente',
+			autoSendConfiguration: 'Envio automatico',
 		},
 	},
 } as const satisfies TranslationsShape;

@@ -17,6 +17,8 @@ export type FormRootProps = {
 
 export type FormSetProps = ComponentProps<'fieldset'>;
 
+export type FormSubSetProps = ComponentProps<'section'>;
+
 export type FormGroupProps = ComponentProps<'div'>;
 
 export type FormSeparatorProps = ComponentProps<'div'> & {

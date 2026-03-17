@@ -1,6 +1,6 @@
 import { db } from '@/db/client';
 import type { ContractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
-import { getServerT } from '@/translations/server';
+import { getServerT } from '@/utils/languageUtils';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
 import type {
 	ExtractServerFnData,
@@ -33,9 +33,9 @@ const getEditContractByIdServerFn = createServerFn({
 		}): Promise<SuccessResponse<ContractsUpsertFormSchema | null>> => {
 			try {
 				const {
-					data: { user, locale },
+					data: { user, language },
 				} = await ensureAuthSessionServerFn();
-				const t = getServerT(locale);
+				const t = getServerT(language);
 
 				const contract = await db.query.contractTable.findFirst({
 					where: {

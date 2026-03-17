@@ -1,15 +1,14 @@
 import { cva } from 'class-variance-authority';
 
 export const toggleSectionVariants = cva(
-	'rounded-lg border p-4 transition-colors',
+	'rounded-lg border px-3 py-4 transition-colors',
 	{
 		variants: {
 			variant: {
 				primary: 'bg-primary/5 border-primary/15 text-foreground',
-				secondary:
-					'bg-secondary/12 border-secondary/20 text-secondary-foreground',
+				secondary: 'bg-secondary/30 border-secondary text-secondary-foreground',
 				destructive: 'bg-destructive/7 border-destructive/20 text-foreground',
-				info: 'bg-info/8 border-info/20 text-foreground',
+				info: 'bg-blue-500/8 border-blue-500/20 text-foreground',
 			},
 		},
 		defaultVariants: {
@@ -24,9 +23,9 @@ export const toggleSectionHeaderVariants = cva(
 		variants: {
 			variant: {
 				primary: 'text-primary',
-				secondary: 'text-secondary',
+				secondary: 'text-secondary-foreground',
 				destructive: 'text-destructive',
-				info: 'text-info',
+				info: 'text-blue-500 dark:text-blue-400',
 			},
 		},
 		defaultVariants: {

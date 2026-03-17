@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Language, UseLanguage } from './types';
 import { persist } from 'zustand/middleware';
-import { LANGUAGE_COOKIE_NAME } from '@/translations/server';
+import { LANGUAGE_COOKIE_NAME } from '@/utils/languageUtils';
 import Cookies from 'js-cookie';
 
 const LANGUAGE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
