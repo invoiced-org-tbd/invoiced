@@ -23,8 +23,12 @@ const contractAutoSendConfigurationFormSchema = z.object({
 	items: z.array(contractAutoSendConfigurationItemFormSchema),
 });
 
-export const contractsUpsertFormSchema = z.object({
+const contractGeneralFormSchema = z.object({
 	description: z.string().min(1),
+});
+
+export const contractsUpsertFormSchema = z.object({
+	general: contractGeneralFormSchema,
 	role: contractRoleFormSchema,
 	client: contractClientFormSchema,
 	autoSendConfiguration: contractAutoSendConfigurationFormSchema,
@@ -50,7 +54,9 @@ export const useContractsUpsertFormDefaultValues = ({
 
 	return {
 		defaultValues: {
-			description: '',
+			general: {
+				description: '',
+			},
 			role: {
 				description: '',
 				rate: undefined as unknown as number,

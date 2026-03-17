@@ -8,10 +8,19 @@ import z from 'zod';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer';
 import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog';
 
+const contractTabsSchema = z.enum([
+	'general',
+	'role',
+	'client',
+	'autoSendConfiguration',
+]);
+
+export type ContractTabs = z.infer<typeof contractTabsSchema>;
 const contractsSearchSchema = z.object({
 	isCreating: z.boolean().optional(),
 	editId: z.string().optional(),
 	deleteId: z.string().optional(),
+	tab: contractTabsSchema.optional(),
 });
 
 export const Route = createFileRoute('/_auth/app/contracts/')({
