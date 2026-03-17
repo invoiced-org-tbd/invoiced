@@ -4,7 +4,7 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
 import { CreateCompanyAddressFields } from './CreateCompanyAddressFields';
-import { CreateCompanyMainFields } from './CreateCompanyMainFields';
+import { CreateCompanyGeneralFields } from './CreateCompanyGeneralFields';
 import {
 	createCompanyFormSchema,
 	useCreateCompanyDefaultValues,
@@ -38,7 +38,7 @@ export const CreateCompanyForm = () => {
 	return (
 		<form.Root form={form}>
 			<form.Group>
-				<CreateCompanyMainFields
+				<CreateCompanyGeneralFields
 					form={form}
 					fields='general'
 				/>

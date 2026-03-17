@@ -18,10 +18,7 @@ export const createCompanyFormSchema = z.object({
 
 export type CreateCompanyFormSchema = z.infer<typeof createCompanyFormSchema>;
 
-export type CreateCompanyFormBaseType = {
-	general: CreateCompanyFormSchema['general'];
-	address: CreateCompanyFormSchema['address'];
-};
+export type CreateCompanyFormBaseType = CreateCompanyFormSchema;
 
 export const useCreateCompanyDefaultValues = (): CreateCompanyFormSchema => {
 	return {

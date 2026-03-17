@@ -1,19 +1,9 @@
 import { withFieldGroup } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import type { CreateCompanyFormSchema } from './createCompanyFormSchema';
+import type { CreateCompanyFormBaseType } from './createCompanyFormSchema';
 
-type CreateCompanyMainFormSchema = Pick<
-	CreateCompanyFormSchema,
-	'name' | 'email'
->;
-
-const createCompanyMainFormDefaults: CreateCompanyMainFormSchema = {
-	name: '',
-	email: '',
-};
-
-export const CreateCompanyMainFields = withFieldGroup({
-	defaultValues: createCompanyMainFormDefaults,
+export const CreateCompanyGeneralFields = withFieldGroup({
+	defaultValues: {} as CreateCompanyFormBaseType['general'],
 	render: ({ group }) => {
 		const { t } = useTranslate();
 
