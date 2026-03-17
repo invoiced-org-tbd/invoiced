@@ -3,6 +3,8 @@ import { useAppForm } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
+import { CreateCompanyAddressFields } from './CreateCompanyAddressFields';
+import { CreateCompanyMainFields } from './CreateCompanyMainFields';
 import {
 	createCompanyFormSchema,
 	useCreateCompanyDefaultValues,
@@ -36,27 +38,25 @@ export const CreateCompanyForm = () => {
 	return (
 		<form.Root form={form}>
 			<form.Group>
-				<form.Group>
-					<form.AppField
-						name='name'
-						children={(field) => (
-							<field.TextInput
-								label={t('createCompany.form.nameLabel')}
-								placeholder={t('createCompany.form.namePlaceholder')}
-								description={t('createCompany.form.nameDescription')}
-							/>
-						)}
-					/>
-					<form.AppField
-						name='email'
-						children={(field) => (
-							<field.TextInput
-								label={t('common.email')}
-								placeholder={t('createCompany.form.emailPlaceholder')}
-							/>
-						)}
-					/>
-				</form.Group>
+				<CreateCompanyMainFields
+					form={form}
+					fields={{
+						name: 'name',
+						email: 'email',
+					}}
+				/>
+				<CreateCompanyAddressFields
+					form={form}
+					fields={{
+						street1: 'street1',
+						street2: 'street2',
+						number: 'number',
+						postalCode: 'postalCode',
+						city: 'city',
+						state: 'state',
+						country: 'country',
+					}}
+				/>
 
 				<form.SubmitButton className='w-full'>
 					{t('createCompany.form.submit')}

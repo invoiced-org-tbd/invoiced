@@ -1,5 +1,5 @@
 import { db } from '@/db/client';
-import { companyTable } from '@/db/tables';
+import { addressTable, companyTable } from '@/db/tables';
 import { createCompanyFormSchema } from '@/routes/_auth/create-company/-lib/components/create-company-form/createCompanyFormSchema';
 import {
 	createMutationOptions,
@@ -29,14 +29,35 @@ const createCompanyServerFn = createServerFn({
 				data: { user },
 			} = await ensureAuthSessionServerFn();
 
-			const company = await db
-				.insert(companyTable)
-				.values({
-					email: data.email,
-					name: data.name,
-					userId: user.id,
-				})
-				.returning();
+			const company = await db.transaction(async (tx) => {
+				const [createdCompany] = await tx
+					.insert(companyTable)
+					.values({
+						email: data.email,
+						name: data.name,
+						userId: user.id,
+					})
+					.returning();
+
+				const companyId = createdCompany.id;
+				if (!companyId) {
+					throw new Error('Failed to create company');
+				}
+
+				await tx.insert(addressTable).values({
+					addressableType: 'company',
+					addressableId: companyId,
+					street1: data.street1,
+					street2: data.street2 || null,
+					number: data.number,
+					postalCode: data.postalCode,
+					city: data.city,
+					state: data.state,
+					country: data.country,
+				});
+
+				return createdCompany;
+			});
 
 			return createSuccessResponse({
 				data: company,
