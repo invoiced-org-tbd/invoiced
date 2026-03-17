@@ -14,6 +14,7 @@ import { updateContractMutationOptions } from '@/api/contract/updateContract';
 import { createFormTabs } from '@/components/form-tabs';
 import type { ContractTabs } from '../..';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { ContractSummary } from './ContractSummary';
 
 export type ContractsUpsertFormProps = {
 	editId?: string;
@@ -105,6 +106,13 @@ export const ContractsUpsertForm = ({
 					/>
 				</FormTabs.Content>
 			</FormTabs.Root>
+
+			<form.Subscribe
+				selector={(state) => state.values}
+				children={(data) => {
+					return <ContractSummary data={data} />;
+				}}
+			/>
 
 			<Drawer.Footer className='justify-end'>
 				<form.CancelButton onClick={onClose} />

@@ -185,5 +185,23 @@ export const brTranslations = {
 			client: 'Cliente',
 			autoSendConfiguration: 'Envio automatico',
 		},
+		summary: {
+			title: 'Resumo do contrato',
+			description:
+				'Revise os detalhes do contrato abaixo antes de enviar suas alteracoes.',
+			badge: 'Revisao',
+			activeContractLabel: 'Contrato ativo',
+			activeContractValue:
+				'Voce tem um contrato ativo com {companyName} como {roleDescription}.',
+			contractDescriptionLabel: 'Descricao',
+			salaryLabel: 'Salario',
+			billingLabel: 'Contato de faturamento',
+			billingValue: 'As faturas serao enviadas para {name} ({email}).',
+			autoSend: {
+				title: 'Agenda de envio automatico',
+				value: 'As faturas serao enviadas todos os meses {schedule}.',
+				item: 'dia {dayOfMonth} ({percentage}%)',
+			},
+		},
 	},
 } as const satisfies TranslationsShape;

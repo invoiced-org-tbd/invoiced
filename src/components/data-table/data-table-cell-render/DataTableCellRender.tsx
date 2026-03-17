@@ -11,6 +11,7 @@ import { Switch } from '@/components/switch';
 import { toDate } from '@/utils/dateUtils';
 import { inferDataTableColumnFormat } from './utils';
 import { Tooltip } from '@/components/tooltip';
+import { formatCurrency } from '@/utils/currencyUtils';
 
 const assertNever = (value: never): never => value;
 
@@ -88,14 +89,7 @@ const NumberCell = ({ data, format }: CellProps<'number'>) => {
 			return <span>{value.toFixed(2).toString()}</span>;
 		}
 		case 'currency': {
-			const formatter = new Intl.NumberFormat('en-US', {
-				style: 'currency',
-				currency: 'USD',
-				minimumFractionDigits: 2,
-				maximumFractionDigits: 2,
-			});
-
-			return <span>{formatter.format(value)}</span>;
+			return <span>{formatCurrency({ value })}</span>;
 		}
 		case 'percent': {
 			const formatter = new Intl.NumberFormat('en-US', {

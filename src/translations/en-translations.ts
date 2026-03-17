@@ -180,5 +180,23 @@ export const enTranslations = {
 			client: 'Client',
 			autoSendConfiguration: 'Auto send configuration',
 		},
+		summary: {
+			title: 'Contract summary',
+			description:
+				'Review the contract details below before submitting your changes.',
+			badge: 'Review',
+			activeContractLabel: 'Active contract',
+			activeContractValue:
+				'You have an active contract with {companyName} as {roleDescription}.',
+			contractDescriptionLabel: 'Description',
+			salaryLabel: 'Salary',
+			billingLabel: 'Billing contact',
+			billingValue: 'Invoices will be sent to {name} ({email}).',
+			autoSend: {
+				title: 'Auto-send schedule',
+				value: 'Invoices will be sent every month on {schedule}.',
+				item: '{dayOfMonth} day ({percentage}%)',
+			},
+		},
 	},
 } as const;
