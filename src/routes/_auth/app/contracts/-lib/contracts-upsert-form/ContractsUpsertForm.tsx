@@ -9,6 +9,8 @@ import {
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
 import { updateContractMutationOptions } from '@/api/contract/updateContract';
+import { createFormTabs } from '@/components/form-tabs';
+import type { ContractTabs } from '../..';
 
 export type ContractsUpsertFormProps = {
 	editId?: string;
@@ -48,22 +50,33 @@ export const ContractsUpsertForm = ({
 		},
 	});
 
+	const FormTabs = createFormTabs<ContractTabs>();
+
 	return (
 		<form.Root
 			form={form}
 			isLoading={isLoadingEditContract}
 		>
-			<form.Group>
-				<form.Group>
+			<FormTabs.Root searchParamKey='tab'>
+				<FormTabs.List>
+					<FormTabs.Trigger value='general'>General</FormTabs.Trigger>
+					<FormTabs.Trigger value='role'>Role</FormTabs.Trigger>
+					<FormTabs.Trigger value='client'>Client</FormTabs.Trigger>
+					<FormTabs.Trigger value='autoSendConfiguration'>
+						Auto Send Configuration
+					</FormTabs.Trigger>
+				</FormTabs.List>
+
+				<FormTabs.Content value='general'>
 					<form.AppField
-						name='description'
+						name='general.description'
 						children={(field) => (
 							<field.TextInput label={t('contracts.form.descriptionLabel')} />
 						)}
 					/>
-				</form.Group>
+				</FormTabs.Content>
 
-				<form.Group>
+				<FormTabs.Content value='role'>
 					<form.AppField
 						name='role.description'
 						children={(field) => (
@@ -81,9 +94,9 @@ export const ContractsUpsertForm = ({
 							/>
 						)}
 					/>
-				</form.Group>
+				</FormTabs.Content>
 
-				<form.Group>
+				<FormTabs.Content value='client'>
 					<form.AppField
 						name='client.companyName'
 						children={(field) => (
@@ -108,13 +121,15 @@ export const ContractsUpsertForm = ({
 							/>
 						)}
 					/>
-				</form.Group>
+				</FormTabs.Content>
 
-				<ContractAutoSendConfigurationForm
-					form={form}
-					fields='autoSendConfiguration'
-				/>
-			</form.Group>
+				<FormTabs.Content value='autoSendConfiguration'>
+					<ContractAutoSendConfigurationForm
+						form={form}
+						fields='autoSendConfiguration'
+					/>
+				</FormTabs.Content>
+			</FormTabs.Root>
 
 			<Drawer.Footer>
 				<form.SubmitButton />

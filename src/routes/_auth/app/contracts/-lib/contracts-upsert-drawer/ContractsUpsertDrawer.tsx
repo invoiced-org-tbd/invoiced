@@ -18,6 +18,7 @@ export const ContractsUpsertDrawer = () => {
 				...prev,
 				isCreating: undefined,
 				editId: undefined,
+				tab: undefined,
 			}),
 		});
 	};

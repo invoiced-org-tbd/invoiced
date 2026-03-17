@@ -62,8 +62,15 @@ const getEditContractByIdServerFn = createServerFn({
 					});
 				}
 
+				const parsedData = {
+					general: {
+						description: contract.description,
+					},
+					...contract,
+				};
+
 				return createSuccessResponse({
-					data: contract,
+					data: parsedData,
 				});
 			} catch (error) {
 				throw createErrorResponse({

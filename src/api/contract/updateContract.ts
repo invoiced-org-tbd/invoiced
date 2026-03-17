@@ -44,7 +44,7 @@ const updateContractServerFn = createServerFn({
 				const [contract] = await tx
 					.update(contractTable)
 					.set({
-						description: data.description,
+						description: data.general.description,
 					})
 					.where(
 						and(

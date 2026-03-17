@@ -40,7 +40,7 @@ const createContractServerFn = createServerFn({
 					.insert(contractTable)
 					.values({
 						userId: user.id,
-						description: data.description,
+						description: data.general.description,
 					})
 					.returning();
 
