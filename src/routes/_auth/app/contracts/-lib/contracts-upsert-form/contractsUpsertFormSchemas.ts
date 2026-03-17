@@ -24,6 +24,16 @@ const contractAutoSendConfigurationFormSchema = z
 		enabled: z.boolean(),
 		items: z.array(contractAutoSendConfigurationItemFormSchema),
 	})
+	.transform((data) => {
+		if (!data.enabled) {
+			return {
+				...data,
+				items: [],
+			};
+		}
+
+		return data;
+	})
 	.superRefine((data, ctx) => {
 		if (data.enabled) {
 			if (data.items.length === 0) {

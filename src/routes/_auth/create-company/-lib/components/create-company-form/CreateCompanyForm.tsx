@@ -3,8 +3,8 @@ import { useAppForm } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
-import { CreateCompanyAddressFields } from './CreateCompanyAddressFields';
-import { CreateCompanyGeneralFields } from './CreateCompanyGeneralFields';
+import { CreateCompanyAddressForm } from './CreateCompanyAddressFields';
+import { CreateCompanyGeneralForm } from './CreateCompanyGeneralFields';
 import {
 	createCompanyFormSchema,
 	useCreateCompanyDefaultValues,
@@ -38,11 +38,11 @@ export const CreateCompanyForm = () => {
 	return (
 		<form.Root form={form}>
 			<form.Group>
-				<CreateCompanyGeneralFields
+				<CreateCompanyGeneralForm
 					form={form}
 					fields='general'
 				/>
-				<CreateCompanyAddressFields
+				<CreateCompanyAddressForm
 					form={form}
 					fields='address'
 				/>

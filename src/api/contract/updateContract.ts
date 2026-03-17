@@ -98,16 +98,22 @@ const updateContractServerFn = createServerFn({
 						),
 					);
 
-				const autoSendConfigurationItems = await tx
-					.insert(contractAutoSendConfigurationItemTable)
-					.values(
-						data.autoSendConfiguration.items.map((item) => ({
-							contractAutoSendConfigurationId: autoSendConfiguration.id,
-							dayOfMonth: item.dayOfMonth,
-							percentage: item.percentage,
-						})),
-					)
-					.returning();
+				type AutoSendConfigurationItem =
+					typeof contractAutoSendConfigurationItemTable.$inferSelect;
+
+				let autoSendConfigurationItems: AutoSendConfigurationItem[] = [];
+				if (data.autoSendConfiguration.enabled) {
+					autoSendConfigurationItems = await tx
+						.insert(contractAutoSendConfigurationItemTable)
+						.values(
+							data.autoSendConfiguration.items.map((item) => ({
+								contractAutoSendConfigurationId: autoSendConfiguration.id,
+								dayOfMonth: item.dayOfMonth,
+								percentage: item.percentage,
+							})),
+						)
+						.returning();
+				}
 
 				return {
 					contract,
