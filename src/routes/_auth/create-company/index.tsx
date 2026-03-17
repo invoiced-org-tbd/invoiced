@@ -20,7 +20,7 @@ function RouteComponent() {
 				style={{ backgroundImage: "url('/soft-green-bg.png')" }}
 			/>
 
-			<div className='h-min w-[80%] flex p-3 rounded-2xl bg-background/90 shadow-xl'>
+			<div className='h-min w-[80%] flex p-3 rounded-2xl bg-background shadow-xl'>
 				<section className='hidden w-5/12 bg-muted md:block lg:w-5/8'>
 					<img
 						src='/soft-green-bg.png'
@@ -30,7 +30,7 @@ function RouteComponent() {
 				</section>
 
 				<section className='flex w-full flex-col justify-center px-12 py-6 items-center'>
-					<div className='max-w-lg w-full flex flex-col items-center gap-10'>
+					<div className='max-w-lg w-full flex flex-col gap-10'>
 						<div className='w-full'>
 							<Button
 								variant='secondary'

@@ -1,5 +1,5 @@
 import { db } from '@/db/client';
-import { companyTable } from '@/db/tables';
+import { addressTable, companyTable } from '@/db/tables';
 import { createCompanyFormSchema } from '@/routes/_auth/create-company/-lib/components/create-company-form/createCompanyFormSchema';
 import {
 	createMutationOptions,
@@ -9,6 +9,8 @@ import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
+	HTTP_STATUS_CODES,
+	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
@@ -29,14 +31,39 @@ const createCompanyServerFn = createServerFn({
 				data: { user },
 			} = await ensureAuthSessionServerFn();
 
-			const company = await db
-				.insert(companyTable)
-				.values({
-					email: data.email,
-					name: data.name,
-					userId: user.id,
-				})
-				.returning();
+			const { general, address } = data;
+
+			const company = await db.transaction(async (tx) => {
+				const [createdCompany] = await tx
+					.insert(companyTable)
+					.values({
+						email: general.email,
+						name: general.name,
+						userId: user.id,
+					})
+					.returning();
+
+				if (!createdCompany) {
+					throw new ServerError({
+						message: 'Failed to create company',
+						statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
+					});
+				}
+
+				await tx.insert(addressTable).values({
+					addressableType: 'company',
+					addressableId: createdCompany.id,
+					street1: address.street1,
+					street2: address.street2 || null,
+					number: address.number,
+					postalCode: address.postalCode,
+					city: address.city,
+					state: address.state,
+					country: address.country,
+				});
+
+				return createdCompany;
+			});
 
 			return createSuccessResponse({
 				data: company,
