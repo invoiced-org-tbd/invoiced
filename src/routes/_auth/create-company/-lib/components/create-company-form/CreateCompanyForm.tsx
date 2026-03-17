@@ -40,22 +40,11 @@ export const CreateCompanyForm = () => {
 			<form.Group>
 				<CreateCompanyMainFields
 					form={form}
-					fields={{
-						name: 'name',
-						email: 'email',
-					}}
+					fields='general'
 				/>
 				<CreateCompanyAddressFields
 					form={form}
-					fields={{
-						street1: 'street1',
-						street2: 'street2',
-						number: 'number',
-						postalCode: 'postalCode',
-						city: 'city',
-						state: 'state',
-						country: 'country',
-					}}
+					fields='address'
 				/>
 
 				<form.SubmitButton className='w-full'>

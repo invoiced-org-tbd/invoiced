@@ -9,6 +9,8 @@ import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
+	HTTP_STATUS_CODES,
+	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
@@ -29,31 +31,35 @@ const createCompanyServerFn = createServerFn({
 				data: { user },
 			} = await ensureAuthSessionServerFn();
 
+			const { general, address } = data;
+
 			const company = await db.transaction(async (tx) => {
 				const [createdCompany] = await tx
 					.insert(companyTable)
 					.values({
-						email: data.email,
-						name: data.name,
+						email: general.email,
+						name: general.name,
 						userId: user.id,
 					})
 					.returning();
 
-				const companyId = createdCompany.id;
-				if (!companyId) {
-					throw new Error('Failed to create company');
+				if (!createdCompany) {
+					throw new ServerError({
+						message: 'Failed to create company',
+						statusCode: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+					});
 				}
 
 				await tx.insert(addressTable).values({
 					addressableType: 'company',
-					addressableId: companyId,
-					street1: data.street1,
-					street2: data.street2 || null,
-					number: data.number,
-					postalCode: data.postalCode,
-					city: data.city,
-					state: data.state,
-					country: data.country,
+					addressableId: createdCompany.id,
+					street1: address.street1,
+					street2: address.street2 || null,
+					number: address.number,
+					postalCode: address.postalCode,
+					city: address.city,
+					state: address.state,
+					country: address.country,
 				});
 
 				return createdCompany;

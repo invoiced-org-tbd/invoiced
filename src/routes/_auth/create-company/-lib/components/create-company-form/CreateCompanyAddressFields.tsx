@@ -1,24 +1,9 @@
 import { withFieldGroup } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import type { CreateCompanyFormSchema } from './createCompanyFormSchema';
-
-type CreateCompanyAddressFormSchema = Pick<
-	CreateCompanyFormSchema,
-	'street1' | 'street2' | 'number' | 'postalCode' | 'city' | 'state' | 'country'
->;
-
-const createCompanyAddressFormDefaults: CreateCompanyAddressFormSchema = {
-	street1: '',
-	street2: '',
-	number: '',
-	postalCode: '',
-	city: '',
-	state: '',
-	country: '',
-};
+import type { CreateCompanyFormBaseType } from './createCompanyFormSchema';
 
 export const CreateCompanyAddressFields = withFieldGroup({
-	defaultValues: createCompanyAddressFormDefaults,
+	defaultValues: {} as CreateCompanyFormBaseType['address'],
 	render: ({ group }) => {
 		const { t } = useTranslate();
 
