@@ -46,7 +46,7 @@ const createCompanyServerFn = createServerFn({
 				if (!createdCompany) {
 					throw new ServerError({
 						message: 'Failed to create company',
-						statusCode: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+						statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
 					});
 				}
 
