@@ -47,18 +47,20 @@ export type ExtractServerFnData<
 > = Awaited<ReturnType<TServerFn>>['data'];
 
 type CreateSuccessResponseParams<T> = {
-	data: T;
+	data?: T;
 	message?: string;
 	statusCode?: HTTPStatusCode;
 };
-export const createSuccessResponse = <T>({
-	data,
-	message,
-	statusCode = HTTP_STATUS_CODES.OK,
-}: CreateSuccessResponseParams<T>): SuccessResponse<T> => {
+export const createSuccessResponse = <T = null>(
+	params?: CreateSuccessResponseParams<T>,
+): SuccessResponse<T> => {
+	const data = params?.data ?? (null as T);
+	const message = params?.message ?? undefined;
+	const statusCode = params?.statusCode ?? HTTP_STATUS_CODES.OK;
+
 	setResponseStatus(statusCode);
 
-	return { data: data ?? (null as T), message };
+	return { data, message };
 };
 
 type CreateErrorResponseParams = {

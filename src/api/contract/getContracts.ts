@@ -6,35 +6,33 @@ import {
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { contractQueryKeys } from './contractApiUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const getContractsServerFn = createServerFn({
 	method: 'GET',
-}).handler(async () => {
-	try {
-		const {
-			data: { user },
-		} = await ensureAuthSessionServerFn();
+})
+	.middleware([sessionMiddleware])
+	.handler(async ({ context: { user } }) => {
+		try {
+			const contracts = await db.query.contractTable.findMany({
+				where: {
+					userId: user.id,
+				},
+				with: {
+					role: true,
+				},
+			});
 
-		const contracts = await db.query.contractTable.findMany({
-			where: {
-				userId: user.id,
-			},
-			with: {
-				role: true,
-			},
-		});
-
-		return createSuccessResponse({
-			data: contracts,
-		});
-	} catch (error) {
-		throw createErrorResponse({
-			error,
-		});
-	}
-});
+			return createSuccessResponse({
+				data: contracts,
+			});
+		} catch (error) {
+			throw createErrorResponse({
+				error,
+			});
+		}
+	});
 
 export type GetContractsResponse = ExtractServerFnData<
 	typeof getContractsServerFn

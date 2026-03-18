@@ -1,19 +1,15 @@
 import { db } from '@/db/client';
-import type { ContractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
 import { getServerT } from '@/utils/languageUtils';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
-import type {
-	ExtractServerFnData,
-	SuccessResponse,
-} from '@/utils/serverFnsUtils';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { contractQueryKeys } from './contractApiUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const getEditContractByIdParams = z.object({
 	id: z.string(),
@@ -26,59 +22,53 @@ export type GetEditContractByIdParams = z.infer<
 const getEditContractByIdServerFn = createServerFn({
 	method: 'GET',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(getEditContractByIdParams)
-	.handler(
-		async ({
-			data,
-		}): Promise<SuccessResponse<ContractsUpsertFormSchema | null>> => {
-			try {
-				const {
-					data: { user, language },
-				} = await ensureAuthSessionServerFn();
-				const t = getServerT(language);
+	.handler(async ({ data, context: { user, language } }) => {
+		try {
+			const t = getServerT(language);
 
-				const contract = await db.query.contractTable.findFirst({
-					where: {
-						id: data.id,
-						userId: user.id,
-					},
-					with: {
-						role: true,
-						client: true,
-						autoSendConfiguration: {
-							with: {
-								items: true,
-							},
+			const contract = await db.query.contractTable.findFirst({
+				where: {
+					id: data.id,
+					userId: user.id,
+				},
+				with: {
+					role: true,
+					client: true,
+					autoSendConfiguration: {
+						with: {
+							items: true,
 						},
 					},
-				});
+				},
+			});
 
-				if (!contract) {
-					return createSuccessResponse({
-						data: null,
-						message: t('entity.notFound', {
-							entity: t('contracts.name'),
-						}),
-					});
-				}
-
-				const parsedData = {
-					general: {
-						description: contract.description,
-					},
-					...contract,
-				};
-
+			if (!contract) {
 				return createSuccessResponse({
-					data: parsedData,
-				});
-			} catch (error) {
-				throw createErrorResponse({
-					error,
+					data: null,
+					message: t('entity.notFound', {
+						entity: t('contracts.name'),
+					}),
 				});
 			}
-		},
-	);
+
+			const parsedData = {
+				general: {
+					description: contract.description,
+				},
+				...contract,
+			};
+
+			return createSuccessResponse({
+				data: parsedData,
+			});
+		} catch (error) {
+			throw createErrorResponse({
+				error,
+			});
+		}
+	});
 
 export type GetEditContractByIdResponse = ExtractServerFnData<
 	typeof getEditContractByIdServerFn

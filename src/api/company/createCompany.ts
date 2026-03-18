@@ -1,5 +1,5 @@
 import { db } from '@/db/client';
-import { addressTable, companyTable } from '@/db/tables';
+import { companyAddressTable, companyTable } from '@/db/tables';
 import { createCompanyFormSchema } from '@/routes/_auth/create-company/-lib/components/create-company-form/createCompanyFormSchema';
 import {
 	createMutationOptions,
@@ -14,8 +14,8 @@ import {
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { companyQueryKeys } from './companyApiUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const createCompanyParams = createCompanyFormSchema.clone();
 
@@ -24,16 +24,13 @@ type CreateCompanyParams = z.infer<typeof createCompanyParams>;
 const createCompanyServerFn = createServerFn({
 	method: 'POST',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(createCompanyParams)
-	.handler(async ({ data }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const {
-				data: { user },
-			} = await ensureAuthSessionServerFn();
-
 			const { general, address } = data;
 
-			const company = await db.transaction(async (tx) => {
+			await db.transaction(async (tx) => {
 				const [createdCompany] = await tx
 					.insert(companyTable)
 					.values({
@@ -50,9 +47,8 @@ const createCompanyServerFn = createServerFn({
 					});
 				}
 
-				await tx.insert(addressTable).values({
-					addressableType: 'company',
-					addressableId: createdCompany.id,
+				await tx.insert(companyAddressTable).values({
+					companyId: createdCompany.id,
 					street1: address.street1,
 					street2: address.street2 || null,
 					number: address.number,
@@ -61,13 +57,9 @@ const createCompanyServerFn = createServerFn({
 					state: address.state,
 					country: address.country,
 				});
-
-				return createdCompany;
 			});
 
-			return createSuccessResponse({
-				data: company,
-			});
+			return createSuccessResponse();
 		} catch (error) {
 			throw createErrorResponse({
 				error,

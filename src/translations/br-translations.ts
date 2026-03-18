@@ -175,7 +175,7 @@ export const brTranslations = {
 				rulesTitle: 'Regras de envio automatico',
 				rulesDescription: 'Defina o cronograma e o percentual de divisao',
 				atLeastOneItemRequired:
-					'Configuração de envio automático, se ativada, deve ter pelo menos um item',
+					'Configure pelo menos um item para o envio automatico quando estiver ativado',
 				percentageMustBe100: 'O percentual total deve ser igual a 100%',
 			},
 		},

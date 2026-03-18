@@ -22,6 +22,7 @@ This project is a mini-erp focused on invoice management for devs in Brazil that
 
 - do not run bun scripts unless told to
 - do not run the integrated browser unless told to
+- do not create/manipulate migrations unless told to
 
 ## React Component Rules
 

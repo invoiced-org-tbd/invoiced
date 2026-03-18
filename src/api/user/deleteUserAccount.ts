@@ -7,35 +7,28 @@ import {
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
-import { getServerT } from '@/utils/languageUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const deleteUserAccountServerFn = createServerFn({
 	method: 'POST',
-}).handler(async () => {
-	try {
-		const {
-			data: { language },
-		} = await ensureAuthSessionServerFn();
-		const t = getServerT(language);
+})
+	.middleware([sessionMiddleware])
+	.handler(async () => {
+		try {
+			const headers = getRequestHeaders();
 
-		const headers = getRequestHeaders();
+			await auth.api.deleteUser({
+				headers,
+				body: {},
+			});
 
-		await auth.api.deleteUser({
-			headers,
-			body: {},
-		});
-
-		return createSuccessResponse({
-			data: null,
-			message: t('auth.server.accountDeletedSuccess'),
-		});
-	} catch (error) {
-		throw createErrorResponse({
-			error,
-		});
-	}
-});
+			return createSuccessResponse();
+		} catch (error) {
+			throw createErrorResponse({
+				error,
+			});
+		}
+	});
 
 export type DeleteUserAccountResponse = ExtractServerFnData<
 	typeof deleteUserAccountServerFn

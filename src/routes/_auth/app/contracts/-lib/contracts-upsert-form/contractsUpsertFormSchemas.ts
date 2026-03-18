@@ -3,23 +3,26 @@ import { clientT } from '@/utils/languageUtils';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
 
-const contractRoleFormSchema = z.object({
+export const contractRoleFormSchema = z.object({
 	description: z.string().min(1),
 	rate: z.number().min(0),
 });
 
-const contractClientFormSchema = z.object({
+export const contractClientFormSchema = z.object({
 	companyName: z.string().min(1),
 	responsibleName: z.string().min(1),
 	responsibleEmail: z.email(),
 });
 
-const contractAutoSendConfigurationItemFormSchema = z.object({
+export const contractAutoSendConfigurationItemFormSchema = z.object({
 	dayOfMonth: z.number().int().min(1).max(31),
 	percentage: z.number().min(1).max(100),
 });
+export type ContractAutoSendConfigurationItemForm = z.infer<
+	typeof contractAutoSendConfigurationItemFormSchema
+>;
 
-const contractAutoSendConfigurationFormSchema = z
+export const contractAutoSendConfigurationFormSchema = z
 	.object({
 		enabled: z.boolean(),
 		items: z.array(contractAutoSendConfigurationItemFormSchema),
@@ -84,8 +87,11 @@ const contractAutoSendConfigurationFormSchema = z
 			}
 		}
 	});
+export type ContractAutoSendConfigurationForm = z.infer<
+	typeof contractAutoSendConfigurationFormSchema
+>;
 
-const contractGeneralFormSchema = z.object({
+export const contractGeneralFormSchema = z.object({
 	description: z.string().min(1),
 });
 

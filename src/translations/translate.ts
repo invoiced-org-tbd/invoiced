@@ -3,7 +3,7 @@ import { brTranslations } from './br-translations';
 import { enTranslations } from './en-translations';
 import type {
 	TranslationArguments,
-	TranslationFunction,
+	TranslationFn,
 	TranslationKey,
 	TranslationRuntimeParams,
 	TranslationsShape,
@@ -52,7 +52,7 @@ export function translate(
 
 export const createTranslationFunction = (
 	language: Language,
-): TranslationFunction => {
+): TranslationFn => {
 	const runTranslate = translate as (
 		language: Language,
 		path: TranslationKey,
@@ -60,5 +60,5 @@ export const createTranslationFunction = (
 	) => string;
 
 	return ((...args: [TranslationKey, TranslationRuntimeParams?]) =>
-		runTranslate(language, args[0], args[1])) as TranslationFunction;
+		runTranslate(language, args[0], args[1])) as TranslationFn;
 };

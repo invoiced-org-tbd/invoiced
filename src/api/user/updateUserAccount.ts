@@ -15,8 +15,8 @@ import { createServerFn } from '@tanstack/react-start';
 import { eq } from 'drizzle-orm';
 import type z from 'zod';
 import { authQueryKeys } from '../auth/authApiUtils';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { userQueryKeys } from './userApiUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const updateUserAccountParams = accountFormSchema.clone();
 type UpdateUserAccountParams = z.infer<typeof updateUserAccountParams>;
@@ -24,24 +24,20 @@ type UpdateUserAccountParams = z.infer<typeof updateUserAccountParams>;
 const updateUserAccountServerFn = createServerFn({
 	method: 'POST',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(updateUserAccountParams)
-	.handler(async ({ data }) => {
+	.handler(async ({ data, context: { user, language } }) => {
 		try {
-			const {
-				data: { user: sessionUser, language },
-			} = await ensureAuthSessionServerFn();
 			const t = getServerT(language);
 
-			const [user] = await db
+			await db
 				.update(userTable)
 				.set({
 					name: data.name,
 				})
-				.where(eq(userTable.id, sessionUser.id))
-				.returning();
+				.where(eq(userTable.id, user.id));
 
 			return createSuccessResponse({
-				data: user,
 				message: t('auth.server.accountUpdatedSuccess'),
 			});
 		} catch (error) {

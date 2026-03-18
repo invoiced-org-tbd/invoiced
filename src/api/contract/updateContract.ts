@@ -1,5 +1,4 @@
 import { db } from '@/db/client';
-import { contractAutoSendConfigurationItemTable } from '@/db/tables/contractAutoSendConfigurationItemTable';
 import { contractAutoSendConfigurationTable } from '@/db/tables/contractAutoSendConfigurationTable';
 import { contractClientTable } from '@/db/tables/contractClientTable';
 import { contractRoleTable } from '@/db/tables/contractRoleTable';
@@ -18,9 +17,10 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { and, eq } from 'drizzle-orm';
 import z from 'zod';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { contractQueryKeys } from './contractApiUtils';
 import { getServerT } from '@/utils/languageUtils';
+import { upsertAutoSendConfigurationItems } from './helpers/upsertAutoSendConfigurationItems';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const updateContractParams = z.object({
 	editId: z.string(),
@@ -32,15 +32,13 @@ export type UpdateContractParams = z.infer<typeof updateContractParams>;
 const updateContractServerFn = createServerFn({
 	method: 'POST',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(updateContractParams)
-	.handler(async ({ data: { data, editId } }) => {
+	.handler(async ({ data: { data, editId }, context: { user, language } }) => {
 		try {
-			const {
-				data: { user, language },
-			} = await ensureAuthSessionServerFn();
 			const t = getServerT(language);
 
-			const contract = await db.transaction(async (tx) => {
+			await db.transaction(async (tx) => {
 				const [contract] = await tx
 					.update(contractTable)
 					.set({
@@ -62,73 +60,41 @@ const updateContractServerFn = createServerFn({
 					});
 				}
 
-				const [role] = await tx
+				await tx
 					.update(contractRoleTable)
 					.set({
 						description: data.role.description,
 						rate: data.role.rate,
 					})
-					.where(eq(contractRoleTable.contractId, editId))
-					.returning();
+					.where(eq(contractRoleTable.contractId, contract.id));
 
-				const [client] = await tx
+				await tx
 					.update(contractClientTable)
 					.set({
 						companyName: data.client.companyName,
 						responsibleName: data.client.responsibleName,
 						responsibleEmail: data.client.responsibleEmail,
 					})
-					.where(eq(contractClientTable.contractId, editId))
-					.returning();
+					.where(eq(contractClientTable.contractId, contract.id));
 
 				const [autoSendConfiguration] = await tx
 					.update(contractAutoSendConfigurationTable)
 					.set({
 						enabled: data.autoSendConfiguration.enabled,
 					})
-					.where(eq(contractAutoSendConfigurationTable.contractId, editId))
+					.where(eq(contractAutoSendConfigurationTable.contractId, contract.id))
 					.returning();
 
-				await tx
-					.delete(contractAutoSendConfigurationItemTable)
-					.where(
-						eq(
-							contractAutoSendConfigurationItemTable.contractAutoSendConfigurationId,
-							autoSendConfiguration.id,
-						),
-					);
-
-				type AutoSendConfigurationItem =
-					typeof contractAutoSendConfigurationItemTable.$inferSelect;
-
-				let autoSendConfigurationItems: AutoSendConfigurationItem[] = [];
-				if (data.autoSendConfiguration.enabled) {
-					autoSendConfigurationItems = await tx
-						.insert(contractAutoSendConfigurationItemTable)
-						.values(
-							data.autoSendConfiguration.items.map((item) => ({
-								contractAutoSendConfigurationId: autoSendConfiguration.id,
-								dayOfMonth: item.dayOfMonth,
-								percentage: item.percentage,
-							})),
-						)
-						.returning();
-				}
-
-				return {
-					contract,
-					role,
-					client,
-					autoSendConfiguration: {
-						...autoSendConfiguration,
-						items: autoSendConfigurationItems,
-					},
-				};
+				await upsertAutoSendConfigurationItems({
+					tx,
+					t,
+					autoSendConfigurationId: autoSendConfiguration.id,
+					configuration: data.autoSendConfiguration,
+					deletePreviousItems: true,
+				});
 			});
 
-			return createSuccessResponse({
-				data: contract,
-			});
+			return createSuccessResponse();
 		} catch (error) {
 			throw createErrorResponse({
 				error,
