@@ -105,7 +105,7 @@ export const SidebarUserMenu = () => {
 
 				<DropdownMenu.Item onSelect={() => setIsAccountDrawerOpen(true)}>
 					<BadgeCheckIcon />
-					{t('common.account')}j
+					{t('common.account')}
 				</DropdownMenu.Item>
 				<DropdownMenu.Item onSelect={() => toggleTheme()}>
 					{theme === 'light' ? <SunIcon /> : <MoonIcon />}
