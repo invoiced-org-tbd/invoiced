@@ -2,7 +2,7 @@ import type { Language } from '@/hooks/use-language/types';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { translate } from '@/translations/translate';
 import type {
-	TranslationFunction,
+	TranslationFn,
 	TranslationKey,
 	TranslationRuntimeParams,
 } from '@/translations/types';
@@ -25,7 +25,7 @@ export const resolveLanguage = (
 	return isLanguage(languageCandidate) ? languageCandidate : 'en';
 };
 
-export const getServerT = (language: Language): TranslationFunction => {
+export const getServerT = (language: Language): TranslationFn => {
 	const runTranslate = translate as (
 		language: Language,
 		path: TranslationKey,
@@ -33,7 +33,7 @@ export const getServerT = (language: Language): TranslationFunction => {
 	) => string;
 
 	return ((...args: [TranslationKey, TranslationRuntimeParams?]) =>
-		runTranslate(language, args[0], args[1])) as TranslationFunction;
+		runTranslate(language, args[0], args[1])) as TranslationFn;
 };
 
 export const clientT = (...args: [TranslationKey, TranslationRuntimeParams?]) =>

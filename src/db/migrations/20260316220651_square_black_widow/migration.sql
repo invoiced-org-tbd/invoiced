@@ -1,1 +1,0 @@
-ALTER TABLE `contractRole` DROP COLUMN `email`;

@@ -8,17 +8,9 @@ export const relations = defineRelations(tables, (r) => ({
 			to: r.userTable.id,
 			optional: false,
 		}),
-		address: r.one.addressTable({
+		address: r.one.companyAddressTable({
 			from: r.companyTable.id,
-			to: r.addressTable.addressableId,
-			optional: false,
-		}),
-	},
-
-	contractClientTable: {
-		address: r.one.addressTable({
-			from: r.contractClientTable.id,
-			to: r.addressTable.addressableId,
+			to: r.companyAddressTable.companyId,
 			optional: false,
 		}),
 	},
@@ -44,6 +36,14 @@ export const relations = defineRelations(tables, (r) => ({
 		role: r.one.contractRoleTable({
 			from: r.contractTable.id,
 			to: r.contractRoleTable.contractId,
+			optional: false,
+		}),
+	},
+
+	contractClientTable: {
+		address: r.one.contractClientAddressTable({
+			from: r.contractClientTable.id,
+			to: r.contractClientAddressTable.contractClientId,
 			optional: false,
 		}),
 	},

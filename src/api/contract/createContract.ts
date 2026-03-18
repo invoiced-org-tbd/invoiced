@@ -6,10 +6,8 @@ import {
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { db } from '@/db/client';
 import {
-	contractAutoSendConfigurationItemTable,
 	contractAutoSendConfigurationTable,
 	contractClientTable,
 	contractRoleTable,
@@ -19,7 +17,10 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
+import { getServerT } from '@/utils/languageUtils';
 import { contractQueryKeys } from './contractApiUtils';
+import { upsertAutoSendConfigurationItems } from './helpers/upsertAutoSendConfigurationItems';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const createContractParams = contractsUpsertFormSchema.clone();
 
@@ -28,14 +29,13 @@ type CreateContractParams = z.infer<typeof createContractParams>;
 const createContractServerFn = createServerFn({
 	method: 'POST',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(createContractParams)
-	.handler(async ({ data }) => {
+	.handler(async ({ data, context: { user, language } }) => {
 		try {
-			const {
-				data: { user },
-			} = await ensureAuthSessionServerFn();
+			const t = getServerT(language);
 
-			const contract = await db.transaction(async (tx) => {
+			await db.transaction(async (tx) => {
 				const [contract] = await tx
 					.insert(contractTable)
 					.values({
@@ -44,24 +44,18 @@ const createContractServerFn = createServerFn({
 					})
 					.returning();
 
-				const [role] = await tx
-					.insert(contractRoleTable)
-					.values({
-						contractId: contract.id,
-						description: data.role.description,
-						rate: data.role.rate,
-					})
-					.returning();
+				await tx.insert(contractRoleTable).values({
+					contractId: contract.id,
+					description: data.role.description,
+					rate: data.role.rate,
+				});
 
-				const [client] = await tx
-					.insert(contractClientTable)
-					.values({
-						contractId: contract.id,
-						companyName: data.client.companyName,
-						responsibleName: data.client.responsibleName,
-						responsibleEmail: data.client.responsibleEmail,
-					})
-					.returning();
+				await tx.insert(contractClientTable).values({
+					contractId: contract.id,
+					companyName: data.client.companyName,
+					responsibleName: data.client.responsibleName,
+					responsibleEmail: data.client.responsibleEmail,
+				});
 
 				const [autoSendConfiguration] = await tx
 					.insert(contractAutoSendConfigurationTable)
@@ -71,34 +65,15 @@ const createContractServerFn = createServerFn({
 					})
 					.returning();
 
-				const autoSendConfigurationItemsValues = [];
-				for (const item of data.autoSendConfiguration.items) {
-					autoSendConfigurationItemsValues.push({
-						contractAutoSendConfigurationId: autoSendConfiguration.id,
-						dayOfMonth: item.dayOfMonth,
-						percentage: item.percentage,
-					});
-				}
-
-				const autoSendConfigurationItems = await tx
-					.insert(contractAutoSendConfigurationItemTable)
-					.values(autoSendConfigurationItemsValues)
-					.returning();
-
-				return {
-					contract,
-					role,
-					client,
-					autoSendConfiguration: {
-						...autoSendConfiguration,
-						items: autoSendConfigurationItems,
-					},
-				};
+				await upsertAutoSendConfigurationItems({
+					tx,
+					t,
+					autoSendConfigurationId: autoSendConfiguration.id,
+					configuration: data.autoSendConfiguration,
+				});
 			});
 
-			return createSuccessResponse({
-				data: contract,
-			});
+			return createSuccessResponse();
 		} catch (error) {
 			throw createErrorResponse({
 				error,

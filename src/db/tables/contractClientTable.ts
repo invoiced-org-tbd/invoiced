@@ -13,3 +13,9 @@ export const contractClientTable = s.sqliteTable('contractClient', {
 	createdAt: u.createdAtColumn(),
 	updatedAt: u.updatedAtColumn(),
 });
+
+export const contractClientIdColumn = () =>
+	s
+		.text()
+		.notNull()
+		.references(() => contractClientTable.id, { onDelete: 'cascade' });

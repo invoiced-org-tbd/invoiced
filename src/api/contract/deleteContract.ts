@@ -14,8 +14,8 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { and, eq } from 'drizzle-orm';
 import z from 'zod';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { contractQueryKeys } from './contractApiUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const deleteContractParams = z.object({
 	id: z.string(),
@@ -26,22 +26,19 @@ export type DeleteContractParams = z.infer<typeof deleteContractParams>;
 const deleteContractServerFn = createServerFn({
 	method: 'POST',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(deleteContractParams)
-	.handler(async ({ data }) => {
+	.handler(async ({ data, context: { user, language } }) => {
 		try {
-			const {
-				data: { user, language },
-			} = await ensureAuthSessionServerFn();
 			const t = getServerT(language);
 
-			const [contract] = await db
+			const { rowsAffected } = await db
 				.delete(contractTable)
 				.where(
 					and(eq(contractTable.id, data.id), eq(contractTable.userId, user.id)),
-				)
-				.returning();
+				);
 
-			if (!contract) {
+			if (rowsAffected === 0) {
 				throw new ServerError({
 					message: t('entity.notFound', {
 						entity: t('contracts.name'),
@@ -50,7 +47,6 @@ const deleteContractServerFn = createServerFn({
 			}
 
 			return createSuccessResponse({
-				data: null,
 				message: t('entity.deletedSuccess', {
 					entity: t('contracts.name'),
 				}),

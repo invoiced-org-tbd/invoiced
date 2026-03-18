@@ -170,7 +170,7 @@ export const enTranslations = {
 				rulesTitle: 'Auto-Send Rules',
 				rulesDescription: 'Define schedule and percentage split',
 				atLeastOneItemRequired:
-					'Auto send configuration, if enabled, must have at least one item',
+					'Please configure at least one item for auto-send configuration when enabled',
 				percentageMustBe100: 'The total percentage must be equal to 100%',
 			},
 		},

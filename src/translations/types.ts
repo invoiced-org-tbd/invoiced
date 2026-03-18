@@ -60,6 +60,6 @@ export type TranslationArguments<P extends TranslationKey> =
 		? [path: P]
 		: [path: P, params: TranslationParams<TranslationMessage<P>>];
 
-export type TranslationFunction = <P extends TranslationKey>(
+export type TranslationFn = <P extends TranslationKey>(
 	...args: TranslationArguments<P>
 ) => string;

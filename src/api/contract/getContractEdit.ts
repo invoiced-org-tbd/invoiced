@@ -1,6 +1,5 @@
 import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
-import { ensureAuthSessionServerFn } from '../auth/ensureAuthSession';
 import { db } from '@/db/client';
 import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
@@ -9,6 +8,7 @@ import {
 } from '@/utils/serverFnsUtils';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
 import { contractQueryKeys } from './contractApiUtils';
+import { sessionMiddleware } from '../sessionMiddleware';
 
 const getContractEditParams = z.object({
 	id: z.string(),
@@ -19,13 +19,10 @@ export type GetContractEditParams = z.infer<typeof getContractEditParams>;
 const getContractEditServerFn = createServerFn({
 	method: 'GET',
 })
+	.middleware([sessionMiddleware])
 	.inputValidator(getContractEditParams)
-	.handler(async ({ data }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const {
-				data: { user },
-			} = await ensureAuthSessionServerFn();
-
 			const contract = await db.query.contractTable.findFirst({
 				where: {
 					id: data.id,
