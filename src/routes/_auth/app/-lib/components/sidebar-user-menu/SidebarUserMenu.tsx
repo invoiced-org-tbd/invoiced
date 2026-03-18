@@ -14,6 +14,8 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useTheme } from '@/hooks/use-theme';
 import { useLogOut } from '@/hooks/use-log-out';
 import { useUser } from '@/hooks/use-user';
+import { BrazilFlag } from '@/components/flags/brazilFlag';
+import { UnitedStatesFlag } from '@/components/flags/unitedStatesFlag';
 
 export const SidebarUserMenu = () => {
 	const user = useUser();
@@ -114,6 +116,9 @@ export const SidebarUserMenu = () => {
 				>
 					<LanguagesIcon />
 					{language === 'en' ? t('common.english') : t('common.portuguese')}
+					<div className='ml-auto'>
+						{language === 'en' ? <UnitedStatesFlag /> : <BrazilFlag />}
+					</div>
 				</DropdownMenu.Item>
 
 				<DropdownMenu.Separator />
