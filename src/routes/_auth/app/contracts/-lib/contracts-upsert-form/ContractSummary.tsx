@@ -38,16 +38,22 @@ export const ContractSummary = ({
 }) => {
 	const { t } = useTranslate();
 	const language = useLanguage((state) => state.language);
+	const hasRate = !!role.rate;
 	const autoSendSummary = autoSendConfiguration.items
 		.map((item) => {
 			const dayOfMonth =
 				language === 'en'
 					? `${item.dayOfMonth}${getOrdinalSuffix(item.dayOfMonth)}`
 					: `${item.dayOfMonth}`;
+			const value = hasRate
+				? formatCurrency({
+						value: role.rate * (item.percentage / 100),
+					})
+				: '';
 
 			return t('contracts.summary.autoSend.item', {
 				dayOfMonth,
-				percentage: item.percentage,
+				value,
 			});
 		})
 		.join(', ');
@@ -106,7 +112,7 @@ export const ContractSummary = ({
 						value={t('contracts.summary.autoSend.value', {
 							schedule: autoSendSummary,
 						})}
-						missingInformation={!autoSendSummary}
+						missingInformation={!autoSendSummary || !hasRate}
 					/>
 				)}
 			</div>

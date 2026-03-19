@@ -6,6 +6,7 @@ type ZodIssue = {
 	input?: unknown;
 	origin?: unknown;
 	minimum?: unknown;
+	maximum?: unknown;
 	format?: unknown;
 };
 
@@ -54,6 +55,37 @@ const getInvalidFormatMessage = (language: Language, issue: ZodIssue) => {
 	return translate(language, 'validation.invalidEmail');
 };
 
+const getTooBigMessage = (language: Language, issue: ZodIssue) => {
+	if (!('origin' in issue) || !('maximum' in issue)) {
+		return undefined;
+	}
+
+	const maximum =
+		typeof issue.maximum === 'number'
+			? issue.maximum
+			: typeof issue.maximum === 'bigint'
+				? Number(issue.maximum)
+				: undefined;
+
+	if (maximum === undefined) {
+		return undefined;
+	}
+
+	if (issue.origin === 'string') {
+		return translate(language, 'validation.maxCharacters', {
+			maximum,
+		});
+	}
+
+	if (issue.origin === 'number') {
+		return translate(language, 'validation.maxNumber', {
+			maximum,
+		});
+	}
+
+	return undefined;
+};
+
 export const setupZodErrorMap = (language: Language) => {
 	z.config({
 		customError: (issue) => {
@@ -62,6 +94,8 @@ export const setupZodErrorMap = (language: Language) => {
 					return getInvalidTypeMessage(language, issue);
 				case 'too_small':
 					return getTooSmallMessage(language, issue);
+				case 'too_big':
+					return getTooBigMessage(language, issue);
 				case 'invalid_format':
 					return getInvalidFormatMessage(language, issue);
 				default:

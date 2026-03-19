@@ -41,6 +41,8 @@ export const brTranslations = {
 		invalidType: 'Valor inválido',
 		invalidEmail: 'Digite um e-mail válido',
 		minCharacters: 'Digite pelo menos {minimum} caracteres',
+		maxCharacters: 'Digite no máximo {maximum} caracteres',
+		maxNumber: 'Digite um valor menor ou igual a {maximum}',
 	},
 	a11y: {
 		inputAction: 'Ação do campo',
@@ -200,7 +202,7 @@ export const brTranslations = {
 			autoSend: {
 				title: 'Agenda de envio automatico',
 				value: 'As faturas serao enviadas todos os meses {schedule}.',
-				item: 'dia {dayOfMonth} ({percentage}%)',
+				item: 'dia {dayOfMonth} ({value})',
 			},
 		},
 	},

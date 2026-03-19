@@ -39,6 +39,8 @@ export const enTranslations = {
 		invalidType: 'Invalid value',
 		invalidEmail: 'Please enter a valid email address',
 		minCharacters: 'Please enter at least {minimum} characters',
+		maxCharacters: 'Please enter at most {maximum} characters',
+		maxNumber: 'Please enter a value less than or equal to {maximum}',
 	},
 	a11y: {
 		inputAction: 'Input action',
@@ -195,7 +197,7 @@ export const enTranslations = {
 			autoSend: {
 				title: 'Auto-send schedule',
 				value: 'Invoices will be sent every month on {schedule}.',
-				item: '{dayOfMonth} day ({percentage}%)',
+				item: '{dayOfMonth} day ({value})',
 			},
 		},
 	},
