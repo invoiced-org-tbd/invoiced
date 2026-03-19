@@ -9,6 +9,7 @@ import type z from 'zod';
 import { db } from '@/db/client';
 import {
 	contractAutoSendConfigurationTable,
+	contractClientAddressTable,
 	contractClientTable,
 	contractRoleTable,
 	contractTable,
@@ -40,7 +41,6 @@ const createContractServerFn = createServerFn({
 					.insert(contractTable)
 					.values({
 						userId: user.id,
-						description: data.general.description,
 					})
 					.returning();
 
@@ -50,11 +50,25 @@ const createContractServerFn = createServerFn({
 					rate: data.role.rate,
 				});
 
-				await tx.insert(contractClientTable).values({
-					contractId: contract.id,
-					companyName: data.client.companyName,
-					responsibleName: data.client.responsibleName,
-					responsibleEmail: data.client.responsibleEmail,
+				const [contractClient] = await tx
+					.insert(contractClientTable)
+					.values({
+						contractId: contract.id,
+						companyName: data.client.companyName,
+						responsibleName: data.client.responsibleName,
+						responsibleEmail: data.client.responsibleEmail,
+					})
+					.returning();
+
+				await tx.insert(contractClientAddressTable).values({
+					contractClientId: contractClient.id,
+					street1: data.client.address.street1,
+					street2: data.client.address.street2 || null,
+					number: data.client.address.number,
+					postalCode: data.client.address.postalCode,
+					city: data.client.address.city,
+					state: data.client.address.state,
+					country: data.client.address.country,
 				});
 
 				const [autoSendConfiguration] = await tx

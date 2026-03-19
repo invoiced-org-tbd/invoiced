@@ -8,10 +8,21 @@ export const contractRoleFormSchema = z.object({
 	rate: z.number().min(1),
 });
 
+export const contractClientAddressFormSchema = z.object({
+	street1: z.string().min(1),
+	street2: z.string(),
+	number: z.string().min(1),
+	postalCode: z.string().min(1),
+	city: z.string().min(1),
+	state: z.string().min(1),
+	country: z.string().min(1),
+});
+
 export const contractClientFormSchema = z.object({
 	companyName: z.string().min(1),
 	responsibleName: z.string().min(1),
 	responsibleEmail: z.email(),
+	address: contractClientAddressFormSchema,
 });
 
 export const contractAutoSendConfigurationItemFormSchema = z.object({
@@ -91,12 +102,7 @@ export type ContractAutoSendConfigurationForm = z.infer<
 	typeof contractAutoSendConfigurationFormSchema
 >;
 
-export const contractGeneralFormSchema = z.object({
-	description: z.string().min(1),
-});
-
 export const contractsUpsertFormSchema = z.object({
-	general: contractGeneralFormSchema,
 	role: contractRoleFormSchema,
 	client: contractClientFormSchema,
 	autoSendConfiguration: contractAutoSendConfigurationFormSchema,
@@ -116,33 +122,35 @@ export const useContractsUpsertFormDefaultValues = ({
 		enabled: !!editId,
 	});
 
-	if (editContract) {
-		return { defaultValues: editContract, isLoadingEditContract: isFetching };
-	}
-
 	return {
 		defaultValues: {
-			general: {
-				description: '',
-			},
 			role: {
-				description: '',
-				rate: undefined as unknown as number,
+				description: editContract?.role.description ?? '',
+				rate: editContract?.role.rate ?? (undefined as unknown as number),
 			},
 			client: {
-				companyName: '',
-				responsibleName: '',
-				responsibleEmail: '',
+				companyName: editContract?.client.companyName ?? '',
+				responsibleName: editContract?.client.responsibleName ?? '',
+				responsibleEmail: editContract?.client.responsibleEmail ?? '',
+				address: {
+					street1: editContract?.client.address.street1 ?? '',
+					street2: editContract?.client.address.street2 ?? '',
+					number: editContract?.client.address.number ?? '',
+					postalCode: editContract?.client.address.postalCode ?? '',
+					city: editContract?.client.address.city ?? '',
+					state: editContract?.client.address.state ?? '',
+					country: editContract?.client.address.country ?? '',
+				},
 			},
 			autoSendConfiguration: {
-				enabled: false,
-				items: [
-					{
-						dayOfMonth: 1,
-						percentage: 100,
-					},
-				],
+				enabled: editContract?.autoSendConfiguration.enabled ?? false,
+				items:
+					editContract?.autoSendConfiguration.items.map((item) => ({
+						dayOfMonth: item.dayOfMonth,
+						percentage: item.percentage,
+					})) ?? [],
 			},
 		},
+		isLoadingEditContract: isFetching,
 	};
 };

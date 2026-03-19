@@ -84,8 +84,11 @@ const normalizeSchema = (schema: ParseableSchema) => {
 	return normalizedSchema;
 };
 
-const isOptionalSchema = (schema: ParseableSchema) => {
-	return schema.safeParse(undefined).success;
+const isOptionalSchema = (
+	schema: ParseableSchema,
+	emptyValue: unknown = undefined,
+) => {
+	return schema.safeParse(emptyValue).success;
 };
 
 const safeAllows = (schema: ParseableSchema, value: unknown) => {
@@ -232,7 +235,7 @@ const resolveTextProps: FormInputResolver<'text'> = ({
 	}
 
 	const { minLength, maxLength } = normalizedSchema as ZodString;
-	const isOptional = isOptionalSchema(fieldSchema);
+	const isOptional = isOptionalSchema(fieldSchema, '');
 
 	return {
 		...baseProps,

@@ -1,22 +1,30 @@
-import { getOrdinalSuffix } from '@/utils/stringUtils';
 import { Badge } from '@/components/badge';
-import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
-import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
-import { AlertCircleIcon } from 'lucide-react';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { cn } from '@/lib/utils';
 import { formatCurrency } from '@/utils/currencyUtils';
+import { getOrdinalSuffix } from '@/utils/stringUtils';
+import { AlertCircleIcon } from 'lucide-react';
+import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 
 const SummarySection = ({
 	description,
 	value,
 	missingInformation,
+	className,
 }: {
 	description: string;
 	value: string;
 	missingInformation: boolean;
+	className?: string;
 }) => {
 	return (
-		<div className='rounded-md border border-border bg-background p-3 space-y-1'>
+		<div
+			className={cn(
+				'rounded-md border border-border bg-background p-3 space-y-1',
+				className,
+			)}
+		>
 			<p className='text-xs text-muted-foreground'>{description}</p>
 			<p className='text-sm font-medium'>
 				{missingInformation ? (
@@ -32,7 +40,7 @@ const SummarySection = ({
 };
 
 export const ContractSummary = ({
-	data: { general, role, client, autoSendConfiguration },
+	data: { role, client, autoSendConfiguration },
 }: {
 	data: ContractsUpsertFormSchema;
 }) => {
@@ -82,29 +90,27 @@ export const ContractSummary = ({
 					missingInformation={!client.companyName || !role.description}
 				/>
 
-				<div className='grid gap-2 sm:grid-cols-2'>
+				{/* TODO: fix responsive layout for large client names/emails */}
+				<div className='flex gap-2 flex-nowrap overflow-hidden'>
 					<SummarySection
-						description={t('contracts.summary.contractDescriptionLabel')}
-						value={general.description}
-						missingInformation={!general.description}
+						description={t('contracts.summary.billingLabel')}
+						value={t('contracts.summary.billingValue', {
+							name: client.responsibleName,
+							email: client.responsibleEmail,
+						})}
+						missingInformation={
+							!client.responsibleName || !client.responsibleEmail
+						}
+						className='h-fit'
 					/>
+
 					<SummarySection
 						description={t('contracts.summary.salaryLabel')}
 						value={formatCurrency({ value: role.rate })}
 						missingInformation={!role.rate}
+						className='px-4 shrink-0'
 					/>
 				</div>
-
-				<SummarySection
-					description={t('contracts.summary.billingLabel')}
-					value={t('contracts.summary.billingValue', {
-						name: client.responsibleName,
-						email: client.responsibleEmail,
-					})}
-					missingInformation={
-						!client.responsibleName || !client.responsibleEmail
-					}
-				/>
 
 				{autoSendConfiguration.enabled && (
 					<SummarySection

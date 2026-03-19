@@ -166,6 +166,16 @@ export const brTranslations = {
 				companyNameLabel: 'Nome da empresa',
 				responsibleNameLabel: 'Nome do responsável',
 				responsibleEmailLabel: 'E-mail do responsável',
+				address: {
+					sectionTitle: 'Endereço do cliente',
+					street1Label: 'Rua',
+					street2Label: 'Complemento',
+					numberLabel: 'Número',
+					postalCodeLabel: 'CEP',
+					cityLabel: 'Cidade',
+					stateLabel: 'Estado',
+					countryLabel: 'País',
+				},
 			},
 			autoSendConfiguration: {
 				title: 'Configuração de envio automático',
@@ -183,7 +193,6 @@ export const brTranslations = {
 			},
 		},
 		tabs: {
-			general: 'Geral',
 			role: 'Cargo',
 			client: 'Cliente',
 			autoSendConfiguration: 'Envio automatico',

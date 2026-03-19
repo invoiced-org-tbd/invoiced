@@ -5,8 +5,6 @@ import { userIdColumn } from './userTable';
 export const contractTable = s.sqliteTable('contract', {
 	id: u.idColumn(),
 
-	description: s.text().notNull(),
-
 	userId: userIdColumn(),
 	createdAt: u.createdAtColumn(),
 	updatedAt: u.updatedAtColumn(),

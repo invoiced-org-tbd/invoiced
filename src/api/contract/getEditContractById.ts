@@ -35,7 +35,11 @@ const getEditContractByIdServerFn = createServerFn({
 				},
 				with: {
 					role: true,
-					client: true,
+					client: {
+						with: {
+							address: true,
+						},
+					},
 					autoSendConfiguration: {
 						with: {
 							items: true,
@@ -53,15 +57,8 @@ const getEditContractByIdServerFn = createServerFn({
 				});
 			}
 
-			const parsedData = {
-				general: {
-					description: contract.description,
-				},
-				...contract,
-			};
-
 			return createSuccessResponse({
-				data: parsedData,
+				data: contract,
 			});
 		} catch (error) {
 			throw createErrorResponse({

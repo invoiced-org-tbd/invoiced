@@ -4,7 +4,6 @@ import { useAppForm, useFormStepper } from '@/hooks/use-app-form';
 import { useMutation } from '@tanstack/react-query';
 import { ContractAutoSendConfigurationForm } from './ContractAutoSendConfigurationForm';
 import { ContractClientForm } from './ContractClientForm';
-import { ContractGeneralForm } from './ContractGeneralForm';
 import { ContractRoleForm } from './ContractRoleForm';
 import {
 	contractsUpsertFormSchema,
@@ -22,7 +21,6 @@ export type ContractsUpsertFormProps = {
 };
 
 const contractSteps = [
-	{ value: 'general', labelKey: 'contracts.tabs.general' },
 	{ value: 'role', labelKey: 'contracts.tabs.role' },
 	{ value: 'client', labelKey: 'contracts.tabs.client' },
 	{
@@ -92,13 +90,6 @@ export const ContractsUpsertForm = ({
 							</FormSteps.Trigger>
 						))}
 					</FormSteps.List>
-
-					<FormSteps.Content value='general'>
-						<ContractGeneralForm
-							form={form}
-							fields='general'
-						/>
-					</FormSteps.Content>
 
 					<FormSteps.Content value='role'>
 						<ContractRoleForm

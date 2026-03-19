@@ -1,6 +1,7 @@
 import { withFieldGroup } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
+import { ContractClientAddressForm } from './ContractClientAddressForm';
 
 export const ContractClientForm = withFieldGroup({
 	defaultValues: {} as ContractsUpsertFormSchema['client'],
@@ -32,6 +33,10 @@ export const ContractClientForm = withFieldGroup({
 							label={t('contracts.form.client.responsibleEmailLabel')}
 						/>
 					)}
+				/>
+				<ContractClientAddressForm
+					form={group}
+					fields='address'
 				/>
 			</group.Set>
 		);

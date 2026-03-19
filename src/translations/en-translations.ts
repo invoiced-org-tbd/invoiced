@@ -161,6 +161,16 @@ export const enTranslations = {
 				companyNameLabel: 'Company Name',
 				responsibleNameLabel: 'Responsible Name',
 				responsibleEmailLabel: 'Responsible Email',
+				address: {
+					sectionTitle: 'Client Address',
+					street1Label: 'Street',
+					street2Label: 'Address Complement',
+					numberLabel: 'Number',
+					postalCodeLabel: 'Postal code',
+					cityLabel: 'City',
+					stateLabel: 'State',
+					countryLabel: 'Country',
+				},
 			},
 			autoSendConfiguration: {
 				title: 'Auto Send Configuration',
@@ -178,7 +188,6 @@ export const enTranslations = {
 			},
 		},
 		tabs: {
-			general: 'General',
 			role: 'Role',
 			client: 'Client',
 			autoSendConfiguration: 'Auto send configuration',
