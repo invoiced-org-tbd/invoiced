@@ -4,10 +4,11 @@ import type {
 	WithItemList,
 } from '../base-field/types';
 
-export type SelectInputProps<TItem extends InputItem> = BaseInputProps<
-	TItem['value'],
-	WithItemList<TItem> & {
-		allowEmpty?: boolean;
-		className?: string;
-	}
->;
+export type SelectInputProps<TItem extends InputItem = InputItem> =
+	BaseInputProps<
+		TItem['value'],
+		WithItemList<TItem> & {
+			allowEmpty?: boolean;
+			className?: string;
+		}
+	>;

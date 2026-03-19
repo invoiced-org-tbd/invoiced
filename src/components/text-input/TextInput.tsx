@@ -44,7 +44,12 @@ export const TextInput = ({
 
 	return (
 		<BaseField.Root>
-			<BaseField.Label htmlFor={id}>{label}</BaseField.Label>
+			<BaseField.Label
+				htmlFor={id}
+				required={inputProps.required}
+			>
+				{label}
+			</BaseField.Label>
 
 			<BaseField.Control>
 				<div className='relative w-full'>

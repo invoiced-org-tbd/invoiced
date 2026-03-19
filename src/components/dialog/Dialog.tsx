@@ -91,6 +91,7 @@ const Content = ({
 				onEscapeKeyDown={(e) => {
 					e.preventDefault();
 				}}
+				aria-describedby={undefined}
 				{...props}
 			>
 				{children}

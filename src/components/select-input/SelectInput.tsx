@@ -56,7 +56,12 @@ export const SelectInput = <TItem extends InputItem>({
 
 	return (
 		<BaseField.Root>
-			<BaseField.Label htmlFor={id}>{label}</BaseField.Label>
+			<BaseField.Label
+				htmlFor={id}
+				required={inputProps.required}
+			>
+				{label}
+			</BaseField.Label>
 
 			<BaseField.Control>
 				<Select.Root

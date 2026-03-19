@@ -14,7 +14,9 @@ export type BaseFieldControlProps = ComponentProps<'div'> & {
 	renderLoading?: ReactNode;
 };
 
-export type BaseFieldLabelProps = ComponentProps<typeof Label>;
+export type BaseFieldLabelProps = ComponentProps<typeof Label> & {
+	required?: boolean;
+};
 
 export type BaseFieldDescriptionProps = ComponentProps<'p'>;
 

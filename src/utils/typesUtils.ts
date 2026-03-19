@@ -5,3 +5,5 @@ export type WithUserId = {
 export type WithId = {
 	id: string;
 };
+
+export const assertNever = (value: never): never => value;

@@ -36,7 +36,10 @@ export const CreateCompanyForm = () => {
 	});
 
 	return (
-		<form.Root form={form}>
+		<form.Root
+			form={form}
+			schema={createCompanyFormSchema}
+		>
 			<form.Group>
 				<CreateCompanyGeneralForm
 					form={form}

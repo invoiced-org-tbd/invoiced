@@ -5,7 +5,7 @@ import z from 'zod';
 
 export const contractRoleFormSchema = z.object({
 	description: z.string().min(1),
-	rate: z.number().min(0),
+	rate: z.number().min(1),
 });
 
 export const contractClientFormSchema = z.object({

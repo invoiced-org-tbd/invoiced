@@ -4,6 +4,7 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
+import type { ZodObject } from 'zod';
 import { Button } from '../button';
 import type {
 	FormCancelButtonProps,
@@ -17,17 +18,19 @@ import type {
 import type { FormRootContextValue } from './utils';
 import { FormRootContext } from './utils';
 
-const FormRoot = ({
+const FormRoot = <TFormSchema extends ZodObject>({
 	className,
 	children,
 	form: formApi,
 	isLoading = false,
-}: FormRootProps) => {
-	const formRootContextValue = useMemo<FormRootContextValue>(
+	schema,
+}: FormRootProps<TFormSchema>) => {
+	const formRootContextValue = useMemo<FormRootContextValue<TFormSchema>>(
 		() => ({
 			isLoading,
+			schema,
 		}),
-		[isLoading],
+		[isLoading, schema],
 	);
 
 	const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {

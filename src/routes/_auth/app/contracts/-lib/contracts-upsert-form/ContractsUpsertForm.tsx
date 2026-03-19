@@ -60,6 +60,7 @@ export const ContractsUpsertForm = ({
 	return (
 		<form.Root
 			form={form}
+			schema={contractsUpsertFormSchema}
 			isLoading={isLoadingEditContract}
 		>
 			<FormTabs.Root searchParamKey='tab'>

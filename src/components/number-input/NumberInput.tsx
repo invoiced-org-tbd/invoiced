@@ -36,8 +36,8 @@ export const NumberInput = (baseProps: NumberInputProps) => {
 		...props
 	} = baseProps;
 	const modeProps = getNumberInputModeProps(baseProps);
-	const min = Number(modeProps.min ?? Number.NEGATIVE_INFINITY);
-	const max = Number(modeProps.max ?? Number.POSITIVE_INFINITY);
+	const min = Number(props.min ?? modeProps.min ?? Number.NEGATIVE_INFINITY);
+	const max = Number(props.max ?? modeProps.max ?? Number.POSITIVE_INFINITY);
 
 	const baseId = useId();
 	const id = providedId ?? baseId;
@@ -135,7 +135,12 @@ export const NumberInput = (baseProps: NumberInputProps) => {
 
 	return (
 		<BaseField.Root>
-			<BaseField.Label htmlFor={id}>{label}</BaseField.Label>
+			<BaseField.Label
+				htmlFor={id}
+				required={inputProps.required}
+			>
+				{label}
+			</BaseField.Label>
 
 			<BaseField.Control>
 				<div className='relative w-full'>

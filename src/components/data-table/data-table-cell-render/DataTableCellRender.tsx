@@ -12,8 +12,7 @@ import { toDate } from '@/utils/dateUtils';
 import { inferDataTableColumnFormat } from './utils';
 import { Tooltip } from '@/components/tooltip';
 import { formatCurrency } from '@/utils/currencyUtils';
-
-const assertNever = (value: never): never => value;
+import { assertNever } from '@/utils/typesUtils';
 
 type FormatConfigMap = {
 	[kind in DataTableCulumnFormat]: Extract<

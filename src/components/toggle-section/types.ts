@@ -16,7 +16,7 @@ export type ToggleSectionRootProps = ComponentProps<'section'> &
 		onOpenChange?: (open: boolean) => void;
 	};
 
-export type ToggleSectionHeaderProps = ComponentProps<'button'>;
+export type ToggleSectionHeaderProps = ComponentProps<'div'>;
 
 export type ToggleSectionTitleProps = ComponentProps<'h3'>;
 

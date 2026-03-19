@@ -82,6 +82,7 @@ const Content = ({ className, children, ...props }: DrawerContentProps) => {
 				onEscapeKeyDown={(e) => {
 					e.preventDefault();
 				}}
+				aria-describedby={undefined}
 				{...props}
 			>
 				<div className='bg-muted mt-4 h-1 w-[100px] rounded-full mx-auto hidden shrink-0 group-data-[vaul-drawer-direction=bottom]/drawer-content:block' />

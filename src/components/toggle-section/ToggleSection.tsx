@@ -76,23 +76,28 @@ const Root = ({
 	);
 };
 
-const Header = ({ className, onClick, ...props }: ToggleSectionHeaderProps) => {
-	const { open, toggleOpen, variant } = useToggleSectionContext();
+const Header = ({ className, ...props }: ToggleSectionHeaderProps) => {
+	const { toggleOpen, variant } = useToggleSectionContext();
+
+	const handleClick = (
+		event:
+			| React.MouseEvent<HTMLDivElement>
+			| React.KeyboardEvent<HTMLDivElement>,
+	) => {
+		if (event.defaultPrevented) {
+			return;
+		}
+		toggleOpen();
+	};
 
 	return (
-		<button
-			type='button'
-			aria-expanded={open}
+		<div
+			tabIndex={0}
+			role='button'
 			className={cn(toggleSectionHeaderVariants({ variant }), className)}
 			data-slot='toggle-section-header'
-			onClick={(event) => {
-				onClick?.(event);
-
-				if (event.defaultPrevented) {
-					return;
-				}
-				toggleOpen();
-			}}
+			onClick={handleClick}
+			onKeyDown={handleClick}
 			{...props}
 		/>
 	);

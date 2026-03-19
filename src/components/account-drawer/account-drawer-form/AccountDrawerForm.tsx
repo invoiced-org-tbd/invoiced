@@ -36,7 +36,10 @@ export const AccountDrawerForm = () => {
 
 	return (
 		<Drawer.Body>
-			<form.Root form={form}>
+			<form.Root
+				form={form}
+				schema={accountFormSchema}
+			>
 				<form.Group>
 					<form.AppField
 						name='name'

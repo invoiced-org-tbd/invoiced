@@ -181,7 +181,12 @@ export const MultiSelectInput = ({
 
 	return (
 		<BaseField.Root>
-			<BaseField.Label htmlFor={id}>{label}</BaseField.Label>
+			<BaseField.Label
+				htmlFor={id}
+				required={inputProps.required}
+			>
+				{label}
+			</BaseField.Label>
 
 			<BaseField.Control>
 				<Popover.Root

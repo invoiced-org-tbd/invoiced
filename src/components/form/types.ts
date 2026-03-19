@@ -1,5 +1,6 @@
 import type { ComponentProps, ComponentType, ReactNode } from 'react';
 import type { ButtonProps } from '../button';
+import type { ZodObject } from 'zod';
 
 export type AppFormApi = {
 	handleSubmit: () => void;
@@ -8,11 +9,12 @@ export type AppFormApi = {
 	}>;
 };
 
-export type FormRootProps = {
+export type FormRootProps<TFormSchema extends ZodObject> = {
 	className?: string;
 	children?: ReactNode;
 	isLoading?: boolean;
 	form: AppFormApi;
+	schema: TFormSchema;
 };
 
 export type FormSetProps = ComponentProps<'fieldset'>;

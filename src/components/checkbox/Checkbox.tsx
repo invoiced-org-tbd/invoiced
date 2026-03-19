@@ -114,6 +114,7 @@ export const Checkbox = ({
 				<BaseField.Label
 					htmlFor={id}
 					className='w-auto'
+					required={inputProps.required}
 				>
 					{label}
 				</BaseField.Label>
