@@ -63,7 +63,7 @@ export const ContractsUpsertForm = ({
 			schema={contractsUpsertFormSchema}
 			isLoading={isLoadingEditContract}
 		>
-			<FormTabs.Root searchParamKey='tab'>
+			<FormTabs.Root searchParamKey='tab' defaultValue='general'>
 				<FormTabs.List>
 					<FormTabs.Trigger value='general'>
 						{t('contracts.tabs.general')}

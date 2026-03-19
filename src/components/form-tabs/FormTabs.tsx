@@ -9,7 +9,12 @@ import type {
 import { useFormContext } from '@/hooks/use-app-form';
 import { useStore } from '@tanstack/react-form';
 
-const Root = ({ searchParamKey = 'tab', ...props }: FormTabsRootProps) => {
+const Root = ({
+	searchParamKey = 'tab',
+	defaultValue,
+	onValueChange,
+	...props
+}: FormTabsRootProps) => {
 	const navigate = useNavigate();
 
 	const currentTab = useSearch({
@@ -27,6 +32,8 @@ const Root = ({ searchParamKey = 'tab', ...props }: FormTabsRootProps) => {
 	});
 
 	const handleValueChange = (value: string) => {
+		onValueChange?.(value);
+
 		if (!value || value === currentTab) {
 			return;
 		}
@@ -40,13 +47,9 @@ const Root = ({ searchParamKey = 'tab', ...props }: FormTabsRootProps) => {
 		});
 	};
 
-	return (
-		<Tabs.Root
-			value={currentTab}
-			onValueChange={handleValueChange}
-			{...props}
-		/>
-	);
+	const resolvedValue = currentTab ?? defaultValue ?? '';
+
+	return <Tabs.Root value={resolvedValue} onValueChange={handleValueChange} {...props} />;
 };
 
 const List = (props: FormTabsListProps) => {
