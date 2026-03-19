@@ -8,7 +8,7 @@ export const contractAutoSendConfigurationTable = s.sqliteTable(
 		id: u.idColumn(),
 
 		enabled: s.integer({ mode: 'boolean' }).notNull().default(false),
-		
+
 		contractId: contractIdColumn(),
 		createdAt: u.createdAtColumn(),
 		updatedAt: u.updatedAtColumn(),

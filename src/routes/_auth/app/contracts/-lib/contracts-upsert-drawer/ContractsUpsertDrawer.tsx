@@ -18,7 +18,7 @@ export const ContractsUpsertDrawer = () => {
 				...prev,
 				isCreating: undefined,
 				editId: undefined,
-				tab: undefined,
+				step: undefined,
 			}),
 		});
 	};
@@ -41,12 +41,10 @@ export const ContractsUpsertDrawer = () => {
 					</Drawer.Title>
 				</Drawer.Header>
 
-				<Drawer.Body>
-					<ContractsUpsertForm
-						editId={editId}
-						onClose={handleClose}
-					/>
-				</Drawer.Body>
+				<ContractsUpsertForm
+					editId={editId}
+					onClose={handleClose}
+				/>
 			</Drawer.Content>
 		</Drawer.Root>
 	);

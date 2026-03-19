@@ -43,7 +43,10 @@ const FormRoot = <TFormSchema extends ZodObject>({
 		<FormRootContext.Provider value={formRootContextValue}>
 			<formApi.AppForm>
 				<form
-					className={cn('w-full h-full', className)}
+					className={cn(
+						'w-full flex flex-col h-auto min-h-0 flex-1',
+						className,
+					)}
 					onSubmit={handleSubmit}
 				>
 					{children}

@@ -35,11 +35,11 @@ export const AccountDrawerForm = () => {
 	});
 
 	return (
-		<Drawer.Body>
-			<form.Root
-				form={form}
-				schema={accountFormSchema}
-			>
+		<form.Root
+			form={form}
+			schema={accountFormSchema}
+		>
+			<Drawer.Body>
 				<form.Group>
 					<form.AppField
 						name='name'
@@ -56,20 +56,20 @@ export const AccountDrawerForm = () => {
 				<div className='py-4'>
 					<AccountFormDangerZone />
 				</div>
+			</Drawer.Body>
 
-				<Drawer.Footer className='justify-end'>
-					<form.Subscribe
-						selector={(state) => ({
-							isDefaultValue: state.isDefaultValue,
-						})}
-						children={({ isDefaultValue }) => (
-							<form.SubmitButton disabled={isDefaultValue}>
-								{t('account.form.saveChanges')}
-							</form.SubmitButton>
-						)}
-					/>
-				</Drawer.Footer>
-			</form.Root>
-		</Drawer.Body>
+			<Drawer.Footer className='justify-end'>
+				<form.Subscribe
+					selector={(state) => ({
+						isDefaultValue: state.isDefaultValue,
+					})}
+					children={({ isDefaultValue }) => (
+						<form.SubmitButton disabled={isDefaultValue}>
+							{t('account.form.saveChanges')}
+						</form.SubmitButton>
+					)}
+				/>
+			</Drawer.Footer>
+		</form.Root>
 	);
 };

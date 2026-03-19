@@ -12,7 +12,9 @@ export const ContractRoleForm = withFieldGroup({
 				<group.AppField
 					name='description'
 					children={(field) => (
-						<field.TextInput label={t('contracts.form.role.descriptionLabel')} />
+						<field.TextInput
+							label={t('contracts.form.role.descriptionLabel')}
+						/>
 					)}
 				/>
 				<group.AppField

@@ -49,7 +49,13 @@ const Root = ({
 
 	const resolvedValue = currentTab ?? defaultValue ?? '';
 
-	return <Tabs.Root value={resolvedValue} onValueChange={handleValueChange} {...props} />;
+	return (
+		<Tabs.Root
+			value={resolvedValue}
+			onValueChange={handleValueChange}
+			{...props}
+		/>
+	);
 };
 
 const List = (props: FormTabsListProps) => {

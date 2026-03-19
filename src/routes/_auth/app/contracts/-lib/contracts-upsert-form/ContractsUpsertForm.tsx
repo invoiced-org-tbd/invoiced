@@ -1,6 +1,6 @@
 import { createContractMutationOptions } from '@/api/contract/createContract';
 import { Drawer } from '@/components/drawer';
-import { useAppForm } from '@/hooks/use-app-form';
+import { useAppForm, useFormStepper } from '@/hooks/use-app-form';
 import { useMutation } from '@tanstack/react-query';
 import { ContractAutoSendConfigurationForm } from './ContractAutoSendConfigurationForm';
 import { ContractClientForm } from './ContractClientForm';
@@ -11,15 +11,27 @@ import {
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
 import { updateContractMutationOptions } from '@/api/contract/updateContract';
-import { createFormTabs } from '@/components/form-tabs';
-import type { ContractTabs } from '../..';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { ContractSummary } from './ContractSummary';
+import type { ContractStep } from '../..';
+import type { FormStepperStep } from '@/hooks/use-app-form';
 
 export type ContractsUpsertFormProps = {
 	editId?: string;
 	onClose: () => void;
 };
+
+const contractSteps = [
+	{ value: 'general', labelKey: 'contracts.tabs.general' },
+	{ value: 'role', labelKey: 'contracts.tabs.role' },
+	{ value: 'client', labelKey: 'contracts.tabs.client' },
+	{
+		value: 'autoSendConfiguration',
+		labelKey: 'contracts.tabs.autoSendConfiguration',
+	},
+] as const satisfies readonly (FormStepperStep<ContractStep> & {
+	labelKey: `contracts.tabs.${ContractStep}`;
+})[];
 
 export const ContractsUpsertForm = ({
 	editId,
@@ -55,7 +67,12 @@ export const ContractsUpsertForm = ({
 		},
 	});
 
-	const FormTabs = createFormTabs<ContractTabs>();
+	const { FormSteps } = useFormStepper({
+		form,
+		mode: editId ? 'edit' : 'create',
+		steps: contractSteps,
+		searchParamKey: 'step',
+	});
 
 	return (
 		<form.Root
@@ -63,61 +80,64 @@ export const ContractsUpsertForm = ({
 			schema={contractsUpsertFormSchema}
 			isLoading={isLoadingEditContract}
 		>
-			<FormTabs.Root searchParamKey='tab' defaultValue='general'>
-				<FormTabs.List>
-					<FormTabs.Trigger value='general'>
-						{t('contracts.tabs.general')}
-					</FormTabs.Trigger>
-					<FormTabs.Trigger value='role'>
-						{t('contracts.tabs.role')}
-					</FormTabs.Trigger>
-					<FormTabs.Trigger value='client'>
-						{t('contracts.tabs.client')}
-					</FormTabs.Trigger>
-					<FormTabs.Trigger value='autoSendConfiguration'>
-						{t('contracts.tabs.autoSendConfiguration')}
-					</FormTabs.Trigger>
-				</FormTabs.List>
+			<Drawer.Body>
+				<FormSteps.Root>
+					<FormSteps.List sticky={true}>
+						{contractSteps.map((stepItem) => (
+							<FormSteps.Trigger
+								key={stepItem.value}
+								value={stepItem.value}
+							>
+								{t(stepItem.labelKey)}
+							</FormSteps.Trigger>
+						))}
+					</FormSteps.List>
 
-				<FormTabs.Content value='general'>
-					<ContractGeneralForm
-						form={form}
-						fields='general'
-					/>
-				</FormTabs.Content>
+					<FormSteps.Content value='general'>
+						<ContractGeneralForm
+							form={form}
+							fields='general'
+						/>
+					</FormSteps.Content>
 
-				<FormTabs.Content value='role'>
-					<ContractRoleForm
-						form={form}
-						fields='role'
-					/>
-				</FormTabs.Content>
+					<FormSteps.Content value='role'>
+						<ContractRoleForm
+							form={form}
+							fields='role'
+						/>
+					</FormSteps.Content>
 
-				<FormTabs.Content value='client'>
-					<ContractClientForm
-						form={form}
-						fields='client'
-					/>
-				</FormTabs.Content>
+					<FormSteps.Content value='client'>
+						<ContractClientForm
+							form={form}
+							fields='client'
+						/>
+					</FormSteps.Content>
 
-				<FormTabs.Content value='autoSendConfiguration'>
-					<ContractAutoSendConfigurationForm
-						form={form}
-						fields='autoSendConfiguration'
-					/>
-				</FormTabs.Content>
-			</FormTabs.Root>
+					<FormSteps.Content value='autoSendConfiguration'>
+						<ContractAutoSendConfigurationForm
+							form={form}
+							fields='autoSendConfiguration'
+						/>
+					</FormSteps.Content>
+				</FormSteps.Root>
 
-			<form.Subscribe
-				selector={(state) => state.values}
-				children={(data) => {
-					return <ContractSummary data={data} />;
-				}}
-			/>
+				<form.Subscribe
+					selector={(state) => state.values}
+					children={(data) => {
+						return <ContractSummary data={data} />;
+					}}
+				/>
+			</Drawer.Body>
 
-			<Drawer.Footer className='justify-end'>
+			<Drawer.Footer>
 				<form.CancelButton onClick={onClose} />
-				<form.SubmitButton />
+
+				<div className='flex items-center gap-2 ml-auto'>
+					<FormSteps.PreviousButton />
+					<FormSteps.SubmitButton />
+					<FormSteps.NextButton />
+				</div>
 			</Drawer.Footer>
 		</form.Root>
 	);

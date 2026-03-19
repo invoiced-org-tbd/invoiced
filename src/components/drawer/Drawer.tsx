@@ -76,7 +76,8 @@ const Content = ({ className, children, ...props }: DrawerContentProps) => {
 			<DrawerPrimitive.Content
 				data-slot='drawer-content'
 				className={cn(
-					'bg-background w-[400px] data-[vaul-drawer-direction=right]:max-w-[90vw] data-[vaul-drawer-direction=left]:max-w-[90vw] flex h-auto flex-col text-sm data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-t data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:rounded-l-xl data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-xl data-[vaul-drawer-direction=top]:border-b group/drawer-content fixed z-50',
+					'px-2.5 w-[400px] overflow-hidden',
+					'bg-background data-[vaul-drawer-direction=right]:max-w-[90vw] data-[vaul-drawer-direction=left]:max-w-[90vw] flex h-auto flex-col text-sm data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-t data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:h-full data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:h-full data-[vaul-drawer-direction=right]:rounded-l-xl data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-xl data-[vaul-drawer-direction=top]:border-b group/drawer-content fixed z-50',
 					className,
 				)}
 				onEscapeKeyDown={(e) => {
@@ -86,8 +87,9 @@ const Content = ({ className, children, ...props }: DrawerContentProps) => {
 				{...props}
 			>
 				<div className='bg-muted mt-4 h-1 w-[100px] rounded-full mx-auto hidden shrink-0 group-data-[vaul-drawer-direction=bottom]/drawer-content:block' />
-
-				{children}
+				<div className='flex flex-1 min-h-0 flex-col overflow-hidden'>
+					{children}
+				</div>
 			</DrawerPrimitive.Content>
 		</Portal>
 	);
@@ -97,7 +99,7 @@ const Body = ({ className, children, ...props }: DrawerBodyProps) => {
 	return (
 		<div
 			data-slot='drawer-body'
-			className={cn('px-4 flex flex-col', className)}
+			className={cn('flex min-h-0 flex-1 flex-col overflow-y-auto px-1', className)}
 			{...props}
 		>
 			{children}
@@ -110,7 +112,7 @@ const Header = ({ className, ...props }: DrawerHeaderProps) => {
 		<div
 			data-slot='drawer-header'
 			className={cn(
-				'gap-0.5 py-2 my-2 px-2 mx-2 border-b border-border group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-0.5 md:text-left flex flex-col',
+				'gap-0.5 py-2 my-2 px-2 mx-2 border-b border-border group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-0.5 md:text-left flex shrink-0 flex-col',
 				className,
 			)}
 			{...props}
@@ -122,7 +124,10 @@ const Footer = ({ className, ...props }: DrawerFooterProps) => {
 	return (
 		<div
 			data-slot='drawer-footer'
-			className={cn('gap-2 py-4 flex', className)}
+			className={cn(
+				'gap-2 flex shrink-0 border-t border-border mt-2 px-2 py-4',
+				className,
+			)}
 			{...props}
 		/>
 	);

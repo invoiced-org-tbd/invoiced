@@ -23,6 +23,7 @@ export const enTranslations = {
 		selectAll: 'Select all',
 		addItem: 'Add item',
 		removeItem: 'Remove item',
+		next: 'Next',
 		unknownError: 'An unknown error occurred',
 		day: 'Day',
 	},

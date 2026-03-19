@@ -25,6 +25,7 @@ export const brTranslations = {
 		selectAll: 'Selecionar tudo',
 		addItem: 'Adicionar item',
 		removeItem: 'Remover item',
+		next: 'Próximo',
 		unknownError: 'Ocorreu um erro desconhecido',
 		day: 'Dia',
 	},
