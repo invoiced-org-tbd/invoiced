@@ -39,7 +39,8 @@ export const getStepsMeta = ({
 		currentIndex !== -1 && stepIndex !== -1 && currentIndex >= stepIndex;
 	const isFirstStep = stepIndex === 0;
 	const isLastStep = stepIndex === resolvedSteps.length - 1;
-	const previousStepValue = stepIndex > 0 ? resolvedSteps[stepIndex - 1] : undefined;
+	const previousStepValue =
+		stepIndex > 0 ? resolvedSteps[stepIndex - 1] : undefined;
 	const nextStepValue =
 		stepIndex >= 0 && stepIndex < resolvedSteps.length - 1
 			? resolvedSteps[stepIndex + 1]

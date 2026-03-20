@@ -1,5 +1,5 @@
 import { Button } from '@/components/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import {
 	Close as DialogClosePrimitive,
 	Content as DialogContentPrimitive,

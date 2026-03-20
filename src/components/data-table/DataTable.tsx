@@ -1,5 +1,5 @@
 import { LoaderCircleIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { Table } from '@/components/table';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { DataTableBody } from './data-table-body';

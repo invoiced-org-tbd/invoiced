@@ -10,7 +10,7 @@ import { useBaseField } from '../base-field/useBaseField';
 import { Checkbox } from '../checkbox';
 import { Popover } from '../popover';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type {
 	MultiSelectInputGroup,
 	MultiSelectInputItem,

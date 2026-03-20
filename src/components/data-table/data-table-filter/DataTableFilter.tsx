@@ -3,7 +3,7 @@ import { fieldInputVariants } from '@/components/base-field';
 import { Popover } from '@/components/popover';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { FilterIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type { DataTableFilterProps } from './types';
 
 export const DataTableFilter = <TData,>({

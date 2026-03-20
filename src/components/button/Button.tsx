@@ -1,6 +1,6 @@
 import { Slot } from '@radix-ui/react-slot';
 import { LoaderCircleIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { buttonVariants } from './consts';
 import type { ButtonProps } from './types';
 import { Tooltip } from '../tooltip';

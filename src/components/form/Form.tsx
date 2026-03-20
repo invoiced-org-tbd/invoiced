@@ -1,7 +1,7 @@
 import { Separator } from '@/components/separator';
 import { useFormContext } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
 import type { ZodObject } from 'zod';

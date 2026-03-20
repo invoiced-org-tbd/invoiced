@@ -1,5 +1,5 @@
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { badgeVariants } from './consts';
 import type { BadgeProps } from './types';
 

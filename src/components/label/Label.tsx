@@ -1,5 +1,5 @@
 import { Label as LabelPrimitive } from 'radix-ui';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type { LabelProps } from './types';
 
 export const Label = ({ className, ...props }: LabelProps) => {

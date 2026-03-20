@@ -3,7 +3,7 @@ import { Button } from '../button';
 import { inputButtonClassName, inputButtonsSideClassName } from './consts';
 import { Label } from '@/components/label';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type {
 	BaseFieldControlProps,
 	BaseFieldDescriptionProps,

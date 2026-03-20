@@ -15,13 +15,17 @@ export const ContractClientAddressForm = withFieldGroup({
 				<group.AppField
 					name='street1'
 					children={(field) => (
-						<field.TextInput label={t('contracts.form.client.address.street1Label')} />
+						<field.TextInput
+							label={t('contracts.form.client.address.street1Label')}
+						/>
 					)}
 				/>
 				<group.AppField
 					name='street2'
 					children={(field) => (
-						<field.TextInput label={t('contracts.form.client.address.street2Label')} />
+						<field.TextInput
+							label={t('contracts.form.client.address.street2Label')}
+						/>
 					)}
 				/>
 				<div className='flex gap-4'>
@@ -46,13 +50,17 @@ export const ContractClientAddressForm = withFieldGroup({
 					<group.AppField
 						name='city'
 						children={(field) => (
-							<field.TextInput label={t('contracts.form.client.address.cityLabel')} />
+							<field.TextInput
+								label={t('contracts.form.client.address.cityLabel')}
+							/>
 						)}
 					/>
 					<group.AppField
 						name='state'
 						children={(field) => (
-							<field.TextInput label={t('contracts.form.client.address.stateLabel')} />
+							<field.TextInput
+								label={t('contracts.form.client.address.stateLabel')}
+							/>
 						)}
 					/>
 					<group.AppField

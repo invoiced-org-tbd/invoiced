@@ -4,7 +4,7 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { Button } from '@/components/button';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { ToggleSection } from '@/components/toggle-section';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { getOrdinalSuffix } from '@/utils/stringUtils';
 
 export const ContractAutoSendConfigurationForm = withFieldGroup({

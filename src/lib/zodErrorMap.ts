@@ -1,6 +1,6 @@
 import type { Language } from '@/hooks/use-language/types';
 import z from 'zod';
-import { translate } from './translate';
+import { translate } from '@/translations/translate';
 
 type ZodIssue = {
 	input?: unknown;

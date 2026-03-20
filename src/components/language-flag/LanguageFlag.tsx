@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { FlagBr, FlagUs } from '@sankyu/react-circle-flags';
 import type { LanguageFlagProps } from './types';
 

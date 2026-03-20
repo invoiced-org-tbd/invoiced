@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { setupZodErrorMap } from '@/translations/zodErrorMap';
+import { setupZodErrorMap } from '@/lib/zodErrorMap';
 import { useLanguage } from './useLanguage';
 
 export const useSyncZodErrorMap = () => {

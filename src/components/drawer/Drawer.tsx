@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { Drawer as DrawerPrimitive } from 'vaul';
 import type {
 	DrawerBodyProps,
@@ -99,7 +99,10 @@ const Body = ({ className, children, ...props }: DrawerBodyProps) => {
 	return (
 		<div
 			data-slot='drawer-body'
-			className={cn('flex min-h-0 flex-1 flex-col overflow-y-auto px-1', className)}
+			className={cn(
+				'flex min-h-0 flex-1 flex-col overflow-y-auto px-1',
+				className,
+			)}
 			{...props}
 		>
 			{children}

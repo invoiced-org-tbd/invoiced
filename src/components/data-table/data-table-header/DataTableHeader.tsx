@@ -3,7 +3,7 @@ import { Table } from '@/components/table';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { flexRender } from '@tanstack/react-table';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type { DataTableHeaderProps } from './types';
 import { DataTableFilter } from '../data-table-filter/DataTableFilter';
 import type { DataTableColumnMeta } from '../types';

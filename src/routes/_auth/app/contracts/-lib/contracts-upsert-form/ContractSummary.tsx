@@ -1,7 +1,7 @@
 import { Badge } from '@/components/badge';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { getOrdinalSuffix } from '@/utils/stringUtils';
 import { motion } from 'framer-motion';
@@ -153,7 +153,11 @@ export const ContractSummary = ({
 						label={t('contracts.summary.salaryLabel')}
 						value={formatCurrency({ value: role.rate })}
 						placeholder={t('contracts.summary.salaryMissing')}
-						hint={!hasRate ? t('contracts.summary.missingInformationHint') : undefined}
+						hint={
+							!hasRate
+								? t('contracts.summary.missingInformationHint')
+								: undefined
+						}
 						isMissing={!hasRate}
 					/>
 

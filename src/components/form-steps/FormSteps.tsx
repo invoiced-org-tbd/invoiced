@@ -1,6 +1,6 @@
 import { useFormContext } from '@/hooks/use-app-form';
 import { getScopedErrorKeys } from '@/hooks/use-app-form/stepErrorUtils';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { useStore } from '@tanstack/react-form';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Steps, useSteps } from '../steps';

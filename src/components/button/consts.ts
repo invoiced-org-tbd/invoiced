@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 
 export const buttonVariants = cva(
 	cn(

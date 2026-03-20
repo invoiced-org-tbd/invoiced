@@ -3,7 +3,7 @@ import { useId } from 'react';
 import { BaseField } from '../base-field';
 import { toggleControlVariants } from '../base-field';
 import { useBaseField } from '../base-field/useBaseField';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type { SwitchProps } from './types';
 
 export const Switch = ({

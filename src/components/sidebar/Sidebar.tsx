@@ -1,6 +1,6 @@
 import { Button } from '@/components/button';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import { Slot } from '@radix-ui/react-slot';
 import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react';
 import {

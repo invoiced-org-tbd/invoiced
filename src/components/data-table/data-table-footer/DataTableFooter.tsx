@@ -1,7 +1,7 @@
 import { Button } from '@/components/button';
 import { DropdownMenu } from '@/components/dropdown-menu';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 import type { DataTableFooterProps } from './types';
 import { DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS } from '../consts';
 

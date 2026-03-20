@@ -9,7 +9,7 @@ import {
 import type { CSSProperties } from 'react';
 import { Toaster as Sonner } from 'sonner';
 import type { ToasterProps } from './types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/classNamesUtils';
 
 export const Toaster = ({ className, ...props }: ToasterProps) => {
 	const theme = useTheme((state) => state.theme);
