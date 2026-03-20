@@ -1,5 +1,6 @@
 import { cn } from '@/utils/classNamesUtils';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { useModalInteractionContainer } from '@/components/modal-interaction-container-context';
 import { Combobox as ComboboxPrimitive } from '@base-ui/react';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
@@ -113,8 +114,12 @@ const Content = ({
 	anchor,
 	...props
 }: SelectContentProps) => {
+	const modalInteractionContainer = useModalInteractionContainer();
+
 	return (
-		<ComboboxPrimitive.Portal>
+		<ComboboxPrimitive.Portal
+			container={modalInteractionContainer ?? undefined}
+		>
 			<ComboboxPrimitive.Positioner
 				side={side}
 				sideOffset={sideOffset}

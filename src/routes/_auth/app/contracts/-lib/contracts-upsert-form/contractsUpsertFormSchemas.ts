@@ -1,4 +1,5 @@
 import { getEditContractByIdQueryOptions } from '@/api/contract/getEditContractById';
+import { countryCodeEnumSchema } from '@/lib/countries';
 import { clientT } from '@/utils/languageUtils';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
@@ -15,7 +16,7 @@ export const contractClientAddressFormSchema = z.object({
 	postalCode: z.string().min(1),
 	city: z.string().min(1),
 	state: z.string().min(1),
-	country: z.string().min(1),
+	country: countryCodeEnumSchema,
 });
 
 export const contractClientFormSchema = z.object({
@@ -139,7 +140,7 @@ export const useContractsUpsertFormDefaultValues = ({
 					postalCode: editContract?.client.address.postalCode ?? '',
 					city: editContract?.client.address.city ?? '',
 					state: editContract?.client.address.state ?? '',
-					country: editContract?.client.address.country ?? '',
+					country: editContract?.client.address.country ?? 'us',
 				},
 			},
 			autoSendConfiguration: {
@@ -150,7 +151,7 @@ export const useContractsUpsertFormDefaultValues = ({
 						percentage: item.percentage,
 					})) ?? [],
 			},
-		},
+		} satisfies ContractsUpsertFormSchema,
 		isLoadingEditContract: isFetching,
 	};
 };

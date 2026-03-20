@@ -1,4 +1,5 @@
 import { Button } from '@/components/button';
+import { ModalInteractionContainerProvider } from '@/components/modal-interaction-container-context';
 import { cn } from '@/utils/classNamesUtils';
 import {
 	Close as DialogClosePrimitive,
@@ -11,6 +12,7 @@ import {
 	Trigger as DialogTriggerPrimitive,
 } from '@radix-ui/react-dialog';
 import { XIcon } from 'lucide-react';
+import { useState } from 'react';
 import type {
 	DialogCloseProps,
 	DialogContentProps,
@@ -79,10 +81,15 @@ const Content = ({
 	showCloseButton = true,
 	...props
 }: DialogContentProps) => {
+	const [contentElement, setContentElement] = useState<HTMLElement | null>(
+		null,
+	);
+
 	return (
 		<Portal>
 			<Overlay />
 			<DialogContentPrimitive
+				ref={setContentElement}
 				data-slot='dialog-content'
 				className={cn(
 					'bg-background data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 ring-foreground/10 grid w-full max-w-[calc(100%-2rem)] gap-4 rounded-xl p-4 text-sm ring-1 duration-100 sm:max-w-sm fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 outline-hidden',
@@ -94,25 +101,27 @@ const Content = ({
 				aria-describedby={undefined}
 				{...props}
 			>
-				{children}
+				<ModalInteractionContainerProvider value={contentElement}>
+					{children}
 
-				{showCloseButton && (
-					<DialogClosePrimitive
-						data-slot='dialog-close'
-						asChild
-					>
-						<Button
-							variant='secondary'
-							isGhost={true}
-							isIcon={true}
-							size='sm'
-							className='absolute top-2 right-2'
+					{showCloseButton && (
+						<DialogClosePrimitive
+							data-slot='dialog-close'
+							asChild
 						>
-							<XIcon />
-							<span className='sr-only'>close</span>
-						</Button>
-					</DialogClosePrimitive>
-				)}
+							<Button
+								variant='secondary'
+								isGhost={true}
+								isIcon={true}
+								size='sm'
+								className='absolute top-2 right-2'
+							>
+								<XIcon />
+								<span className='sr-only'>close</span>
+							</Button>
+						</DialogClosePrimitive>
+					)}
+				</ModalInteractionContainerProvider>
 			</DialogContentPrimitive>
 		</Portal>
 	);

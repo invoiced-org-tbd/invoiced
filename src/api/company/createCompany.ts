@@ -55,7 +55,7 @@ const createCompanyServerFn = createServerFn({
 					postalCode: address.postalCode,
 					city: address.city,
 					state: address.state,
-					country: address.country,
+					country: 'br',
 				});
 			});
 

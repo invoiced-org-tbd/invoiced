@@ -1,11 +1,13 @@
 import { withFieldGroup } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
+import { useCountryItems } from '@/lib/countries';
 
 export const ContractClientAddressForm = withFieldGroup({
 	defaultValues: {} as ContractsUpsertFormSchema['client']['address'],
 	render: ({ group }) => {
 		const { t } = useTranslate();
+		const { countryItems } = useCountryItems();
 
 		return (
 			<group.Group>
@@ -66,8 +68,9 @@ export const ContractClientAddressForm = withFieldGroup({
 					<group.AppField
 						name='country'
 						children={(field) => (
-							<field.TextInput
+							<field.SelectInput
 								label={t('contracts.form.client.address.countryLabel')}
+								items={countryItems}
 							/>
 						)}
 					/>

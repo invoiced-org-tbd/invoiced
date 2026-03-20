@@ -1,4 +1,5 @@
 import { cn } from '@/utils/classNamesUtils';
+import { useModalInteractionContainer } from '@/components/modal-interaction-container-context';
 import {
 	Content as PopoverContentPrimitive,
 	Portal as PopoverPortal,
@@ -39,8 +40,10 @@ const Content = ({
 	sideOffset = POPOVER_CONTENT_DEFAULT_SIDE_OFFSET_PX,
 	...props
 }: PopoverContentProps) => {
+	const modalInteractionContainer = useModalInteractionContainer();
+
 	return (
-		<PopoverPortal>
+		<PopoverPortal container={modalInteractionContainer ?? undefined}>
 			<PopoverContentPrimitive
 				data-slot='popover-content'
 				align={align}

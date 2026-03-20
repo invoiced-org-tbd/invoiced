@@ -1,4 +1,5 @@
 import { cn } from '@/utils/classNamesUtils';
+import { useModalInteractionContainer } from '@/components/modal-interaction-container-context';
 import {
 	CheckboxItem as DropdownMenuCheckboxItemPrimitive,
 	Content as DropdownMenuContentPrimitive,
@@ -72,8 +73,10 @@ const Content = ({
 	sideOffset = DROPDOWN_MENU_CONTENT_DEFAULT_SIDE_OFFSET_PX,
 	...props
 }: DropdownMenuContentProps) => {
+	const modalInteractionContainer = useModalInteractionContainer();
+
 	return (
-		<Portal>
+		<Portal container={modalInteractionContainer ?? undefined}>
 			<DropdownMenuContentPrimitive
 				data-slot='dropdown-menu-content'
 				sideOffset={sideOffset}

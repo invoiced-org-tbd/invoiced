@@ -12,7 +12,6 @@ const createCompanyAddressFormSchema = z.object({
 	postalCode: z.string().min(1),
 	city: z.string().min(1),
 	state: z.string().min(1),
-	country: z.string().min(1),
 });
 
 export const createCompanyFormSchema = z.object({
@@ -22,7 +21,7 @@ export const createCompanyFormSchema = z.object({
 
 export type CreateCompanyFormSchema = z.infer<typeof createCompanyFormSchema>;
 
-export const useCreateCompanyDefaultValues = (): CreateCompanyFormSchema => {
+export const useCreateCompanyDefaultValues = () => {
 	return {
 		general: {
 			name: '',
@@ -35,7 +34,6 @@ export const useCreateCompanyDefaultValues = (): CreateCompanyFormSchema => {
 			postalCode: '',
 			city: '',
 			state: '',
-			country: '',
 		},
-	};
+	} satisfies CreateCompanyFormSchema;
 };

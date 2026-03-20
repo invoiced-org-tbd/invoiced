@@ -1,4 +1,6 @@
+import { ModalInteractionContainerProvider } from '@/components/modal-interaction-container-context';
 import { cn } from '@/utils/classNamesUtils';
+import { useState } from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 import type {
 	DrawerBodyProps,
@@ -70,10 +72,15 @@ const Overlay = ({ className, ...props }: DrawerOverlayProps) => {
 };
 
 const Content = ({ className, children, ...props }: DrawerContentProps) => {
+	const [contentElement, setContentElement] = useState<HTMLElement | null>(
+		null,
+	);
+
 	return (
 		<Portal>
 			<Overlay />
 			<DrawerPrimitive.Content
+				ref={setContentElement}
 				data-slot='drawer-content'
 				className={cn(
 					'px-2.5 w-[400px] overflow-hidden',
@@ -86,10 +93,12 @@ const Content = ({ className, children, ...props }: DrawerContentProps) => {
 				aria-describedby={undefined}
 				{...props}
 			>
-				<div className='bg-muted mt-4 h-1 w-[100px] rounded-full mx-auto hidden shrink-0 group-data-[vaul-drawer-direction=bottom]/drawer-content:block' />
-				<div className='flex flex-1 min-h-0 flex-col overflow-hidden'>
-					{children}
-				</div>
+				<ModalInteractionContainerProvider value={contentElement}>
+					<div className='bg-muted mt-4 h-1 w-[100px] rounded-full mx-auto hidden shrink-0 group-data-[vaul-drawer-direction=bottom]/drawer-content:block' />
+					<div className='flex flex-1 min-h-0 flex-col overflow-hidden'>
+						{children}
+					</div>
+				</ModalInteractionContainerProvider>
 			</DrawerPrimitive.Content>
 		</Portal>
 	);

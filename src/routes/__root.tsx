@@ -48,10 +48,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body
-				suppressHydrationWarning={true}
-				className='select-none'
-			>
+			<body suppressHydrationWarning={true}>
 				<Tooltip.Provider>
 					{children}
 					<Toaster />

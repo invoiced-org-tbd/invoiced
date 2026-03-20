@@ -1,11 +1,14 @@
+import { TextInput } from '@/components/text-input';
 import { withFieldGroup } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { CreateCompanyFormSchema } from './createCompanyFormSchema';
+import { useGetCountryName } from '@/lib/countries';
 
 export const CreateCompanyAddressForm = withFieldGroup({
 	defaultValues: {} as CreateCompanyFormSchema['address'],
 	render: ({ group }) => {
 		const { t } = useTranslate();
+		const { getCountryName } = useGetCountryName();
 
 		return (
 			<group.Group>
@@ -70,14 +73,11 @@ export const CreateCompanyAddressForm = withFieldGroup({
 							/>
 						)}
 					/>
-					<group.AppField
-						name='country'
-						children={(field) => (
-							<field.TextInput
-								label={t('createCompany.form.countryLabel')}
-								placeholder={t('createCompany.form.countryPlaceholder')}
-							/>
-						)}
+					<TextInput
+						label={t('createCompany.form.countryLabel')}
+						placeholder={t('createCompany.form.countryPlaceholder')}
+						value={getCountryName('br')}
+						disabled
 					/>
 				</div>
 			</group.Group>

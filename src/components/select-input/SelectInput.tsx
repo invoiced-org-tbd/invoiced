@@ -4,7 +4,6 @@ import { useBaseField } from '../base-field/useBaseField';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { InputItem } from '../base-field/types';
 import type { SelectInputProps } from './types';
-import { isInputItem } from '../base-field/utils';
 import { Select } from '../select';
 
 export const SelectInput = <TItem extends InputItem>({
@@ -46,13 +45,13 @@ export const SelectInput = <TItem extends InputItem>({
 		if (!item && !allowEmpty) {
 			return;
 		}
-		if (!isInputItem(item) || !item.value) {
-			onChange?.(undefined);
-			return;
-		}
 
-		onChange?.(item.value);
+		onChange?.((item as TItem)?.value ?? undefined);
 	};
+
+	const value = props.value
+		? items.find((item) => item.value === props.value)
+		: undefined;
 
 	return (
 		<BaseField.Root>
@@ -66,9 +65,13 @@ export const SelectInput = <TItem extends InputItem>({
 			<BaseField.Control>
 				<Select.Root
 					items={items}
+					itemToStringValue={(item) => (item as TItem)?.label ?? ''}
 					onValueChange={handleChange}
 					data-slot='input'
 					{...props}
+					value={value}
+					disabled={false}
+					readOnly={false}
 					id={id}
 				>
 					<Select.Input
