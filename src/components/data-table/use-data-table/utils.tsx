@@ -13,6 +13,7 @@ import type {
 	DataTableAccessorKeyColumn,
 	DataTableFormatStyle,
 } from '../data-table-cell-render/types';
+import type { DataTableObjectPath } from '../objectPath';
 import { useCreateRowActionsColumn } from '../utils';
 import { DataTableCellRender } from '../data-table-cell-render';
 import type { ReactNode } from 'react';
@@ -31,7 +32,7 @@ export const resolveDataTableSingleColumnSorting = <TData,>(
 
 	return [
 		{
-			id: nextSorting[0].id as Extract<keyof TData, string>,
+			id: nextSorting[0].id as DataTableObjectPath<TData>,
 			desc: nextSorting[0].desc,
 		},
 	];
@@ -74,7 +75,7 @@ export const toServerDataTableFilters = <TData,>(
 
 		return [
 			{
-				id: columnFilter.id as Extract<keyof TData, string>,
+				id: columnFilter.id as DataTableObjectPath<TData>,
 				value,
 			},
 		];

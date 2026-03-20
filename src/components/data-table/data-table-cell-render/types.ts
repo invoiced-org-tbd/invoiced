@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { DataTableObjectPath } from '../objectPath';
 
 export type DataTableColumnBaseOptions = {
 	header?: string;
@@ -55,7 +56,7 @@ export type DataTableIdColumn<TData> = {
 export type DataTableAccessorKeyColumn<TData> = {
 	id?: never;
 	header?: ReactNode;
-	accessorKey: Extract<keyof TData, string>;
+	accessorKey: DataTableObjectPath<TData>;
 	format?: DataTableCulumnFormatConfig;
 	canSort?: boolean;
 	canHide?: boolean;

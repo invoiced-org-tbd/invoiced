@@ -13,6 +13,7 @@ import { inferDataTableColumnFormat } from './utils';
 import { Tooltip } from '@/components/tooltip';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { assertNever } from '@/utils/typesUtils';
+import { getDataTableValueByPath } from '../objectPath';
 
 type FormatConfigMap = {
 	[kind in DataTableCulumnFormat]: Extract<
@@ -191,10 +192,9 @@ export const DataTableCellRender = <TData,>({
 	data,
 	column,
 }: DataTableCellRenderProps<TData>) => {
-	const format = inferDataTableColumnFormat({ value: data, column });
-
+	const value = getDataTableValueByPath(data, column.accessorKey);
+	const format = inferDataTableColumnFormat({ value, column });
 	const Cell = cellMap[format.kind];
-	const value = data[column.accessorKey];
 
 	if (value === undefined || value === null || !Cell) {
 		return null;

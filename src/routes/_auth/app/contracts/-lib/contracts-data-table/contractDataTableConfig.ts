@@ -21,7 +21,7 @@ export const useContractDataTableColumns = (): DataTableColumn<
 
 	return [
 		{
-			accessorKey: 'id',
+			accessorKey: 'client.companyName',
 			header: t('contracts.name'),
 		},
 	];

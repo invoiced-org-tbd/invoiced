@@ -110,6 +110,8 @@ export const getPaginatedQueryOrderBy = ({
 		return undefined;
 	}
 
+	// NOTE: this helper expects orderBy.id to be a backend-allowed field mapping
+	// nested UI IDs like "address.city" must be translated/allowlisted before reaching DB query builders
 	return {
 		[orderBy.id]: orderBy.desc ? 'desc' : 'asc',
 	};

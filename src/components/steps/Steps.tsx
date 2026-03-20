@@ -1,11 +1,11 @@
 import { cn } from '@/lib/utils';
-import { CheckIcon } from 'lucide-react';
 import {
 	Content as TabsContentPrimitive,
 	List as TabsListPrimitive,
 	Root as TabsRootPrimitive,
 	Trigger as TabsTriggerPrimitive,
 } from '@radix-ui/react-tabs';
+import { CheckIcon } from 'lucide-react';
 import {
 	createContext,
 	useCallback,
@@ -35,6 +35,8 @@ type StepsContextValue = {
 	registerStep: (value: string) => void;
 	unregisterStep: (value: string) => void;
 	getStepIndex: (value: string) => number;
+	setStepVariant: (value: string, variant: 'default' | 'error') => void;
+	getStepVariant: (value: string) => 'default' | 'error';
 };
 
 const StepsContext = createContext<StepsContextValue | null>(null);
@@ -60,6 +62,9 @@ const Root = ({
 }: StepsRootProps) => {
 	const [internalValue, setInternalValue] = useState(defaultValue ?? '');
 	const [orderedSteps, setOrderedSteps] = useState<string[]>([]);
+	const [stepVariants, setStepVariants] = useState<
+		Record<string, 'default' | 'error'>
+	>({});
 	const isControlled = controlledValue !== undefined;
 	const currentValue = isControlled ? controlledValue : internalValue;
 	const resolvedSteps = steps ? [...steps] : orderedSteps;
@@ -74,11 +79,41 @@ const Root = ({
 		setOrderedSteps((previous) =>
 			previous.filter((existingStep) => existingStep !== stepValue),
 		);
+		setStepVariants((previous) => {
+			if (!(stepValue in previous)) {
+				return previous;
+			}
+
+			const next = { ...previous };
+			delete next[stepValue];
+			return next;
+		});
 	}, []);
 
 	const getStepIndex = useCallback(
 		(stepValue: string) => resolvedSteps.indexOf(stepValue),
 		[resolvedSteps],
+	);
+
+	const setStepVariant = useCallback(
+		(stepValue: string, stepVariant: 'default' | 'error') => {
+			setStepVariants((previous) => {
+				if (previous[stepValue] === stepVariant) {
+					return previous;
+				}
+
+				return {
+					...previous,
+					[stepValue]: stepVariant,
+				};
+			});
+		},
+		[],
+	);
+
+	const getStepVariant = useCallback(
+		(stepValue: string) => stepVariants[stepValue] ?? 'default',
+		[stepVariants],
 	);
 
 	const canSelectStep = (nextValue: string) => {
@@ -119,6 +154,8 @@ const Root = ({
 			registerStep,
 			unregisterStep,
 			getStepIndex,
+			setStepVariant,
+			getStepVariant,
 		}),
 		[
 			currentValue,
@@ -127,6 +164,8 @@ const Root = ({
 			registerStep,
 			unregisterStep,
 			getStepIndex,
+			setStepVariant,
+			getStepVariant,
 		],
 	);
 
@@ -198,6 +237,8 @@ const Trigger = ({
 		registerStep,
 		unregisterStep,
 		getStepIndex,
+		setStepVariant,
+		getStepVariant,
 	} = useStepsContext();
 
 	useEffect(() => {
@@ -217,7 +258,23 @@ const Trigger = ({
 		currentIndex !== -1 && stepIndex !== -1 && currentIndex >= stepIndex;
 	const isFirstStep = stepIndex === 0;
 	const isLastStep = stepIndex === resolvedSteps.length - 1;
-	const isError = variant === 'error';
+	const resolvedVariant = variant ?? 'default';
+	const isError = resolvedVariant === 'error';
+	const previousStepValue = stepIndex > 0 ? resolvedSteps[stepIndex - 1] : undefined;
+	const nextStepValue =
+		stepIndex >= 0 && stepIndex < resolvedSteps.length - 1
+			? resolvedSteps[stepIndex + 1]
+			: undefined;
+	const previousStepHasError = previousStepValue
+		? getStepVariant(previousStepValue) === 'error'
+		: false;
+	const nextStepHasError = nextStepValue
+		? getStepVariant(nextStepValue) === 'error'
+		: false;
+
+	useEffect(() => {
+		setStepVariant(value, resolvedVariant);
+	}, [setStepVariant, resolvedVariant, value]);
 
 	let state: 'active' | 'completed' | 'upcoming' = 'upcoming';
 	if (isActive) {
@@ -264,7 +321,11 @@ const Trigger = ({
 						aria-hidden
 						className={cn(
 							stepsConnectorVariants({
-								state: isReached ? 'completed' : 'upcoming',
+								state: isReached
+									? previousStepHasError || isError
+										? 'error'
+										: 'completed'
+									: 'upcoming',
 							}),
 							'left-0 right-[calc(50%+1rem)]',
 						)}
@@ -276,7 +337,11 @@ const Trigger = ({
 						aria-hidden
 						className={cn(
 							stepsConnectorVariants({
-								state: isCompleted ? 'completed' : 'upcoming',
+								state: isCompleted
+									? isError || nextStepHasError
+										? 'error'
+										: 'completed'
+									: 'upcoming',
 							}),
 							'left-[calc(50%+1rem)] right-0',
 						)}

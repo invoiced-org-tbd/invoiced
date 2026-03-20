@@ -24,6 +24,7 @@ import {
 	toServerDataTableFilters,
 } from './utils';
 import type { DataTableOrderByState } from '../schemas';
+import type { DataTableObjectPath } from '../objectPath';
 
 export const useDataTable = <TData>({
 	columns: baseColumns,
@@ -112,7 +113,7 @@ export const useDataTable = <TData>({
 			}
 
 			serverSort.setState({
-				id: nextSort.id as Extract<keyof TData, string>,
+				id: nextSort.id as DataTableObjectPath<TData>,
 				desc: nextSort.desc,
 			});
 			return;

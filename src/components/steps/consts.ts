@@ -25,7 +25,8 @@ export const stepsIndicatorVariants = cva(
 					'border-primary bg-background text-primary ring-4 ring-primary/20',
 				upcoming:
 					'border-muted-foreground/30 bg-background text-muted-foreground',
-				errorCompleted: 'border-destructive bg-background text-destructive',
+				errorCompleted:
+					'border-destructive text-destructive bg-destructive/5',
 				errorActive:
 					'border-destructive bg-background text-destructive ring-4 ring-destructive/20',
 				errorUpcoming:
@@ -63,6 +64,7 @@ export const stepsConnectorVariants = cva(
 		variants: {
 			state: {
 				completed: 'bg-primary',
+				error: 'bg-destructive',
 				upcoming: 'bg-border',
 			},
 		},

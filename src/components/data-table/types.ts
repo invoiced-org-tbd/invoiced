@@ -7,6 +7,7 @@ import type {
 	DataTableAccessorKeyColumn,
 	DataTableIdColumn,
 } from './data-table-cell-render/types';
+import type { DataTableObjectPath } from './objectPath';
 import type {
 	DataTableOrderByState,
 	DataTablePaginationState,
@@ -17,7 +18,7 @@ type DataTablePaginationBaseOptions = {
 };
 
 export type DataTableSort<TData> = {
-	id: Extract<keyof TData, string>;
+	id: DataTableObjectPath<TData>;
 	desc: boolean;
 };
 
@@ -29,7 +30,7 @@ export type DataTableServerSort = {
 };
 
 export type DataTableFilterItem<TData> = {
-	id: Extract<keyof TData, string>;
+	id: DataTableObjectPath<TData>;
 	value: string;
 };
 

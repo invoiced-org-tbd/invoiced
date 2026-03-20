@@ -21,6 +21,16 @@ const getContractsServerFn = createServerFn({
 				},
 				with: {
 					role: true,
+					client: {
+						with: {
+							address: true,
+						},
+					},
+					autoSendConfiguration: {
+						with: {
+							items: true,
+						},
+					},
 				},
 			});
 
