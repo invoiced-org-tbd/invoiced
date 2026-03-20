@@ -27,6 +27,15 @@ import type {
 	StepsState,
 	StepsTriggerProps,
 } from './types';
+import {
+	getStepsCanSelectStep,
+	getStepsIsStepBlockedBySkipGuard,
+	getStepsMeta,
+	getStepsNextConnectorState,
+	getStepsPreviousConnectorState,
+	getStepsResolvedVisualState,
+	getStepsTriggerState,
+} from './utils';
 
 type StepsContextValue = {
 	currentValue: string | undefined;
@@ -116,26 +125,16 @@ const Root = ({
 		[stepVariants],
 	);
 
-	const canSelectStep = (nextValue: string) => {
-		if (!preventSkip) {
-			return true;
-		}
-
-		const nextIndex = getStepIndex(nextValue);
-		if (nextIndex === -1) {
-			return false;
-		}
-
-		const currentIndex = currentValue ? getStepIndex(currentValue) : -1;
-		if (currentIndex === -1) {
-			return nextIndex === 0;
-		}
-
-		return nextIndex < currentIndex;
-	};
-
 	const handleValueChange = (nextValue: string) => {
-		if (nextValue === currentValue || !canSelectStep(nextValue)) {
+		if (
+			nextValue === currentValue ||
+			!getStepsCanSelectStep({
+				preventSkip,
+				nextValue,
+				currentValue,
+				getStepIndex,
+			})
+		) {
 			return;
 		}
 
@@ -240,6 +239,7 @@ const Trigger = ({
 		setStepVariant,
 		getStepVariant,
 	} = useStepsContext();
+	const resolvedVariant = variant ?? 'default';
 
 	useEffect(() => {
 		registerStep(value);
@@ -249,59 +249,45 @@ const Trigger = ({
 		};
 	}, [registerStep, unregisterStep, value]);
 
-	const currentIndex = currentValue ? getStepIndex(currentValue) : -1;
-	const stepIndex = getStepIndex(value);
-	const isActive = value === currentValue;
-	const isCompleted =
-		currentIndex !== -1 && stepIndex !== -1 && stepIndex < currentIndex;
-	const isReached =
-		currentIndex !== -1 && stepIndex !== -1 && currentIndex >= stepIndex;
-	const isFirstStep = stepIndex === 0;
-	const isLastStep = stepIndex === resolvedSteps.length - 1;
-	const resolvedVariant = variant ?? 'default';
+	useEffect(() => {
+		setStepVariant(value, resolvedVariant);
+	}, [setStepVariant, value, resolvedVariant]);
+
+	const {
+		currentIndex,
+		stepIndex,
+		isActive,
+		isCompleted,
+		isReached,
+		isFirstStep,
+		isLastStep,
+		previousStepValue,
+		nextStepValue,
+	} = getStepsMeta({
+		currentValue,
+		value,
+		resolvedSteps,
+		getStepIndex,
+	});
 	const isError = resolvedVariant === 'error';
-	const previousStepValue = stepIndex > 0 ? resolvedSteps[stepIndex - 1] : undefined;
-	const nextStepValue =
-		stepIndex >= 0 && stepIndex < resolvedSteps.length - 1
-			? resolvedSteps[stepIndex + 1]
-			: undefined;
 	const previousStepHasError = previousStepValue
 		? getStepVariant(previousStepValue) === 'error'
 		: false;
 	const nextStepHasError = nextStepValue
 		? getStepVariant(nextStepValue) === 'error'
 		: false;
-
-	useEffect(() => {
-		setStepVariant(value, resolvedVariant);
-	}, [setStepVariant, resolvedVariant, value]);
-
-	let state: 'active' | 'completed' | 'upcoming' = 'upcoming';
-	if (isActive) {
-		state = 'active';
-	} else if (isCompleted) {
-		state = 'completed';
-	}
-
-	const isBlockedBySkipGuard =
-		preventSkip &&
-		stepIndex !== -1 &&
-		(currentIndex === -1 ? stepIndex > 0 : stepIndex > currentIndex);
-
-	const visualState = isCompleted
-		? 'completed'
-		: isActive
-			? 'active'
-			: 'upcoming';
+	const state = getStepsTriggerState({ isActive, isCompleted });
+	const isBlockedBySkipGuard = getStepsIsStepBlockedBySkipGuard({
+		preventSkip,
+		stepIndex,
+		currentIndex,
+	});
+	const resolvedVisualState = getStepsResolvedVisualState({
+		isActive,
+		isCompleted,
+		isError,
+	});
 	const showError = isError;
-	const resolvedVisualState =
-		showError && visualState === 'completed'
-			? 'errorCompleted'
-			: showError && visualState === 'active'
-				? 'errorActive'
-				: showError
-					? 'errorUpcoming'
-					: visualState;
 
 	return (
 		<TabsTriggerPrimitive
@@ -309,8 +295,11 @@ const Trigger = ({
 			data-state={state}
 			data-active={isActive}
 			data-completed={isCompleted}
-			data-variant={variant}
-			className={cn(stepsTriggerVariants({ variant }), className)}
+			data-variant={resolvedVariant}
+			className={cn(
+				stepsTriggerVariants({ variant: resolvedVariant }),
+				className,
+			)}
 			disabled={disabled || isBlockedBySkipGuard}
 			value={value}
 			{...props}
@@ -321,11 +310,11 @@ const Trigger = ({
 						aria-hidden
 						className={cn(
 							stepsConnectorVariants({
-								state: isReached
-									? previousStepHasError || isError
-										? 'error'
-										: 'completed'
-									: 'upcoming',
+								state: getStepsPreviousConnectorState({
+									isReached,
+									previousStepHasError,
+									isError,
+								}),
 							}),
 							'left-0 right-[calc(50%+1rem)]',
 						)}
@@ -337,11 +326,11 @@ const Trigger = ({
 						aria-hidden
 						className={cn(
 							stepsConnectorVariants({
-								state: isCompleted
-									? isError || nextStepHasError
-										? 'error'
-										: 'completed'
-									: 'upcoming',
+								state: getStepsNextConnectorState({
+									isCompleted,
+									nextStepHasError,
+									isError,
+								}),
 							}),
 							'left-[calc(50%+1rem)] right-0',
 						)}

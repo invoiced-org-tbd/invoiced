@@ -1,7 +1,8 @@
-import { useNavigate, useSearch } from '@tanstack/react-router';
-import { useStore } from '@tanstack/react-form';
 import { useFormContext } from '@/hooks/use-app-form';
 import { getScopedErrorKeys } from '@/hooks/use-app-form/stepErrorUtils';
+import { cn } from '@/lib/utils';
+import { useStore } from '@tanstack/react-form';
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Steps, useSteps } from '../steps';
 import type {
 	FormStepsContentProps,
@@ -9,7 +10,6 @@ import type {
 	FormStepsRootProps,
 	FormStepsTriggerProps,
 } from './types';
-import { cn } from '@/lib/utils';
 
 const Root = ({
 	searchParamKey = 'step',
@@ -24,8 +24,10 @@ const Root = ({
 		strict: false,
 		select: (search) => {
 			let resolved: string | undefined;
+			type Search = typeof search;
+			type SearchKey = keyof Search;
 
-			const value = search[searchParamKey as keyof typeof search];
+			const value = search[searchParamKey as SearchKey];
 			if (value) {
 				resolved = String(value);
 			}
