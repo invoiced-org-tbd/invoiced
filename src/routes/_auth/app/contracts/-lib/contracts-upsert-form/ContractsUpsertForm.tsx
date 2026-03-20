@@ -113,12 +113,19 @@ export const ContractsUpsertForm = ({
 					</FormSteps.Content>
 				</FormSteps.Root>
 
-				<form.Subscribe
-					selector={(state) => state.values}
-					children={(data) => {
-						return <ContractSummary data={data} />;
-					}}
-				/>
+				<section className='mt-auto'>
+					<form.Subscribe
+						selector={(state) => state.values}
+						children={(data) => {
+							return (
+								<ContractSummary
+									data={data}
+									isLoading={isLoadingEditContract}
+								/>
+							);
+						}}
+					/>
+				</section>
 			</Drawer.Body>
 
 			<Drawer.Footer>

@@ -200,14 +200,23 @@ export const enTranslations = {
 			activeContractLabel: 'Active contract',
 			activeContractValue:
 				'You have an active contract with {companyName} as {roleDescription}.',
+			activeContractMissing:
+				'The client company and role are not fully defined yet.',
 			contractDescriptionLabel: 'Description',
 			salaryLabel: 'Salary',
+			salaryMissing: 'Salary has not been set yet.',
 			billingLabel: 'Billing contact',
 			billingValue: 'Invoices will be sent to {name} ({email}).',
+			billingMissing:
+				'Billing contact details are still missing for this contract.',
+			missingInformationHint:
+				'Add this information to make the summary complete.',
 			autoSend: {
 				title: 'Auto-send schedule',
 				value: 'Invoices will be sent every month on {schedule}.',
 				item: '{dayOfMonth} day ({value})',
+				missing:
+					'Auto-send is enabled, but the schedule is incomplete or missing salary data.',
 			},
 		},
 	},

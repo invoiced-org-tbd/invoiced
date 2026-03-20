@@ -4,49 +4,82 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/lib/utils';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { getOrdinalSuffix } from '@/utils/stringUtils';
-import { AlertCircleIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 
-const SummarySection = ({
-	description,
+const SummaryItem = ({
+	label,
 	value,
-	missingInformation,
+	placeholder,
+	hint,
+	isMissing,
 	className,
 }: {
-	description: string;
+	label: string;
 	value: string;
-	missingInformation: boolean;
+	placeholder: string;
+	hint?: string;
+	isMissing: boolean;
 	className?: string;
 }) => {
 	return (
-		<div
-			className={cn(
-				'rounded-md border border-border bg-background p-3 space-y-1',
-				className,
-			)}
-		>
-			<p className='text-xs text-muted-foreground'>{description}</p>
-			<p className='text-sm font-medium'>
-				{missingInformation ? (
-					<span className='text-destructive'>
-						<AlertCircleIcon className='size-4' />
-					</span>
-				) : (
-					value
-				)}
+		<div className={cn('space-y-1.5 py-2.5', className)}>
+			<p className='text-xs font-medium tracking-wide text-muted-foreground uppercase'>
+				{label}
 			</p>
+
+			<p
+				className={cn(
+					'text-sm leading-relaxed',
+					isMissing ? 'text-muted-foreground italic' : 'font-medium',
+				)}
+			>
+				{isMissing ? placeholder : value}
+			</p>
+
+			{hint ? <p className='text-xs text-muted-foreground'>{hint}</p> : null}
+		</div>
+	);
+};
+
+const SummarySkeleton = () => {
+	return (
+		<div className='rounded-md border border-border bg-background p-3.5 space-y-3.5'>
+			<div className='space-y-2'>
+				<div className='h-2.5 w-24 rounded bg-muted animate-pulse' />
+				<div className='h-3.5 w-full rounded bg-muted animate-pulse' />
+				<div className='h-3.5 w-4/5 rounded bg-muted animate-pulse' />
+			</div>
+
+			<div className='h-px w-full bg-border/80' />
+
+			<div className='space-y-2'>
+				<div className='h-2.5 w-20 rounded bg-muted animate-pulse' />
+				<div className='h-3.5 w-3/4 rounded bg-muted animate-pulse' />
+			</div>
+
+			<div className='h-px w-full bg-border/80' />
+
+			<div className='space-y-2'>
+				<div className='h-2.5 w-16 rounded bg-muted animate-pulse' />
+				<div className='h-3.5 w-28 rounded bg-muted animate-pulse' />
+			</div>
 		</div>
 	);
 };
 
 export const ContractSummary = ({
+	isLoading = false,
 	data: { role, client, autoSendConfiguration },
 }: {
+	isLoading?: boolean;
 	data: ContractsUpsertFormSchema;
 }) => {
 	const { t } = useTranslate();
 	const language = useLanguage((state) => state.language);
 	const hasRate = !!role.rate;
+	const hasActiveContractInfo = !!client.companyName && !!role.description;
+	const hasBillingInfo = !!client.responsibleName && !!client.responsibleEmail;
 	const autoSendSummary = autoSendConfiguration.items
 		.map((item) => {
 			const dayOfMonth =
@@ -67,7 +100,7 @@ export const ContractSummary = ({
 		.join(', ');
 
 	return (
-		<section className='rounded-lg border border-border bg-muted/30 p-3 space-y-3'>
+		<section className='rounded-lg border border-border bg-muted/30 p-3.5 space-y-3'>
 			<header className='flex items-center justify-between gap-2'>
 				<div className='space-y-1'>
 					<h3 className='text-sm font-semibold'>
@@ -80,48 +113,74 @@ export const ContractSummary = ({
 				<Badge variant='secondary'>{t('contracts.summary.badge')}</Badge>
 			</header>
 
-			<div className='space-y-2'>
-				<SummarySection
-					description={t('contracts.summary.activeContractLabel')}
-					value={t('contracts.summary.activeContractValue', {
-						companyName: client.companyName,
-						roleDescription: role.description,
-					})}
-					missingInformation={!client.companyName || !role.description}
-				/>
+			{isLoading ? (
+				<SummarySkeleton />
+			) : (
+				<div className='rounded-md border border-border bg-background px-3.5 py-1.5'>
+					<SummaryItem
+						label={t('contracts.summary.activeContractLabel')}
+						value={t('contracts.summary.activeContractValue', {
+							companyName: client.companyName,
+							roleDescription: role.description,
+						})}
+						placeholder={t('contracts.summary.activeContractMissing')}
+						hint={
+							hasActiveContractInfo
+								? undefined
+								: t('contracts.summary.missingInformationHint')
+						}
+						isMissing={!hasActiveContractInfo}
+						className='border-b border-border/80'
+					/>
 
-				{/* TODO: fix responsive layout for large client names/emails */}
-				<div className='flex gap-2 flex-nowrap overflow-hidden'>
-					<SummarySection
-						description={t('contracts.summary.billingLabel')}
+					<SummaryItem
+						label={t('contracts.summary.billingLabel')}
 						value={t('contracts.summary.billingValue', {
 							name: client.responsibleName,
 							email: client.responsibleEmail,
 						})}
-						missingInformation={
-							!client.responsibleName || !client.responsibleEmail
+						placeholder={t('contracts.summary.billingMissing')}
+						hint={
+							hasBillingInfo
+								? undefined
+								: t('contracts.summary.missingInformationHint')
 						}
-						className='h-fit'
+						isMissing={!hasBillingInfo}
+						className='border-b border-border/80'
 					/>
 
-					<SummarySection
-						description={t('contracts.summary.salaryLabel')}
+					<SummaryItem
+						label={t('contracts.summary.salaryLabel')}
 						value={formatCurrency({ value: role.rate })}
-						missingInformation={!role.rate}
-						className='px-4 shrink-0'
+						placeholder={t('contracts.summary.salaryMissing')}
+						hint={!hasRate ? t('contracts.summary.missingInformationHint') : undefined}
+						isMissing={!hasRate}
 					/>
-				</div>
 
-				{autoSendConfiguration.enabled && (
-					<SummarySection
-						description={t('contracts.summary.autoSend.title')}
-						value={t('contracts.summary.autoSend.value', {
-							schedule: autoSendSummary,
-						})}
-						missingInformation={!autoSendSummary || !hasRate}
-					/>
-				)}
-			</div>
+					{autoSendConfiguration.enabled ? (
+						<motion.div
+							initial={{ opacity: 0, y: 6 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.18, ease: 'easeOut' }}
+							className='border-t border-border/80'
+						>
+							<SummaryItem
+								label={t('contracts.summary.autoSend.title')}
+								value={t('contracts.summary.autoSend.value', {
+									schedule: autoSendSummary,
+								})}
+								placeholder={t('contracts.summary.autoSend.missing')}
+								hint={
+									!autoSendSummary || !hasRate
+										? t('contracts.summary.missingInformationHint')
+										: undefined
+								}
+								isMissing={!autoSendSummary || !hasRate}
+							/>
+						</motion.div>
+					) : null}
+				</div>
+			)}
 		</section>
 	);
 };

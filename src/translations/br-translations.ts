@@ -205,14 +205,23 @@ export const brTranslations = {
 			activeContractLabel: 'Contrato ativo',
 			activeContractValue:
 				'Voce tem um contrato ativo com {companyName} como {roleDescription}.',
+			activeContractMissing:
+				'A empresa cliente e o cargo ainda nao foram definidos por completo.',
 			contractDescriptionLabel: 'Descricao',
 			salaryLabel: 'Salario',
+			salaryMissing: 'O salario ainda nao foi definido.',
 			billingLabel: 'Contato de faturamento',
 			billingValue: 'As faturas serao enviadas para {name} ({email}).',
+			billingMissing:
+				'Os dados do contato de faturamento ainda nao foram preenchidos.',
+			missingInformationHint:
+				'Adicione estas informacoes para completar o resumo.',
 			autoSend: {
 				title: 'Agenda de envio automatico',
 				value: 'As faturas serao enviadas todos os meses {schedule}.',
 				item: 'dia {dayOfMonth} ({value})',
+				missing:
+					'O envio automatico esta ativo, mas a agenda esta incompleta ou sem dados de salario.',
 			},
 		},
 	},
