@@ -1,5 +1,4 @@
-import { BrazilFlag } from '@/components/flags/brazilFlag';
-import { UnitedStatesFlag } from '@/components/flags/unitedStatesFlag';
+import { LanguageFlag } from '@/components/language-flag';
 import { DropdownMenu } from '@/components/dropdown-menu';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
@@ -9,17 +8,14 @@ import { ChevronDownIcon } from 'lucide-react';
 const LANGUAGE_OPTIONS: Array<{
 	value: Language;
 	labelKey: 'common.english' | 'common.portuguese';
-	Flag: typeof UnitedStatesFlag;
 }> = [
 	{
 		value: 'en',
 		labelKey: 'common.english',
-		Flag: UnitedStatesFlag,
 	},
 	{
 		value: 'br',
 		labelKey: 'common.portuguese',
-		Flag: BrazilFlag,
 	},
 ];
 
@@ -40,8 +36,9 @@ export const LanguageSwitcher = () => {
 					className='border-border bg-background hover:bg-muted text-foreground flex justify-between h-8 w-18 items-center gap-2 rounded-md border px-2 text-sm'
 					aria-label='Language selector'
 				>
-					<currentLanguage.Flag
-						className='h-4 w-auto shrink-0 rounded-[2px]'
+					<LanguageFlag
+						language={currentLanguage.value}
+						size={16}
 						aria-hidden='true'
 					/>
 					<ChevronDownIcon className='size-4 text-muted-foreground' />
@@ -56,13 +53,14 @@ export const LanguageSwitcher = () => {
 					value={language}
 					onValueChange={(value) => setLanguage(value as Language)}
 				>
-					{LANGUAGE_OPTIONS.map(({ value, labelKey, Flag }) => (
+					{LANGUAGE_OPTIONS.map(({ value, labelKey }) => (
 						<DropdownMenu.RadioItem
 							key={value}
 							value={value}
 						>
-							<Flag
-								className='h-4 w-auto shrink-0 rounded-[2px]'
+							<LanguageFlag
+								language={value}
+								size={16}
 								aria-hidden='true'
 							/>
 							{t(labelKey)}
