@@ -1,5 +1,5 @@
 import { getEditContractByIdQueryOptions } from '@/api/contract/getEditContractById';
-import { countryCodeEnumSchema } from '@/lib/countries';
+import { addressFormWithCountrySchema } from '@/components/address-form';
 import { clientT } from '@/utils/languageUtils';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
@@ -9,21 +9,11 @@ export const contractRoleFormSchema = z.object({
 	rate: z.number().min(1),
 });
 
-export const contractClientAddressFormSchema = z.object({
-	street1: z.string().min(1),
-	street2: z.string(),
-	number: z.string().min(1),
-	postalCode: z.string().min(1),
-	city: z.string().min(1),
-	state: z.string().min(1),
-	country: countryCodeEnumSchema,
-});
-
 export const contractClientFormSchema = z.object({
 	companyName: z.string().min(1),
 	responsibleName: z.string().min(1),
 	responsibleEmail: z.email(),
-	address: contractClientAddressFormSchema,
+	address: addressFormWithCountrySchema,
 });
 
 export const contractAutoSendConfigurationItemFormSchema = z.object({

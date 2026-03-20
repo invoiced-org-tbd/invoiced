@@ -1,9 +1,9 @@
 import { createCompanyMutationOptions } from '@/api/company/createCompany';
+import { AddressForm } from '@/components/address-form';
 import { useAppForm } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
-import { CreateCompanyAddressForm } from './CreateCompanyAddressForm';
 import { CreateCompanyGeneralForm } from './CreateCompanyGeneralForm';
 import {
 	createCompanyFormSchema,
@@ -45,9 +45,27 @@ export const CreateCompanyForm = () => {
 					form={form}
 					fields='general'
 				/>
-				<CreateCompanyAddressForm
+				<AddressForm
 					form={form}
 					fields='address'
+					fixedCountryCode='br'
+					labels={{
+						sectionTitle: t('createCompany.form.addressSectionTitle'),
+						street1Label: t('createCompany.form.street1Label'),
+						street1Placeholder: t('createCompany.form.street1Placeholder'),
+						street2Label: t('createCompany.form.street2Label'),
+						street2Placeholder: t('createCompany.form.street2Placeholder'),
+						numberLabel: t('createCompany.form.numberLabel'),
+						numberPlaceholder: t('createCompany.form.numberPlaceholder'),
+						postalCodeLabel: t('createCompany.form.postalCodeLabel'),
+						postalCodePlaceholder: t('createCompany.form.postalCodePlaceholder'),
+						cityLabel: t('createCompany.form.cityLabel'),
+						cityPlaceholder: t('createCompany.form.cityPlaceholder'),
+						stateLabel: t('createCompany.form.stateLabel'),
+						statePlaceholder: t('createCompany.form.statePlaceholder'),
+						countryLabel: t('createCompany.form.countryLabel'),
+						countryPlaceholder: t('createCompany.form.countryPlaceholder'),
+					}}
 				/>
 
 				<form.SubmitButton className='w-full'>

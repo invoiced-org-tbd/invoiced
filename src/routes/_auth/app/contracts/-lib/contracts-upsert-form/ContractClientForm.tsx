@@ -1,7 +1,7 @@
+import { AddressForm } from '@/components/address-form';
 import { withFieldGroup } from '@/hooks/use-app-form';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
-import { ContractClientAddressForm } from './ContractClientAddressForm';
 
 export const ContractClientForm = withFieldGroup({
 	defaultValues: {} as ContractsUpsertFormSchema['client'],
@@ -34,9 +34,19 @@ export const ContractClientForm = withFieldGroup({
 						/>
 					)}
 				/>
-				<ContractClientAddressForm
+				<AddressForm
 					form={group}
 					fields='address'
+					labels={{
+						sectionTitle: t('contracts.form.client.address.sectionTitle'),
+						street1Label: t('contracts.form.client.address.street1Label'),
+						street2Label: t('contracts.form.client.address.street2Label'),
+						numberLabel: t('contracts.form.client.address.numberLabel'),
+						postalCodeLabel: t('contracts.form.client.address.postalCodeLabel'),
+						cityLabel: t('contracts.form.client.address.cityLabel'),
+						stateLabel: t('contracts.form.client.address.stateLabel'),
+						countryLabel: t('contracts.form.client.address.countryLabel'),
+					}}
 				/>
 			</group.Set>
 		);
