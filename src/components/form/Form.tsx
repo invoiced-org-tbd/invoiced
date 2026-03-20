@@ -16,7 +16,7 @@ import type {
 	FormSubSetProps,
 } from './types';
 import type { FormRootContextValue } from './utils';
-import { FormRootContext } from './utils';
+import { FormRootContext, useFormRootContext } from './utils';
 
 const FormRoot = <TFormSchema extends ZodObject>({
 	className,
@@ -125,6 +125,7 @@ const FormSeparator = ({
 
 const FormSubmitButton = (props: FormSubmitButtonProps) => {
 	const form = useFormContext();
+	const formRootContext = useFormRootContext();
 	const { t } = useTranslate();
 
 	return (
@@ -134,8 +135,9 @@ const FormSubmitButton = (props: FormSubmitButtonProps) => {
 				canSubmit: state.canSubmit,
 			})}
 			children={({ isSubmitting, canSubmit }) => {
-				const isDisabled = isSubmitting || props.disabled || !canSubmit;
-				const isLoading = isSubmitting || props.isLoading;
+				const isLoading = !!isSubmitting || !!props.isLoading;
+				const isDisabled =
+					props.disabled || !canSubmit || !!formRootContext?.isLoading;
 
 				return (
 					<Button

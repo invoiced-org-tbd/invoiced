@@ -3,15 +3,27 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { authClient } from '@/lib/authClient';
 import { appConfig } from '@/utils/appConfig';
 import type { LinkProps } from '@tanstack/react-router';
+import { useState } from 'react';
 
 export const LandingPage = () => {
 	const { t } = useTranslate();
+	const [isRedirecting, setIsRedirecting] = useState(false);
 
 	const handleGoogleSignIn = async () => {
-		await authClient.signIn.social({
-			provider: 'google',
-			callbackURL: '/app' satisfies LinkProps['to'],
-		});
+		if (isRedirecting) {
+			return;
+		}
+
+		setIsRedirecting(true);
+
+		try {
+			await authClient.signIn.social({
+				provider: 'google',
+				callbackURL: '/app' satisfies LinkProps['to'],
+			});
+		} finally {
+			setIsRedirecting(false);
+		}
 	};
 
 	return (
@@ -48,6 +60,7 @@ export const LandingPage = () => {
 
 						<Button
 							onClick={handleGoogleSignIn}
+							isLoading={isRedirecting}
 							size='md'
 							className='mt-6 w-full'
 						>
