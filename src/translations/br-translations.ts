@@ -119,6 +119,7 @@ export const brTranslations = {
 		sidebar: {
 			management: 'Gestão',
 			contracts: 'Contratos',
+			invoices: 'Faturas',
 		},
 		server: {
 			accountUpdatedSuccess: 'Sua conta foi atualizada',
@@ -240,5 +241,8 @@ export const brTranslations = {
 					'O envio automatico esta ativo, mas a agenda esta incompleta ou sem dados de salario.',
 			},
 		},
+	},
+	invoices: {
+		title: 'Faturas',
 	},
 } as const satisfies TranslationsShape;

@@ -116,6 +116,7 @@ export const enTranslations = {
 		sidebar: {
 			management: 'Management',
 			contracts: 'Contracts',
+			invoices: 'Invoices',
 		},
 		server: {
 			accountUpdatedSuccess: 'Your account has been updated',
@@ -235,5 +236,8 @@ export const enTranslations = {
 					'Auto-send is enabled, but the schedule is incomplete or missing salary data.',
 			},
 		},
+	},
+	invoices: {
+		title: 'Invoices',
 	},
 } as const;

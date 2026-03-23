@@ -16,6 +16,7 @@ import { Route as AuthAppRouteRouteImport } from './routes/_auth/app/route'
 import { Route as AuthCreateCompanyIndexRouteImport } from './routes/_auth/create-company/index'
 import { Route as AuthAppIndexRouteImport } from './routes/_auth/app/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthAppInvoicesIndexRouteImport } from './routes/_auth/app/invoices/index'
 import { Route as AuthAppContractsIndexRouteImport } from './routes/_auth/app/contracts/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -52,6 +53,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthAppInvoicesIndexRoute = AuthAppInvoicesIndexRouteImport.update({
+  id: '/invoices/',
+  path: '/invoices/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
 const AuthAppContractsIndexRoute = AuthAppContractsIndexRouteImport.update({
   id: '/contracts/',
   path: '/contracts/',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/app/': typeof AuthAppIndexRoute
   '/create-company/': typeof AuthCreateCompanyIndexRoute
   '/app/contracts/': typeof AuthAppContractsIndexRoute
+  '/app/invoices/': typeof AuthAppInvoicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/app': typeof AuthAppIndexRoute
   '/create-company': typeof AuthCreateCompanyIndexRoute
   '/app/contracts': typeof AuthAppContractsIndexRoute
+  '/app/invoices': typeof AuthAppInvoicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/_auth/app/': typeof AuthAppIndexRoute
   '/_auth/create-company/': typeof AuthCreateCompanyIndexRoute
   '/_auth/app/contracts/': typeof AuthAppContractsIndexRoute
+  '/_auth/app/invoices/': typeof AuthAppInvoicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -95,8 +104,15 @@ export interface FileRouteTypes {
     | '/app/'
     | '/create-company/'
     | '/app/contracts/'
+    | '/app/invoices/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/auth/$' | '/app' | '/create-company' | '/app/contracts'
+  to:
+    | '/'
+    | '/api/auth/$'
+    | '/app'
+    | '/create-company'
+    | '/app/contracts'
+    | '/app/invoices'
   id:
     | '__root__'
     | '/'
@@ -107,6 +123,7 @@ export interface FileRouteTypes {
     | '/_auth/app/'
     | '/_auth/create-company/'
     | '/_auth/app/contracts/'
+    | '/_auth/app/invoices/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -166,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/app/invoices/': {
+      id: '/_auth/app/invoices/'
+      path: '/invoices'
+      fullPath: '/app/invoices/'
+      preLoaderRoute: typeof AuthAppInvoicesIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
     '/_auth/app/contracts/': {
       id: '/_auth/app/contracts/'
       path: '/contracts'
@@ -179,11 +203,13 @@ declare module '@tanstack/react-router' {
 interface AuthAppRouteRouteChildren {
   AuthAppIndexRoute: typeof AuthAppIndexRoute
   AuthAppContractsIndexRoute: typeof AuthAppContractsIndexRoute
+  AuthAppInvoicesIndexRoute: typeof AuthAppInvoicesIndexRoute
 }
 
 const AuthAppRouteRouteChildren: AuthAppRouteRouteChildren = {
   AuthAppIndexRoute: AuthAppIndexRoute,
   AuthAppContractsIndexRoute: AuthAppContractsIndexRoute,
+  AuthAppInvoicesIndexRoute: AuthAppInvoicesIndexRoute,
 }
 
 const AuthAppRouteRouteWithChildren = AuthAppRouteRoute._addFileChildren(
