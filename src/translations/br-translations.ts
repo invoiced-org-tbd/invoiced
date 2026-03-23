@@ -196,6 +196,9 @@ export const brTranslations = {
 			},
 			autoSendConfiguration: {
 				title: 'Configuração de envio automático',
+				comingSoonTitle: 'Em breve',
+				comingSoonDescription:
+					'A configuração de envio automático estará disponível em breve.',
 				dayOfMonthLabel: 'Dia do mês',
 				percentageLabel: 'Percentual',
 				dayOfMonthPrefix: 'Todo ',

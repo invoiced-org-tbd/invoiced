@@ -1,18 +1,37 @@
 import { withFieldGroup } from '@/hooks/use-app-form';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { Button } from '@/components/button';
-import { PlusIcon, TrashIcon } from 'lucide-react';
-import { ToggleSection } from '@/components/toggle-section';
-import { cn } from '@/utils/classNamesUtils';
-import { getOrdinalSuffix } from '@/utils/stringUtils';
+
+const ComingSoon = ({
+	title,
+	description,
+}: {
+	title: string;
+	description: string;
+}) => {
+	return (
+		<div className='rounded-lg border border-dashed p-6 space-y-2'>
+			<p className='text-sm font-semibold'>{title}</p>
+			<p className='text-sm text-muted-foreground'>{description}</p>
+		</div>
+	);
+};
 
 export const ContractAutoSendConfigurationForm = withFieldGroup({
 	defaultValues: {} as ContractsUpsertFormSchema['autoSendConfiguration'],
-	render: ({ group }) => {
+	render: () => {
 		const { t } = useTranslate();
 
 		return (
+			<ComingSoon
+				title={t('contracts.form.autoSendConfiguration.comingSoonTitle')}
+				description={t(
+					'contracts.form.autoSendConfiguration.comingSoonDescription',
+				)}
+			/>
+		);
+
+		/* return (
 			<group.Set>
 				<group.AppField
 					name='enabled'
@@ -171,6 +190,6 @@ export const ContractAutoSendConfigurationForm = withFieldGroup({
 					)}
 				/>
 			</group.Set>
-		);
+		); */
 	},
 });

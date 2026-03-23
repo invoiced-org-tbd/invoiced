@@ -191,6 +191,9 @@ export const enTranslations = {
 			},
 			autoSendConfiguration: {
 				title: 'Auto Send Configuration',
+				comingSoonTitle: 'Coming soon',
+				comingSoonDescription:
+					'Auto-send configuration will be available soon.',
 				dayOfMonthLabel: 'Day of Month',
 				percentageLabel: 'Percentage',
 				dayOfMonthPrefix: 'Every ',
