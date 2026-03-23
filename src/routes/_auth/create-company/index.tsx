@@ -4,7 +4,8 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { ChevronLeftIcon } from 'lucide-react';
 import { useLogOut } from '@/hooks/use-log-out';
 import { CreateCompanyForm } from './-lib/components/create-company-form';
-import { LanguageSwitcher } from './-lib/components/language-switcher/LanguageSwitcher';
+import { LanguageSwitcher } from '../../../components/language-switcher/LanguageSwitcher';
+import { ThemeSwitcher } from '@/components/theme-switcher/ThemeSwitcher';
 
 export const Route = createFileRoute('/_auth/create-company/')({
 	component: RouteComponent,
@@ -32,11 +33,11 @@ function RouteComponent() {
 
 				<section className='flex w-full flex-col justify-center px-12 py-6 items-center'>
 					<div className='max-w-lg w-full flex flex-col gap-10'>
-						<div className='w-full flex justify-between'>
+						<div className='w-full flex gap-2'>
 							<Button
 								variant='secondary'
 								size='sm'
-								className='w-fit'
+								className='w-fit mr-auto'
 								isGhost={true}
 								onClick={() => handleLogOut()}
 							>
@@ -44,6 +45,7 @@ function RouteComponent() {
 								<span>{t('common.goBack')}</span>
 							</Button>
 
+							<ThemeSwitcher />
 							<LanguageSwitcher />
 						</div>
 
