@@ -1,11 +1,9 @@
 import {
-	BuildingIcon,
 	FileStackIcon,
 	FileTextIcon,
 	HandCoinsIcon,
 	LayoutDashboardIcon,
 	ReceiptIcon,
-	SendIcon,
 } from 'lucide-react';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { AuthenticatedSidebarNavItem } from './types';
@@ -50,22 +48,6 @@ export const useAuthenticatedSidebarNavItems =
 						label: t('auth.sidebar.invoices'),
 						to: '/app/invoices',
 						icon: FileTextIcon,
-					},
-				],
-			},
-			{
-				type: 'group',
-				label: t('auth.sidebar.settings.group'),
-				subItems: [
-					{
-						label: t('auth.sidebar.settings.company'),
-						to: '/app/settings/company',
-						icon: BuildingIcon,
-					},
-					{
-						label: t('auth.sidebar.settings.automation'),
-						to: '/app/settings/automation',
-						icon: SendIcon,
 					},
 				],
 			},
