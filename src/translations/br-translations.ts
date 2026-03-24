@@ -120,6 +120,13 @@ export const brTranslations = {
 			management: 'Gestão',
 			contracts: 'Contratos',
 			invoices: 'Faturas',
+			cashflow: 'Fluxo de caixa',
+			receivableDebtAccounts: 'Contas a receber/pagar',
+			settings: {
+				group: 'Configurações',
+				company: 'Empresa',
+				automation: 'Automação',
+			},
 		},
 		server: {
 			accountUpdatedSuccess: 'Sua conta foi atualizada',

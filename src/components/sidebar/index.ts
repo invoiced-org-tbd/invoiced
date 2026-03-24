@@ -7,6 +7,7 @@ export type {
 	SidebarGroupContentProps,
 	SidebarGroupLabelProps,
 	SidebarGroupProps,
+	SidebarInsetProps,
 	SidebarMenuButtonProps,
 	SidebarMenuButtonSize,
 	SidebarMenuButtonVariant,

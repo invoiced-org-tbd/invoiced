@@ -42,6 +42,7 @@ export const SidebarUserMenu = () => {
 				<Sidebar.MenuButton
 					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground max-md:mx-auto max-md:size-8 max-md:w-8 max-md:justify-center max-md:gap-0 max-md:p-0'
 					size='lg'
+					tooltip={displayName}
 				>
 					<span
 						data-size='default'
