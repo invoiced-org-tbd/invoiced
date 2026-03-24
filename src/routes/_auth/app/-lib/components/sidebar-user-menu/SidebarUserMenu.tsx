@@ -4,6 +4,7 @@ import {
 	LanguagesIcon,
 	LogOutIcon,
 	MoonIcon,
+	SettingsIcon,
 	SunIcon,
 } from 'lucide-react';
 import { DropdownMenu } from '@/components/dropdown-menu';
@@ -15,6 +16,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useLogOut } from '@/hooks/use-log-out';
 import { useUser } from '@/hooks/use-user';
 import { LanguageFlag } from '@/components/language-flag';
+import { Link } from '@tanstack/react-router';
 
 export const SidebarUserMenu = () => {
 	const user = useUser();
@@ -103,10 +105,12 @@ export const SidebarUserMenu = () => {
 
 				<DropdownMenu.Separator />
 
-				<DropdownMenu.Item onSelect={() => setIsAccountDrawerOpen(true)}>
-					<BadgeCheckIcon />
-					{t('common.account')}
-				</DropdownMenu.Item>
+				<Link to='/app/settings'>
+					<DropdownMenu.Item>
+						<SettingsIcon />
+						{t('auth.sidebar.settings.group')}
+					</DropdownMenu.Item>
+				</Link>
 				<DropdownMenu.Item onSelect={() => toggleTheme()}>
 					{theme === 'light' ? <SunIcon /> : <MoonIcon />}
 					{theme === 'light' ? t('common.lightMode') : t('common.darkMode')}

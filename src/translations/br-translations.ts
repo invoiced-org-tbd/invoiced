@@ -133,6 +133,36 @@ export const brTranslations = {
 			accountDeletedSuccess: 'Sua conta foi excluida',
 		},
 	},
+	settings: {
+		title: 'Configurações',
+		tabs: {
+			account: {
+				title: 'Conta',
+				description: 'Gerencie suas informações de conta.',
+			},
+			company: {
+				title: 'Empresa',
+				description: 'Gerencie suas informações de empresa.',
+			},
+			automations: {
+				title: 'Automações',
+				description: 'Gerencie suas automações.',
+			},
+			notifications: {
+				title: 'Notificações',
+				description: 'Gerencie suas notificações.',
+			},
+			plans: {
+				title: 'Planos',
+				description: 'Gerencie seus planos.',
+			},
+			billing: {
+				title: 'Faturamento',
+				description: 'Gerencie suas informações de faturamento.',
+			},
+		},
+		placeholderDescription: 'Esta seção estará disponível em breve.',
+	},
 	landing: {
 		backgroundAlt: 'Fundo abstrato verde suave',
 		signInWithGoogle: 'Entrar com Google',
