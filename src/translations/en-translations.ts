@@ -117,6 +117,13 @@ export const enTranslations = {
 			management: 'Management',
 			contracts: 'Contracts',
 			invoices: 'Invoices',
+			cashflow: 'Cash flow',
+			receivableDebtAccounts: 'Accounts receivable/payable',
+			settings: {
+				group: 'Settings',
+				company: 'Company',
+				automation: 'Automation',
+			},
 		},
 		server: {
 			accountUpdatedSuccess: 'Your account has been updated',
