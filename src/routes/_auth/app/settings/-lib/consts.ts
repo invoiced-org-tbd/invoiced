@@ -1,4 +1,5 @@
-import type { ComponentType } from 'react';
+import type { FC } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import {
 	BellIcon,
 	BotIcon,
@@ -14,6 +15,7 @@ import { SettingsBillingTab } from './settings-billing-tab/SettingsBillingTab';
 import { SettingsCompanyTab } from './settings-company-tab/SettingsCompanyTab';
 import { SettingsNotificationsTab } from './settings-notifications-tab/SettingsNotificationsTab';
 import { SettingsPlansTab } from './settings-plans-tab/SettingsPlansTab';
+import type { TranslationKey } from '@/translations/types';
 
 export const settingsTabSchema = z.enum([
 	'account',
@@ -30,18 +32,7 @@ export const settingsSearchSchema = z.object({
 	tab: settingsTabSchema.optional(),
 });
 
-export const settingsTabs: Array<{
-	value: SettingsTab;
-	labelKey:
-		| 'settings.tabs.account.title'
-		| 'settings.tabs.company.title'
-		| 'settings.tabs.automations.title'
-		| 'settings.tabs.notifications.title'
-		| 'settings.tabs.plans.title'
-		| 'settings.tabs.billing.title';
-	icon: ComponentType<{ className?: string }>;
-	Content: ComponentType;
-}> = [
+export const settingsTabs = [
 	{
 		value: 'account',
 		labelKey: 'settings.tabs.account.title',
@@ -78,4 +69,9 @@ export const settingsTabs: Array<{
 		icon: CreditCardIcon,
 		Content: SettingsBillingTab,
 	},
-];
+] as const satisfies {
+	value: SettingsTab;
+	labelKey: TranslationKey;
+	icon: LucideIcon;
+	Content: FC;
+}[];

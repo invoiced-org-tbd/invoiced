@@ -1,5 +1,4 @@
 import { db } from '@/db/client';
-import { contractAutoSendConfigurationTable } from '@/db/tables/contractAutoSendConfigurationTable';
 import { contractClientAddressTable } from '@/db/tables/contractClientAddressTable';
 import { contractClientTable } from '@/db/tables/contractClientTable';
 import { contractRoleTable } from '@/db/tables/contractRoleTable';
@@ -19,7 +18,6 @@ import { eq } from 'drizzle-orm';
 import z from 'zod';
 import { contractQueryKeys } from './contractApiUtils';
 import { getServerT } from '@/utils/languageUtils';
-import { upsertAutoSendConfigurationItems } from './helpers/upsertAutoSendConfigurationItems';
 import { sessionMiddleware } from '../sessionMiddleware';
 
 const updateContractParams = z.object({
@@ -95,22 +93,6 @@ const updateContractServerFn = createServerFn({
 					city: data.client.address.city,
 					state: data.client.address.state,
 					country: data.client.address.country,
-				});
-
-				const [autoSendConfiguration] = await tx
-					.update(contractAutoSendConfigurationTable)
-					.set({
-						enabled: data.autoSendConfiguration.enabled,
-					})
-					.where(eq(contractAutoSendConfigurationTable.contractId, contract.id))
-					.returning();
-
-				await upsertAutoSendConfigurationItems({
-					tx,
-					t,
-					autoSendConfigurationId: autoSendConfiguration.id,
-					configuration: data.autoSendConfiguration,
-					deletePreviousItems: true,
 				});
 			});
 

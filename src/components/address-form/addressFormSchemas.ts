@@ -1,4 +1,4 @@
-import { countryCodeEnumSchema } from '@/lib/countries';
+import { countryCodeEnumSchema } from '@/db/tables/addressTableBase';
 import z from 'zod';
 
 export const addressFormSchema = z.object({

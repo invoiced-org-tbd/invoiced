@@ -1,10 +1,7 @@
 import { Badge } from '@/components/badge';
-import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
-import { getOrdinalSuffix } from '@/utils/stringUtils';
-import { motion } from 'framer-motion';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 
 const SummaryItem = ({
@@ -70,34 +67,15 @@ const SummarySkeleton = () => {
 
 export const ContractSummary = ({
 	isLoading = false,
-	data: { role, client, autoSendConfiguration },
+	data: { role, client },
 }: {
 	isLoading?: boolean;
 	data: ContractsUpsertFormSchema;
 }) => {
 	const { t } = useTranslate();
-	const language = useLanguage((state) => state.language);
 	const hasRate = !!role.rate;
 	const hasActiveContractInfo = !!client.companyName && !!role.description;
 	const hasBillingInfo = !!client.responsibleName && !!client.responsibleEmail;
-	const autoSendSummary = autoSendConfiguration.items
-		.map((item) => {
-			const dayOfMonth =
-				language === 'en'
-					? `${item.dayOfMonth}${getOrdinalSuffix(item.dayOfMonth)}`
-					: `${item.dayOfMonth}`;
-			const value = hasRate
-				? formatCurrency({
-						value: role.rate * (item.percentage / 100),
-					})
-				: '';
-
-			return t('contracts.summary.autoSend.item', {
-				dayOfMonth,
-				value,
-			});
-		})
-		.join(', ');
 
 	return (
 		<section className='rounded-lg border border-border bg-muted/30 p-3.5 space-y-3'>
@@ -160,29 +138,6 @@ export const ContractSummary = ({
 						}
 						isMissing={!hasRate}
 					/>
-
-					{autoSendConfiguration.enabled ? (
-						<motion.div
-							initial={{ opacity: 0, y: 6 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.18, ease: 'easeOut' }}
-							className='border-t border-border/80'
-						>
-							<SummaryItem
-								label={t('contracts.summary.autoSend.title')}
-								value={t('contracts.summary.autoSend.value', {
-									schedule: autoSendSummary,
-								})}
-								placeholder={t('contracts.summary.autoSend.missing')}
-								hint={
-									!autoSendSummary || !hasRate
-										? t('contracts.summary.missingInformationHint')
-										: undefined
-								}
-								isMissing={!autoSendSummary || !hasRate}
-							/>
-						</motion.div>
-					) : null}
 				</div>
 			)}
 		</section>

@@ -31,11 +31,6 @@ const getContractEditServerFn = createServerFn({
 				with: {
 					role: true,
 					client: true,
-					autoSendConfiguration: {
-						with: {
-							items: true,
-						},
-					},
 				},
 			});
 

@@ -231,28 +231,10 @@ export const brTranslations = {
 					countryLabel: 'País',
 				},
 			},
-			autoSendConfiguration: {
-				title: 'Configuração de envio automático',
-				comingSoonTitle: 'Em breve',
-				comingSoonDescription:
-					'A configuração de envio automático estará disponível em breve.',
-				dayOfMonthLabel: 'Dia do mês',
-				percentageLabel: 'Percentual',
-				dayOfMonthPrefix: 'Todo ',
-				conflictingDaysLabel: 'Dias conflitantes: {days}',
-				totalLabel: 'Total: {total}% (deve ser igual a 100%)',
-				configureLabel: 'Configurar configuracao de envio automatico',
-				rulesTitle: 'Regras de envio automatico',
-				rulesDescription: 'Defina o cronograma e o percentual de divisao',
-				atLeastOneItemRequired:
-					'Configure pelo menos um item para o envio automatico quando estiver ativado',
-				percentageMustBe100: 'O percentual total deve ser igual a 100%',
-			},
 		},
 		tabs: {
 			role: 'Cargo',
 			client: 'Cliente',
-			autoSendConfiguration: 'Envio automatico',
 		},
 		summary: {
 			title: 'Resumo do contrato',
@@ -273,13 +255,6 @@ export const brTranslations = {
 				'Os dados do contato de faturamento ainda nao foram preenchidos.',
 			missingInformationHint:
 				'Adicione estas informacoes para completar o resumo.',
-			autoSend: {
-				title: 'Agenda de envio automatico',
-				value: 'As faturas serao enviadas todos os meses {schedule}.',
-				item: 'dia {dayOfMonth} ({value})',
-				missing:
-					'O envio automatico esta ativo, mas a agenda esta incompleta ou sem dados de salario.',
-			},
 		},
 		invoicePreview: {
 			previewButton: 'Visualizar PDF',

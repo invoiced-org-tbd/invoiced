@@ -226,28 +226,10 @@ export const enTranslations = {
 					countryLabel: 'Country',
 				},
 			},
-			autoSendConfiguration: {
-				title: 'Auto Send Configuration',
-				comingSoonTitle: 'Coming soon',
-				comingSoonDescription:
-					'Auto-send configuration will be available soon.',
-				dayOfMonthLabel: 'Day of Month',
-				percentageLabel: 'Percentage',
-				dayOfMonthPrefix: 'Every ',
-				conflictingDaysLabel: 'Conflicting days: {days}',
-				totalLabel: 'Total: {total}% (must equal 100%)',
-				configureLabel: 'Configure auto send configuration',
-				rulesTitle: 'Auto-Send Rules',
-				rulesDescription: 'Define schedule and percentage split',
-				atLeastOneItemRequired:
-					'Please configure at least one item for auto-send configuration when enabled',
-				percentageMustBe100: 'The total percentage must be equal to 100%',
-			},
 		},
 		tabs: {
 			role: 'Role',
 			client: 'Client',
-			autoSendConfiguration: 'Auto send configuration',
 		},
 		summary: {
 			title: 'Contract summary',
@@ -268,13 +250,6 @@ export const enTranslations = {
 				'Billing contact details are still missing for this contract.',
 			missingInformationHint:
 				'Add this information to make the summary complete.',
-			autoSend: {
-				title: 'Auto-send schedule',
-				value: 'Invoices will be sent every month on {schedule}.',
-				item: '{dayOfMonth} day ({value})',
-				missing:
-					'Auto-send is enabled, but the schedule is incomplete or missing salary data.',
-			},
 		},
 		invoicePreview: {
 			previewButton: 'Preview PDF',

@@ -1,5 +1,4 @@
 import {
-	BadgeCheckIcon,
 	ChevronsUpDownIcon,
 	LanguagesIcon,
 	LogOutIcon,
@@ -9,7 +8,6 @@ import {
 } from 'lucide-react';
 import { DropdownMenu } from '@/components/dropdown-menu';
 import { Sidebar } from '@/components/sidebar';
-import { useAccountDrawer } from '@/hooks/use-account-drawer';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useTheme } from '@/hooks/use-theme';
@@ -24,7 +22,6 @@ export const SidebarUserMenu = () => {
 
 	const { handleLogOut } = useLogOut();
 
-	const setIsAccountDrawerOpen = useAccountDrawer((state) => state.setIsOpen);
 	const toggleTheme = useTheme((state) => state.toggleTheme);
 	const theme = useTheme((state) => state.theme);
 	const language = useLanguage((state) => state.language);

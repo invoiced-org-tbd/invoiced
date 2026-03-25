@@ -8,7 +8,6 @@ import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
 import { db } from '@/db/client';
 import {
-	contractAutoSendConfigurationTable,
 	contractClientAddressTable,
 	contractClientTable,
 	contractRoleTable,
@@ -18,9 +17,7 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import { getServerT } from '@/utils/languageUtils';
 import { contractQueryKeys } from './contractApiUtils';
-import { upsertAutoSendConfigurationItems } from './helpers/upsertAutoSendConfigurationItems';
 import { sessionMiddleware } from '../sessionMiddleware';
 
 const createContractParams = contractsUpsertFormSchema.clone();
@@ -32,10 +29,8 @@ const createContractServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createContractParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
-
 			await db.transaction(async (tx) => {
 				const [contract] = await tx
 					.insert(contractTable)
@@ -69,21 +64,6 @@ const createContractServerFn = createServerFn({
 					city: data.client.address.city,
 					state: data.client.address.state,
 					country: data.client.address.country,
-				});
-
-				const [autoSendConfiguration] = await tx
-					.insert(contractAutoSendConfigurationTable)
-					.values({
-						contractId: contract.id,
-						enabled: data.autoSendConfiguration.enabled,
-					})
-					.returning();
-
-				await upsertAutoSendConfigurationItems({
-					tx,
-					t,
-					autoSendConfigurationId: autoSendConfiguration.id,
-					configuration: data.autoSendConfiguration,
 				});
 			});
 

@@ -25,12 +25,12 @@ export const useAuthenticatedSidebarNavItems =
 				subItems: [
 					{
 						label: t('auth.sidebar.cashflow'),
-						to: '/app/cash-flow',
+						to: '/app',
 						icon: HandCoinsIcon,
 					},
 					{
 						label: t('auth.sidebar.receivableDebtAccounts'),
-						to: '/app/receivable-debt-accounts',
+						to: '/app',
 						icon: ReceiptIcon,
 					},
 				],

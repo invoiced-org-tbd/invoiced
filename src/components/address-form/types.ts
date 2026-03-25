@@ -1,4 +1,4 @@
-import type { CountryCode } from '@/lib/countries';
+import type { CountryCode } from '@/db/tables/addressTableBase';
 
 export type AddressFormValues = {
 	street1: string;

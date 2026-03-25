@@ -4,7 +4,6 @@ import { Drawer } from '@/components/drawer';
 import { useAppForm, useFormStepper } from '@/hooks/use-app-form';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { ContractAutoSendConfigurationForm } from './ContractAutoSendConfigurationForm';
 import { ContractClientForm } from './ContractClientForm';
 import { ContractsInvoicePreviewDialog } from './ContractsInvoicePreviewDialog';
 import { ContractRoleForm } from './ContractRoleForm';
@@ -26,10 +25,6 @@ export type ContractsUpsertFormProps = {
 const contractSteps = [
 	{ value: 'role', labelKey: 'contracts.tabs.role' },
 	{ value: 'client', labelKey: 'contracts.tabs.client' },
-	{
-		value: 'autoSendConfiguration',
-		labelKey: 'contracts.tabs.autoSendConfiguration',
-	},
 ] as const satisfies readonly (FormStepperStep<ContractStep> & {
 	labelKey: `contracts.tabs.${ContractStep}`;
 })[];
@@ -106,13 +101,6 @@ export const ContractsUpsertForm = ({
 						<ContractClientForm
 							form={form}
 							fields='client'
-						/>
-					</FormSteps.Content>
-
-					<FormSteps.Content value='autoSendConfiguration'>
-						<ContractAutoSendConfigurationForm
-							form={form}
-							fields='autoSendConfiguration'
 						/>
 					</FormSteps.Content>
 				</FormSteps.Root>

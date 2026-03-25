@@ -40,11 +40,6 @@ const getEditContractByIdServerFn = createServerFn({
 							address: true,
 						},
 					},
-					autoSendConfiguration: {
-						with: {
-							items: true,
-						},
-					},
 				},
 			});
 

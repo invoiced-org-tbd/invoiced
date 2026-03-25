@@ -23,11 +23,6 @@ export const relations = defineRelations(tables, (r) => ({
 	},
 
 	contractTable: {
-		autoSendConfiguration: r.one.contractAutoSendConfigurationTable({
-			from: r.contractTable.id,
-			to: r.contractAutoSendConfigurationTable.contractId,
-			optional: false,
-		}),
 		client: r.one.contractClientTable({
 			from: r.contractTable.id,
 			to: r.contractClientTable.contractId,
@@ -45,14 +40,6 @@ export const relations = defineRelations(tables, (r) => ({
 			from: r.contractClientTable.id,
 			to: r.contractClientAddressTable.contractClientId,
 			optional: false,
-		}),
-	},
-
-	contractAutoSendConfigurationTable: {
-		items: r.many.contractAutoSendConfigurationItemTable({
-			from: r.contractAutoSendConfigurationTable.id,
-			to: r.contractAutoSendConfigurationItemTable
-				.contractAutoSendConfigurationId,
 		}),
 	},
 }));

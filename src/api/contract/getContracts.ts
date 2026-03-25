@@ -26,11 +26,6 @@ const getContractsServerFn = createServerFn({
 							address: true,
 						},
 					},
-					autoSendConfiguration: {
-						with: {
-							items: true,
-						},
-					},
 				},
 			});
 
