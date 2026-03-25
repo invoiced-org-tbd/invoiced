@@ -33,7 +33,7 @@ export type FormInputPropsByMode = {
 };
 export type FormInputWrapperMode = keyof FormInputPropsByMode;
 
-export type ParseableSchema = {
+type ParseableSchema = {
 	safeParse: (value: unknown) => { success: boolean };
 };
 
@@ -42,7 +42,7 @@ type FormInputResolverParams = {
 	fieldSchema: ParseableSchema;
 };
 
-export type FormInputResolver<TMode extends FormInputWrapperMode> = (
+type FormInputResolver<TMode extends FormInputWrapperMode> = (
 	params: FormInputResolverParams,
 ) =>
 	| BaseFieldInputProps<unknown>

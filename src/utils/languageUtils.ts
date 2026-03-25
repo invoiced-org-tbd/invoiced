@@ -15,7 +15,7 @@ const isLanguage = (value: string): value is Language => {
 	return value === 'en' || value === 'br';
 };
 
-export const resolveLanguage = (
+const resolveLanguage = (
 	languageCandidate: string | undefined,
 ): Language => {
 	if (!languageCandidate) {
@@ -35,9 +35,6 @@ export const getServerT = (language: Language): TranslationFn => {
 	return ((...args: [TranslationKey, TranslationRuntimeParams?]) =>
 		runTranslate(language, args[0], args[1])) as TranslationFn;
 };
-
-export const clientT = (...args: [TranslationKey, TranslationRuntimeParams?]) =>
-	translate(getLanguage(), ...(args as [never]));
 
 export const getLanguage = createIsomorphicFn()
 	.client(() => {

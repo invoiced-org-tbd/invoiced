@@ -10,7 +10,7 @@ import {
 } from './accountFormSchemas';
 import { useMutation } from '@tanstack/react-query';
 import { updateUserAccountMutationOptions } from '@/api/user/updateUserAccount';
-import { useAccountDrawer } from '@/hooks/use-account-drawer/useAccountDrawer';
+import { useAccountDrawer } from '@/hooks/use-account-drawer';
 
 export const AccountDrawerForm = () => {
 	const user = useUser();

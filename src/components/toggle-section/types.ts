@@ -5,9 +5,6 @@ import type { toggleSectionVariants } from './consts';
 export type ToggleSectionVariantProps = VariantProps<
 	typeof toggleSectionVariants
 >;
-export type ToggleSectionVariant = NonNullable<
-	ToggleSectionVariantProps['variant']
->;
 
 export type ToggleSectionRootProps = ComponentProps<'section'> &
 	ToggleSectionVariantProps & {

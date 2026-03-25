@@ -6,7 +6,7 @@ const INPUT_BUTTON_SIDE_PADDING_PX = 4;
 const INPUT_BUTTON_SIZE_PX = 20;
 const INPUT_BUTTON_GAP_PX = 4;
 
-export const getInputButtonsBySide = (
+const getInputButtonsBySide = (
 	buttons: InputButton[] = [],
 ): Record<'left' | 'right', InputButton[]> => {
 	return {
@@ -28,7 +28,7 @@ const getSidePaddingByButtonsCount = (buttonsCount: number) => {
 	);
 };
 
-export const getInputButtonsPaddingStyle = ({
+const getInputButtonsPaddingStyle = ({
 	leftButtonsCount,
 	rightButtonsCount,
 }: {

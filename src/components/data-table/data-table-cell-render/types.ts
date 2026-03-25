@@ -1,10 +1,6 @@
 import type { ReactNode } from 'react';
 import type { DataTableObjectPath } from '../objectPath';
 
-export type DataTableColumnBaseOptions = {
-	header?: string;
-};
-
 export type DataTableCulumnFormat =
 	| 'text'
 	| 'number'

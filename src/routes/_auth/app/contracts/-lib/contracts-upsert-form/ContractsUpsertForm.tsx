@@ -17,7 +17,7 @@ import { ContractSummary } from './ContractSummary';
 import type { ContractStep } from '../..';
 import type { FormStepperStep } from '@/hooks/use-app-form';
 
-export type ContractsUpsertFormProps = {
+type ContractsUpsertFormProps = {
 	editId?: string;
 	onClose: () => void;
 };

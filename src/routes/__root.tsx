@@ -15,7 +15,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { tanstackQueryDevtoolsConfig } from '../components/tanstack-query';
 import { getRootRouteHead, getRootRouteScripts } from './-lib/utils';
 
-export type AppRouterContext = {
+type AppRouterContext = {
 	queryClient: QueryClient;
 };
 

@@ -11,7 +11,7 @@ export type BaseCountry = {
 	currencyCode: string;
 };
 
-export const getCountryByCode = (countryCode: Country['code']) => {
+const getCountryByCode = (countryCode: Country['code']) => {
 	return countries.find((country) => country.code === countryCode);
 };
 

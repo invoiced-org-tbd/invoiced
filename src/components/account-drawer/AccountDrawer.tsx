@@ -1,6 +1,6 @@
 import { Drawer } from '../drawer';
 import { AccountDrawerForm } from './account-drawer-form';
-import { useAccountDrawer } from '@/hooks/use-account-drawer/useAccountDrawer';
+import { useAccountDrawer } from '@/hooks/use-account-drawer';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 
 export const AccountDrawer = () => {

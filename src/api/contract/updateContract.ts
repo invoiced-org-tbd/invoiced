@@ -7,7 +7,6 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -25,7 +24,7 @@ const updateContractParams = z.object({
 	data: contractsUpsertFormSchema,
 });
 
-export type UpdateContractParams = z.infer<typeof updateContractParams>;
+type UpdateContractParams = z.infer<typeof updateContractParams>;
 
 const updateContractServerFn = createServerFn({
 	method: 'POST',
@@ -103,10 +102,6 @@ const updateContractServerFn = createServerFn({
 			});
 		}
 	});
-
-export type UpdateContractResponse = ExtractServerFnData<
-	typeof updateContractServerFn
->;
 
 export const updateContractMutationOptions = () =>
 	createMutationOptions({

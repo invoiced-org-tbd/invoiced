@@ -5,7 +5,6 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -21,7 +20,7 @@ const deleteContractParams = z.object({
 	id: z.string(),
 });
 
-export type DeleteContractParams = z.infer<typeof deleteContractParams>;
+type DeleteContractParams = z.infer<typeof deleteContractParams>;
 
 const deleteContractServerFn = createServerFn({
 	method: 'POST',
@@ -57,10 +56,6 @@ const deleteContractServerFn = createServerFn({
 			});
 		}
 	});
-
-export type DeleteContractResponse = ExtractServerFnData<
-	typeof deleteContractServerFn
->;
 
 export const deleteContractMutationOptions = () =>
 	createMutationOptions({

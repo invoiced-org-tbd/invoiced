@@ -1,8 +1,9 @@
-import type { DefaultError, SkipToken } from '@tanstack/query-core';
 import { mutationOptions, queryOptions } from '@tanstack/react-query';
 import type {
+	DefaultError,
 	MutationOptions,
 	QueryKey,
+	SkipToken,
 	UndefinedInitialDataOptions,
 	UseMutationOptions,
 } from '@tanstack/react-query';
@@ -47,7 +48,7 @@ const handleError = (error: unknown) => {
 	toast.error(message);
 };
 
-export const handleQueryFn = async <TData>(
+const handleQueryFn = async <TData>(
 	queryFn: () => Promise<SuccessResponse<TData>>,
 ): Promise<TData> => {
 	try {
@@ -64,7 +65,7 @@ export const handleQueryFn = async <TData>(
 	}
 };
 
-export const handleMutationFn = async <TData>(
+const handleMutationFn = async <TData>(
 	mutationFn: () => Promise<SuccessResponse<TData>>,
 ): Promise<TData> => {
 	try {

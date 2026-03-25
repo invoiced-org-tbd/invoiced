@@ -3,12 +3,12 @@ import { addressFormWithCountrySchema } from '@/components/address-form';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
 
-export const contractRoleFormSchema = z.object({
+const contractRoleFormSchema = z.object({
 	description: z.string().min(1),
 	rate: z.number().min(1),
 });
 
-export const contractClientFormSchema = z.object({
+const contractClientFormSchema = z.object({
 	companyName: z.string().min(1),
 	responsibleName: z.string().min(1),
 	responsibleEmail: z.email(),

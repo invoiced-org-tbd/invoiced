@@ -74,7 +74,7 @@ export const countries = [
 
 export type Country = (typeof countries)[number];
 
-export const countryCodes = countries.map((country) => country.code);
+const countryCodes = countries.map((country) => country.code);
 export const countryCodeEnumSchema = z.enum(countryCodes);
 export type CountryCode = z.infer<typeof countryCodeEnumSchema>;
 

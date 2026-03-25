@@ -4,7 +4,7 @@ import z from 'zod';
 export const accountFormSchema = z.object({
 	name: z.string().min(1),
 });
-export type AccountFormSchema = z.infer<typeof accountFormSchema>;
+type AccountFormSchema = z.infer<typeof accountFormSchema>;
 
 export const useAccountFormDefaultValues = (): AccountFormSchema => {
 	const user = useUser();

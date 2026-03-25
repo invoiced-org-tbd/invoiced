@@ -1,7 +1,6 @@
 import { db } from '@/db/client';
 import { getServerT } from '@/utils/languageUtils';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
-import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -61,10 +60,6 @@ const getEditContractByIdServerFn = createServerFn({
 			});
 		}
 	});
-
-export type GetEditContractByIdResponse = ExtractServerFnData<
-	typeof getEditContractByIdServerFn
->;
 
 export const getEditContractByIdQueryOptions = (
 	params: GetEditContractByIdParams,

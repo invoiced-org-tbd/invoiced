@@ -11,7 +11,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { getScopedErrorKeys } from './stepErrorUtils';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
-export type FormStepperMode = 'create' | 'edit';
+type FormStepperMode = 'create' | 'edit';
 
 export type FormStepperStep<TStep extends string> = {
 	value: TStep;
@@ -23,7 +23,7 @@ type FormWithStore = {
 	SubmitButton: (props: ButtonProps) => ReactNode;
 };
 
-export type UseFormStepperOptions<
+type UseFormStepperOptions<
 	TStep extends string,
 	TForm extends FormWithStore,
 > = {

@@ -1,5 +1,4 @@
 import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
-import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -74,10 +73,6 @@ const createContractServerFn = createServerFn({
 			});
 		}
 	});
-
-export type CreateContractResponse = ExtractServerFnData<
-	typeof createContractServerFn
->;
 
 export const createContractMutationOptions = () =>
 	createMutationOptions({

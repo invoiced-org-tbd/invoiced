@@ -34,14 +34,6 @@ export type SidebarMenuProps = ComponentProps<'ul'>;
 
 export type SidebarMenuItemProps = ComponentProps<'li'>;
 
-export type SidebarMenuButtonVariant = NonNullable<
-	VariantProps<typeof sidebarMenuButtonVariants>['variant']
->;
-
-export type SidebarMenuButtonSize = NonNullable<
-	VariantProps<typeof sidebarMenuButtonVariants>['size']
->;
-
 export type SidebarMenuButtonProps = ComponentProps<'button'> &
 	VariantProps<typeof sidebarMenuButtonVariants> & {
 		asChild?: boolean;

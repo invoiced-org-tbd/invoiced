@@ -6,7 +6,6 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -46,10 +45,6 @@ const updateUserAccountServerFn = createServerFn({
 			});
 		}
 	});
-
-export type UpdateUserAccountResponse = ExtractServerFnData<
-	typeof updateUserAccountServerFn
->;
 
 export const updateUserAccountMutationOptions = () =>
 	createMutationOptions({

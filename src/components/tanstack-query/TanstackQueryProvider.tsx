@@ -1,5 +1,5 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { TanstackQueryProviderProps, TanstackQueryContext } from './types';
+import { QueryClient } from '@tanstack/react-query';
+import type { TanstackQueryContext } from './types';
 
 export const getQueryContext = (): TanstackQueryContext => {
 	const queryClient = new QueryClient({
@@ -14,11 +14,3 @@ export const getQueryContext = (): TanstackQueryContext => {
 	};
 };
 
-export const TanstackQueryProvider = ({
-	children,
-	queryClient,
-}: TanstackQueryProviderProps) => {
-	return (
-		<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-	);
-};

@@ -1,6 +1,6 @@
-export type StepsTriggerState = 'active' | 'completed' | 'upcoming';
+type StepsTriggerState = 'active' | 'completed' | 'upcoming';
 
-export type StepsVisualState =
+type StepsVisualState =
 	| 'completed'
 	| 'active'
 	| 'upcoming'
@@ -8,7 +8,7 @@ export type StepsVisualState =
 	| 'errorActive'
 	| 'errorUpcoming';
 
-export type StepsConnectorState = 'completed' | 'error' | 'upcoming';
+type StepsConnectorState = 'completed' | 'error' | 'upcoming';
 
 type GetStepMetaInput = {
 	currentValue: string | undefined;
@@ -17,7 +17,7 @@ type GetStepMetaInput = {
 	getStepIndex: (value: string) => number;
 };
 
-export const getStepsCurrentIndex = ({
+const getStepsCurrentIndex = ({
 	currentValue,
 	getStepIndex,
 }: Pick<GetStepMetaInput, 'currentValue' | 'getStepIndex'>): number => {
