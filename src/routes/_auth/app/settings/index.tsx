@@ -1,8 +1,8 @@
-import { Page } from '@/components/page';
+import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
-import { SettingsTabs } from './-lib/settings-tabs';
+import { SettingsTabs } from './-lib/settings-tabs/SettingsTabs';
 import { settingsSearchSchema, settingsTabSchema } from './-lib/consts';
 
 export const Route = createFileRoute('/_auth/app/settings/')({

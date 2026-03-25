@@ -1,5 +1,5 @@
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
-import { DataTable } from '@/components/data-table';
+import { DataTable } from '@/components/data-table/DataTable';
 import { useQuery } from '@tanstack/react-query';
 import {
 	useContractDataTableColumns,

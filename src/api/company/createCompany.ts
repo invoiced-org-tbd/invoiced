@@ -1,5 +1,6 @@
 import { db } from '@/db/client';
-import { companyAddressTable, companyTable } from '@/db/tables';
+import { companyAddressTable } from '@/db/tables/companyAddressTable';
+import { companyTable } from '@/db/tables/companyTable';
 import { createCompanyFormSchema } from '@/routes/_auth/create-company/-lib/components/create-company-form/createCompanyFormSchema';
 import {
 	createMutationOptions,

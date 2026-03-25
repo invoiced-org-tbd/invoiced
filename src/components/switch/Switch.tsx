@@ -1,7 +1,7 @@
 import { Switch as SwitchPrimitive } from 'radix-ui';
 import { useId } from 'react';
-import { BaseField } from '../base-field';
-import { toggleControlVariants } from '../base-field';
+import { BaseField } from '../base-field/BaseField';
+import { toggleControlVariants } from '../base-field/consts';
 import { useBaseField } from '../base-field/useBaseField';
 import { cn } from '@/utils/classNamesUtils';
 import type { SwitchProps } from './types';

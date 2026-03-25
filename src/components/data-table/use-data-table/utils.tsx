@@ -15,7 +15,7 @@ import type {
 } from '../data-table-cell-render/types';
 import type { DataTableObjectPath } from '../objectPath';
 import { useCreateRowActionsColumn } from '../utils';
-import { DataTableCellRender } from '../data-table-cell-render';
+import { DataTableCellRender } from '../data-table-cell-render/DataTableCellRender';
 import type { ReactNode } from 'react';
 import { toTitleCase } from '@/utils/stringUtils';
 

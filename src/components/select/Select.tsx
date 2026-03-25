@@ -5,7 +5,7 @@ import { Combobox as ComboboxPrimitive } from '@base-ui/react';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 import { useRef } from 'react';
-import { BaseField } from '../base-field';
+import { BaseField } from '../base-field/BaseField';
 import { fieldInputVariants } from '../base-field/consts';
 import type { InputButton } from '../base-field/types';
 import { getInputButtonsLayout } from '../base-field/utils';

@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@/components/button';
+import { Button } from '@/components/button/Button';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { ChevronLeftIcon } from 'lucide-react';
-import { useLogOut } from '@/hooks/use-log-out';
-import { CreateCompanyForm } from './-lib/components/create-company-form';
+import { useLogOut } from '@/hooks/use-log-out/useLogOut';
+import { CreateCompanyForm } from './-lib/components/create-company-form/CreateCompanyForm';
 import { LanguageSwitcher } from '../../../components/language-switcher/LanguageSwitcher';
 import { ThemeSwitcher } from '@/components/theme-switcher/ThemeSwitcher';
 

@@ -1,1 +1,0 @@
-export { useCompany } from './useCompany';

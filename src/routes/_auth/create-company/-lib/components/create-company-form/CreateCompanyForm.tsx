@@ -1,6 +1,6 @@
 import { createCompanyMutationOptions } from '@/api/company/createCompany';
-import { AddressForm } from '@/components/address-form';
-import { useAppForm } from '@/hooks/use-app-form';
+import { AddressForm } from '@/components/address-form/AddressForm';
+import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';

@@ -1,6 +1,6 @@
 import { accountFormSchema } from '@/components/account-drawer/account-drawer-form/accountFormSchemas';
 import { db } from '@/db/client';
-import { userTable } from '@/db/tables';
+import { userTable } from '@/db/tables/userTable';
 import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,

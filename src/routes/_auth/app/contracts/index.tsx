@@ -1,12 +1,12 @@
-import { Page } from '@/components/page';
+import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { createFileRoute } from '@tanstack/react-router';
-import { ContractsDataTable } from './-lib/contracts-data-table';
+import { ContractsDataTable } from './-lib/contracts-data-table/ContractsDataTable';
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
 import { zodValidator } from '@tanstack/zod-adapter';
 import z from 'zod';
-import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer';
-import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog';
+import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
+import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog/ContractsDeleteDialog';
 
 const contractStepsSchema = z.enum(['role', 'client']);
 

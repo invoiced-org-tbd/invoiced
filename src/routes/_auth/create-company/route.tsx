@@ -1,4 +1,4 @@
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/hooks/use-company/useCompany';
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth/create-company')({

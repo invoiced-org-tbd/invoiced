@@ -1,6 +1,6 @@
 import { deleteContractMutationOptions } from '@/api/contract/deleteContract';
-import { Button } from '@/components/button';
-import { Dialog } from '@/components/dialog';
+import { Button } from '@/components/button/Button';
+import { Dialog } from '@/components/dialog/Dialog';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';

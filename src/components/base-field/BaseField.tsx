@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { Button } from '../button';
+import { Button } from '../button/Button';
 import { inputButtonClassName, inputButtonsSideClassName } from './consts';
-import { Label } from '@/components/label';
+import { Label } from '@/components/label/Label';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import type {

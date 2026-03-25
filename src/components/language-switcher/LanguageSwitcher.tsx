@@ -1,5 +1,5 @@
-import { LanguageFlag } from '@/components/language-flag';
-import { DropdownMenu } from '@/components/dropdown-menu';
+import { LanguageFlag } from '@/components/language-flag/LanguageFlag';
+import { DropdownMenu } from '@/components/dropdown-menu/DropdownMenu';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { Language } from '@/hooks/use-language/types';

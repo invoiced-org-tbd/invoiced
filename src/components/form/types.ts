@@ -1,5 +1,5 @@
 import type { ComponentProps, ComponentType, ReactNode } from 'react';
-import type { ButtonProps } from '../button';
+import type { ButtonProps } from '../button/types';
 import type { ZodObject } from 'zod';
 
 export type AppFormApi = {

@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { EllipsisIcon } from 'lucide-react';
-import { Button } from '@/components/button';
-import { DropdownMenu } from '@/components/dropdown-menu';
+import { Button } from '@/components/button/Button';
+import { DropdownMenu } from '@/components/dropdown-menu/DropdownMenu';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { DATA_TABLE_ROW_ACTIONS_COLUMN_ID } from './consts';
 import type { DataTableColumnMeta, DataTableRowAction } from './types';

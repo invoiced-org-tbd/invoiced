@@ -1,4 +1,4 @@
-import { Tabs } from '@/components/tabs';
+import { Tabs } from '@/components/tabs/Tabs';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { settingsTabs } from '../consts';
 import type { SettingsTab } from '../consts';

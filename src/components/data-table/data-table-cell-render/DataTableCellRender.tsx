@@ -6,11 +6,11 @@ import type {
 	DataTableCulumnFormat,
 	DataTableCulumnFormatConfig,
 } from './types';
-import { Checkbox } from '@/components/checkbox';
-import { Switch } from '@/components/switch';
+import { Checkbox } from '@/components/checkbox/Checkbox';
+import { Switch } from '@/components/switch/Switch';
 import { toDate } from '@/utils/dateUtils';
 import { inferDataTableColumnFormat } from './utils';
-import { Tooltip } from '@/components/tooltip';
+import { Tooltip } from '@/components/tooltip/Tooltip';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { assertNever } from '@/utils/typesUtils';
 import { getDataTableValueByPath } from '../objectPath';

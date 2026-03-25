@@ -2,7 +2,7 @@ import { cn } from '@/utils/classNamesUtils';
 import { useCallback, useEffect, useId, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { NumericFormat } from 'react-number-format';
-import { BaseField } from '../base-field';
+import { BaseField } from '../base-field/BaseField';
 import { fieldInputVariants } from '../base-field/consts';
 import { getInputButtonsLayout } from '../base-field/utils';
 import { useBaseField } from '../base-field/useBaseField';

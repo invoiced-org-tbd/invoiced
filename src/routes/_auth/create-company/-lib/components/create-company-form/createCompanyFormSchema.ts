@@ -1,5 +1,5 @@
 import z from 'zod';
-import { addressFormSchema } from '@/components/address-form';
+import { addressFormSchema } from '@/components/address-form/addressFormSchemas';
 
 const createCompanyGeneralFormSchema = z.object({
 	name: z.string().min(1),

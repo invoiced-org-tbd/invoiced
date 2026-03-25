@@ -4,9 +4,9 @@ import {
 	accountFormSchema,
 	useAccountFormDefaultValues,
 } from '@/components/account-drawer/account-drawer-form/accountFormSchemas';
-import { Button } from '@/components/button';
-import { TextInput } from '@/components/text-input';
-import { useAppForm } from '@/hooks/use-app-form';
+import { Button } from '@/components/button/Button';
+import { TextInput } from '@/components/text-input/TextInput';
+import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useUser } from '@/hooks/use-user/useUser';
 import { cn } from '@/utils/classNamesUtils';

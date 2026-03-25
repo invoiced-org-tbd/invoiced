@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router';
-import { Sidebar } from '@/components/sidebar';
-import { SidebarUserMenu } from '../sidebar-user-menu';
+import { Sidebar } from '@/components/sidebar/Sidebar';
+import { SidebarUserMenu } from '../sidebar-user-menu/SidebarUserMenu';
 import { useAuthenticatedSidebarNavItems } from './consts';
 import type { SidebarNavLinkItem } from './types';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/hooks/use-company/useCompany';
 
 export const AuthenticatedSidebar = () => {
 	const { company } = useCompany();

@@ -1,7 +1,8 @@
 import { createContractMutationOptions } from '@/api/contract/createContract';
-import { Button } from '@/components/button';
-import { Drawer } from '@/components/drawer';
-import { useAppForm, useFormStepper } from '@/hooks/use-app-form';
+import { Button } from '@/components/button/Button';
+import { Drawer } from '@/components/drawer/Drawer';
+import { useAppForm } from '@/hooks/use-app-form/useAppForm';
+import { useFormStepper } from '@/hooks/use-app-form/useFormStepper';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ContractClientForm } from './ContractClientForm';
@@ -15,7 +16,7 @@ import { updateContractMutationOptions } from '@/api/contract/updateContract';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { ContractSummary } from './ContractSummary';
 import type { ContractStep } from '../..';
-import type { FormStepperStep } from '@/hooks/use-app-form';
+import type { FormStepperStep } from '@/hooks/use-app-form/useFormStepper';
 
 type ContractsUpsertFormProps = {
 	editId?: string;

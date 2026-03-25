@@ -1,7 +1,7 @@
-import { Drawer } from '@/components/drawer';
+import { Drawer } from '@/components/drawer/Drawer';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { getRouteApi } from '@tanstack/react-router';
-import { ContractsUpsertForm } from '../contracts-upsert-form';
+import { ContractsUpsertForm } from '../contracts-upsert-form/ContractsUpsertForm';
 
 const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
 

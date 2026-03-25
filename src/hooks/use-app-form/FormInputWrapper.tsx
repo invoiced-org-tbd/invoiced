@@ -1,5 +1,5 @@
-import type { BaseFieldInputProps } from '@/components/base-field';
-import { useFormRootContext } from '@/components/form';
+import type { BaseFieldInputProps } from '@/components/base-field/types';
+import { useFormRootContext } from '@/components/form/utils';
 import type { FC } from 'react';
 import { useFieldContext } from './contexts';
 import type {

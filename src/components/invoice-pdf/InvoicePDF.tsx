@@ -1,4 +1,4 @@
-import { PDFCanvasViewer } from '@/components/pdf-canvas-viewer';
+import { PDFCanvasViewer } from '@/components/pdf-canvas-viewer/PDFCanvasViewer';
 import { invoicePDFModelMap } from './invoiceModels';
 import type { InvoicePDFProps } from './types';
 

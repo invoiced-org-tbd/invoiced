@@ -1,5 +1,5 @@
-import { Button } from '@/components/button';
-import { DropdownMenu } from '@/components/dropdown-menu';
+import { Button } from '@/components/button/Button';
+import { DropdownMenu } from '@/components/dropdown-menu/DropdownMenu';
 import type { DataTableToolbarProps } from './types';
 
 export const DataTableToolbar = <TData,>({

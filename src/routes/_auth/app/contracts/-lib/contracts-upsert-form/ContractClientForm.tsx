@@ -1,5 +1,5 @@
-import { AddressForm } from '@/components/address-form';
-import { withFieldGroup } from '@/hooks/use-app-form';
+import { AddressForm } from '@/components/address-form/AddressForm';
+import { withFieldGroup } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 

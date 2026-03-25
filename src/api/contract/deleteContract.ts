@@ -1,5 +1,5 @@
 import { db } from '@/db/client';
-import { contractTable } from '@/db/tables';
+import { contractTable } from '@/db/tables/contractTable';
 import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,

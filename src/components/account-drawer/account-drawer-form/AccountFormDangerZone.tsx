@@ -1,5 +1,5 @@
-import { Button } from '@/components/button';
-import { ToggleSection } from '@/components/toggle-section';
+import { Button } from '@/components/button/Button';
+import { ToggleSection } from '@/components/toggle-section/ToggleSection';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { deleteUserAccountMutationOptions } from '@/api/user/deleteUserAccount';
 import { useMutation } from '@tanstack/react-query';

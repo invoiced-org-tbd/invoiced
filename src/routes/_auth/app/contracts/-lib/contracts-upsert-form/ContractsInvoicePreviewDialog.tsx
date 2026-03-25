@@ -1,7 +1,7 @@
-import { Button } from '@/components/button';
-import { Dialog } from '@/components/dialog';
-import { InvoicePDF } from '@/components/invoice-pdf';
-import { useCompany } from '@/hooks/use-company';
+import { Button } from '@/components/button/Button';
+import { Dialog } from '@/components/dialog/Dialog';
+import { InvoicePDF } from '@/components/invoice-pdf/InvoicePDF';
+import { useCompany } from '@/hooks/use-company/useCompany';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 

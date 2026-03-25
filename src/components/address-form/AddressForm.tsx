@@ -1,5 +1,5 @@
-import { TextInput } from '@/components/text-input';
-import { withFieldGroup } from '@/hooks/use-app-form';
+import { TextInput } from '@/components/text-input/TextInput';
+import { withFieldGroup } from '@/hooks/use-app-form/useAppForm';
 import { useCountryItems, useGetCountryName } from '@/lib/countries';
 import type { AddressFormProps, AddressFormValues } from './types';
 

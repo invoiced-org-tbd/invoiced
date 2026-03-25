@@ -1,4 +1,4 @@
-import { useUser } from '@/hooks/use-user';
+import { useUser } from '@/hooks/use-user/useUser';
 import z from 'zod';
 
 export const accountFormSchema = z.object({

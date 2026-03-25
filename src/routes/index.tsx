@@ -1,6 +1,6 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { getAuthSessionQueryOptions } from '@/api/auth/getAuthSession';
-import { LandingPage } from './-lib/components/landing-page';
+import { LandingPage } from './-lib/components/landing-page/LandingPage';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/')({

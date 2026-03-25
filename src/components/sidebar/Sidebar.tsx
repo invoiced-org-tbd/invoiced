@@ -1,5 +1,5 @@
-import { Button } from '@/components/button';
-import { Tooltip } from '@/components/tooltip';
+import { Button } from '@/components/button/Button';
+import { Tooltip } from '@/components/tooltip/Tooltip';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import { Slot } from '@radix-ui/react-slot';

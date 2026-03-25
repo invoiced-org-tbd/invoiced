@@ -1,5 +1,5 @@
-import { Toaster } from '@/components/toaster';
-import { Tooltip } from '@/components/tooltip';
+import { Toaster } from '@/components/toaster/Toaster';
+import { Tooltip } from '@/components/tooltip/Tooltip';
 import { useSyncZodErrorMap } from '@/hooks/use-language/useSyncZodErrorMap';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { TanStackDevtools } from '@tanstack/react-devtools';
@@ -12,7 +12,7 @@ import {
 	createRootRouteWithContext,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
-import { tanstackQueryDevtoolsConfig } from '../components/tanstack-query';
+import { tanstackQueryDevtoolsConfig } from '../components/tanstack-query/TanstackQueryDevtools';
 import { getRootRouteHead, getRootRouteScripts } from './-lib/utils';
 
 type AppRouterContext = {

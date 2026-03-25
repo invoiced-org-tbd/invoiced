@@ -1,10 +1,10 @@
 import { useId } from 'react';
-import { BaseField } from '../base-field';
+import { BaseField } from '../base-field/BaseField';
 import { useBaseField } from '../base-field/useBaseField';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { InputItem } from '../base-field/types';
 import type { SelectInputProps } from './types';
-import { Select } from '../select';
+import { Select } from '../select/Select';
 
 export const SelectInput = <TItem extends InputItem>({
 	onChange,

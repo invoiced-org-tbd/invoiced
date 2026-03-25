@@ -1,6 +1,6 @@
-import { Button } from '@/components/button';
-import { fieldInputVariants } from '@/components/base-field';
-import { Popover } from '@/components/popover';
+import { Button } from '@/components/button/Button';
+import { fieldInputVariants } from '@/components/base-field/consts';
+import { Popover } from '@/components/popover/Popover';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { FilterIcon } from 'lucide-react';
 import { cn } from '@/utils/classNamesUtils';

@@ -1,8 +1,8 @@
 import type { ComponentProps, ComponentType, ReactNode } from 'react';
 import type { MouseEvent } from 'react';
 import type { LucideProps } from 'lucide-react';
-import type { ButtonProps } from '../button';
-import type { Label } from '@/components/label';
+import type { ButtonProps } from '../button/types';
+import type { Label } from '@/components/label/Label';
 import type z from 'zod';
 import type { inputItemSchema } from './schemas';
 

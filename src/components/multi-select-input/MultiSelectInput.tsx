@@ -2,13 +2,13 @@ import { ChevronDownIcon, XIcon } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { Badge } from '../badge';
-import { BaseField } from '../base-field';
+import { Badge } from '../badge/Badge';
+import { BaseField } from '../base-field/BaseField';
 import { fieldInputVariants } from '../base-field/consts';
 import type { InputButton } from '../base-field/types';
 import { useBaseField } from '../base-field/useBaseField';
-import { Checkbox } from '../checkbox';
-import { Popover } from '../popover';
+import { Checkbox } from '../checkbox/Checkbox';
+import { Popover } from '../popover/Popover';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import type {

@@ -1,4 +1,4 @@
-import { Button } from '@/components/button';
+import { Button } from '@/components/button/Button';
 import { Link } from '@tanstack/react-router';
 import { FileText } from 'lucide-react';
 import type { LandingSectionActionProps } from './landingSectionTypes';

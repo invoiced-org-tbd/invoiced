@@ -1,7 +1,7 @@
-import { createFormSteps } from '@/components/form-steps';
-import type { FormStepsRootProps } from '@/components/form-steps';
-import { Button } from '@/components/button';
-import type { ButtonProps } from '@/components/button';
+import { createFormSteps } from '@/components/form-steps/FormSteps';
+import type { FormStepsRootProps } from '@/components/form-steps/types';
+import { Button } from '@/components/button/Button';
+import type { ButtonProps } from '@/components/button/types';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useStore } from '@tanstack/react-form';
 import { useNavigate, useSearch } from '@tanstack/react-router';

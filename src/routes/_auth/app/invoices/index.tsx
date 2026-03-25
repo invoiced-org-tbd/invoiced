@@ -1,4 +1,4 @@
-import { Page } from '@/components/page';
+import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { createFileRoute } from '@tanstack/react-router';
 

@@ -1,6 +1,6 @@
-import { Page } from '@/components/page';
+import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { useUser } from '@/hooks/use-user';
+import { useUser } from '@/hooks/use-user/useUser';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth/app/')({

@@ -1,1 +1,0 @@
-export { SidebarUserMenu } from './SidebarUserMenu';

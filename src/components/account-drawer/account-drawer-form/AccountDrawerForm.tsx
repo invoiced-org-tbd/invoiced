@@ -1,6 +1,6 @@
-import { Drawer } from '@/components/drawer';
-import { TextInput } from '@/components/text-input';
-import { useAppForm } from '@/hooks/use-app-form';
+import { Drawer } from '@/components/drawer/Drawer';
+import { TextInput } from '@/components/text-input/TextInput';
+import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useUser } from '@/hooks/use-user/useUser';
 import { AccountFormDangerZone } from './AccountFormDangerZone';
@@ -10,7 +10,7 @@ import {
 } from './accountFormSchemas';
 import { useMutation } from '@tanstack/react-query';
 import { updateUserAccountMutationOptions } from '@/api/user/updateUserAccount';
-import { useAccountDrawer } from '@/hooks/use-account-drawer';
+import { useAccountDrawer } from '@/hooks/use-account-drawer/useAccountDrawer';
 
 export const AccountDrawerForm = () => {
 	const user = useUser();

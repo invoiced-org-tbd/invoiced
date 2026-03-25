@@ -1,1 +1,0 @@
-export { useLogOut } from './useLogOut';

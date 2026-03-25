@@ -6,12 +6,10 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import type z from 'zod';
 import { db } from '@/db/client';
-import {
-	contractClientAddressTable,
-	contractClientTable,
-	contractRoleTable,
-	contractTable,
-} from '@/db/tables';
+import { contractClientAddressTable } from '@/db/tables/contractClientAddressTable';
+import { contractClientTable } from '@/db/tables/contractClientTable';
+import { contractRoleTable } from '@/db/tables/contractRoleTable';
+import { contractTable } from '@/db/tables/contractTable';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,

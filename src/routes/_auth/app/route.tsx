@@ -1,8 +1,8 @@
-import { AccountDrawer } from '@/components/account-drawer';
-import { Sidebar } from '@/components/sidebar';
+import { AccountDrawer } from '@/components/account-drawer/AccountDrawer';
+import { Sidebar } from '@/components/sidebar/Sidebar';
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
-import { AuthenticatedSidebar } from './-lib/components/authenticated-sidebar';
-import { useCompany } from '@/hooks/use-company';
+import { AuthenticatedSidebar } from './-lib/components/authenticated-sidebar/AuthenticatedSidebar';
+import { useCompany } from '@/hooks/use-company/useCompany';
 
 export const Route = createFileRoute('/_auth/app')({
 	component: AppLayout,

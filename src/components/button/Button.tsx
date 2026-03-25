@@ -3,7 +3,7 @@ import { LoaderCircleIcon } from 'lucide-react';
 import { cn } from '@/utils/classNamesUtils';
 import { buttonVariants } from './consts';
 import type { ButtonProps } from './types';
-import { Tooltip } from '../tooltip';
+import { Tooltip } from '../tooltip/Tooltip';
 
 export const Button = ({
 	className,

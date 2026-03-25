@@ -1,5 +1,5 @@
 import { flexRender } from '@tanstack/react-table';
-import { Table } from '@/components/table';
+import { Table } from '@/components/table/Table';
 import type { DataTableBodyProps } from './types';
 import type { DataTableColumnMeta } from '../types';
 

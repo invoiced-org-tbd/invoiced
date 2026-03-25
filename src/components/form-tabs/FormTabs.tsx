@@ -1,12 +1,12 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { Tabs } from '../tabs';
+import { Tabs } from '../tabs/Tabs';
 import type {
 	FormTabsContentProps,
 	FormTabsListProps,
 	FormTabsRootProps,
 	FormTabsTriggerProps,
 } from './types';
-import { useFormContext } from '@/hooks/use-app-form';
+import { useFormContext } from '@/hooks/use-app-form/useAppForm';
 import { useStore } from '@tanstack/react-form';
 
 const Root = ({

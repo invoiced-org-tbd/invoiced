@@ -1,7 +1,7 @@
 import { cn } from '@/utils/classNamesUtils';
 import type { ChangeEvent } from 'react';
 import { useId } from 'react';
-import { BaseField } from '../base-field';
+import { BaseField } from '../base-field/BaseField';
 import { fieldInputVariants } from '../base-field/consts';
 import { getInputButtonsLayout } from '../base-field/utils';
 import { useBaseField } from '../base-field/useBaseField';

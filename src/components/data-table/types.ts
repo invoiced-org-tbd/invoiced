@@ -1,8 +1,8 @@
 import type { OnChangeFn } from '@tanstack/react-table';
 import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import type { ButtonProps } from '@/components/button';
-import type { DropdownMenuItemProps } from '@/components/dropdown-menu';
+import type { ButtonProps } from '@/components/button/types';
+import type { DropdownMenuItemProps } from '@/components/dropdown-menu/types';
 import type {
 	DataTableAccessorKeyColumn,
 	DataTableIdColumn,

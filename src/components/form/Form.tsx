@@ -1,11 +1,11 @@
-import { Separator } from '@/components/separator';
-import { useFormContext } from '@/hooks/use-app-form';
+import { Separator } from '@/components/separator/Separator';
+import { useFormContext } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
 import type { ZodObject } from 'zod';
-import { Button } from '../button';
+import { Button } from '../button/Button';
 import type {
 	FormCancelButtonProps,
 	FormGroupProps,

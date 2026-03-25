@@ -1,5 +1,5 @@
 import { getEditContractByIdQueryOptions } from '@/api/contract/getEditContractById';
-import { addressFormWithCountrySchema } from '@/components/address-form';
+import { addressFormWithCountrySchema } from '@/components/address-form/addressFormSchemas';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
 

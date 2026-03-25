@@ -6,14 +6,14 @@ import {
 	SettingsIcon,
 	SunIcon,
 } from 'lucide-react';
-import { DropdownMenu } from '@/components/dropdown-menu';
-import { Sidebar } from '@/components/sidebar';
+import { DropdownMenu } from '@/components/dropdown-menu/DropdownMenu';
+import { Sidebar } from '@/components/sidebar/Sidebar';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { useTheme } from '@/hooks/use-theme';
-import { useLogOut } from '@/hooks/use-log-out';
-import { useUser } from '@/hooks/use-user';
-import { LanguageFlag } from '@/components/language-flag';
+import { useTheme } from '@/hooks/use-theme/useTheme';
+import { useLogOut } from '@/hooks/use-log-out/useLogOut';
+import { useUser } from '@/hooks/use-user/useUser';
+import { LanguageFlag } from '@/components/language-flag/LanguageFlag';
 import { Link } from '@tanstack/react-router';
 
 export const SidebarUserMenu = () => {

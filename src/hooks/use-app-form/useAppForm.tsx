@@ -1,10 +1,10 @@
-import { Checkbox } from '@/components/checkbox';
-import { Form } from '@/components/form';
-import { MultiSelectInput } from '@/components/multi-select-input';
-import { NumberInput } from '@/components/number-input';
-import { SelectInput } from '@/components/select-input';
-import { Switch } from '@/components/switch';
-import { TextInput } from '@/components/text-input';
+import { Checkbox } from '@/components/checkbox/Checkbox';
+import { Form } from '@/components/form/Form';
+import { MultiSelectInput } from '@/components/multi-select-input/MultiSelectInput';
+import { NumberInput } from '@/components/number-input/NumberInput';
+import { SelectInput } from '@/components/select-input/SelectInput';
+import { Switch } from '@/components/switch/Switch';
+import { TextInput } from '@/components/text-input/TextInput';
 import { createFormHook } from '@tanstack/react-form';
 import { fieldContext, formContext } from './contexts';
 import { FormInputWrapper } from './FormInputWrapper';

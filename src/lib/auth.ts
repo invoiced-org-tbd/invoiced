@@ -1,10 +1,8 @@
 import { db } from '@/db/client';
-import {
-	accountTable,
-	sessionTable,
-	userTable,
-	verificationTable,
-} from '@/db/tables';
+import { accountTable } from '@/db/tables/accountTable';
+import { sessionTable } from '@/db/tables/sessionTable';
+import { userTable } from '@/db/tables/userTable';
+import { verificationTable } from '@/db/tables/verificationTable';
 import { envServer } from '@/lib/envServer';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';

@@ -1,5 +1,5 @@
-import { Button } from '@/components/button';
-import { Card } from '@/components/card';
+import { Button } from '@/components/button/Button';
+import { Card } from '@/components/card/Card';
 import { CheckCircle2 } from 'lucide-react';
 import type { LandingSectionActionProps } from './landingSectionTypes';
 import { cn } from '@/utils/classNamesUtils';

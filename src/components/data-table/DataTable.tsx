@@ -1,13 +1,13 @@
 import { LoaderCircleIcon } from 'lucide-react';
 import { cn } from '@/utils/classNamesUtils';
-import { Table } from '@/components/table';
+import { Table } from '@/components/table/Table';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { DataTableBody } from './data-table-body';
-import { DataTableFooter } from './data-table-footer';
-import { DataTableHeader } from './data-table-header';
-import { DataTableToolbar } from './data-table-toolbar';
+import { DataTableBody } from './data-table-body/DataTableBody';
+import { DataTableFooter } from './data-table-footer/DataTableFooter';
+import { DataTableHeader } from './data-table-header/DataTableHeader';
+import { DataTableToolbar } from './data-table-toolbar/DataTableToolbar';
 import type { DataTableProps } from './types';
-import { useDataTable } from './use-data-table';
+import { useDataTable } from './use-data-table/useDataTable';
 
 export const DataTable = <TData,>(props: DataTableProps<TData>) => {
 	'use no memo';

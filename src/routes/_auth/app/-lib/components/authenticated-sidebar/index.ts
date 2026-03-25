@@ -1,1 +1,0 @@
-export { AuthenticatedSidebar } from './AuthenticatedSidebar';

@@ -1,11 +1,11 @@
-import { Button } from '@/components/button';
-import { Table } from '@/components/table';
+import { Button } from '@/components/button/Button';
+import { Table } from '@/components/table/Table';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { flexRender } from '@tanstack/react-table';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react';
 import { cn } from '@/utils/classNamesUtils';
 import type { DataTableHeaderProps } from './types';
-import { DataTableFilter } from '../data-table-filter';
+import { DataTableFilter } from '../data-table-filter/DataTableFilter';
 import type { DataTableColumnMeta } from '../types';
 
 export const DataTableHeader = <TData,>({

@@ -1,10 +1,10 @@
-import type { BaseFieldInputProps } from '@/components/base-field';
-import type { CheckboxProps } from '@/components/checkbox';
-import type { MultiSelectInputProps } from '@/components/multi-select-input';
-import type { NumberInputProps } from '@/components/number-input';
-import type { SelectInputProps } from '@/components/select-input';
-import type { SwitchProps } from '@/components/switch';
-import type { TextInputProps } from '@/components/text-input';
+import type { BaseFieldInputProps } from '@/components/base-field/types';
+import type { CheckboxProps } from '@/components/checkbox/types';
+import type { MultiSelectInputProps } from '@/components/multi-select-input/types';
+import type { NumberInputProps } from '@/components/number-input/types';
+import type { SelectInputProps } from '@/components/select-input/types';
+import type { SwitchProps } from '@/components/switch/types';
+import type { TextInputProps } from '@/components/text-input/types';
 import {
 	ZodArray,
 	ZodBoolean,
