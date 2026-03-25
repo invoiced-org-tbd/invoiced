@@ -95,7 +95,7 @@ const Content = ({
 				ref={setContentElement}
 				data-slot='dialog-content'
 				className={cn(
-					'bg-background data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 duration-100',
+					'border border-border bg-background data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 duration-100',
 					'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
 					'flex w-full sm:max-w-sm max-w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] min-h-0 flex-col overflow-hidden rounded-xl text-sm outline-hidden',
 					className,
@@ -164,7 +164,8 @@ const Footer = ({ className, children, ...props }: DialogFooterProps) => {
 		<div
 			data-slot='dialog-footer'
 			className={cn(
-				'bg-muted/50 border-t border-border in-data-[slot=dialog-body]:p-0 p-4 flex shrink-0 gap-2',
+				'bg-muted/50 border-t border-border in-data-[slot=dialog-body]:p-0 p-4',
+				'flex shrink-0 gap-2 justify-end items-center',
 				className,
 			)}
 			{...props}

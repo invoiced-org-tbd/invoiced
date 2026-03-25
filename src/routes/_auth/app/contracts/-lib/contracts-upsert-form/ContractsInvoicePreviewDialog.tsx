@@ -53,7 +53,7 @@ export const ContractsInvoicePreviewDialog = ({
 					)}
 				</Dialog.Body>
 
-				<Dialog.Footer className='px-4 py-3'>
+				<Dialog.Footer>
 					{!canSubmit ? (
 						<p className='text-xs text-muted-foreground mr-auto'>
 							{t('contracts.invoicePreview.incompleteFieldsHint')}
