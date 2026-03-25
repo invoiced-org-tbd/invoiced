@@ -239,8 +239,25 @@ export const enTranslations = {
 					'Auto-send is enabled, but the schedule is incomplete or missing salary data.',
 			},
 		},
+		invoicePreview: {
+			previewButton: 'Preview PDF',
+			title: 'Invoice Preview',
+			description: 'This preview updates from your current form values.',
+			browserOnlyMessage: 'PDF preview is available in the browser.',
+			incompleteFieldsHint:
+				'Some fields are incomplete. Preview may show placeholders.',
+		},
 	},
 	invoices: {
 		title: 'Invoices',
+	},
+	pdfCanvasViewer: {
+		loading: {
+			generatingPreview: 'Generating PDF preview...',
+		},
+		error: {
+			renderFailed: 'Could not render PDF preview.',
+			unavailable: 'PDF preview is unavailable right now.',
+		},
 	},
 } as const;

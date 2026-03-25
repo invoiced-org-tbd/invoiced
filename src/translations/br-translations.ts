@@ -244,8 +244,27 @@ export const brTranslations = {
 					'O envio automatico esta ativo, mas a agenda esta incompleta ou sem dados de salario.',
 			},
 		},
+		invoicePreview: {
+			previewButton: 'Visualizar PDF',
+			title: 'Pre-visualizacao da fatura',
+			description:
+				'Esta pre-visualizacao e atualizada com os valores atuais do formulario.',
+			browserOnlyMessage:
+				'A pre-visualizacao do PDF esta disponivel no navegador.',
+			incompleteFieldsHint:
+				'Alguns campos estao incompletos. A pre-visualizacao pode mostrar placeholders.',
+		},
 	},
 	invoices: {
 		title: 'Faturas',
+	},
+	pdfCanvasViewer: {
+		loading: {
+			generatingPreview: 'Gerando pre-visualizacao do PDF...',
+		},
+		error: {
+			renderFailed: 'Nao foi possivel renderizar a pre-visualizacao do PDF.',
+			unavailable: 'A pre-visualizacao do PDF nao esta disponivel no momento.',
+		},
 	},
 } as const satisfies TranslationsShape;

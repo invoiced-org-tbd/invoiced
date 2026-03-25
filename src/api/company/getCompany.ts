@@ -19,6 +19,9 @@ const getCompanyServerFn = createServerFn({
 				where: {
 					userId: user.id,
 				},
+				with: {
+					address: true,
+				},
 			});
 
 			return createSuccessResponse({

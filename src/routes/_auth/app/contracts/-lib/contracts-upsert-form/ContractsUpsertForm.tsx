@@ -1,9 +1,12 @@
 import { createContractMutationOptions } from '@/api/contract/createContract';
+import { Button } from '@/components/button';
 import { Drawer } from '@/components/drawer';
 import { useAppForm, useFormStepper } from '@/hooks/use-app-form';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { ContractAutoSendConfigurationForm } from './ContractAutoSendConfigurationForm';
 import { ContractClientForm } from './ContractClientForm';
+import { ContractsInvoicePreviewDialog } from './ContractsInvoicePreviewDialog';
 import { ContractRoleForm } from './ContractRoleForm';
 import {
 	contractsUpsertFormSchema,
@@ -36,6 +39,7 @@ export const ContractsUpsertForm = ({
 	onClose,
 }: ContractsUpsertFormProps) => {
 	const { t } = useTranslate();
+	const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
 	const { defaultValues, isLoadingEditContract } =
 		useContractsUpsertFormDefaultValues({
@@ -132,6 +136,29 @@ export const ContractsUpsertForm = ({
 				<form.CancelButton onClick={onClose} />
 
 				<div className='flex items-center gap-2 ml-auto'>
+					<form.Subscribe
+						selector={(state) => ({
+							canSubmit: state.canSubmit,
+							values: state.values,
+						})}
+						children={({ canSubmit, values }) => (
+							<>
+								<Button
+									variant='secondary'
+									onClick={() => setIsPreviewOpen(true)}
+								>
+									{t('contracts.invoicePreview.previewButton')}
+								</Button>
+
+								<ContractsInvoicePreviewDialog
+									open={isPreviewOpen}
+									onOpenChange={setIsPreviewOpen}
+									contractData={values}
+									canSubmit={canSubmit}
+								/>
+							</>
+						)}
+					/>
 					<FormSteps.PreviousButton />
 					<FormSteps.SubmitButton />
 					<FormSteps.NextButton />

@@ -1,4 +1,5 @@
-import { isValid, parseISO } from 'date-fns';
+import { format, isValid, parseISO } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 
 export const toDate = (value: unknown): Date | null => {
 	if (value instanceof Date) {
@@ -26,4 +27,10 @@ export const toDate = (value: unknown): Date | null => {
 	}
 
 	return null;
+};
+
+export const formatInvoiceTodayDate = () => {
+	return format(new Date(), 'MMM d, yyyy', {
+		locale: enUS,
+	});
 };
