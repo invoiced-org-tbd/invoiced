@@ -1,5 +1,6 @@
 import { Button } from '@/components/button/Button';
 import { ModalInteractionContainerProvider } from '@/components/modal-interaction-container-context';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import {
 	Close as DialogClosePrimitive,
@@ -85,6 +86,7 @@ const Content = ({
 	const [contentElement, setContentElement] = useState<HTMLElement | null>(
 		null,
 	);
+	const { t } = useTranslate();
 
 	return (
 		<Portal>
@@ -122,7 +124,7 @@ const Content = ({
 								className='absolute top-2 right-2'
 							>
 								<XIcon />
-								<span className='sr-only'>close</span>
+								<span className='sr-only'>{t('common.close')}</span>
 							</Button>
 						</DialogClosePrimitive>
 					)}
@@ -136,7 +138,10 @@ const Body = ({ className, children, ...props }: DialogBodyProps) => {
 	return (
 		<div
 			data-slot='dialog-body'
-			className={cn('flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-4', className)}
+			className={cn(
+				'flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-4',
+				className,
+			)}
 			{...props}
 		>
 			{children}

@@ -1,22 +1,23 @@
 import { createContractMutationOptions } from '@/api/contract/createContract';
+import { updateContractMutationOptions } from '@/api/contract/updateContract';
 import { Button } from '@/components/button/Button';
 import { Drawer } from '@/components/drawer/Drawer';
 import { useAppForm } from '@/hooks/use-app-form/useAppForm';
+import type { FormStepperStep } from '@/hooks/use-app-form/useFormStepper';
 import { useFormStepper } from '@/hooks/use-app-form/useFormStepper';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
+import type { ContractStep } from '../..';
 import { ContractClientForm } from './ContractClientForm';
-import { ContractsInvoicePreviewDialog } from './ContractsInvoicePreviewDialog';
+import { ContractInvoiceRecurrenceForm } from './ContractInvoiceRecurrenceForm';
 import { ContractRoleForm } from './ContractRoleForm';
+import { ContractsInvoicePreviewDialog } from './ContractsInvoicePreviewDialog';
+import { ContractSummary } from './ContractSummary';
 import {
 	contractsUpsertFormSchema,
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
-import { updateContractMutationOptions } from '@/api/contract/updateContract';
-import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { ContractSummary } from './ContractSummary';
-import type { ContractStep } from '../..';
-import type { FormStepperStep } from '@/hooks/use-app-form/useFormStepper';
 
 type ContractsUpsertFormProps = {
 	editId?: string;
@@ -26,6 +27,7 @@ type ContractsUpsertFormProps = {
 const contractSteps = [
 	{ value: 'role', labelKey: 'contracts.tabs.role' },
 	{ value: 'client', labelKey: 'contracts.tabs.client' },
+	{ value: 'invoiceRecurrence', labelKey: 'contracts.tabs.invoiceRecurrence' },
 ] as const satisfies readonly (FormStepperStep<ContractStep> & {
 	labelKey: `contracts.tabs.${ContractStep}`;
 })[];
@@ -102,6 +104,21 @@ export const ContractsUpsertForm = ({
 						<ContractClientForm
 							form={form}
 							fields='client'
+						/>
+					</FormSteps.Content>
+
+					<FormSteps.Content value='invoiceRecurrence'>
+						<form.Subscribe
+							selector={(state) => ({
+								rate: state.values.role.rate,
+							})}
+							children={({ rate }) => (
+								<ContractInvoiceRecurrenceForm
+									form={form}
+									fields='invoiceRecurrence'
+									rate={rate}
+								/>
+							)}
 						/>
 					</FormSteps.Content>
 				</FormSteps.Root>

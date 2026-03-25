@@ -18,6 +18,7 @@ import z from 'zod';
 import { contractQueryKeys } from './contractApiUtils';
 import { getServerT } from '@/utils/languageUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
+import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
 
 const updateContractParams = z.object({
 	editId: z.string(),
@@ -93,6 +94,40 @@ const updateContractServerFn = createServerFn({
 					state: data.client.address.state,
 					country: data.client.address.country,
 				});
+
+				const invoiceRecurrence =
+					await tx.query.contractInvoiceRecurrenceTable.findFirst({
+						where: {
+							contractId: contract.id,
+						},
+					});
+
+				if (!invoiceRecurrence) {
+					throw new ServerError({
+						message: t('entity.notFound', {
+							entity: t('contracts.name'),
+						}),
+					});
+				}
+
+				await tx
+					.delete(contractInvoiceRecurrenceItemTable)
+					.where(
+						eq(
+							contractInvoiceRecurrenceItemTable.contractInvoiceRecurrenceId,
+							invoiceRecurrence.id,
+						),
+					);
+
+				const recurrenceItems = data.invoiceRecurrence.items.map((item) => ({
+					contractInvoiceRecurrenceId: invoiceRecurrence.id,
+					dayOfMonth: item.dayOfMonth,
+					percentage: item.percentage,
+				}));
+
+				await tx
+					.insert(contractInvoiceRecurrenceItemTable)
+					.values(recurrenceItems);
 			});
 
 			return createSuccessResponse();

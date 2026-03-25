@@ -15,9 +15,7 @@ const isLanguage = (value: string): value is Language => {
 	return value === 'en' || value === 'br';
 };
 
-const resolveLanguage = (
-	languageCandidate: string | undefined,
-): Language => {
+const resolveLanguage = (languageCandidate: string | undefined): Language => {
 	if (!languageCandidate) {
 		return 'en';
 	}

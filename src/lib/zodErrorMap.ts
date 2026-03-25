@@ -23,7 +23,7 @@ const getTooSmallMessage = (language: Language, issue: ZodIssue) => {
 		return undefined;
 	}
 
-	if (issue.origin !== 'string') {
+	if (issue.origin !== 'string' && issue.origin !== 'number') {
 		return undefined;
 	}
 
@@ -38,11 +38,17 @@ const getTooSmallMessage = (language: Language, issue: ZodIssue) => {
 		return undefined;
 	}
 
-	if (minimum <= 1) {
+	if (issue.origin === 'string' && minimum <= 1) {
 		return translate(language, 'validation.required');
 	}
 
-	return translate(language, 'validation.minCharacters', {
+	if (issue.origin === 'string') {
+		return translate(language, 'validation.minCharacters', {
+			minimum,
+		});
+	}
+
+	return translate(language, 'validation.minNumber', {
 		minimum,
 	});
 };

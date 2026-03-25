@@ -66,6 +66,24 @@ CREATE TABLE `contractClient` (
 	CONSTRAINT `fk_contractClient_contractId_contract_id_fk` FOREIGN KEY (`contractId`) REFERENCES `contract`(`id`) ON DELETE CASCADE
 );
 --> statement-breakpoint
+CREATE TABLE `contractInvoiceRecurrenceItem` (
+	`id` text PRIMARY KEY,
+	`dayOfMonth` integer NOT NULL,
+	`percentage` integer NOT NULL,
+	`contractInvoiceRecurrenceId` text NOT NULL,
+	`createdAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updatedAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	CONSTRAINT `fk_contractInvoiceRecurrenceItem_contractInvoiceRecurrenceId_contractInvoiceRecurrence_id_fk` FOREIGN KEY (`contractInvoiceRecurrenceId`) REFERENCES `contractInvoiceRecurrence`(`id`) ON DELETE CASCADE
+);
+--> statement-breakpoint
+CREATE TABLE `contractInvoiceRecurrence` (
+	`id` text PRIMARY KEY,
+	`contractId` text NOT NULL,
+	`createdAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updatedAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	CONSTRAINT `fk_contractInvoiceRecurrence_contractId_contract_id_fk` FOREIGN KEY (`contractId`) REFERENCES `contract`(`id`) ON DELETE CASCADE
+);
+--> statement-breakpoint
 CREATE TABLE `contractRole` (
 	`id` text PRIMARY KEY,
 	`description` text NOT NULL,

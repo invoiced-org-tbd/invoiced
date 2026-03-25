@@ -18,7 +18,7 @@ export const toggleSectionVariants = cva(
 );
 
 export const toggleSectionHeaderVariants = cva(
-	'w-full cursor-pointer select-none text-left text-sm font-semibold leading-none outline-none',
+	'w-full select-none text-left text-sm font-semibold leading-none outline-none',
 	{
 		variants: {
 			variant: {
@@ -26,6 +26,9 @@ export const toggleSectionHeaderVariants = cva(
 				secondary: 'text-secondary-foreground',
 				destructive: 'text-destructive',
 				info: 'text-blue-500 dark:text-blue-400',
+			},
+			isButton: {
+				true: 'cursor-pointer',
 			},
 		},
 		defaultVariants: {

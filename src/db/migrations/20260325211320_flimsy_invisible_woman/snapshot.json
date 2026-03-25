@@ -1,7 +1,7 @@
 {
   "version": "7",
   "dialect": "sqlite",
-  "id": "64da4a74-44c5-4b11-b0b2-7cb6f7b22e6c",
+  "id": "353be9d1-6cc8-4835-9fc2-5322d5859845",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -24,6 +24,14 @@
     },
     {
       "name": "contractClient",
+      "entityType": "tables"
+    },
+    {
+      "name": "contractInvoiceRecurrenceItem",
+      "entityType": "tables"
+    },
+    {
+      "name": "contractInvoiceRecurrence",
       "entityType": "tables"
     },
     {
@@ -534,6 +542,106 @@
       "generated": null,
       "name": "id",
       "entityType": "columns",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "dayOfMonth",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "percentage",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "contractInvoiceRecurrenceId",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+      "generated": null,
+      "name": "createdAt",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+      "generated": null,
+      "name": "updatedAt",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrence"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "contractId",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrence"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+      "generated": null,
+      "name": "createdAt",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrence"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+      "generated": null,
+      "name": "updatedAt",
+      "entityType": "columns",
+      "table": "contractInvoiceRecurrence"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
       "table": "contractRole"
     },
     {
@@ -913,6 +1021,36 @@
     },
     {
       "columns": [
+        "contractInvoiceRecurrenceId"
+      ],
+      "tableTo": "contractInvoiceRecurrence",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "nameExplicit": false,
+      "name": "fk_contractInvoiceRecurrenceItem_contractInvoiceRecurrenceId_contractInvoiceRecurrence_id_fk",
+      "entityType": "fks",
+      "table": "contractInvoiceRecurrenceItem"
+    },
+    {
+      "columns": [
+        "contractId"
+      ],
+      "tableTo": "contract",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "nameExplicit": false,
+      "name": "fk_contractInvoiceRecurrence_contractId_contract_id_fk",
+      "entityType": "fks",
+      "table": "contractInvoiceRecurrence"
+    },
+    {
+      "columns": [
         "contractId"
       ],
       "tableTo": "contract",
@@ -999,6 +1137,24 @@
       "nameExplicit": false,
       "name": "contractClient_pk",
       "table": "contractClient",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "contractInvoiceRecurrenceItem_pk",
+      "table": "contractInvoiceRecurrenceItem",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "contractInvoiceRecurrence_pk",
+      "table": "contractInvoiceRecurrence",
       "entityType": "pks"
     },
     {

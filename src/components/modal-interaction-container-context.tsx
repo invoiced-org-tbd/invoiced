@@ -1,7 +1,9 @@
 import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
 
-const ModalInteractionContainerContext = createContext<HTMLElement | null>(null);
+const ModalInteractionContainerContext = createContext<HTMLElement | null>(
+	null,
+);
 
 type ModalInteractionContainerProviderProps = {
 	value: HTMLElement | null;

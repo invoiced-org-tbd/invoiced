@@ -8,8 +8,7 @@ export type ToggleSectionVariantProps = VariantProps<
 
 export type ToggleSectionRootProps = ComponentProps<'section'> &
 	ToggleSectionVariantProps & {
-		open?: boolean;
-		defaultOpen?: boolean;
+		open: boolean;
 		onOpenChange?: (open: boolean) => void;
 	};
 

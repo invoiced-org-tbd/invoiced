@@ -37,6 +37,11 @@ const getEditContractServerFn = createServerFn({
 							address: true,
 						},
 					},
+					invoiceRecurrence: {
+						with: {
+							items: true,
+						},
+					},
 				},
 			});
 

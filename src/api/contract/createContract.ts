@@ -16,6 +16,8 @@ import {
 } from '@/utils/queryOptionsUtils';
 import { contractQueryKeys } from './contractApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
+import { contractInvoiceRecurrenceTable } from '@/db/tables/contractInvoiceRecurrenceTable';
+import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
 
 const createContractParams = contractsUpsertFormSchema.clone();
 
@@ -62,6 +64,22 @@ const createContractServerFn = createServerFn({
 					state: data.client.address.state,
 					country: data.client.address.country,
 				});
+
+				const [invoiceRecurrence] = await tx
+					.insert(contractInvoiceRecurrenceTable)
+					.values({
+						contractId: contract.id,
+					})
+					.returning();
+				const recurrenceItems = data.invoiceRecurrence.items.map((item) => ({
+					contractInvoiceRecurrenceId: invoiceRecurrence.id,
+					dayOfMonth: item.dayOfMonth,
+					percentage: item.percentage,
+				}));
+
+				await tx
+					.insert(contractInvoiceRecurrenceItemTable)
+					.values(recurrenceItems);
 			});
 
 			return createSuccessResponse();

@@ -8,7 +8,7 @@ import z from 'zod';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog/ContractsDeleteDialog';
 
-const contractStepsSchema = z.enum(['role', 'client']);
+const contractStepsSchema = z.enum(['role', 'client', 'invoiceRecurrence']);
 
 export type ContractStep = z.infer<typeof contractStepsSchema>;
 const contractsSearchSchema = z.object({

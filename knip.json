@@ -2,7 +2,6 @@
 	"$schema": "https://unpkg.com/knip@latest/schema.json",
 	"ignore": [
 		"src/components/form-tabs/FormTabs.tsx",
-		"src/components/form-tabs/index.ts",
 		"src/components/form-tabs/types.ts"
 	]
 }

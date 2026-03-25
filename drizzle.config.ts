@@ -13,7 +13,7 @@ const drizzleEnv = drizzleEnvSchema.parse(process.env);
 
 // biome-ignore lint/style/noDefaultExport: drizzle-kit expects a default config export
 export default defineConfig({
-	schema: './src/db/tables/index.ts',
+	schema: './src/db/tables/dbTables.ts',
 	out: './src/db/migrations',
 	dialect: 'turso',
 	dbCredentials: {

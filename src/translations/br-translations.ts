@@ -58,6 +58,7 @@ export const brTranslations = {
 		invalidType: 'Valor inválido',
 		invalidEmail: 'Digite um e-mail válido',
 		minCharacters: 'Digite pelo menos {minimum} caracteres',
+		minNumber: 'Digite um valor maior ou igual a {minimum}',
 		maxCharacters: 'Digite no máximo {maximum} caracteres',
 		maxNumber: 'Digite um valor menor ou igual a {maximum}',
 	},
@@ -216,6 +217,19 @@ export const brTranslations = {
 				rateLabel: 'Valor',
 				emailLabel: 'E-mail',
 			},
+			invoiceRecurrence: {
+				sectionTitle: 'Recorrencia de faturas',
+				sectionDescription: 'Defina a recorrencia de faturas para o contrato.',
+				dayOfMonthLabel: 'Dia do mês',
+				dayOfMonthSuffix: '{suffix} dia do mês',
+				percentageLabel: 'Porcentagem',
+				totalPercentageLabel: 'Porcentagem total: {value}%',
+				totalPercentageInvalidHint: '(deve ser 100%)',
+				validation: {
+					totalPercentageMustBe100: 'A porcentagem total deve ser 100',
+					duplicateDayOfMonth: 'Dia do mes duplicado',
+				},
+			},
 			client: {
 				companyNameLabel: 'Nome da empresa',
 				responsibleNameLabel: 'Nome do responsável',
@@ -235,6 +249,7 @@ export const brTranslations = {
 		tabs: {
 			role: 'Cargo',
 			client: 'Cliente',
+			invoiceRecurrence: 'Recorrencia de Invoices',
 		},
 		summary: {
 			title: 'Resumo do contrato',

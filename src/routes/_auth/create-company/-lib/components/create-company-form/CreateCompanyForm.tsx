@@ -58,7 +58,9 @@ export const CreateCompanyForm = () => {
 						numberLabel: t('createCompany.form.numberLabel'),
 						numberPlaceholder: t('createCompany.form.numberPlaceholder'),
 						postalCodeLabel: t('createCompany.form.postalCodeLabel'),
-						postalCodePlaceholder: t('createCompany.form.postalCodePlaceholder'),
+						postalCodePlaceholder: t(
+							'createCompany.form.postalCodePlaceholder',
+						),
 						cityLabel: t('createCompany.form.cityLabel'),
 						cityPlaceholder: t('createCompany.form.cityPlaceholder'),
 						stateLabel: t('createCompany.form.stateLabel'),

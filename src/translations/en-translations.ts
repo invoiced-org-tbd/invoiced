@@ -56,6 +56,7 @@ export const enTranslations = {
 		invalidType: 'Invalid value',
 		invalidEmail: 'Please enter a valid email address',
 		minCharacters: 'Please enter at least {minimum} characters',
+		minNumber: 'Please enter a value greater than or equal to {minimum}',
 		maxCharacters: 'Please enter at most {maximum} characters',
 		maxNumber: 'Please enter a value less than or equal to {maximum}',
 	},
@@ -211,6 +212,19 @@ export const enTranslations = {
 				rateLabel: 'Rate',
 				emailLabel: 'Email',
 			},
+			invoiceRecurrence: {
+				sectionTitle: 'Invoice Recurrence',
+				sectionDescription: 'Define the invoice recurrence for the contract.',
+				dayOfMonthLabel: 'Day of Month',
+				dayOfMonthSuffix: '{suffix} day of month',
+				percentageLabel: 'Percentage',
+				totalPercentageLabel: 'Total percentage: {value}%',
+				totalPercentageInvalidHint: '(must be 100%)',
+				validation: {
+					totalPercentageMustBe100: 'Total percentage must be 100',
+					duplicateDayOfMonth: 'Duplicate day of month',
+				},
+			},
 			client: {
 				companyNameLabel: 'Company Name',
 				responsibleNameLabel: 'Responsible Name',
@@ -230,6 +244,7 @@ export const enTranslations = {
 		tabs: {
 			role: 'Role',
 			client: 'Client',
+			invoiceRecurrence: 'Invoice Recurrence',
 		},
 		summary: {
 			title: 'Contract summary',

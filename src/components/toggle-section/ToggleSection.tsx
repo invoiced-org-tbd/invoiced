@@ -1,6 +1,6 @@
 import { cn } from '@/utils/classNamesUtils';
 import { motion } from 'framer-motion';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import { toggleSectionHeaderVariants, toggleSectionVariants } from './consts';
 import type {
 	ToggleSectionContentProps,
@@ -14,6 +14,7 @@ import type {
 
 type ToggleSectionContextValue = {
 	open: boolean;
+	canToggle: boolean;
 	toggleOpen: () => void;
 	variant: ToggleSectionVariantProps['variant'];
 };
@@ -38,25 +39,13 @@ const Root = ({
 	className,
 	variant,
 	open,
-	defaultOpen = false,
 	onOpenChange,
 	...props
 }: ToggleSectionRootProps) => {
-	const [internalOpen, setInternalOpen] = useState(defaultOpen);
-	const isControlled = open !== undefined;
-	const isOpen = isControlled ? open : internalOpen;
-
-	const setOpen = (nextOpen: boolean) => {
-		if (!isControlled) {
-			setInternalOpen(nextOpen);
-		}
-
-		onOpenChange?.(nextOpen);
-	};
-
 	const contextValue = {
-		open: isOpen,
-		toggleOpen: () => setOpen(!isOpen),
+		open,
+		canToggle: !!onOpenChange,
+		toggleOpen: () => onOpenChange?.(!open),
 		variant,
 	};
 
@@ -64,7 +53,7 @@ const Root = ({
 		<ToggleSectionContext.Provider value={contextValue}>
 			<section
 				data-slot='toggle-section'
-				data-state={isOpen ? 'open' : 'closed'}
+				data-state={open ? 'open' : 'closed'}
 				className={cn(
 					'flex flex-col',
 					toggleSectionVariants({ variant }),
@@ -77,7 +66,7 @@ const Root = ({
 };
 
 const Header = ({ className, ...props }: ToggleSectionHeaderProps) => {
-	const { toggleOpen, variant } = useToggleSectionContext();
+	const { canToggle, toggleOpen, variant } = useToggleSectionContext();
 
 	const handleClick = (
 		event:
@@ -87,6 +76,11 @@ const Header = ({ className, ...props }: ToggleSectionHeaderProps) => {
 		if (event.defaultPrevented) {
 			return;
 		}
+
+		if (!canToggle) {
+			return;
+		}
+
 		toggleOpen();
 	};
 
@@ -94,7 +88,10 @@ const Header = ({ className, ...props }: ToggleSectionHeaderProps) => {
 		<div
 			tabIndex={0}
 			role='button'
-			className={cn(toggleSectionHeaderVariants({ variant }), className)}
+			className={cn(
+				toggleSectionHeaderVariants({ variant, isButton: canToggle }),
+				className,
+			)}
 			data-slot='toggle-section-header'
 			onClick={handleClick}
 			onKeyDown={handleClick}

@@ -12,6 +12,7 @@ export const AccountFormDangerZone = () => {
 	const { t } = useTranslate();
 	const queryClient = useQueryClient();
 
+	const [isDangerZoneOpen, setIsDangerZoneOpen] = useState(false);
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
 	const { mutateAsync: deleteAccount, isPending } = useMutation({
@@ -23,7 +24,11 @@ export const AccountFormDangerZone = () => {
 	});
 
 	return (
-		<ToggleSection.Root variant='destructive'>
+		<ToggleSection.Root
+			variant='destructive'
+			open={isDangerZoneOpen}
+			onOpenChange={setIsDangerZoneOpen}
+		>
 			<ToggleSection.Header>
 				<ToggleSection.Title>
 					{t('account.dangerZone.title')}

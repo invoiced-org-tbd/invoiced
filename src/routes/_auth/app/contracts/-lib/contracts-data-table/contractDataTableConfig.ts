@@ -1,5 +1,9 @@
 import type { GetContractsResponse } from '@/api/contract/getContracts';
-import type { DataTableColumn, DataTableRowAction, DataTableToolbarAction } from '@/components/data-table/types';
+import type {
+	DataTableColumn,
+	DataTableRowAction,
+	DataTableToolbarAction,
+} from '@/components/data-table/types';
 import { getTableAddToolbarAction } from '@/components/data-table/data-table-toolbar/baseTableToolbarActions';
 import {
 	useGetTableDeleteRowAction,

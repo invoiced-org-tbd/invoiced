@@ -2,6 +2,12 @@ import { getEditContractQueryOptions } from '@/api/contract/getEditContract';
 import { addressFormWithCountrySchema } from '@/components/address-form/addressFormSchemas';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
+import { getLanguage } from '@/utils/languageUtils';
+import { translate } from '@/translations/translate';
+import {
+	getContractRecurrenceItemsTotalPercentage,
+	getContractRecurrenceItemsConflictingDays,
+} from './utils';
 
 const contractRoleFormSchema = z.object({
 	description: z.string().min(1),
@@ -15,14 +21,64 @@ const contractClientFormSchema = z.object({
 	address: addressFormWithCountrySchema,
 });
 
+const contractInvoiceRecurrenceItemFormSchema = z.object({
+	dayOfMonth: z.number().min(1).max(31),
+	percentage: z.number().min(1).max(100),
+});
+export type ContractInvoiceRecurrenceItemFormSchema = z.infer<
+	typeof contractInvoiceRecurrenceItemFormSchema
+>;
+
+const contractInvoiceRecurrenceFormSchema = z
+	.object({
+		items: z.array(contractInvoiceRecurrenceItemFormSchema).min(1),
+	})
+	.superRefine((data, ctx) => {
+		const { totalPercentage } = getContractRecurrenceItemsTotalPercentage(
+			data.items,
+		);
+		if (totalPercentage !== 100) {
+			ctx.addIssue({
+				code: 'custom',
+				message: translate(
+					getLanguage(),
+					'contracts.form.invoiceRecurrence.validation.totalPercentageMustBe100',
+				),
+				path: ['items'],
+			});
+		}
+
+		const { conflictingDays, conflictingIndexes } =
+			getContractRecurrenceItemsConflictingDays(data.items);
+		if (conflictingDays.length > 0) {
+			for (const index of conflictingIndexes) {
+				ctx.addIssue({
+					code: 'custom',
+					message: translate(
+						getLanguage(),
+						'contracts.form.invoiceRecurrence.validation.duplicateDayOfMonth',
+					),
+					path: ['items', index, 'dayOfMonth'],
+				});
+			}
+		}
+	});
+
 export const contractsUpsertFormSchema = z.object({
 	role: contractRoleFormSchema,
 	client: contractClientFormSchema,
+	invoiceRecurrence: contractInvoiceRecurrenceFormSchema,
 });
 
 export type ContractsUpsertFormSchema = z.infer<
 	typeof contractsUpsertFormSchema
 >;
+
+export const getEmptyContractInvoiceRecurrenceItem = (dayOfMonth = 1) =>
+	({
+		dayOfMonth,
+		percentage: 100,
+	}) satisfies ContractInvoiceRecurrenceItemFormSchema;
 
 export const useContractsUpsertFormDefaultValues = ({
 	editId,
@@ -53,6 +109,11 @@ export const useContractsUpsertFormDefaultValues = ({
 					state: editContract?.client.address.state ?? '',
 					country: editContract?.client.address.country ?? 'us',
 				},
+			},
+			invoiceRecurrence: {
+				items: editContract?.invoiceRecurrence.items ?? [
+					getEmptyContractInvoiceRecurrenceItem(),
+				],
 			},
 		} satisfies ContractsUpsertFormSchema,
 		isLoadingEditContract: isFetching,

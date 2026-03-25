@@ -1,29 +1,7 @@
 import { defineRelations } from 'drizzle-orm';
-import { accountTable } from './tables/accountTable';
-import { companyAddressTable } from './tables/companyAddressTable';
-import { companyTable } from './tables/companyTable';
-import { contractClientAddressTable } from './tables/contractClientAddressTable';
-import { contractClientTable } from './tables/contractClientTable';
-import { contractRoleTable } from './tables/contractRoleTable';
-import { contractTable } from './tables/contractTable';
-import { sessionTable } from './tables/sessionTable';
-import { userTable } from './tables/userTable';
-import { verificationTable } from './tables/verificationTable';
+import * as dbTables from './tables/dbTables';
 
-const tables = {
-	accountTable,
-	companyAddressTable,
-	companyTable,
-	contractClientAddressTable,
-	contractClientTable,
-	contractRoleTable,
-	contractTable,
-	sessionTable,
-	userTable,
-	verificationTable,
-};
-
-export const relations = defineRelations(tables, (r) => ({
+export const relations = defineRelations(dbTables, (r) => ({
 	companyTable: {
 		owner: r.one.userTable({
 			from: r.companyTable.userId,
@@ -54,6 +32,18 @@ export const relations = defineRelations(tables, (r) => ({
 			from: r.contractTable.id,
 			to: r.contractRoleTable.contractId,
 			optional: false,
+		}),
+		invoiceRecurrence: r.one.contractInvoiceRecurrenceTable({
+			from: r.contractTable.id,
+			to: r.contractInvoiceRecurrenceTable.contractId,
+			optional: false,
+		}),
+	},
+
+	contractInvoiceRecurrenceTable: {
+		items: r.many.contractInvoiceRecurrenceItemTable({
+			from: r.contractInvoiceRecurrenceTable.id,
+			to: r.contractInvoiceRecurrenceItemTable.contractInvoiceRecurrenceId,
 		}),
 	},
 
