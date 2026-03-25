@@ -1,12 +1,12 @@
-import type { GetEditContractByIdParams } from './getEditContractById';
+import type { GetEditContractParams } from './getEditContract';
 
 const baseKey = 'contracts';
 export const contractQueryKeys = {
 	base: () => [baseKey],
 	get: () => [baseKey],
-	getById: (params: GetEditContractByIdParams) => [
+	getEditContract: (params: GetEditContractParams) => [
 		baseKey,
-		'getById',
+		'getEditContract',
 		params.id,
 	],
 };

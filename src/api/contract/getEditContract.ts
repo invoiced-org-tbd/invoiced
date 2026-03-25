@@ -10,19 +10,17 @@ import z from 'zod';
 import { contractQueryKeys } from './contractApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
 
-const getEditContractByIdParams = z.object({
+const getEditContractParams = z.object({
 	id: z.string(),
 });
 
-export type GetEditContractByIdParams = z.infer<
-	typeof getEditContractByIdParams
->;
+export type GetEditContractParams = z.infer<typeof getEditContractParams>;
 
-const getEditContractByIdServerFn = createServerFn({
+const getEditContractServerFn = createServerFn({
 	method: 'GET',
 })
 	.middleware([sessionMiddleware])
-	.inputValidator(getEditContractByIdParams)
+	.inputValidator(getEditContractParams)
 	.handler(async ({ data, context: { user, language } }) => {
 		try {
 			const t = getServerT(language);
@@ -61,10 +59,8 @@ const getEditContractByIdServerFn = createServerFn({
 		}
 	});
 
-export const getEditContractByIdQueryOptions = (
-	params: GetEditContractByIdParams,
-) =>
+export const getEditContractQueryOptions = (params: GetEditContractParams) =>
 	createQueryOptions({
-		queryKey: contractQueryKeys.getById(params),
-		queryFn: () => getEditContractByIdServerFn({ data: params }),
+		queryKey: contractQueryKeys.getEditContract(params),
+		queryFn: () => getEditContractServerFn({ data: params }),
 	});

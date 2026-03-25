@@ -1,4 +1,4 @@
-import { getEditContractByIdQueryOptions } from '@/api/contract/getEditContractById';
+import { getEditContractQueryOptions } from '@/api/contract/getEditContract';
 import { addressFormWithCountrySchema } from '@/components/address-form/addressFormSchemas';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
@@ -30,7 +30,7 @@ export const useContractsUpsertFormDefaultValues = ({
 	editId?: string;
 }) => {
 	const { data: editContract, isFetching } = useQuery({
-		...getEditContractByIdQueryOptions({ id: editId ?? '' }),
+		...getEditContractQueryOptions({ id: editId ?? '' }),
 		enabled: !!editId,
 	});
 
