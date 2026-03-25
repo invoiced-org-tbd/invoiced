@@ -1,12 +1,16 @@
-import { Button } from '@/components/button';
-import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { authClient } from '@/lib/authClient';
-import { appConfig } from '@/utils/appConfig';
 import type { LinkProps } from '@tanstack/react-router';
 import { useState } from 'react';
+import { LandingHeaderSection } from './LandingHeaderSection';
+import { LandingHeroSection } from './LandingHeroSection';
+import { LandingStatsSection } from './LandingStatsSection';
+import { LandingFeaturesSection } from './LandingFeaturesSection';
+import { LandingHowItWorksSection } from './LandingHowItWorksSection';
+import { LandingPricingSection } from './LandingPricingSection';
+import { LandingCtaSection } from './LandingCtaSection';
+import { LandingFooterSection } from './LandingFooterSection';
 
 export const LandingPage = () => {
-	const { t } = useTranslate();
 	const [isRedirecting, setIsRedirecting] = useState(false);
 
 	const handleGoogleSignIn = async () => {
@@ -27,52 +31,27 @@ export const LandingPage = () => {
 	};
 
 	return (
-		<div className='h-screen w-full overflow-hidden flex items-center justify-center'>
-			<div
-				className='absolute inset-0 bg-cover bg-center blur-md -z-10'
-				style={{ backgroundImage: "url('/soft-green-bg.png')" }}
+		<div className='min-h-screen bg-background'>
+			<LandingHeaderSection
+				isRedirecting={isRedirecting}
+				onGoogleSignIn={handleGoogleSignIn}
 			/>
-
-			<div className='h-min w-[80%] flex p-3 rounded-2xl bg-background/90 shadow-xl'>
-				<section className='hidden w-5/12 bg-muted md:block lg:w-5/8'>
-					<img
-						src='/soft-green-bg.png'
-						alt={t('landing.backgroundAlt')}
-						className='h-full w-full object-cover rounded-xl'
-					/>
-				</section>
-
-				<section className='flex w-full flex-col justify-center px-12 py-6 items-center'>
-					<div className='max-w-lg w-full flex flex-col items-center gap-10'>
-						<header className='text-center flex flex-col items-center'>
-							<img
-								src='/logo.png'
-								alt={appConfig.appName}
-								className='size-20'
-							/>
-							<h1 className='text-2xl font-semibold text-foreground'>
-								{appConfig.appName}
-							</h1>
-							<p className='text-sm text-muted-foreground'>
-								{appConfig.appTagline}
-							</p>
-						</header>
-
-						<Button
-							onClick={handleGoogleSignIn}
-							isLoading={isRedirecting}
-							size='md'
-							className='mt-6 w-full'
-						>
-							{t('landing.signInWithGoogle')}
-						</Button>
-
-						<p className='mt-4 text-center text-xs text-muted-foreground'>
-							{t('landing.terms')}
-						</p>
-					</div>
-				</section>
-			</div>
+			<LandingHeroSection
+				isRedirecting={isRedirecting}
+				onGoogleSignIn={handleGoogleSignIn}
+			/>
+			<LandingStatsSection />
+			<LandingFeaturesSection />
+			<LandingHowItWorksSection />
+			<LandingPricingSection
+				isRedirecting={isRedirecting}
+				onGoogleSignIn={handleGoogleSignIn}
+			/>
+			<LandingCtaSection
+				isRedirecting={isRedirecting}
+				onGoogleSignIn={handleGoogleSignIn}
+			/>
+			<LandingFooterSection />
 		</div>
 	);
 };

@@ -21,9 +21,12 @@ function AppLayout() {
 	}
 
 	return (
-		<Sidebar.Root>
+		<Sidebar.Root inset>
 			<AuthenticatedSidebar />
-			<Outlet />
+
+			<Sidebar.Inset>
+				<Outlet />
+			</Sidebar.Inset>
 
 			<AccountDrawer />
 		</Sidebar.Root>

@@ -120,11 +120,48 @@ export const brTranslations = {
 			management: 'Gestão',
 			contracts: 'Contratos',
 			invoices: 'Faturas',
+			cashflow: 'Fluxo de caixa',
+			receivableDebtAccounts: 'Contas a receber/pagar',
+			settings: {
+				group: 'Configurações',
+				company: 'Empresa',
+				automation: 'Automação',
+			},
 		},
 		server: {
 			accountUpdatedSuccess: 'Sua conta foi atualizada',
 			accountDeletedSuccess: 'Sua conta foi excluida',
 		},
+	},
+	settings: {
+		title: 'Configurações',
+		tabs: {
+			account: {
+				title: 'Conta',
+				description: 'Gerencie suas informações de conta.',
+			},
+			company: {
+				title: 'Empresa',
+				description: 'Gerencie suas informações de empresa.',
+			},
+			automations: {
+				title: 'Automações',
+				description: 'Gerencie suas automações.',
+			},
+			notifications: {
+				title: 'Notificações',
+				description: 'Gerencie suas notificações.',
+			},
+			plans: {
+				title: 'Planos',
+				description: 'Gerencie seus planos.',
+			},
+			billing: {
+				title: 'Faturamento',
+				description: 'Gerencie suas informações de faturamento.',
+			},
+		},
+		placeholderDescription: 'Esta seção estará disponível em breve.',
 	},
 	landing: {
 		backgroundAlt: 'Fundo abstrato verde suave',

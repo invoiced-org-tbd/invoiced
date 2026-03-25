@@ -33,7 +33,7 @@ export const LanguageSwitcher = () => {
 			<DropdownMenu.Trigger asChild>
 				<button
 					type='button'
-					className='border-border bg-background hover:bg-muted text-foreground flex justify-between h-8 w-18 items-center gap-2 rounded-md border px-2 text-sm'
+					className='border-secondary bg-background/50 hover:bg-muted text-foreground flex justify-between h-8 items-center gap-2 rounded-md border px-2 text-sm'
 					aria-label='Language selector'
 				>
 					<LanguageFlag

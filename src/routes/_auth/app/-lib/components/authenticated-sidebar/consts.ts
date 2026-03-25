@@ -1,4 +1,10 @@
-import { FileIcon, LayoutDashboardIcon, ReceiptIcon } from 'lucide-react';
+import {
+	FileStackIcon,
+	FileTextIcon,
+	HandCoinsIcon,
+	LayoutDashboardIcon,
+	ReceiptIcon,
+} from 'lucide-react';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { AuthenticatedSidebarNavItem } from './types';
 
@@ -15,17 +21,33 @@ export const useAuthenticatedSidebarNavItems =
 			},
 			{
 				type: 'group',
+				label: 'ERP',
+				subItems: [
+					{
+						label: t('auth.sidebar.cashflow'),
+						to: '/app/cash-flow',
+						icon: HandCoinsIcon,
+					},
+					{
+						label: t('auth.sidebar.receivableDebtAccounts'),
+						to: '/app/receivable-debt-accounts',
+						icon: ReceiptIcon,
+					},
+				],
+			},
+			{
+				type: 'group',
 				label: t('auth.sidebar.management'),
 				subItems: [
 					{
 						label: t('auth.sidebar.contracts'),
 						to: '/app/contracts',
-						icon: FileIcon,
+						icon: FileStackIcon,
 					},
 					{
 						label: t('auth.sidebar.invoices'),
 						to: '/app/invoices',
-						icon: ReceiptIcon,
+						icon: FileTextIcon,
 					},
 				],
 			},

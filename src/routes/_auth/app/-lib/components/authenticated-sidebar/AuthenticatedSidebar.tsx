@@ -16,7 +16,7 @@ export const AuthenticatedSidebar = () => {
 		>
 			<div
 				data-slot='authenticated-sidebar-header'
-				className='flex items-center justify-between border-b border-sidebar-border p-2'
+				className='flex items-center justify-between border-sidebar-border p-2'
 			>
 				<section className='flex items-center truncate'>
 					<span className='truncate pl-1 text-sm font-semibold text-sidebar-foreground transition-opacity'>
@@ -72,7 +72,7 @@ export const AuthenticatedSidebar = () => {
 
 			<div
 				data-slot='authenticated-sidebar-footer'
-				className='border-t border-sidebar-border p-2'
+				className='px-2 py-1'
 			>
 				<Sidebar.Menu>
 					<Sidebar.MenuItem>
@@ -90,7 +90,10 @@ type SidebarLinkItemProps = {
 const SidebarLinkItem = ({ item }: SidebarLinkItemProps) => {
 	return (
 		<Sidebar.MenuItem>
-			<Sidebar.MenuButton asChild>
+			<Sidebar.MenuButton
+				asChild
+				tooltip={item.label}
+			>
 				<Link
 					to={item.to}
 					activeProps={{

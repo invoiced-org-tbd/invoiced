@@ -37,7 +37,7 @@ const List = ({ className, ...props }: TabsListProps) => {
 		<TabsListPrimitive
 			data-slot='tabs-list'
 			className={cn(
-				'bg-foreground/5 rounded-lg p-[3px] group/tabs-list inline-flex w-full items-center justify-center text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col gap-1',
+				'rounded-lg p-[3px] group/tabs-list inline-flex w-full items-center justify-center text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col gap-1',
 				className,
 			)}
 			{...props}

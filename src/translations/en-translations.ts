@@ -117,11 +117,48 @@ export const enTranslations = {
 			management: 'Management',
 			contracts: 'Contracts',
 			invoices: 'Invoices',
+			cashflow: 'Cash flow',
+			receivableDebtAccounts: 'Accounts receivable/payable',
+			settings: {
+				group: 'Settings',
+				company: 'Company',
+				automation: 'Automation',
+			},
 		},
 		server: {
 			accountUpdatedSuccess: 'Your account has been updated',
 			accountDeletedSuccess: 'Your account has been deleted',
 		},
+	},
+	settings: {
+		title: 'Settings',
+		tabs: {
+			account: {
+				title: 'Account',
+				description: 'Manage your account information.',
+			},
+			company: {
+				title: 'Company',
+				description: 'Manage your company information.',
+			},
+			automations: {
+				title: 'Automations',
+				description: 'Manage your automations.',
+			},
+			notifications: {
+				title: 'Notifications',
+				description: 'Manage your notifications.',
+			},
+			plans: {
+				title: 'Plans',
+				description: 'Manage your plans.',
+			},
+			billing: {
+				title: 'Billing',
+				description: 'Manage your billing information.',
+			},
+		},
+		placeholderDescription: 'This section is coming soon.',
 	},
 	landing: {
 		backgroundAlt: 'Soft green abstract background',

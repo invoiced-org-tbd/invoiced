@@ -4,6 +4,7 @@ import {
 	LanguagesIcon,
 	LogOutIcon,
 	MoonIcon,
+	SettingsIcon,
 	SunIcon,
 } from 'lucide-react';
 import { DropdownMenu } from '@/components/dropdown-menu';
@@ -15,6 +16,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useLogOut } from '@/hooks/use-log-out';
 import { useUser } from '@/hooks/use-user';
 import { LanguageFlag } from '@/components/language-flag';
+import { Link } from '@tanstack/react-router';
 
 export const SidebarUserMenu = () => {
 	const user = useUser();
@@ -42,6 +44,7 @@ export const SidebarUserMenu = () => {
 				<Sidebar.MenuButton
 					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground max-md:mx-auto max-md:size-8 max-md:w-8 max-md:justify-center max-md:gap-0 max-md:p-0'
 					size='lg'
+					tooltip={displayName}
 				>
 					<span
 						data-size='default'
@@ -102,10 +105,12 @@ export const SidebarUserMenu = () => {
 
 				<DropdownMenu.Separator />
 
-				<DropdownMenu.Item onSelect={() => setIsAccountDrawerOpen(true)}>
-					<BadgeCheckIcon />
-					{t('common.account')}
-				</DropdownMenu.Item>
+				<Link to='/app/settings'>
+					<DropdownMenu.Item>
+						<SettingsIcon />
+						{t('auth.sidebar.settings.group')}
+					</DropdownMenu.Item>
+				</Link>
 				<DropdownMenu.Item onSelect={() => toggleTheme()}>
 					{theme === 'light' ? <SunIcon /> : <MoonIcon />}
 					{theme === 'light' ? t('common.lightMode') : t('common.darkMode')}
