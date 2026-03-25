@@ -3,7 +3,6 @@ import {
 	FileTextIcon,
 	HandCoinsIcon,
 	LayoutDashboardIcon,
-	ReceiptIcon,
 } from 'lucide-react';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import type { AuthenticatedSidebarNavItem } from './types';
@@ -16,7 +15,7 @@ export const useAuthenticatedSidebarNavItems =
 			{
 				type: 'link',
 				label: t('auth.dashboardTitle'),
-				to: '/app',
+				to: '/app/dashboard',
 				icon: LayoutDashboardIcon,
 			},
 			{
@@ -25,13 +24,8 @@ export const useAuthenticatedSidebarNavItems =
 				subItems: [
 					{
 						label: t('auth.sidebar.cashflow'),
-						to: '/app',
+						to: '/app/cashflow',
 						icon: HandCoinsIcon,
-					},
-					{
-						label: t('auth.sidebar.receivableDebtAccounts'),
-						to: '/app',
-						icon: ReceiptIcon,
 					},
 				],
 			},

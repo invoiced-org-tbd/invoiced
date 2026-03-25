@@ -18,7 +18,9 @@ import { Route as AuthAppIndexRouteImport } from './routes/_auth/app/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthAppSettingsIndexRouteImport } from './routes/_auth/app/settings/index'
 import { Route as AuthAppInvoicesIndexRouteImport } from './routes/_auth/app/invoices/index'
+import { Route as AuthAppDashboardIndexRouteImport } from './routes/_auth/app/dashboard/index'
 import { Route as AuthAppContractsIndexRouteImport } from './routes/_auth/app/contracts/index'
+import { Route as AuthAppCashflowIndexRouteImport } from './routes/_auth/app/cashflow/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
@@ -64,9 +66,19 @@ const AuthAppInvoicesIndexRoute = AuthAppInvoicesIndexRouteImport.update({
   path: '/invoices/',
   getParentRoute: () => AuthAppRouteRoute,
 } as any)
+const AuthAppDashboardIndexRoute = AuthAppDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
 const AuthAppContractsIndexRoute = AuthAppContractsIndexRouteImport.update({
   id: '/contracts/',
   path: '/contracts/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppCashflowIndexRoute = AuthAppCashflowIndexRouteImport.update({
+  id: '/cashflow/',
+  path: '/cashflow/',
   getParentRoute: () => AuthAppRouteRoute,
 } as any)
 
@@ -77,7 +89,9 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app/': typeof AuthAppIndexRoute
   '/create-company/': typeof AuthCreateCompanyIndexRoute
+  '/app/cashflow/': typeof AuthAppCashflowIndexRoute
   '/app/contracts/': typeof AuthAppContractsIndexRoute
+  '/app/dashboard/': typeof AuthAppDashboardIndexRoute
   '/app/invoices/': typeof AuthAppInvoicesIndexRoute
   '/app/settings/': typeof AuthAppSettingsIndexRoute
 }
@@ -86,7 +100,9 @@ export interface FileRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app': typeof AuthAppIndexRoute
   '/create-company': typeof AuthCreateCompanyIndexRoute
+  '/app/cashflow': typeof AuthAppCashflowIndexRoute
   '/app/contracts': typeof AuthAppContractsIndexRoute
+  '/app/dashboard': typeof AuthAppDashboardIndexRoute
   '/app/invoices': typeof AuthAppInvoicesIndexRoute
   '/app/settings': typeof AuthAppSettingsIndexRoute
 }
@@ -99,7 +115,9 @@ export interface FileRoutesById {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_auth/app/': typeof AuthAppIndexRoute
   '/_auth/create-company/': typeof AuthCreateCompanyIndexRoute
+  '/_auth/app/cashflow/': typeof AuthAppCashflowIndexRoute
   '/_auth/app/contracts/': typeof AuthAppContractsIndexRoute
+  '/_auth/app/dashboard/': typeof AuthAppDashboardIndexRoute
   '/_auth/app/invoices/': typeof AuthAppInvoicesIndexRoute
   '/_auth/app/settings/': typeof AuthAppSettingsIndexRoute
 }
@@ -112,7 +130,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/app/'
     | '/create-company/'
+    | '/app/cashflow/'
     | '/app/contracts/'
+    | '/app/dashboard/'
     | '/app/invoices/'
     | '/app/settings/'
   fileRoutesByTo: FileRoutesByTo
@@ -121,7 +141,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/app'
     | '/create-company'
+    | '/app/cashflow'
     | '/app/contracts'
+    | '/app/dashboard'
     | '/app/invoices'
     | '/app/settings'
   id:
@@ -133,7 +155,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/_auth/app/'
     | '/_auth/create-company/'
+    | '/_auth/app/cashflow/'
     | '/_auth/app/contracts/'
+    | '/_auth/app/dashboard/'
     | '/_auth/app/invoices/'
     | '/_auth/app/settings/'
   fileRoutesById: FileRoutesById
@@ -209,6 +233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAppInvoicesIndexRouteImport
       parentRoute: typeof AuthAppRouteRoute
     }
+    '/_auth/app/dashboard/': {
+      id: '/_auth/app/dashboard/'
+      path: '/dashboard'
+      fullPath: '/app/dashboard/'
+      preLoaderRoute: typeof AuthAppDashboardIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
     '/_auth/app/contracts/': {
       id: '/_auth/app/contracts/'
       path: '/contracts'
@@ -216,19 +247,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAppContractsIndexRouteImport
       parentRoute: typeof AuthAppRouteRoute
     }
+    '/_auth/app/cashflow/': {
+      id: '/_auth/app/cashflow/'
+      path: '/cashflow'
+      fullPath: '/app/cashflow/'
+      preLoaderRoute: typeof AuthAppCashflowIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
   }
 }
 
 interface AuthAppRouteRouteChildren {
   AuthAppIndexRoute: typeof AuthAppIndexRoute
+  AuthAppCashflowIndexRoute: typeof AuthAppCashflowIndexRoute
   AuthAppContractsIndexRoute: typeof AuthAppContractsIndexRoute
+  AuthAppDashboardIndexRoute: typeof AuthAppDashboardIndexRoute
   AuthAppInvoicesIndexRoute: typeof AuthAppInvoicesIndexRoute
   AuthAppSettingsIndexRoute: typeof AuthAppSettingsIndexRoute
 }
 
 const AuthAppRouteRouteChildren: AuthAppRouteRouteChildren = {
   AuthAppIndexRoute: AuthAppIndexRoute,
+  AuthAppCashflowIndexRoute: AuthAppCashflowIndexRoute,
   AuthAppContractsIndexRoute: AuthAppContractsIndexRoute,
+  AuthAppDashboardIndexRoute: AuthAppDashboardIndexRoute,
   AuthAppInvoicesIndexRoute: AuthAppInvoicesIndexRoute,
   AuthAppSettingsIndexRoute: AuthAppSettingsIndexRoute,
 }

@@ -2,7 +2,7 @@ import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_auth/app/invoices/')({
+export const Route = createFileRoute('/_auth/app/cashflow/')({
 	component: RouteComponent,
 });
 
@@ -12,11 +12,10 @@ function RouteComponent() {
 	return (
 		<Page.Root>
 			<Page.Header>
-				<Page.Title>{t('invoices.title')}</Page.Title>
+				<Page.Title>{t('auth.sidebar.cashflow')}</Page.Title>
 			</Page.Header>
-
 			<Page.Content>
-				<div>{t('auth.sidebar.invoices')}</div>
+				<div>{t('auth.sidebar.cashflow')}</div>
 			</Page.Content>
 		</Page.Root>
 	);
