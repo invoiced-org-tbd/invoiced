@@ -7,6 +7,7 @@ export { contractInvoiceRecurrenceItemTable } from './contractInvoiceRecurrenceI
 export { contractInvoiceRecurrenceTable } from './contractInvoiceRecurrenceTable';
 export { contractRoleTable } from './contractRoleTable';
 export { contractTable } from './contractTable';
+export { invoiceConfigurationTable } from './invoiceConfigurationTable';
 export { sessionTable } from './sessionTable';
 export { userTable } from './userTable';
 export { verificationTable } from './verificationTable';

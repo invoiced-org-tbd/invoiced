@@ -6,7 +6,7 @@ import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import type { FormStepperStep } from '@/hooks/use-app-form/useFormStepper';
 import { useFormStepper } from '@/hooks/use-app-form/useFormStepper';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import type { ContractStep } from '../..';
 import { ContractClientForm } from './ContractClientForm';
@@ -18,6 +18,9 @@ import {
 	contractsUpsertFormSchema,
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
+import { ContractInvoiceConfigurationDialog } from './ContractInvoiceConfigurationDialog';
+import type { InvoiceConfigurationFormSchema } from './invoiceConfigurationFormSchemas';
+import { getInvoiceConfigurationQueryOptions } from '@/api/invoice-configuration/getInvoiceConfiguration';
 
 type ContractsUpsertFormProps = {
 	editId?: string;
@@ -37,7 +40,11 @@ export const ContractsUpsertForm = ({
 	onClose,
 }: ContractsUpsertFormProps) => {
 	const { t } = useTranslate();
+	const queryClient = useQueryClient();
+
 	const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+	const [isInvoiceConfigurationOpen, setIsInvoiceConfigurationOpen] =
+		useState(false);
 
 	const { defaultValues, isLoadingEditContract } =
 		useContractsUpsertFormDefaultValues({
@@ -53,14 +60,28 @@ export const ContractsUpsertForm = ({
 
 	const form = useAppForm({
 		defaultValues,
+		onSubmitMeta: {
+			value: undefined as InvoiceConfigurationFormSchema | undefined,
+		},
 		validators: {
 			onChange: contractsUpsertFormSchema,
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, meta }) => {
+			const invoiceConfiguration = await queryClient.fetchQuery(
+				getInvoiceConfigurationQueryOptions(),
+			);
+			if (!invoiceConfiguration && !meta.value) {
+				setIsInvoiceConfigurationOpen(true);
+				return;
+			}
+
 			if (editId) {
 				await updateContract({ editId, data: value });
 			} else {
-				await createContract(value);
+				await createContract({
+					data: value,
+					invoiceConfiguration: meta.value,
+				});
 			}
 
 			onClose();
@@ -170,6 +191,23 @@ export const ContractsUpsertForm = ({
 					<FormSteps.NextButton />
 				</div>
 			</Drawer.Footer>
+
+			<form.Subscribe
+				selector={(state) => state.values}
+				children={(values) => (
+					<ContractInvoiceConfigurationDialog
+						open={isInvoiceConfigurationOpen}
+						contractValues={values}
+						onClose={() => setIsInvoiceConfigurationOpen(false)}
+						onSuccess={(data) => {
+							form.handleSubmit({
+								value: data,
+							});
+							setIsInvoiceConfigurationOpen(false);
+						}}
+					/>
+				)}
+			/>
 		</form.Root>
 	);
 };

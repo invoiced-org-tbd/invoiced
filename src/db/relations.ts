@@ -20,6 +20,11 @@ export const relations = defineRelations(dbTables, (r) => ({
 			from: r.userTable.id,
 			to: r.contractTable.userId,
 		}),
+		invoiceConfiguration: r.one.invoiceConfigurationTable({
+			from: r.userTable.id,
+			to: r.invoiceConfigurationTable.userId,
+			optional: false,
+		}),
 	},
 
 	contractTable: {
