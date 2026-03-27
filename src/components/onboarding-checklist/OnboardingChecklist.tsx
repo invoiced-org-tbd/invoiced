@@ -3,6 +3,7 @@ import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
 import { Tooltip } from '@/components/tooltip/Tooltip';
 import { useCompany } from '@/hooks/use-company/useCompany';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
@@ -65,6 +66,7 @@ const readDismissedState = (): boolean => {
 
 export const OnboardingChecklist = () => {
 	const { company } = useCompany();
+	const { t } = useTranslate();
 	const { data: contracts, isFetching } = useQuery(getContractsQueryOptions());
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isDismissed, setIsDismissed] = useState(false);
@@ -149,9 +151,12 @@ export const OnboardingChecklist = () => {
 					>
 						<RocketIcon className='size-5 text-primary' />
 						<div className='min-w-0'>
-							<p className='text-sm font-semibold'>Onboarding</p>
+							<p className='text-sm font-semibold'>{t('onboarding.title')}</p>
 							<p className='text-muted-foreground truncate text-xs'>
-								{completedCount}/{allSteps.length} completed
+								{t('onboarding.completed', {
+									completed: completedCount,
+									total: allSteps.length,
+								})}
 							</p>
 						</div>
 
@@ -168,7 +173,7 @@ export const OnboardingChecklist = () => {
 							variant='secondary'
 							isGhost
 							isIcon
-							tooltip='Dismiss onboarding'
+							tooltip={t('onboarding.actions.dismiss')}
 							onClick={dismissChecklist}
 						>
 							<EyeOffIcon />
@@ -199,7 +204,7 @@ export const OnboardingChecklist = () => {
 							<Card.Content className='space-y-4 px-4 pb-4'>
 								<section className='space-y-2'>
 									<p className='text-muted-foreground text-xs font-semibold uppercase'>
-										Core setup
+										{t('onboarding.sections.coreSetup')}
 									</p>
 									<div className='space-y-2'>
 										{coreSteps.map((step) => (
@@ -215,7 +220,7 @@ export const OnboardingChecklist = () => {
 
 								<section className='space-y-2'>
 									<p className='text-muted-foreground text-xs font-semibold uppercase'>
-										Advanced setup
+										{t('onboarding.sections.advancedSetup')}
 									</p>
 									<div className='space-y-2'>
 										{advancedSteps.map((step) => (
@@ -246,6 +251,8 @@ const ChecklistStepRow = ({
 	isLoading = false,
 	onToggleManualStep,
 }: ChecklistStepRowProps) => {
+	const { t } = useTranslate();
+
 	return (
 		<motion.div
 			layout
@@ -273,7 +280,7 @@ const ChecklistStepRow = ({
 
 					<div className='min-w-0 flex-1 space-y-1'>
 						<div className='flex items-center gap-1'>
-							<p className='truncate text-sm font-medium'>{step.label}</p>
+							<p className='truncate text-sm font-medium'>{t(step.labelKey)}</p>
 
 							<Tooltip.Root>
 								<Tooltip.Trigger asChild>
@@ -281,7 +288,9 @@ const ChecklistStepRow = ({
 										<CircleHelpIcon className='size-4 text-muted-foreground' />
 									</span>
 								</Tooltip.Trigger>
-								<Tooltip.Content side='top'>{step.description}</Tooltip.Content>
+								<Tooltip.Content side='top'>
+									{t(step.descriptionKey)}
+								</Tooltip.Content>
 							</Tooltip.Root>
 						</div>
 					</div>
@@ -295,7 +304,7 @@ const ChecklistStepRow = ({
 						isIcon
 						isOutlined
 						className='self-center'
-						tooltip='Open'
+						tooltip={t('onboarding.actions.open')}
 					>
 						{step.id === 'contract' ? (
 							<Link
@@ -328,7 +337,9 @@ const ChecklistStepRow = ({
 							}
 						}}
 					>
-						{step.done ? 'Mark as not done' : 'Mark as done'}
+						{step.done
+							? t('onboarding.actions.markAsNotDone')
+							: t('onboarding.actions.markAsDone')}
 					</Button>
 				</div>
 			)}

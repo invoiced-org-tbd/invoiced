@@ -270,6 +270,42 @@ export const brTranslations = {
 	invoices: {
 		title: 'Faturas',
 	},
+	onboarding: {
+		title: 'Onboarding',
+		completed: '{completed}/{total} concluidos',
+		sections: {
+			coreSetup: 'Configuracao base',
+			advancedSetup: 'Configuração avançada',
+		},
+		actions: {
+			dismiss: 'Dispensar onboarding',
+			open: 'Abrir',
+			markAsDone: 'Marcar como concluido',
+			markAsNotDone: 'Marcar como pendente',
+		},
+		steps: {
+			company: {
+				label: 'Crie sua empresa',
+				description: 'Configure os dados da sua empresa e informacoes legais.',
+			},
+			contract: {
+				label: 'Adicione seu primeiro contrato',
+				description: 'Crie ao menos um contrato para comecar a cobrar.',
+			},
+			invoice: {
+				label: 'Envie uma fatura',
+				description: 'Marque isso quando sua primeira fatura for enviada.',
+			},
+			smtp: {
+				label: 'Configure o SMTP',
+				description: 'Configure seu provedor SMTP para envio de e-mails.',
+			},
+			emailTemplates: {
+				label: 'Configure os templates de e-mail',
+				description: 'Defina templates padrao para e-mails de fatura.',
+			},
+		},
+	},
 	pdfCanvasViewer: {
 		loading: {
 			generatingPreview: 'Gerando pre-visualizacao do PDF...',
