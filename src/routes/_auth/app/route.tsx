@@ -1,4 +1,5 @@
 import { AccountDrawer } from '@/components/account-drawer/AccountDrawer';
+import { OnboardingChecklist } from '@/components/onboarding-checklist/OnboardingChecklist';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 import { AuthenticatedSidebar } from './-lib/components/authenticated-sidebar/AuthenticatedSidebar';
@@ -28,6 +29,7 @@ function AppLayout() {
 				<Outlet />
 			</Sidebar.Inset>
 
+			<OnboardingChecklist />
 			<AccountDrawer />
 		</Sidebar.Root>
 	);

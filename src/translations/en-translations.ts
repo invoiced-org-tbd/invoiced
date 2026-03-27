@@ -278,6 +278,42 @@ export const enTranslations = {
 	invoices: {
 		title: 'Invoices',
 	},
+	onboarding: {
+		title: 'Onboarding',
+		completed: '{completed}/{total} completed',
+		sections: {
+			coreSetup: 'Core setup',
+			advancedSetup: 'Advanced setup',
+		},
+		actions: {
+			dismiss: 'Dismiss onboarding',
+			open: 'Open',
+			markAsDone: 'Mark as done',
+			markAsNotDone: 'Mark as not done',
+		},
+		steps: {
+			company: {
+				label: 'Create your Company',
+				description: 'Set your business profile and legal details.',
+			},
+			contract: {
+				label: 'Add your first Contract',
+				description: 'Create at least one contract to start billing.',
+			},
+			invoice: {
+				label: 'Send an Invoice',
+				description: 'Mark this when your first invoice is sent.',
+			},
+			smtp: {
+				label: 'Setup SMTP',
+				description: 'Configure your SMTP provider for outbound email.',
+			},
+			emailTemplates: {
+				label: 'Setup email templates',
+				description: 'Define your default invoice email templates.',
+			},
+		},
+	},
 	pdfCanvasViewer: {
 		loading: {
 			generatingPreview: 'Generating PDF preview...',
