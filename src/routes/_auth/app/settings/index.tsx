@@ -27,6 +27,8 @@ function RouteComponent() {
 			search: (prev) => ({
 				...prev,
 				tab: parsedTab.data,
+				companyAction:
+					parsedTab.data === 'company' ? prev.companyAction : undefined,
 			}),
 		});
 	};

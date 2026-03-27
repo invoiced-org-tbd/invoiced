@@ -142,12 +142,12 @@ export const OnboardingChecklist = () => {
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ duration: 0.3, ease: 'easeOut' }}
 		>
-			<Card.Root className='pointer-events-auto overflow-hidden border-border/70 shadow-lg backdrop-blur-sm'>
+			<Card.Root className='pointer-events-auto overflow-hidden border-primary/20 shadow-lg backdrop-blur-sm'>
 				<div className='flex items-center gap-2 '>
 					<button
 						type='button'
 						onClick={() => setIsExpanded((current) => !current)}
-						className='flex min-w-0 flex-1 items-center gap-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30  border-b px-4 py-3'
+						className='flex min-w-0 flex-1 items-center gap-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30  border-b border-primary/20 px-4 py-3 bg-linear-to-br from-primary/10 via-transparent to-muted/30'
 					>
 						<RocketIcon className='size-5 text-primary' />
 						<div className='min-w-0'>
@@ -280,7 +280,14 @@ const ChecklistStepRow = ({
 
 					<div className='min-w-0 flex-1 space-y-1'>
 						<div className='flex items-center gap-1'>
-							<p className='truncate text-sm font-medium'>{t(step.labelKey)}</p>
+							<p
+								className={cn(
+									'truncate text-sm font-medium',
+									step.done && 'text-muted-foreground line-through',
+								)}
+							>
+								{t(step.labelKey)}
+							</p>
 
 							<Tooltip.Root>
 								<Tooltip.Trigger asChild>
@@ -296,33 +303,56 @@ const ChecklistStepRow = ({
 					</div>
 				</div>
 
-				{step.to && (
-					<Button
-						asChild
-						size='xs'
-						variant='secondary'
-						isIcon
-						isOutlined
-						className='self-center'
-						tooltip={t('onboarding.actions.open')}
-					>
-						{step.id === 'contract' ? (
-							<Link
-								to='/app/contracts'
-								search={(prev) => ({
-									...prev,
-									isCreating: true,
-								})}
-							>
-								<ChevronRightIcon />
-							</Link>
-						) : (
-							<Link to={step.to}>
-								<ChevronRightIcon />
-							</Link>
-						)}
-					</Button>
-				)}
+				{step.to &&
+					(step.done ? (
+						<Button
+							size='xs'
+							variant='secondary'
+							isIcon
+							isOutlined
+							className='self-center'
+							disabled
+						>
+							<ChevronRightIcon />
+						</Button>
+					) : (
+						<Button
+							asChild
+							size='xs'
+							variant='secondary'
+							isIcon
+							isOutlined
+							className='self-center'
+							tooltip={t('onboarding.actions.open')}
+						>
+							{step.id === 'contract' ? (
+								<Link
+									to='/app/contracts'
+									search={(prev) => ({
+										...prev,
+										isCreating: true,
+									})}
+								>
+									<ChevronRightIcon />
+								</Link>
+							) : step.id === 'company' ? (
+								<Link
+									to='/app/settings'
+									search={(prev) => ({
+										...prev,
+										tab: 'company',
+										companyAction: 'create',
+									})}
+								>
+									<ChevronRightIcon />
+								</Link>
+							) : (
+								<Link to={step.to}>
+									<ChevronRightIcon />
+								</Link>
+							)}
+						</Button>
+					))}
 			</div>
 
 			{step.manualId && (

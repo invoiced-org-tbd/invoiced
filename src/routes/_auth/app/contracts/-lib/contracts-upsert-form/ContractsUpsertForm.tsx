@@ -139,7 +139,10 @@ export const ContractsUpsertForm = ({
 			</Drawer.Body>
 
 			<Drawer.Footer>
-				<form.CancelButton onClick={onClose} />
+				<form.CancelButton
+					size='sm'
+					onClick={onClose}
+				/>
 
 				<div className='flex items-center gap-2 ml-auto'>
 					<form.Subscribe
@@ -151,6 +154,7 @@ export const ContractsUpsertForm = ({
 							<>
 								<Button
 									variant='secondary'
+									size='sm'
 									onClick={() => setIsPreviewOpen(true)}
 								>
 									{t('contracts.invoicePreview.previewButton')}

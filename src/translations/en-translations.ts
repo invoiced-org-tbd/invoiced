@@ -141,6 +141,24 @@ export const enTranslations = {
 			company: {
 				title: 'Company',
 				description: 'Manage your company information.',
+				profile: {
+					title: 'Company profile',
+					description: 'Your workspace is linked to a single company record.',
+					noAddress: 'Address not provided',
+				},
+				zeroState: {
+					title: 'Create your company profile',
+					description:
+						'Set up your company once to unlock invoices and business details across the app.',
+					primaryAction: 'Create company',
+				},
+				drawer: {
+					title: 'Create company',
+					description: 'Add your company details to continue your setup.',
+					editTitle: 'Edit company',
+					editDescription: 'Update your company details and address.',
+					saveAction: 'Save changes',
+				},
 			},
 			automations: {
 				title: 'Automations',
@@ -150,13 +168,41 @@ export const enTranslations = {
 				title: 'Notifications',
 				description: 'Manage your notifications.',
 			},
-			plans: {
-				title: 'Plans',
-				description: 'Manage your plans.',
-			},
-			billing: {
-				title: 'Billing',
-				description: 'Manage your billing information.',
+			billingPlans: {
+				title: 'Billing & Plans',
+				description:
+					'Review your active plan, payment method, and recent invoices.',
+				paymentMethod: {
+					title: 'Selected payment method',
+					description: 'This is the card used for your subscription renewals.',
+					methodLabel: 'Card',
+					defaultBadge: 'Default',
+					holderLabel: 'Card holder',
+					expiresLabel: 'Expires',
+				},
+				selectedPlan: {
+					title: 'Selected plan',
+					description: 'Overview of your current subscription plan.',
+					planLabel: 'Plan',
+					activeBadge: 'Active',
+					priceLabel: 'Price',
+					renewalLabel: 'Renews on',
+				},
+				history: {
+					title: 'Billing history',
+					description: 'Track your monthly billing activity.',
+					period: 'Period',
+					invoice: 'Invoice',
+					issuedAt: 'Issued at',
+					amount: 'Amount',
+					status: 'Status',
+					statuses: {
+						paid: 'Paid',
+						processing: 'Processing',
+						pending: 'Pending',
+						failed: 'Failed',
+					},
+				},
 			},
 		},
 		placeholderDescription: 'This section is coming soon.',
@@ -271,6 +317,8 @@ export const enTranslations = {
 			title: 'Invoice Preview',
 			description: 'This preview updates from your current form values.',
 			browserOnlyMessage: 'PDF preview is available in the browser.',
+			missingCompanyHint:
+				'Set up your company in Settings > Company to generate invoice previews.',
 			incompleteFieldsHint:
 				'Some fields are incomplete. Preview may show placeholders.',
 		},

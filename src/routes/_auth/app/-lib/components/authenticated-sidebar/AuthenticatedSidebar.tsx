@@ -4,9 +4,12 @@ import { SidebarUserMenu } from '../sidebar-user-menu/SidebarUserMenu';
 import { useAuthenticatedSidebarNavItems } from './consts';
 import type { SidebarNavLinkItem } from './types';
 import { useCompany } from '@/hooks/use-company/useCompany';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { Settings } from 'lucide-react';
 
 export const AuthenticatedSidebar = () => {
 	const { company } = useCompany();
+	const { t } = useTranslate();
 	const authenticatedSidebarNavItems = useAuthenticatedSidebarNavItems();
 
 	return (
@@ -20,7 +23,7 @@ export const AuthenticatedSidebar = () => {
 			>
 				<section className='flex items-center truncate'>
 					<span className='truncate pl-1 text-sm font-semibold text-sidebar-foreground transition-opacity'>
-						{company.name}
+						{company?.name ?? t('settings.tabs.company.title')}
 					</span>
 				</section>
 
@@ -28,7 +31,6 @@ export const AuthenticatedSidebar = () => {
 					<Sidebar.Trigger className='bg-sidebar' />
 				</span>
 			</div>
-
 			<Sidebar.Content data-slot='authenticated-sidebar-content'>
 				{authenticatedSidebarNavItems.map((item) => {
 					if (item.type === 'link') {
@@ -72,8 +74,17 @@ export const AuthenticatedSidebar = () => {
 
 			<div
 				data-slot='authenticated-sidebar-footer'
-				className='px-2 py-1'
+				className='px-2 py-1 space-y-2'
 			>
+				<SidebarLinkItem
+					item={{
+						type: 'link',
+						label: t('auth.sidebar.settings.group'),
+						to: '/app/settings',
+						icon: Settings,
+					}}
+				/>
+
 				<Sidebar.Menu>
 					<Sidebar.MenuItem>
 						<SidebarUserMenu />

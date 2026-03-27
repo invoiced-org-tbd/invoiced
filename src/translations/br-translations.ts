@@ -144,6 +144,25 @@ export const brTranslations = {
 			company: {
 				title: 'Empresa',
 				description: 'Gerencie suas informações de empresa.',
+				profile: {
+					title: 'Perfil da empresa',
+					description:
+						'Seu workspace está vinculado a um único registro de empresa.',
+					noAddress: 'Endereço não informado',
+				},
+				zeroState: {
+					title: 'Crie o perfil da sua empresa',
+					description:
+						'Configure sua empresa uma vez para liberar faturas e dados empresariais no app.',
+					primaryAction: 'Criar empresa',
+				},
+				drawer: {
+					title: 'Criar empresa',
+					description: 'Adicione os dados da sua empresa para continuar.',
+					editTitle: 'Editar empresa',
+					editDescription: 'Atualize os dados e o endereço da sua empresa.',
+					saveAction: 'Salvar alterações',
+				},
 			},
 			automations: {
 				title: 'Automações',
@@ -153,13 +172,41 @@ export const brTranslations = {
 				title: 'Notificações',
 				description: 'Gerencie suas notificações.',
 			},
-			plans: {
-				title: 'Planos',
-				description: 'Gerencie seus planos.',
-			},
-			billing: {
-				title: 'Faturamento',
-				description: 'Gerencie suas informações de faturamento.',
+			billingPlans: {
+				title: 'Faturamento e Planos',
+				description:
+					'Revise seu plano ativo, método de pagamento e faturas recentes.',
+				paymentMethod: {
+					title: 'Método de pagamento selecionado',
+					description: 'Este é o cartão usado nas renovações da assinatura.',
+					methodLabel: 'Cartão',
+					defaultBadge: 'Padrão',
+					holderLabel: 'Titular',
+					expiresLabel: 'Validade',
+				},
+				selectedPlan: {
+					title: 'Plano selecionado',
+					description: 'Visão geral do seu plano de assinatura atual.',
+					planLabel: 'Plano',
+					activeBadge: 'Ativo',
+					priceLabel: 'Preço',
+					renewalLabel: 'Renova em',
+				},
+				history: {
+					title: 'Histórico de faturamento',
+					description: 'Acompanhe sua atividade de cobrança mensal.',
+					period: 'Período',
+					invoice: 'Fatura',
+					issuedAt: 'Emitida em',
+					amount: 'Valor',
+					status: 'Status',
+					statuses: {
+						paid: 'Pago',
+						processing: 'Processando',
+						pending: 'Pendente',
+						failed: 'Falhou',
+					},
+				},
 			},
 		},
 		placeholderDescription: 'Esta seção estará disponível em breve.',
@@ -278,6 +325,8 @@ export const brTranslations = {
 				'Esta pre-visualizacao e atualizada com os valores atuais do formulario.',
 			browserOnlyMessage:
 				'A pre-visualizacao do PDF esta disponivel no navegador.',
+			missingCompanyHint:
+				'Configure sua empresa em Configuracoes > Empresa para gerar a pre-visualizacao.',
 			incompleteFieldsHint:
 				'Alguns campos estao incompletos. A pre-visualizacao pode mostrar placeholders.',
 		},

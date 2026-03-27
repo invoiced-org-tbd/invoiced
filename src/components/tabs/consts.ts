@@ -6,7 +6,7 @@ export const tabsTriggerVariants = cva(
 		variants: {
 			variant: {
 				default:
-					'text-foreground/60 hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground data-active:bg-input/20 data-active:text-foreground data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground',
+					'text-foreground/60 hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground data-active:bg-linear-to-br from-primary/20 via-transparent to-muted/30 data-active:text-foreground data-active:border-primary dark:data-active:text-foreground',
 				error:
 					'text-destructive/70 hover:text-destructive dark:text-destructive/80 dark:hover:text-destructive data-active:border-destructive/40 data-active:bg-destructive/10 data-active:text-destructive data-active:shadow-sm dark:data-active:border-destructive/20 dark:bg-destructive/10 dark:text-destructive',
 			},
