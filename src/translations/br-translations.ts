@@ -216,6 +216,8 @@ export const brTranslations = {
 						description:
 							'Adicione seu primeiro provedor SMTP para começar a enviar e-mails transacionais.',
 					},
+					deleteBlockedByContractAutoSend:
+						'Esta configuração SMTP está em uso no envio automático de faturas de um contrato. Desative ou altere o envio automático nesses contratos antes de excluir.',
 					drawer: {
 						title: 'Criar configuração SMTP',
 						description: 'Defina host, remetente e opções de segurança.',
@@ -272,6 +274,8 @@ export const brTranslations = {
 						description:
 							'Crie seu primeiro template para padronizar a comunicação de faturas.',
 					},
+					deleteBlockedByContractAutoSend:
+						'Este template está em uso no envio automático de faturas de um contrato. Desative ou altere o envio automático nesses contratos antes de excluir.',
 					drawer: {
 						title: 'Criar template de e-mail',
 						description: 'Defina o tipo e o assunto do template.',
@@ -419,11 +423,44 @@ export const brTranslations = {
 					countryLabel: 'País',
 				},
 			},
+			autoSend: {
+				sectionTitle: 'Envio automático de faturas',
+				sectionDescription:
+					'Opcionalmente envie faturas por e-mail automaticamente usando seu SMTP e templates.',
+				loading: 'Carregando configurações de automação…',
+				zeroState: {
+					title: 'Falta SMTP ou template de e-mail',
+					description:
+						'Adicione ao menos uma configuração SMTP e um template de e-mail em Configurações > Automações antes de ativar o envio automático.',
+					cta: 'Abrir Automações',
+				},
+				enabledLabel: 'Ativar envio automático',
+				enabledDescription:
+					'Quando ativado, as faturas deste contrato podem ser enviadas por e-mail com as opções abaixo.',
+				smtpLabel: 'Configuração SMTP',
+				smtpDescription: 'Servidor de e-mail usado para enviar as faturas.',
+				smtpPlaceholder: 'Selecione o SMTP',
+				templateLabel: 'Template de e-mail',
+				templateDescription:
+					'Template aplicado ao assunto e corpo dos e-mails de fatura.',
+				templatePlaceholder: 'Selecione o template',
+				validation: {
+					smtpRequired:
+						'Selecione uma configuração SMTP quando o envio automático estiver ativado.',
+					templateRequired:
+						'Selecione um template de e-mail quando o envio automático estiver ativado.',
+				},
+				invalidSmtpConfiguration:
+					'A configuração SMTP selecionada não foi encontrada ou não pertence à sua conta.',
+				invalidEmailTemplate:
+					'O template de e-mail selecionado não foi encontrado ou não pertence à sua conta.',
+			},
 		},
 		tabs: {
 			role: 'Cargo',
 			client: 'Cliente',
 			invoiceRecurrence: 'Recorrencia de Invoices',
+			autoSend: 'Envio automático',
 		},
 		summary: {
 			title: 'Resumo do contrato',
@@ -444,6 +481,13 @@ export const brTranslations = {
 				'Os dados do contato de faturamento ainda nao foram preenchidos.',
 			missingInformationHint:
 				'Adicione estas informacoes para completar o resumo.',
+			autoSendLabel: 'Envio automático',
+			autoSendValue: '{smtpName} · template "{templateName}"',
+			autoSendOff: 'Envio automático desligado para este contrato.',
+			autoSendIncomplete:
+				'Selecione SMTP e template para concluir o envio automático.',
+			autoSendIncompleteHint:
+				'Abra a etapa Envio automático e escolha uma configuração SMTP e um template de e-mail.',
 		},
 		invoicePreview: {
 			previewButton: 'Visualizar PDF',

@@ -4,6 +4,7 @@ export { companyAddressTable } from './companyAddressTable';
 export { companyTable } from './companyTable';
 export { contractClientAddressTable } from './contractClientAddressTable';
 export { contractClientTable } from './contractClientTable';
+export { contractAutoSendTable } from './contractAutoSendTable';
 export { contractInvoiceRecurrenceItemTable } from './contractInvoiceRecurrenceItemTable';
 export { contractInvoiceRecurrenceTable } from './contractInvoiceRecurrenceTable';
 export { contractRoleTable } from './contractRoleTable';

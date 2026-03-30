@@ -4,10 +4,13 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
+	ServerError,
 } from '@/utils/serverFnsUtils';
+import { isSqliteForeignKeyConstraintError } from '@/utils/sqliteConstraintErrors';
 import { createServerFn } from '@tanstack/react-start';
 import { and, eq } from 'drizzle-orm';
 import z from 'zod';
@@ -24,7 +27,8 @@ const deleteEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(deleteEmailTemplateParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data, context: { user, language } }) => {
+		const t = getServerT(language);
 		try {
 			await db
 				.delete(emailTemplateTable)
@@ -37,6 +41,15 @@ const deleteEmailTemplateServerFn = createServerFn({
 
 			return createSuccessResponse();
 		} catch (error) {
+			if (isSqliteForeignKeyConstraintError(error)) {
+				throw createErrorResponse({
+					error: new ServerError({
+						message: t(
+							'settings.tabs.automations.emailTemplates.deleteBlockedByContractAutoSend',
+						),
+					}),
+				});
+			}
 			throw createErrorResponse({
 				error,
 			});

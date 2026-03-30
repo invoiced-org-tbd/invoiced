@@ -42,6 +42,7 @@ const getEditContractServerFn = createServerFn({
 							items: true,
 						},
 					},
+					autoSend: true,
 				},
 			});
 
@@ -54,8 +55,23 @@ const getEditContractServerFn = createServerFn({
 				});
 			}
 
+			const { autoSend: autoSendRow, ...contractRest } = contract;
+
 			return createSuccessResponse({
-				data: contract,
+				data: {
+					...contractRest,
+					autoSend: autoSendRow
+						? {
+								enabled: true,
+								smtpConfigId: autoSendRow.smtpConfigId,
+								emailTemplateId: autoSendRow.emailTemplateId,
+							}
+						: {
+								enabled: false,
+								smtpConfigId: '',
+								emailTemplateId: '',
+							},
+				},
 			});
 		} catch (error) {
 			throw createErrorResponse({

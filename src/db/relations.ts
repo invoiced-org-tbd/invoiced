@@ -46,6 +46,11 @@ export const relations = defineRelations(dbTables, (r) => ({
 			to: r.contractInvoiceRecurrenceTable.contractId,
 			optional: false,
 		}),
+		autoSend: r.one.contractAutoSendTable({
+			from: r.contractTable.id,
+			to: r.contractAutoSendTable.contractId,
+			optional: true,
+		}),
 	},
 
 	contractInvoiceRecurrenceTable: {

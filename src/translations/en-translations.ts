@@ -211,6 +211,8 @@ export const enTranslations = {
 						description:
 							'Add your first SMTP provider to start sending transactional emails.',
 					},
+					deleteBlockedByContractAutoSend:
+						"This SMTP configuration is used by a contract's invoice auto-send settings. Disable or change auto-send on those contracts before deleting.",
 					drawer: {
 						title: 'Create SMTP configuration',
 						description: 'Define host, sender, and security settings.',
@@ -266,6 +268,8 @@ export const enTranslations = {
 						description:
 							'Create your first template to standardize invoice communication.',
 					},
+					deleteBlockedByContractAutoSend:
+						"This template is used by a contract's invoice auto-send settings. Disable or change auto-send on those contracts before deleting.",
 					drawer: {
 						title: 'Create email template',
 						description: 'Define template type and subject.',
@@ -411,11 +415,44 @@ export const enTranslations = {
 					countryLabel: 'Country',
 				},
 			},
+			autoSend: {
+				sectionTitle: 'Invoice auto-send',
+				sectionDescription:
+					'Optionally send invoices by email automatically using your SMTP and templates.',
+				loading: 'Loading automation settings…',
+				zeroState: {
+					title: 'SMTP or email templates are missing',
+					description:
+						'Add at least one SMTP configuration and one email template in Settings > Automations before you can enable auto-send.',
+					cta: 'Open Automations',
+				},
+				enabledLabel: 'Enable auto-send',
+				enabledDescription:
+					'When enabled, invoices for this contract can be emailed using the selections below.',
+				smtpLabel: 'SMTP configuration',
+				smtpDescription: 'Outbound mail server used to send invoice emails.',
+				smtpPlaceholder: 'Select SMTP',
+				templateLabel: 'Email template',
+				templateDescription:
+					'Template applied to the body and subject of invoice emails.',
+				templatePlaceholder: 'Select template',
+				validation: {
+					smtpRequired:
+						'Select an SMTP configuration when auto-send is enabled.',
+					templateRequired:
+						'Select an email template when auto-send is enabled.',
+				},
+				invalidSmtpConfiguration:
+					'The selected SMTP configuration was not found or does not belong to your account.',
+				invalidEmailTemplate:
+					'The selected email template was not found or does not belong to your account.',
+			},
 		},
 		tabs: {
 			role: 'Role',
 			client: 'Client',
 			invoiceRecurrence: 'Invoice Recurrence',
+			autoSend: 'Auto-send',
 		},
 		summary: {
 			title: 'Contract summary',
@@ -436,6 +473,13 @@ export const enTranslations = {
 				'Billing contact details are still missing for this contract.',
 			missingInformationHint:
 				'Add this information to make the summary complete.',
+			autoSendLabel: 'Auto-send',
+			autoSendValue: '{smtpName} · template "{templateName}"',
+			autoSendOff: 'Auto-send is off for this contract.',
+			autoSendIncomplete:
+				'Select both SMTP and a template to finish auto-send.',
+			autoSendIncompleteHint:
+				'Open the Auto-send step and pick an SMTP configuration and email template.',
 		},
 		invoicePreview: {
 			previewButton: 'Preview PDF',

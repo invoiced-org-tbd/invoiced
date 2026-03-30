@@ -18,6 +18,9 @@ import { contractQueryKeys } from './contractApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { contractInvoiceRecurrenceTable } from '@/db/tables/contractInvoiceRecurrenceTable';
 import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
+import { contractAutoSendTable } from '@/db/tables/contractAutoSendTable';
+import { assertContractAutoSendResourcesOwned } from './assertContractAutoSendResourcesOwned';
+import { getServerT } from '@/utils/languageUtils';
 
 const createContractParams = contractsUpsertFormSchema.clone();
 
@@ -28,7 +31,8 @@ const createContractServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createContractParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data, context: { user, language } }) => {
+		const t = getServerT(language);
 		try {
 			await db.transaction(async (tx) => {
 				const [contract] = await tx
@@ -80,6 +84,24 @@ const createContractServerFn = createServerFn({
 				await tx
 					.insert(contractInvoiceRecurrenceItemTable)
 					.values(recurrenceItems);
+
+				if (data.autoSend.enabled) {
+					const smtpConfigId = data.autoSend.smtpConfigId;
+					const emailTemplateId = data.autoSend.emailTemplateId;
+
+					await assertContractAutoSendResourcesOwned(tx, {
+						userId: user.id,
+						smtpConfigId,
+						emailTemplateId,
+						t,
+					});
+
+					await tx.insert(contractAutoSendTable).values({
+						contractId: contract.id,
+						smtpConfigId,
+						emailTemplateId,
+					});
+				}
 			});
 
 			return createSuccessResponse();

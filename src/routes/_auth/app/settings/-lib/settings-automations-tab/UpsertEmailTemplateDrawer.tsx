@@ -48,8 +48,12 @@ export const UpsertEmailTemplateDrawer = ({
 					</Drawer.Title>
 					<Drawer.Description>
 						{isEditing
-							? t('settings.tabs.automations.emailTemplates.drawer.editDescription')
-							: t('settings.tabs.automations.emailTemplates.drawer.description')}
+							? t(
+									'settings.tabs.automations.emailTemplates.drawer.editDescription',
+								)
+							: t(
+									'settings.tabs.automations.emailTemplates.drawer.description',
+								)}
 					</Drawer.Description>
 				</Drawer.Header>
 				<UpsertEmailTemplateForm

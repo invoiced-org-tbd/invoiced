@@ -9,6 +9,7 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import type { ContractStep } from '../..';
+import { ContractAutoSendForm } from './ContractAutoSendForm';
 import { ContractClientForm } from './ContractClientForm';
 import { ContractInvoiceRecurrenceForm } from './ContractInvoiceRecurrenceForm';
 import { ContractRoleForm } from './ContractRoleForm';
@@ -28,6 +29,7 @@ const contractSteps = [
 	{ value: 'role', labelKey: 'contracts.tabs.role' },
 	{ value: 'client', labelKey: 'contracts.tabs.client' },
 	{ value: 'invoiceRecurrence', labelKey: 'contracts.tabs.invoiceRecurrence' },
+	{ value: 'autoSend', labelKey: 'contracts.tabs.autoSend' },
 ] as const satisfies readonly (FormStepperStep<ContractStep> & {
 	labelKey: `contracts.tabs.${ContractStep}`;
 })[];
@@ -54,6 +56,8 @@ export const ContractsUpsertForm = ({
 	const form = useAppForm({
 		defaultValues,
 		validators: {
+			// Zod `preprocess` on autoSend id fields widens Standard Schema input typing vs form values.
+			// @ts-expect-error — runtime validation matches ContractsUpsertFormSchema
 			onChange: contractsUpsertFormSchema,
 		},
 		onSubmit: async ({ value }) => {
@@ -119,6 +123,13 @@ export const ContractsUpsertForm = ({
 									rate={rate}
 								/>
 							)}
+						/>
+					</FormSteps.Content>
+
+					<FormSteps.Content value='autoSend'>
+						<ContractAutoSendForm
+							form={form}
+							fields='autoSend'
 						/>
 					</FormSteps.Content>
 				</FormSteps.Root>

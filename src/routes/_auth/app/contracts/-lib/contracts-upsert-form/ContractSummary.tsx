@@ -1,5 +1,8 @@
+import { getEmailTemplatesQueryOptions } from '@/api/email-template/getEmailTemplates';
+import { getSmtpConfigsQueryOptions } from '@/api/smtp/getSmtpConfigs';
 import { Badge } from '@/components/badge/Badge';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { useQuery } from '@tanstack/react-query';
 import { cn } from '@/utils/classNamesUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
@@ -67,15 +70,35 @@ const SummarySkeleton = () => {
 
 export const ContractSummary = ({
 	isLoading = false,
-	data: { role, client },
+	data: { role, client, autoSend },
 }: {
 	isLoading?: boolean;
 	data: ContractsUpsertFormSchema;
 }) => {
 	const { t } = useTranslate();
+	const { data: smtpConfigs = [] } = useQuery(getSmtpConfigsQueryOptions());
+	const { data: emailTemplates = [] } = useQuery(
+		getEmailTemplatesQueryOptions(),
+	);
 	const hasRate = !!role.rate;
 	const hasActiveContractInfo = !!client.companyName && !!role.description;
 	const hasBillingInfo = !!client.responsibleName && !!client.responsibleEmail;
+
+	const smtpName =
+		autoSend.smtpConfigId &&
+		smtpConfigs.find((c) => c.id === autoSend.smtpConfigId)?.name;
+	const templateName =
+		autoSend.emailTemplateId &&
+		emailTemplates.find((tpl) => tpl.id === autoSend.emailTemplateId)?.name;
+	const autoSendConfigured = autoSend.enabled && !!smtpName && !!templateName;
+
+	const autoSendSummaryValue =
+		autoSend.enabled && autoSendConfigured
+			? t('contracts.summary.autoSendValue', {
+					smtpName: smtpName ?? '',
+					templateName: templateName ?? '',
+				})
+			: t('contracts.summary.autoSendOff');
 
 	return (
 		<section className='rounded-lg border border-border bg-muted/30 p-3.5 space-y-3'>
@@ -137,6 +160,19 @@ export const ContractSummary = ({
 								: undefined
 						}
 						isMissing={!hasRate}
+						className='border-b border-border/80'
+					/>
+
+					<SummaryItem
+						label={t('contracts.summary.autoSendLabel')}
+						value={autoSendSummaryValue}
+						placeholder={t('contracts.summary.autoSendIncomplete')}
+						hint={
+							autoSend.enabled && !autoSendConfigured
+								? t('contracts.summary.autoSendIncompleteHint')
+								: undefined
+						}
+						isMissing={autoSend.enabled && !autoSendConfigured}
 					/>
 				</div>
 			)}
