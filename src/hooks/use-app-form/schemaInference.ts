@@ -4,6 +4,7 @@ import type { MultiSelectInputProps } from '@/components/multi-select-input/type
 import type { NumberInputProps } from '@/components/number-input/types';
 import type { SelectInputProps } from '@/components/select-input/types';
 import type { SwitchProps } from '@/components/switch/types';
+import type { TextareaInputProps } from '@/components/textarea-input/TextareaInput';
 import type { TextInputProps } from '@/components/text-input/types';
 import {
 	ZodArray,
@@ -25,6 +26,7 @@ import {
 
 export type FormInputPropsByMode = {
 	text: TextInputProps;
+	textarea: TextareaInputProps;
 	number: NumberInputProps;
 	select: SelectInputProps;
 	'multi-select': MultiSelectInputProps;
@@ -337,6 +339,7 @@ const resolveBooleanProps = ({
 
 export const modeResolvers = {
 	text: resolveTextProps,
+	textarea: resolveTextProps,
 	number: resolveNumberProps,
 	select: resolveSelectProps,
 	'multi-select': resolveMultiSelectProps,

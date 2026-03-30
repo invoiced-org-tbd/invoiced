@@ -40,7 +40,11 @@ export const ContractsInvoicePreviewDialog = ({
 				</Dialog.Header>
 
 				<Dialog.Body className='bg-muted'>
-					{isBrowser ? (
+					{!company ? (
+						<div className='h-full rounded-lg border border-border bg-background p-4 text-sm text-muted-foreground'>
+							{t('contracts.invoicePreview.missingCompanyHint')}
+						</div>
+					) : isBrowser ? (
 						<InvoicePDF
 							model='base-v0'
 							contractData={contractData}
@@ -54,9 +58,11 @@ export const ContractsInvoicePreviewDialog = ({
 				</Dialog.Body>
 
 				<Dialog.Footer>
-					{!canSubmit ? (
+					{!canSubmit || !company ? (
 						<p className='text-xs text-muted-foreground mr-auto'>
-							{t('contracts.invoicePreview.incompleteFieldsHint')}
+							{!company
+								? t('contracts.invoicePreview.missingCompanyHint')
+								: t('contracts.invoicePreview.incompleteFieldsHint')}
 						</p>
 					) : null}
 

@@ -150,22 +150,197 @@ export const enTranslations = {
 			company: {
 				title: 'Company',
 				description: 'Manage your company information.',
+				profile: {
+					title: 'Company profile',
+					description: 'Your workspace is linked to a single company record.',
+					noAddress: 'Address not provided',
+				},
+				zeroState: {
+					title: 'Create your company profile',
+					description:
+						'Set up your company once to unlock invoices and business details across the app.',
+					primaryAction: 'Create company',
+				},
+				drawer: {
+					title: 'Create company',
+					description: 'Add your company details to continue your setup.',
+					editTitle: 'Edit company',
+					editDescription: 'Update your company details and address.',
+					saveAction: 'Save changes',
+				},
 			},
 			automations: {
 				title: 'Automations',
-				description: 'Manage your automations.',
+				description: 'Configure SMTP providers and email templates.',
+				actions: {
+					add: 'Add',
+					duplicate: 'Duplicate',
+				},
+				copySuffix: '(copy)',
+				status: {
+					active: 'Active',
+					inactive: 'Inactive',
+				},
+				shared: {
+					addAction: 'Add',
+					duplicateAction: 'Duplicate',
+					updatedAtLabel: 'Updated at',
+					copySuffix: '(copy)',
+					status: {
+						active: 'Active',
+						inactive: 'Inactive',
+					},
+				},
+				smtp: {
+					title: 'SMTP configurations',
+					description: 'Manage your outgoing email providers.',
+					senderLabel: 'Sender email',
+					hostLabel: 'Host / Port',
+					presets: {
+						label: 'Provider preset',
+						description: 'Pick a provider to prefill host, port, and security.',
+						placeholder: 'Select a provider...',
+						applyAction: 'Apply preset',
+						providers: {
+							gmail: 'Gmail',
+							outlook: 'Outlook (Microsoft 365)',
+							mailgun: 'Mailgun',
+							sendgrid: 'SendGrid',
+						},
+					},
+					securityModes: {
+						starttls: 'STARTTLS',
+						sslTls: 'SSL/TLS',
+						tls: 'TLS',
+						ssl: 'SSL',
+						none: 'None',
+					},
+					emptyState: {
+						title: 'No SMTP configuration yet',
+						description:
+							'Add your first SMTP provider to start sending transactional emails.',
+					},
+					deleteBlockedByContractAutoSend:
+						"This SMTP configuration is used by a contract's invoice auto-send settings. Disable or change auto-send on those contracts before deleting.",
+					drawer: {
+						title: 'Create SMTP configuration',
+						description: 'Define host, sender, and security settings.',
+						editTitle: 'Edit SMTP configuration',
+						editDescription: 'Update SMTP connection and sender details.',
+						createAction: 'Create SMTP',
+						saveAction: 'Save changes',
+					},
+					form: {
+						nameLabel: 'Configuration name',
+						namePlaceholder: 'Primary SMTP',
+						usernameLabel: 'Username',
+						usernamePlaceholder: 'smtp-user',
+						usernameHint:
+							'Usually your SMTP login, often an email or provider username.',
+						fromNameLabel: 'Sender name',
+						fromNamePlaceholder: 'Billing Team',
+						fromEmailLabel: 'Sender email',
+						fromEmailPlaceholder: 'billing@acme.com',
+						fromEmailHint:
+							'The address recipients will see as the sender in their inbox.',
+						hostLabel: 'Host',
+						hostPlaceholder: 'smtp.mailgun.org',
+						hostHint: 'SMTP server host provided by your email provider.',
+						portLabel: 'Port',
+						portHint:
+							'Common ports: 587 (STARTTLS), 465 (SSL/TLS), or 25 (no encryption).',
+						securityLabel: 'Security',
+						securityHint:
+							'Match this with your provider settings. STARTTLS is most common.',
+						statusLabel: 'Status',
+						statusDescription: 'Enable to use this SMTP configuration.',
+						passwordLabel: 'Password',
+						passwordPlaceholder: 'Type your SMTP password',
+						passwordDescription: 'Stored securely and never shown again.',
+						passwordEditPlaceholder: 'Leave blank to keep current password',
+						passwordEditDescription:
+							'For security, we never reveal the current password.',
+					},
+				},
+				emailTemplates: {
+					title: 'Email templates',
+					description: 'Create and maintain reusable email templates.',
+					subjectLabel: 'Subject preview',
+					updatedAtLabel: 'Updated at',
+					types: {
+						invoice: 'Invoice',
+						reminder: 'Reminder',
+						overdue: 'Overdue',
+					},
+					emptyState: {
+						title: 'No email templates yet',
+						description:
+							'Create your first template to standardize invoice communication.',
+					},
+					deleteBlockedByContractAutoSend:
+						"This template is used by a contract's invoice auto-send settings. Disable or change auto-send on those contracts before deleting.",
+					drawer: {
+						title: 'Create email template',
+						description: 'Define template type and subject.',
+						editTitle: 'Edit email template',
+						editDescription: 'Adjust template details and status.',
+						createAction: 'Create template',
+						saveAction: 'Save changes',
+					},
+					form: {
+						nameLabel: 'Template name',
+						namePlaceholder: 'Invoice reminder',
+						slugLabel: 'Slug',
+						slugPlaceholder: 'invoice-reminder',
+						typeLabel: 'Template type',
+						subjectLabel: 'Subject',
+						subjectPlaceholder: 'Reminder: your invoice is due soon',
+						bodyLabel: 'Body',
+						bodyPlaceholder: 'Hello client, your invoice is ready.',
+						statusLabel: 'Status',
+						statusDescription: 'Enable to use this template in automations.',
+					},
+				},
 			},
 			notifications: {
 				title: 'Notifications',
 				description: 'Manage your notifications.',
 			},
-			plans: {
-				title: 'Plans',
-				description: 'Manage your plans.',
-			},
-			billing: {
-				title: 'Billing',
-				description: 'Manage your billing information.',
+			billingPlans: {
+				title: 'Billing & Plans',
+				description:
+					'Review your active plan, payment method, and recent invoices.',
+				paymentMethod: {
+					title: 'Selected payment method',
+					description: 'This is the card used for your subscription renewals.',
+					methodLabel: 'Card',
+					defaultBadge: 'Default',
+					holderLabel: 'Card holder',
+					expiresLabel: 'Expires',
+				},
+				selectedPlan: {
+					title: 'Selected plan',
+					description: 'Overview of your current subscription plan.',
+					planLabel: 'Plan',
+					activeBadge: 'Active',
+					priceLabel: 'Price',
+					renewalLabel: 'Renews on',
+				},
+				history: {
+					title: 'Billing history',
+					description: 'Track your monthly billing activity.',
+					period: 'Period',
+					invoice: 'Invoice',
+					issuedAt: 'Issued at',
+					amount: 'Amount',
+					status: 'Status',
+					statuses: {
+						paid: 'Paid',
+						processing: 'Processing',
+						pending: 'Pending',
+						failed: 'Failed',
+					},
+				},
 			},
 		},
 		placeholderDescription: 'This section is coming soon.',
@@ -214,6 +389,24 @@ export const enTranslations = {
 	contracts: {
 		name: 'Contract',
 		title: 'Contracts',
+		list: {
+			pageDescription:
+				'A cleaner view for your contracts, designed for one or many clients.',
+			listDescription: 'Pick a contract to view details on the right panel.',
+			count: '{count} total',
+			singleLabel: 'Current contract',
+			singleBadge: 'Selected',
+			emptyBadge: 'No contracts yet',
+			emptyTitle: 'Start with your first contract',
+			emptyDescription:
+				'Add a contract to unlock billing workflows and automate your invoices.',
+			emptyCta: 'Create contract',
+			recurrenceValue: '{count} recurrence item(s)',
+			autoSendOn: 'Auto-send enabled',
+			autoSendOff: 'Auto-send disabled',
+			roleLabel: 'Role',
+			updatedAtLabel: 'Last update',
+		},
 		form: {
 			descriptionLabel: 'Description',
 			role: {
@@ -249,11 +442,44 @@ export const enTranslations = {
 					countryLabel: 'Country',
 				},
 			},
+			autoSend: {
+				sectionTitle: 'Invoice auto-send',
+				sectionDescription:
+					'Optionally send invoices by email automatically using your SMTP and templates.',
+				loading: 'Loading automation settings…',
+				zeroState: {
+					title: 'SMTP or email templates are missing',
+					description:
+						'Add at least one SMTP configuration and one email template in Settings > Automations before you can enable auto-send.',
+					cta: 'Open Automations',
+				},
+				enabledLabel: 'Enable auto-send',
+				enabledDescription:
+					'When enabled, invoices for this contract can be emailed using the selections below.',
+				smtpLabel: 'SMTP configuration',
+				smtpDescription: 'Outbound mail server used to send invoice emails.',
+				smtpPlaceholder: 'Select SMTP',
+				templateLabel: 'Email template',
+				templateDescription:
+					'Template applied to the body and subject of invoice emails.',
+				templatePlaceholder: 'Select template',
+				validation: {
+					smtpRequired:
+						'Select an SMTP configuration when auto-send is enabled.',
+					templateRequired:
+						'Select an email template when auto-send is enabled.',
+				},
+				invalidSmtpConfiguration:
+					'The selected SMTP configuration was not found or does not belong to your account.',
+				invalidEmailTemplate:
+					'The selected email template was not found or does not belong to your account.',
+			},
 		},
 		tabs: {
 			role: 'Role',
 			client: 'Client',
 			invoiceRecurrence: 'Invoice Recurrence',
+			autoSend: 'Auto-send',
 		},
 		summary: {
 			title: 'Contract summary',
@@ -274,12 +500,21 @@ export const enTranslations = {
 				'Billing contact details are still missing for this contract.',
 			missingInformationHint:
 				'Add this information to make the summary complete.',
+			autoSendLabel: 'Auto-send',
+			autoSendValue: '{smtpName} · template "{templateName}"',
+			autoSendOff: 'Auto-send is off for this contract.',
+			autoSendIncomplete:
+				'Select both SMTP and a template to finish auto-send.',
+			autoSendIncompleteHint:
+				'Open the Auto-send step and pick an SMTP configuration and email template.',
 		},
 		invoicePreview: {
 			previewButton: 'Preview PDF',
 			title: 'Invoice Preview',
 			description: 'This preview updates from your current form values.',
 			browserOnlyMessage: 'PDF preview is available in the browser.',
+			missingCompanyHint:
+				'Set up your company in Settings > Company to generate invoice previews.',
 			incompleteFieldsHint:
 				'Some fields are incomplete. Preview may show placeholders.',
 		},
@@ -313,6 +548,42 @@ export const enTranslations = {
 	},
 	invoices: {
 		title: 'Invoices',
+	},
+	onboarding: {
+		title: 'Onboarding',
+		completed: '{completed}/{total} completed',
+		sections: {
+			coreSetup: 'Core setup',
+			advancedSetup: 'Advanced setup',
+		},
+		actions: {
+			dismiss: 'Dismiss onboarding',
+			open: 'Open',
+			markAsDone: 'Mark as done',
+			markAsNotDone: 'Mark as not done',
+		},
+		steps: {
+			company: {
+				label: 'Create your Company',
+				description: 'Set your business profile and legal details.',
+			},
+			contract: {
+				label: 'Add your first Contract',
+				description: 'Create at least one contract to start billing.',
+			},
+			invoice: {
+				label: 'Send an Invoice',
+				description: 'Mark this when your first invoice is sent.',
+			},
+			smtp: {
+				label: 'Setup SMTP',
+				description: 'Configure your SMTP provider for outbound email.',
+			},
+			emailTemplates: {
+				label: 'Setup email templates',
+				description: 'Define your default invoice email templates.',
+			},
+		},
 	},
 	pdfCanvasViewer: {
 		loading: {

@@ -11,9 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthCreateCompanyRouteRouteImport } from './routes/_auth/create-company/route'
 import { Route as AuthAppRouteRouteImport } from './routes/_auth/app/route'
-import { Route as AuthCreateCompanyIndexRouteImport } from './routes/_auth/create-company/index'
 import { Route as AuthAppIndexRouteImport } from './routes/_auth/app/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthAppSettingsIndexRouteImport } from './routes/_auth/app/settings/index'
@@ -31,20 +29,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthCreateCompanyRouteRoute = AuthCreateCompanyRouteRouteImport.update({
-  id: '/create-company',
-  path: '/create-company',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
 const AuthAppRouteRoute = AuthAppRouteRouteImport.update({
   id: '/app',
   path: '/app',
   getParentRoute: () => AuthRouteRoute,
-} as any)
-const AuthCreateCompanyIndexRoute = AuthCreateCompanyIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthCreateCompanyRouteRoute,
 } as any)
 const AuthAppIndexRoute = AuthAppIndexRouteImport.update({
   id: '/',
@@ -85,10 +73,8 @@ const AuthAppCashflowIndexRoute = AuthAppCashflowIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AuthAppRouteRouteWithChildren
-  '/create-company': typeof AuthCreateCompanyRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app/': typeof AuthAppIndexRoute
-  '/create-company/': typeof AuthCreateCompanyIndexRoute
   '/app/cashflow/': typeof AuthAppCashflowIndexRoute
   '/app/contracts/': typeof AuthAppContractsIndexRoute
   '/app/dashboard/': typeof AuthAppDashboardIndexRoute
@@ -99,7 +85,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app': typeof AuthAppIndexRoute
-  '/create-company': typeof AuthCreateCompanyIndexRoute
   '/app/cashflow': typeof AuthAppCashflowIndexRoute
   '/app/contracts': typeof AuthAppContractsIndexRoute
   '/app/dashboard': typeof AuthAppDashboardIndexRoute
@@ -111,10 +96,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_auth/app': typeof AuthAppRouteRouteWithChildren
-  '/_auth/create-company': typeof AuthCreateCompanyRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_auth/app/': typeof AuthAppIndexRoute
-  '/_auth/create-company/': typeof AuthCreateCompanyIndexRoute
   '/_auth/app/cashflow/': typeof AuthAppCashflowIndexRoute
   '/_auth/app/contracts/': typeof AuthAppContractsIndexRoute
   '/_auth/app/dashboard/': typeof AuthAppDashboardIndexRoute
@@ -126,10 +109,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
-    | '/create-company'
     | '/api/auth/$'
     | '/app/'
-    | '/create-company/'
     | '/app/cashflow/'
     | '/app/contracts/'
     | '/app/dashboard/'
@@ -140,7 +121,6 @@ export interface FileRouteTypes {
     | '/'
     | '/api/auth/$'
     | '/app'
-    | '/create-company'
     | '/app/cashflow'
     | '/app/contracts'
     | '/app/dashboard'
@@ -151,10 +131,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth'
     | '/_auth/app'
-    | '/_auth/create-company'
     | '/api/auth/$'
     | '/_auth/app/'
-    | '/_auth/create-company/'
     | '/_auth/app/cashflow/'
     | '/_auth/app/contracts/'
     | '/_auth/app/dashboard/'
@@ -184,26 +162,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth/create-company': {
-      id: '/_auth/create-company'
-      path: '/create-company'
-      fullPath: '/create-company'
-      preLoaderRoute: typeof AuthCreateCompanyRouteRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
     '/_auth/app': {
       id: '/_auth/app'
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AuthAppRouteRouteImport
       parentRoute: typeof AuthRouteRoute
-    }
-    '/_auth/create-company/': {
-      id: '/_auth/create-company/'
-      path: '/'
-      fullPath: '/create-company/'
-      preLoaderRoute: typeof AuthCreateCompanyIndexRouteImport
-      parentRoute: typeof AuthCreateCompanyRouteRoute
     }
     '/_auth/app/': {
       id: '/_auth/app/'
@@ -279,28 +243,12 @@ const AuthAppRouteRouteWithChildren = AuthAppRouteRoute._addFileChildren(
   AuthAppRouteRouteChildren,
 )
 
-interface AuthCreateCompanyRouteRouteChildren {
-  AuthCreateCompanyIndexRoute: typeof AuthCreateCompanyIndexRoute
-}
-
-const AuthCreateCompanyRouteRouteChildren: AuthCreateCompanyRouteRouteChildren =
-  {
-    AuthCreateCompanyIndexRoute: AuthCreateCompanyIndexRoute,
-  }
-
-const AuthCreateCompanyRouteRouteWithChildren =
-  AuthCreateCompanyRouteRoute._addFileChildren(
-    AuthCreateCompanyRouteRouteChildren,
-  )
-
 interface AuthRouteRouteChildren {
   AuthAppRouteRoute: typeof AuthAppRouteRouteWithChildren
-  AuthCreateCompanyRouteRoute: typeof AuthCreateCompanyRouteRouteWithChildren
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthAppRouteRoute: AuthAppRouteRouteWithChildren,
-  AuthCreateCompanyRouteRoute: AuthCreateCompanyRouteRouteWithChildren,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(

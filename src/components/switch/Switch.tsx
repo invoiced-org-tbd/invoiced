@@ -11,6 +11,7 @@ export const Switch = ({
 	value,
 	onChange,
 	label,
+	tooltip,
 	description,
 	errors,
 	showErrors,
@@ -95,6 +96,7 @@ export const Switch = ({
 					htmlFor={id}
 					className='w-auto'
 					required={inputProps.required}
+					tooltip={tooltip}
 				>
 					{label}
 				</BaseField.Label>

@@ -64,10 +64,48 @@ const contractInvoiceRecurrenceFormSchema = z
 		}
 	});
 
+const optionalIdString = z.preprocess(
+	(value) => (value === undefined || value === null ? '' : value),
+	z.string(),
+);
+
+const contractAutoSendFormSchema = z
+	.object({
+		enabled: z.boolean(),
+		smtpConfigId: optionalIdString,
+		emailTemplateId: optionalIdString,
+	})
+	.superRefine((data, ctx) => {
+		if (!data.enabled) {
+			return;
+		}
+		if (!data.smtpConfigId.trim()) {
+			ctx.addIssue({
+				code: 'custom',
+				message: translate(
+					getLanguage(),
+					'contracts.form.autoSend.validation.smtpRequired',
+				),
+				path: ['smtpConfigId'],
+			});
+		}
+		if (!data.emailTemplateId.trim()) {
+			ctx.addIssue({
+				code: 'custom',
+				message: translate(
+					getLanguage(),
+					'contracts.form.autoSend.validation.templateRequired',
+				),
+				path: ['emailTemplateId'],
+			});
+		}
+	});
+
 export const contractsUpsertFormSchema = z.object({
 	role: contractRoleFormSchema,
 	client: contractClientFormSchema,
 	invoiceRecurrence: contractInvoiceRecurrenceFormSchema,
+	autoSend: contractAutoSendFormSchema,
 });
 
 export type ContractsUpsertFormSchema = z.infer<
@@ -115,6 +153,17 @@ export const useContractsUpsertFormDefaultValues = ({
 					getEmptyContractInvoiceRecurrenceItem(),
 				],
 			},
+			autoSend: editContract?.autoSend
+				? {
+						enabled: editContract.autoSend.enabled,
+						smtpConfigId: editContract.autoSend.smtpConfigId ?? '',
+						emailTemplateId: editContract.autoSend.emailTemplateId ?? '',
+					}
+				: {
+						enabled: false,
+						smtpConfigId: '',
+						emailTemplateId: '',
+					},
 		} satisfies ContractsUpsertFormSchema,
 		isLoadingEditContract: isFetching,
 	};

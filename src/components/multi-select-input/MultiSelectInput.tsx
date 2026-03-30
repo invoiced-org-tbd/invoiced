@@ -47,6 +47,7 @@ export const MultiSelectInput = ({
 	onChange,
 	value,
 	label,
+	tooltip,
 	description,
 	errors,
 	showErrors,
@@ -184,6 +185,7 @@ export const MultiSelectInput = ({
 			<BaseField.Label
 				htmlFor={id}
 				required={inputProps.required}
+				tooltip={tooltip}
 			>
 				{label}
 			</BaseField.Label>

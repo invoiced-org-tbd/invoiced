@@ -25,6 +25,14 @@ export const relations = defineRelations(dbTables, (r) => ({
 			to: r.invoiceConfigurationTable.userId,
 			optional: false,
 		}),
+		smtpConfigs: r.many.smtpConfigTable({
+			from: r.userTable.id,
+			to: r.smtpConfigTable.userId,
+		}),
+		emailTemplates: r.many.emailTemplateTable({
+			from: r.userTable.id,
+			to: r.emailTemplateTable.userId,
+		}),
 	},
 
 	contractTable: {
@@ -42,6 +50,11 @@ export const relations = defineRelations(dbTables, (r) => ({
 			from: r.contractTable.id,
 			to: r.contractInvoiceRecurrenceTable.contractId,
 			optional: false,
+		}),
+		autoSend: r.one.contractAutoSendTable({
+			from: r.contractTable.id,
+			to: r.contractAutoSendTable.contractId,
+			optional: true,
 		}),
 	},
 

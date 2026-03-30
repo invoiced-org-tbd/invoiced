@@ -27,6 +27,16 @@ function RouteComponent() {
 			search: (prev) => ({
 				...prev,
 				tab: parsedTab.data,
+				companyAction:
+					parsedTab.data === 'company' ? prev.companyAction : undefined,
+				automationAction:
+					parsedTab.data === 'automations' ? prev.automationAction : undefined,
+				automationResource:
+					parsedTab.data === 'automations'
+						? prev.automationResource
+						: undefined,
+				automationId:
+					parsedTab.data === 'automations' ? prev.automationId : undefined,
 			}),
 		});
 	};

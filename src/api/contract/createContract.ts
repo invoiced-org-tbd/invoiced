@@ -1,4 +1,5 @@
 import { db } from '@/db/client';
+import { contractAutoSendTable } from '@/db/tables/contractAutoSendTable';
 import { contractClientAddressTable } from '@/db/tables/contractClientAddressTable';
 import { contractClientTable } from '@/db/tables/contractClientTable';
 import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
@@ -20,6 +21,7 @@ import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
 import { invoiceConfigurationQueryKeys } from '../invoice-configuration/invoiceConfigurationApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
+import { assertContractAutoSendResourcesOwned } from './assertContractAutoSendResourcesOwned';
 import { contractQueryKeys } from './contractApiUtils';
 import { setupInvoiceConfiguration } from './utils/setupInvoiceConfiguration';
 
@@ -100,6 +102,24 @@ const createContractServerFn = createServerFn({
 					await tx
 						.insert(contractInvoiceRecurrenceItemTable)
 						.values(recurrenceItems);
+
+					if (data.autoSend.enabled) {
+						const smtpConfigId = data.autoSend.smtpConfigId;
+						const emailTemplateId = data.autoSend.emailTemplateId;
+
+						await assertContractAutoSendResourcesOwned(tx, {
+							userId: user.id,
+							smtpConfigId,
+							emailTemplateId,
+							t,
+						});
+
+						await tx.insert(contractAutoSendTable).values({
+							contractId: contract.id,
+							smtpConfigId,
+							emailTemplateId,
+						});
+					}
 				});
 
 				return createSuccessResponse();

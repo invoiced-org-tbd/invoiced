@@ -13,6 +13,7 @@ export const TextInput = ({
 	onChange,
 	value,
 	label,
+	tooltip,
 	description,
 	errors,
 	showErrors,
@@ -47,6 +48,7 @@ export const TextInput = ({
 			<BaseField.Label
 				htmlFor={id}
 				required={inputProps.required}
+				tooltip={tooltip}
 			>
 				{label}
 			</BaseField.Label>

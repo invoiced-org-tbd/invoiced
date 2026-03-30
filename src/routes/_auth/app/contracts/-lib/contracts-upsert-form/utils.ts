@@ -38,3 +38,21 @@ export const getContractRecurrenceItemsTotalPercentage = (
 	}
 	return { totalPercentage };
 };
+
+export const getBalancedContractRecurrencePercentages = (
+	itemsCount: number,
+) => {
+	if (itemsCount <= 0) {
+		return [];
+	}
+
+	const totalBasisPoints = 100 * 100;
+	const baseBasisPoints = Math.floor(totalBasisPoints / itemsCount);
+	const remainderBasisPoints = totalBasisPoints % itemsCount;
+
+	return Array.from({ length: itemsCount }, (_, index) => {
+		const itemBasisPoints =
+			baseBasisPoints + (index < remainderBasisPoints ? 1 : 0);
+		return itemBasisPoints / 100;
+	});
+};

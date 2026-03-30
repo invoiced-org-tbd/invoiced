@@ -5,16 +5,14 @@ import {
 	BotIcon,
 	Building2Icon,
 	CreditCardIcon,
-	FileTextIcon,
 	UserIcon,
 } from 'lucide-react';
 import z from 'zod';
 import { SettingsAccountTab } from './settings-account-tab/SettingsAccountTab';
 import { SettingsAutomationsTab } from './settings-automations-tab/SettingsAutomationsTab';
-import { SettingsBillingTab } from './settings-billing-tab/SettingsBillingTab';
+import { SettingsBillingPlansTab } from './settings-billing-plans-tab/SettingsBillingPlansTab';
 import { SettingsCompanyTab } from './settings-company-tab/SettingsCompanyTab';
 import { SettingsNotificationsTab } from './settings-notifications-tab/SettingsNotificationsTab';
-import { SettingsPlansTab } from './settings-plans-tab/SettingsPlansTab';
 import type { TranslationKey } from '@/translations/types';
 
 export const settingsTabSchema = z.enum([
@@ -22,14 +20,32 @@ export const settingsTabSchema = z.enum([
 	'company',
 	'automations',
 	'notifications',
-	'plans',
-	'billing',
+	'billingPlans',
 ]);
 
 export type SettingsTab = z.infer<typeof settingsTabSchema>;
+export const settingsCompanyDrawerActionSchema = z.enum(['create', 'edit']);
+export type SettingsCompanyDrawerAction = z.infer<
+	typeof settingsCompanyDrawerActionSchema
+>;
+export const settingsAutomationDrawerActionSchema = z.enum(['create', 'edit']);
+export type SettingsAutomationDrawerAction = z.infer<
+	typeof settingsAutomationDrawerActionSchema
+>;
+export const settingsAutomationResourceSchema = z.enum([
+	'smtp',
+	'emailTemplate',
+]);
+export type SettingsAutomationResource = z.infer<
+	typeof settingsAutomationResourceSchema
+>;
 
 export const settingsSearchSchema = z.object({
 	tab: settingsTabSchema.optional(),
+	companyAction: settingsCompanyDrawerActionSchema.optional(),
+	automationAction: settingsAutomationDrawerActionSchema.optional(),
+	automationResource: settingsAutomationResourceSchema.optional(),
+	automationId: z.string().optional(),
 });
 
 export const settingsTabs = [
@@ -58,16 +74,10 @@ export const settingsTabs = [
 		Content: SettingsNotificationsTab,
 	},
 	{
-		value: 'plans',
-		labelKey: 'settings.tabs.plans.title',
-		icon: FileTextIcon,
-		Content: SettingsPlansTab,
-	},
-	{
-		value: 'billing',
-		labelKey: 'settings.tabs.billing.title',
+		value: 'billingPlans',
+		labelKey: 'settings.tabs.billingPlans.title',
 		icon: CreditCardIcon,
-		Content: SettingsBillingTab,
+		Content: SettingsBillingPlansTab,
 	},
 ] as const satisfies {
 	value: SettingsTab;

@@ -5,7 +5,10 @@ import { TrashIcon } from 'lucide-react';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 import { getEmptyContractInvoiceRecurrenceItem } from './contractsUpsertFormSchemas';
 import { ToggleSection } from '@/components/toggle-section/ToggleSection';
-import { getContractRecurrenceItemsTotalPercentage } from './utils';
+import {
+	getBalancedContractRecurrencePercentages,
+	getContractRecurrenceItemsTotalPercentage,
+} from './utils';
 import { cn } from '@/utils/classNamesUtils';
 import { getOrdinalSuffix } from '@/utils/stringUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
@@ -40,17 +43,30 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 						mode='array'
 						children={(field) => {
 							const handleAddItem = () => {
+								const previousItems = field.state.value;
 								let nextDayOfMonth =
-									Math.max(
-										...field.state.value.map((item) => item.dayOfMonth),
-										0,
-									) + 1;
+									Math.max(...previousItems.map((item) => item.dayOfMonth), 0) +
+									1;
 								if (nextDayOfMonth > 31) {
 									nextDayOfMonth = 1;
 								}
 
-								field.pushValue(
+								const nextItems = [
+									...previousItems,
 									getEmptyContractInvoiceRecurrenceItem(nextDayOfMonth),
+								];
+								const balancedPercentages =
+									getBalancedContractRecurrencePercentages(nextItems.length);
+
+								field.handleChange(
+									nextItems.map((item, index) => {
+										const balancedPercentage =
+											balancedPercentages.at(index) ?? 0;
+										return {
+											...item,
+											percentage: balancedPercentage,
+										};
+									}),
 								);
 							};
 

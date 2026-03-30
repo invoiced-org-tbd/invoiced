@@ -9,6 +9,7 @@ import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import type { ContractsSearchSchema, ContractStep } from '../..';
+import { ContractAutoSendForm } from './ContractAutoSendForm';
 import { ContractClientForm } from './ContractClientForm';
 import { ContractInvoiceRecurrenceForm } from './ContractInvoiceRecurrenceForm';
 import { ContractRoleForm } from './ContractRoleForm';
@@ -31,6 +32,7 @@ const contractSteps = [
 	{ value: 'role', labelKey: 'contracts.tabs.role' },
 	{ value: 'client', labelKey: 'contracts.tabs.client' },
 	{ value: 'invoiceRecurrence', labelKey: 'contracts.tabs.invoiceRecurrence' },
+	{ value: 'autoSend', labelKey: 'contracts.tabs.autoSend' },
 ] as const satisfies readonly (FormStepperStep<ContractStep> & {
 	labelKey: `contracts.tabs.${ContractStep}`;
 })[];
@@ -64,6 +66,8 @@ export const ContractsUpsertForm = ({
 			value: undefined as InvoiceConfigurationPersistSchema | undefined,
 		},
 		validators: {
+			// Zod `preprocess` on autoSend id fields widens Standard Schema input typing vs form values.
+			// @ts-expect-error — runtime validation matches ContractsUpsertFormSchema
 			onChange: contractsUpsertFormSchema,
 		},
 		onSubmit: async ({ value, meta }) => {
@@ -146,6 +150,13 @@ export const ContractsUpsertForm = ({
 							)}
 						/>
 					</FormSteps.Content>
+
+					<FormSteps.Content value='autoSend'>
+						<ContractAutoSendForm
+							form={form}
+							fields='autoSend'
+						/>
+					</FormSteps.Content>
 				</FormSteps.Root>
 
 				<section className='mt-auto'>
@@ -164,7 +175,10 @@ export const ContractsUpsertForm = ({
 			</Drawer.Body>
 
 			<Drawer.Footer>
-				<form.CancelButton onClick={onClose} />
+				<form.CancelButton
+					size='sm'
+					onClick={onClose}
+				/>
 
 				<div className='flex items-center gap-2 ml-auto'>
 					<form.Subscribe
@@ -176,6 +190,7 @@ export const ContractsUpsertForm = ({
 							<>
 								<Button
 									variant='secondary'
+									size='sm'
 									onClick={() => setIsPreviewOpen(true)}
 								>
 									{t('contracts.invoicePreview.previewButton')}

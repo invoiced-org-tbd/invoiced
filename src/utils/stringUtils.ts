@@ -29,3 +29,13 @@ export const getOrdinalSuffix = (value: number, language?: Language) => {
 
 	return 'th';
 };
+
+export const slugify = (value: string) => {
+	return value
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '')
+		.replace(/-{2,}/g, '-');
+};
