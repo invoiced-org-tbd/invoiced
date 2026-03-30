@@ -281,6 +281,32 @@ export const brTranslations = {
 			incompleteFieldsHint:
 				'Alguns campos estao incompletos. A pre-visualizacao pode mostrar placeholders.',
 		},
+		invoiceConfigurationSetup: {
+			title: 'Nome do arquivo da fatura e numeracao',
+			introLead:
+				'Este e o seu primeiro contrato. Defina como os nomes dos arquivos de fatura serao gerados e a partir de qual numero continuar.',
+			introExisting:
+				'Se voce ja emite faturas fora do app, use o mesmo padrao e informe o ultimo numero para manter a sequencia.',
+			patternSectionTitle: 'Prefixo e sufixo',
+			includeSectionTitle: 'Incluir no nome do arquivo',
+			previewCaption: 'Exemplo de nome de arquivo',
+			numberingSectionTitle: 'Numeracao',
+			prefixLabel: 'Prefixo',
+			suffixLabel: 'Sufixo',
+			withYearLabel: 'Ano',
+			withMonthLabel: 'Mes',
+			withDayLabel: 'Dia',
+			withCompanyNameLabel: 'Nome da empresa',
+			lastInvoiceNumberLabel: 'Ultimo numero da fatura',
+			numberingTabNewLabel: 'Comecando agora',
+			numberingTabExistingLabel: 'Ja faturava fora do app',
+			numberingNewTabHint: 'Sua primeira fatura no app sera numerada como 1.',
+			numberingExistingTabHint:
+				'Informe o ultimo numero de fatura usado fora do app para a sequencia continuar.',
+			finishSetup: 'Concluir configuracao',
+			alreadyExistsForUser:
+				'Ja existe uma configuracao de fatura para este usuario.',
+		},
 	},
 	invoices: {
 		title: 'Faturas',

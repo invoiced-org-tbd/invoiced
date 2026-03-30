@@ -274,6 +274,33 @@ export const enTranslations = {
 			incompleteFieldsHint:
 				'Some fields are incomplete. Preview may show placeholders.',
 		},
+		invoiceConfigurationSetup: {
+			title: 'Invoice file name and numbering',
+			introLead:
+				'This is your first contract. Choose how generated invoice file names are built and which number to continue from.',
+			introExisting:
+				'If you already issue invoices outside the app, use the same pattern and enter your last invoice number so numbering stays continuous.',
+			patternSectionTitle: 'Prefix and suffix',
+			includeSectionTitle: 'Include in file name',
+			previewCaption: 'Example file name',
+			numberingSectionTitle: 'Numbering',
+			prefixLabel: 'Prefix',
+			suffixLabel: 'Suffix',
+			withYearLabel: 'Year',
+			withMonthLabel: 'Month',
+			withDayLabel: 'Day',
+			withCompanyNameLabel: 'Company name',
+			lastInvoiceNumberLabel: 'Last invoice number',
+			numberingTabNewLabel: 'Starting fresh',
+			numberingTabExistingLabel: 'Already invoicing elsewhere',
+			numberingNewTabHint:
+				'Your first invoice in the app will start at number 1.',
+			numberingExistingTabHint:
+				'Enter the last invoice number you used outside the app so the next one continues the sequence.',
+			finishSetup: 'Finish setup',
+			alreadyExistsForUser:
+				'There is already an invoice configuration for this user.',
+		},
 	},
 	invoices: {
 		title: 'Invoices',

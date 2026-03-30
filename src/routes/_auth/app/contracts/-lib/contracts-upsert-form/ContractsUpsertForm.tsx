@@ -19,7 +19,7 @@ import {
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
 import { ContractInvoiceConfigurationDialog } from './ContractInvoiceConfigurationDialog';
-import type { InvoiceConfigurationFormSchema } from './invoiceConfigurationFormSchemas';
+import type { InvoiceConfigurationPersistSchema } from './invoiceConfigurationFormSchemas';
 import { getInvoiceConfigurationQueryOptions } from '@/api/invoice-configuration/getInvoiceConfiguration';
 
 type ContractsUpsertFormProps = {
@@ -61,7 +61,7 @@ export const ContractsUpsertForm = ({
 	const form = useAppForm({
 		defaultValues,
 		onSubmitMeta: {
-			value: undefined as InvoiceConfigurationFormSchema | undefined,
+			value: undefined as InvoiceConfigurationPersistSchema | undefined,
 		},
 		validators: {
 			onChange: contractsUpsertFormSchema,
@@ -76,7 +76,10 @@ export const ContractsUpsertForm = ({
 			}
 
 			if (editId) {
-				await updateContract({ editId, data: value });
+				await updateContract({
+					editId,
+					data: { data: value, invoiceConfiguration: meta.value },
+				});
 			} else {
 				await createContract({
 					data: value,

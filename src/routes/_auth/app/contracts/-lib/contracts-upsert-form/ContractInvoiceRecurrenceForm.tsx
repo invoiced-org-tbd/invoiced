@@ -86,9 +86,7 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 															suffix={t(
 																'contracts.form.invoiceRecurrence.dayOfMonthSuffix',
 																{
-																	suffix: getOrdinalSuffix(
-																		field.state.value,
-																	),
+																	suffix: getOrdinalSuffix(field.state.value),
 																},
 															)}
 															mode='integer'
@@ -141,12 +139,9 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 										isPercentageValid ? 'text-primary' : 'text-destructive',
 									)}
 								>
-									{t(
-										'contracts.form.invoiceRecurrence.totalPercentageLabel',
-										{
-											value: totalPercentage,
-										},
-									)}
+									{t('contracts.form.invoiceRecurrence.totalPercentageLabel', {
+										value: totalPercentage,
+									})}
 									{isPercentageValid
 										? ''
 										: ` ${t('contracts.form.invoiceRecurrence.totalPercentageInvalidHint')}`}

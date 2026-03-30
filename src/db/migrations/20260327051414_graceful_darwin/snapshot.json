@@ -1,8 +1,8 @@
 {
 	"version": "7",
 	"dialect": "sqlite",
-	"id": "353be9d1-6cc8-4835-9fc2-5322d5859845",
-	"prevIds": ["00000000-0000-0000-0000-000000000000"],
+	"id": "8415cbf7-cc0e-4c09-8f4e-665c96b2bded",
+	"prevIds": ["5aed355e-dc9b-4334-81b6-4cc63b255c32"],
 	"ddl": [
 		{
 			"name": "account",
@@ -38,6 +38,10 @@
 		},
 		{
 			"name": "contract",
+			"entityType": "tables"
+		},
+		{
+			"name": "invoiceConfiguration",
 			"entityType": "tables"
 		},
 		{
@@ -740,6 +744,116 @@
 			"generated": null,
 			"name": "id",
 			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "lastInvoiceNumber",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "prefix",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "suffix",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "withYear",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "withMonth",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "withDay",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "withCompanyName",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "userId",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+			"generated": null,
+			"name": "createdAt",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+			"generated": null,
+			"name": "updatedAt",
+			"entityType": "columns",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
 			"table": "session"
 		},
 		{
@@ -1048,6 +1162,17 @@
 			"onUpdate": "NO ACTION",
 			"onDelete": "CASCADE",
 			"nameExplicit": false,
+			"name": "fk_invoiceConfiguration_userId_user_id_fk",
+			"entityType": "fks",
+			"table": "invoiceConfiguration"
+		},
+		{
+			"columns": ["userId"],
+			"tableTo": "user",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "CASCADE",
+			"nameExplicit": false,
 			"name": "fk_session_userId_user_id_fk",
 			"entityType": "fks",
 			"table": "session"
@@ -1113,6 +1238,13 @@
 			"nameExplicit": false,
 			"name": "contract_pk",
 			"table": "contract",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "invoiceConfiguration_pk",
+			"table": "invoiceConfiguration",
 			"entityType": "pks"
 		},
 		{

@@ -1,30 +1,31 @@
-import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
-import {
-	createErrorResponse,
-	createSuccessResponse,
-	ServerError,
-} from '@/utils/serverFnsUtils';
-import { createServerFn } from '@tanstack/react-start';
-import z from 'zod';
 import { db } from '@/db/client';
 import { contractClientAddressTable } from '@/db/tables/contractClientAddressTable';
 import { contractClientTable } from '@/db/tables/contractClientTable';
+import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
+import { contractInvoiceRecurrenceTable } from '@/db/tables/contractInvoiceRecurrenceTable';
 import { contractRoleTable } from '@/db/tables/contractRoleTable';
 import { contractTable } from '@/db/tables/contractTable';
+import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
+import { invoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import { contractQueryKeys } from './contractApiUtils';
+import {
+	createErrorResponse,
+	createSuccessResponse,
+} from '@/utils/serverFnsUtils';
+import { createServerFn } from '@tanstack/react-start';
+import z from 'zod';
+import { invoiceConfigurationQueryKeys } from '../invoice-configuration/invoiceConfigurationApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
-import { contractInvoiceRecurrenceTable } from '@/db/tables/contractInvoiceRecurrenceTable';
-import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
-import { invoiceConfigurationFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
-import { invoiceConfigurationTable } from '@/db/tables/invoiceConfigurationTable';
+import { contractQueryKeys } from './contractApiUtils';
+import { setupInvoiceConfiguration } from './utils/setupInvoiceConfiguration';
 
 const createContractParams = z.object({
 	data: contractsUpsertFormSchema,
-	invoiceConfiguration: invoiceConfigurationFormSchema.optional(),
+	invoiceConfiguration: invoiceConfigurationPersistSchema.optional(),
 });
 
 type CreateContractParams = z.infer<typeof createContractParams>;
@@ -35,35 +36,20 @@ const createContractServerFn = createServerFn({
 	.middleware([sessionMiddleware])
 	.inputValidator(createContractParams)
 	.handler(
-		async ({ data: { data, invoiceConfiguration }, context: { user } }) => {
+		async ({
+			data: { data, invoiceConfiguration },
+			context: { user, language },
+		}) => {
 			try {
+				const t = getServerT(language);
+
 				await db.transaction(async (tx) => {
-					if (invoiceConfiguration) {
-						const existingInvoiceConfiguration =
-							await tx.query.invoiceConfigurationTable.findFirst({
-								where: {
-									userId: user.id,
-								},
-							});
-
-						if (existingInvoiceConfiguration) {
-							throw new ServerError({
-								message:
-									'There is already an invoice configuration for this user.',
-							});
-						}
-
-						await tx.insert(invoiceConfigurationTable).values({
-							userId: user.id,
-							prefix: invoiceConfiguration.prefix,
-							suffix: invoiceConfiguration.suffix,
-							withYear: invoiceConfiguration.withYear,
-							withMonth: invoiceConfiguration.withMonth,
-							withDay: invoiceConfiguration.withDay,
-							withCompanyName: invoiceConfiguration.withCompanyName,
-							lastInvoiceNumber: invoiceConfiguration.lastInvoiceNumber,
-						});
-					}
+					await setupInvoiceConfiguration({
+						tx,
+						t,
+						userId: user.id,
+						invoiceConfiguration,
+					});
 
 					const [contract] = await tx
 						.insert(contractTable)
@@ -133,6 +119,10 @@ export const createContractMutationOptions = () =>
 			invalidateOnSuccess({
 				args,
 				keys: [contractQueryKeys.base()],
+			});
+			invalidateOnSuccess({
+				args,
+				keys: [invoiceConfigurationQueryKeys.base()],
 			});
 		},
 	});

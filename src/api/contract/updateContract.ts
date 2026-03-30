@@ -1,8 +1,11 @@
 import { db } from '@/db/client';
 import { contractClientAddressTable } from '@/db/tables/contractClientAddressTable';
 import { contractClientTable } from '@/db/tables/contractClientTable';
+import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
 import { contractRoleTable } from '@/db/tables/contractRoleTable';
 import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
+import { invoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -15,14 +18,17 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { eq } from 'drizzle-orm';
 import z from 'zod';
-import { contractQueryKeys } from './contractApiUtils';
-import { getServerT } from '@/utils/languageUtils';
+import { invoiceConfigurationQueryKeys } from '../invoice-configuration/invoiceConfigurationApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
-import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
+import { contractQueryKeys } from './contractApiUtils';
+import { setupInvoiceConfiguration } from './utils/setupInvoiceConfiguration';
 
 const updateContractParams = z.object({
 	editId: z.string(),
-	data: contractsUpsertFormSchema,
+	data: z.object({
+		data: contractsUpsertFormSchema,
+		invoiceConfiguration: invoiceConfigurationPersistSchema.optional(),
+	}),
 });
 
 type UpdateContractParams = z.infer<typeof updateContractParams>;
@@ -32,111 +38,129 @@ const updateContractServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateContractParams)
-	.handler(async ({ data: { data, editId }, context: { user, language } }) => {
-		try {
-			const t = getServerT(language);
+	.handler(
+		async ({
+			data: {
+				data: { data, invoiceConfiguration },
+				editId,
+			},
+			context: { user, language },
+		}) => {
+			try {
+				const t = getServerT(language);
 
-			await db.transaction(async (tx) => {
-				const contract = await tx.query.contractTable.findFirst({
-					where: {
-						id: editId,
-						userId: user.id,
-					},
-				});
-
-				if (!contract) {
-					throw new ServerError({
-						message: t('entity.notFound', {
-							entity: t('contracts.name'),
-						}),
-					});
-				}
-
-				await tx
-					.update(contractRoleTable)
-					.set({
-						description: data.role.description,
-						rate: data.role.rate,
-					})
-					.where(eq(contractRoleTable.contractId, contract.id));
-
-				const [contractClient] = await tx
-					.update(contractClientTable)
-					.set({
-						companyName: data.client.companyName,
-						responsibleName: data.client.responsibleName,
-						responsibleEmail: data.client.responsibleEmail,
-					})
-					.where(eq(contractClientTable.contractId, contract.id))
-					.returning();
-
-				if (!contractClient) {
-					throw new ServerError({
-						message: t('entity.notFound', {
-							entity: t('contracts.name'),
-						}),
-					});
-				}
-
-				await tx
-					.delete(contractClientAddressTable)
-					.where(
-						eq(contractClientAddressTable.contractClientId, contractClient.id),
-					);
-
-				await tx.insert(contractClientAddressTable).values({
-					contractClientId: contractClient.id,
-					street1: data.client.address.street1,
-					street2: data.client.address.street2 || null,
-					number: data.client.address.number,
-					postalCode: data.client.address.postalCode,
-					city: data.client.address.city,
-					state: data.client.address.state,
-					country: data.client.address.country,
-				});
-
-				const invoiceRecurrence =
-					await tx.query.contractInvoiceRecurrenceTable.findFirst({
+				await db.transaction(async (tx) => {
+					const contract = await tx.query.contractTable.findFirst({
 						where: {
-							contractId: contract.id,
+							id: editId,
+							userId: user.id,
 						},
 					});
 
-				if (!invoiceRecurrence) {
-					throw new ServerError({
-						message: t('entity.notFound', {
-							entity: t('contracts.name'),
-						}),
+					if (!contract) {
+						throw new ServerError({
+							message: t('entity.notFound', {
+								entity: t('contracts.name'),
+							}),
+						});
+					}
+
+					await setupInvoiceConfiguration({
+						tx,
+						t,
+						userId: user.id,
+						invoiceConfiguration,
 					});
-				}
 
-				await tx
-					.delete(contractInvoiceRecurrenceItemTable)
-					.where(
-						eq(
-							contractInvoiceRecurrenceItemTable.contractInvoiceRecurrenceId,
-							invoiceRecurrence.id,
-						),
-					);
+					await tx
+						.update(contractRoleTable)
+						.set({
+							description: data.role.description,
+							rate: data.role.rate,
+						})
+						.where(eq(contractRoleTable.contractId, contract.id));
 
-				const recurrenceItems = data.invoiceRecurrence.items.map((item) => ({
-					contractInvoiceRecurrenceId: invoiceRecurrence.id,
-					dayOfMonth: item.dayOfMonth,
-					percentage: item.percentage,
-				}));
+					const [contractClient] = await tx
+						.update(contractClientTable)
+						.set({
+							companyName: data.client.companyName,
+							responsibleName: data.client.responsibleName,
+							responsibleEmail: data.client.responsibleEmail,
+						})
+						.where(eq(contractClientTable.contractId, contract.id))
+						.returning();
 
-				await tx
-					.insert(contractInvoiceRecurrenceItemTable)
-					.values(recurrenceItems);
-			});
+					if (!contractClient) {
+						throw new ServerError({
+							message: t('entity.notFound', {
+								entity: t('contracts.name'),
+							}),
+						});
+					}
 
-			return createSuccessResponse();
-		} catch (error) {
-			throw createErrorResponse({
-				error,
-			});
-		}
-	});
+					await tx
+						.delete(contractClientAddressTable)
+						.where(
+							eq(
+								contractClientAddressTable.contractClientId,
+								contractClient.id,
+							),
+						);
+
+					await tx.insert(contractClientAddressTable).values({
+						contractClientId: contractClient.id,
+						street1: data.client.address.street1,
+						street2: data.client.address.street2 || null,
+						number: data.client.address.number,
+						postalCode: data.client.address.postalCode,
+						city: data.client.address.city,
+						state: data.client.address.state,
+						country: data.client.address.country,
+					});
+
+					const invoiceRecurrence =
+						await tx.query.contractInvoiceRecurrenceTable.findFirst({
+							where: {
+								contractId: contract.id,
+							},
+						});
+
+					if (!invoiceRecurrence) {
+						throw new ServerError({
+							message: t('entity.notFound', {
+								entity: t('contracts.name'),
+							}),
+						});
+					}
+
+					await tx
+						.delete(contractInvoiceRecurrenceItemTable)
+						.where(
+							eq(
+								contractInvoiceRecurrenceItemTable.contractInvoiceRecurrenceId,
+								invoiceRecurrence.id,
+							),
+						);
+
+					const recurrenceItems = data.invoiceRecurrence.items.map((item) => ({
+						contractInvoiceRecurrenceId: invoiceRecurrence.id,
+						dayOfMonth: item.dayOfMonth,
+						percentage: item.percentage,
+					}));
+
+					await tx
+						.insert(contractInvoiceRecurrenceItemTable)
+						.values(recurrenceItems);
+				});
+
+				return createSuccessResponse();
+			} catch (error) {
+				throw createErrorResponse({
+					error,
+				});
+			}
+		},
+	);
 
 export const updateContractMutationOptions = () =>
 	createMutationOptions({
@@ -146,6 +170,11 @@ export const updateContractMutationOptions = () =>
 			invalidateOnSuccess({
 				args,
 				keys: [contractQueryKeys.base()],
+			});
+
+			invalidateOnSuccess({
+				args,
+				keys: [invoiceConfigurationQueryKeys.base()],
 			});
 		},
 	});

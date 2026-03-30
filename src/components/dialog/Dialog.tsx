@@ -97,7 +97,7 @@ const Content = ({
 				className={cn(
 					'border border-border bg-background data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 duration-100',
 					'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
-					'flex w-full sm:max-w-sm max-w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] min-h-0 flex-col overflow-hidden rounded-xl text-sm outline-hidden',
+					'flex w-max min-w-0 max-w-[min(42rem,calc(100%-2rem))] max-h-[calc(100dvh-2rem)] min-h-0 flex-col overflow-hidden rounded-xl text-sm outline-hidden',
 					className,
 				)}
 				onEscapeKeyDown={(e) => {
@@ -107,7 +107,7 @@ const Content = ({
 				{...props}
 			>
 				<ModalInteractionContainerProvider value={contentElement}>
-					<div className='flex min-h-0 flex-1 flex-col overflow-hidden'>
+					<div className='flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden'>
 						{children}
 					</div>
 
@@ -153,7 +153,7 @@ const Header = ({ className, ...props }: DialogHeaderProps) => {
 	return (
 		<div
 			data-slot='dialog-header'
-			className={cn('gap-2 flex shrink-0 flex-col px-4 py-3', className)}
+			className={cn('gap-3 flex shrink-0 flex-col px-4 py-5', className)}
 			{...props}
 		/>
 	);
