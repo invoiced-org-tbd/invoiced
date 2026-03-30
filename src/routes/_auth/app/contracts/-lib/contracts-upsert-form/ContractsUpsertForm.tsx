@@ -8,7 +8,7 @@ import { useFormStepper } from '@/hooks/use-app-form/useFormStepper';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import type { ContractStep } from '../..';
+import type { ContractsSearchSchema, ContractStep } from '../..';
 import { ContractClientForm } from './ContractClientForm';
 import { ContractInvoiceRecurrenceForm } from './ContractInvoiceRecurrenceForm';
 import { ContractRoleForm } from './ContractRoleForm';
@@ -103,6 +103,7 @@ export const ContractsUpsertForm = ({
 			form={form}
 			schema={contractsUpsertFormSchema}
 			isLoading={isLoadingEditContract}
+			safeSearchParamKeys={['step'] satisfies (keyof ContractsSearchSchema)[]}
 		>
 			<Drawer.Body>
 				<FormSteps.Root>

@@ -17,6 +17,7 @@ const contractsSearchSchema = z.object({
 	deleteId: z.string().optional(),
 	step: contractStepsSchema.optional(),
 });
+export type ContractsSearchSchema = z.infer<typeof contractsSearchSchema>;
 
 export const Route = createFileRoute('/_auth/app/contracts/')({
 	validateSearch: zodValidator(contractsSearchSchema),

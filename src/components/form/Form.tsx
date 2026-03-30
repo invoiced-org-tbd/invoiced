@@ -2,10 +2,13 @@ import { Separator } from '@/components/separator/Separator';
 import { useFormContext } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
+import { useStore } from '@tanstack/react-form';
+import { useBlocker } from '@tanstack/react-router';
 import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
 import type { ZodObject } from 'zod';
 import { Button } from '../button/Button';
+import { Dialog } from '../dialog/Dialog';
 import type {
 	FormCancelButtonProps,
 	FormGroupProps,
@@ -16,7 +19,11 @@ import type {
 	FormSubSetProps,
 } from './types';
 import type { FormRootContextValue } from './utils';
-import { FormRootContext, useFormRootContext } from './utils';
+import {
+	FormRootContext,
+	isDangerousNavigation,
+	useFormRootContext,
+} from './utils';
 
 const FormRoot = <TFormSchema extends ZodObject>({
 	className,
@@ -24,13 +31,15 @@ const FormRoot = <TFormSchema extends ZodObject>({
 	form: formApi,
 	isLoading = false,
 	schema,
+	safeSearchParamKeys = [],
 }: FormRootProps<TFormSchema>) => {
 	const formRootContextValue = useMemo<FormRootContextValue<TFormSchema>>(
 		() => ({
 			isLoading,
 			schema,
+			safeSearchParamKeys,
 		}),
-		[isLoading, schema],
+		[isLoading, schema, safeSearchParamKeys],
 	);
 
 	const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
@@ -51,8 +60,84 @@ const FormRoot = <TFormSchema extends ZodObject>({
 				>
 					{children}
 				</form>
+
+				<FormNavigationBlocker />
 			</formApi.AppForm>
 		</FormRootContext.Provider>
+	);
+};
+
+const FormNavigationBlocker = () => {
+	const form = useFormContext();
+	const formRootContext = useFormRootContext();
+
+	const { isDefaultValue } = useStore(form.store, (state) => ({
+		isDefaultValue: state.isDefaultValue,
+	}));
+
+	const { status, reset, proceed } = useBlocker({
+		withResolver: true,
+		shouldBlockFn: ({ current, next }) => {
+			if (isDefaultValue) {
+				return false;
+			}
+
+			const safeSearchParamKeys = formRootContext?.safeSearchParamKeys ?? [];
+
+			return isDangerousNavigation({
+				current,
+				next,
+				safeSearchParamKeys,
+			});
+		},
+	});
+	const isBlocked = status === 'blocked';
+
+	const handleCancel = () => {
+		if (!isBlocked) {
+			return;
+		}
+
+		reset();
+	};
+
+	const handleConfirm = () => {
+		if (!isBlocked) {
+			return;
+		}
+
+		proceed();
+	};
+
+	return (
+		<Dialog.Root
+			open={isBlocked}
+			onOpenChange={handleCancel}
+		>
+			<Dialog.Content>
+				<Dialog.Header>
+					<Dialog.Title>Unsaved changes</Dialog.Title>
+					<Dialog.Description>
+						You have unsaved changes. Are you sure you want to leave?
+					</Dialog.Description>
+				</Dialog.Header>
+				<Dialog.Footer>
+					<Button
+						variant='destructive'
+						isGhost={true}
+						onClick={handleConfirm}
+					>
+						Discard
+					</Button>
+					<Button
+						variant='secondary'
+						onClick={handleCancel}
+					>
+						Stay
+					</Button>
+				</Dialog.Footer>
+			</Dialog.Content>
+		</Dialog.Root>
 	);
 };
 
