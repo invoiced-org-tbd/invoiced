@@ -44,7 +44,7 @@ const hasDifferentValuesExcept = ({
 	return false;
 };
 
-export type IsDangerousNavigationParams = {
+type IsDangerousNavigationParams = {
 	current: NavigationLocationLike;
 	next: NavigationLocationLike;
 	safeSearchParamKeys: string[];

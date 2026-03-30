@@ -2,7 +2,7 @@ import { translate } from '@/translations/translate';
 import { getLanguage } from '@/utils/languageUtils';
 import z from 'zod';
 
-export const invoiceNumberingModeSchema = z.enum(['new', 'existing']);
+const invoiceNumberingModeSchema = z.enum(['new', 'existing']);
 
 export const invoiceConfigurationPersistSchema = z.object({
 	prefix: z.string().min(1),
@@ -37,7 +37,7 @@ export const invoiceConfigurationFormSchema = invoiceConfigurationPersistSchema
 		}
 	});
 
-export type InvoiceConfigurationFormSchema = z.infer<
+type InvoiceConfigurationFormSchema = z.infer<
 	typeof invoiceConfigurationFormSchema
 >;
 
