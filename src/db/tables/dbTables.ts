@@ -1,4 +1,5 @@
 export { accountTable } from './accountTable';
+export { emailTemplateTable } from './emailTemplateTable';
 export { companyAddressTable } from './companyAddressTable';
 export { companyTable } from './companyTable';
 export { contractClientAddressTable } from './contractClientAddressTable';
@@ -8,5 +9,6 @@ export { contractInvoiceRecurrenceTable } from './contractInvoiceRecurrenceTable
 export { contractRoleTable } from './contractRoleTable';
 export { contractTable } from './contractTable';
 export { sessionTable } from './sessionTable';
+export { smtpConfigTable } from './smtpConfigTable';
 export { userTable } from './userTable';
 export { verificationTable } from './verificationTable';

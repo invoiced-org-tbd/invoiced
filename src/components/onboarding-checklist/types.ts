@@ -1,6 +1,9 @@
-export type OnboardingRoute = '/app/contracts' | '/app/invoices' | '/app/settings';
+export type OnboardingRoute =
+	| '/app/contracts'
+	| '/app/invoices'
+	| '/app/settings';
 
-export type ManualStepId = 'invoiceSent' | 'smtpSetup' | 'emailTemplatesSetup';
+export type ManualStepId = 'invoiceSent';
 
 export type OnboardingStepId =
 	| 'company'

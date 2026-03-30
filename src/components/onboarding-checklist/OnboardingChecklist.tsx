@@ -1,4 +1,6 @@
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
+import { getEmailTemplatesQueryOptions } from '@/api/email-template/getEmailTemplates';
+import { getSmtpConfigsQueryOptions } from '@/api/smtp/getSmtpConfigs';
 import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
 import { Tooltip } from '@/components/tooltip/Tooltip';
@@ -30,8 +32,6 @@ const STORAGE_KEY = 'onboarding-manual-steps-v1';
 const DISMISSED_STORAGE_KEY = 'onboarding-checklist-dismissed-v1';
 const DEFAULT_MANUAL_STEPS: ManualStepsState = {
 	invoiceSent: false,
-	smtpSetup: false,
-	emailTemplatesSetup: false,
 };
 
 const readManualSteps = (): ManualStepsState => {
@@ -48,8 +48,6 @@ const readManualSteps = (): ManualStepsState => {
 		const parsed = JSON.parse(raw) as Partial<ManualStepsState>;
 		return {
 			invoiceSent: !!parsed.invoiceSent,
-			smtpSetup: !!parsed.smtpSetup,
-			emailTemplatesSetup: !!parsed.emailTemplatesSetup,
 		};
 	} catch {
 		return DEFAULT_MANUAL_STEPS;
@@ -68,6 +66,8 @@ export const OnboardingChecklist = () => {
 	const { company } = useCompany();
 	const { t } = useTranslate();
 	const { data: contracts, isFetching } = useQuery(getContractsQueryOptions());
+	const { data: smtpConfigs } = useQuery(getSmtpConfigsQueryOptions());
+	const { data: emailTemplates } = useQuery(getEmailTemplatesQueryOptions());
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isDismissed, setIsDismissed] = useState(false);
 	const [manualSteps, setManualSteps] =
@@ -93,6 +93,14 @@ export const OnboardingChecklist = () => {
 
 		if (step.id === 'contract') {
 			return (contracts?.length ?? 0) > 0;
+		}
+
+		if (step.id === 'smtp') {
+			return (smtpConfigs?.length ?? 0) > 0;
+		}
+
+		if (step.id === 'email-templates') {
+			return (emailTemplates?.length ?? 0) > 0;
 		}
 
 		if (step.manualId) {
@@ -342,6 +350,30 @@ const ChecklistStepRow = ({
 										...prev,
 										tab: 'company',
 										companyAction: 'create',
+									})}
+								>
+									<ChevronRightIcon />
+								</Link>
+							) : step.id === 'smtp' ? (
+								<Link
+									to='/app/settings'
+									search={(prev) => ({
+										...prev,
+										tab: 'automations',
+										automationResource: 'smtp',
+										automationAction: 'create',
+									})}
+								>
+									<ChevronRightIcon />
+								</Link>
+							) : step.id === 'email-templates' ? (
+								<Link
+									to='/app/settings'
+									search={(prev) => ({
+										...prev,
+										tab: 'automations',
+										automationResource: 'emailTemplate',
+										automationAction: 'create',
 									})}
 								>
 									<ChevronRightIcon />

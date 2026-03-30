@@ -162,7 +162,132 @@ export const enTranslations = {
 			},
 			automations: {
 				title: 'Automations',
-				description: 'Manage your automations.',
+				description: 'Configure SMTP providers and email templates.',
+				actions: {
+					add: 'Add',
+					duplicate: 'Duplicate',
+				},
+				copySuffix: '(copy)',
+				status: {
+					active: 'Active',
+					inactive: 'Inactive',
+				},
+				shared: {
+					addAction: 'Add',
+					duplicateAction: 'Duplicate',
+					updatedAtLabel: 'Updated at',
+					copySuffix: '(copy)',
+					status: {
+						active: 'Active',
+						inactive: 'Inactive',
+					},
+				},
+				smtp: {
+					title: 'SMTP configurations',
+					description: 'Manage your outgoing email providers.',
+					senderLabel: 'Sender email',
+					hostLabel: 'Host / Port',
+					presets: {
+						label: 'Provider preset',
+						description: 'Pick a provider to prefill host, port, and security.',
+						placeholder: 'Select a provider...',
+						applyAction: 'Apply preset',
+						providers: {
+							gmail: 'Gmail',
+							outlook: 'Outlook (Microsoft 365)',
+							mailgun: 'Mailgun',
+							sendgrid: 'SendGrid',
+						},
+					},
+					securityModes: {
+						starttls: 'STARTTLS',
+						sslTls: 'SSL/TLS',
+						tls: 'TLS',
+						ssl: 'SSL',
+						none: 'None',
+					},
+					emptyState: {
+						title: 'No SMTP configuration yet',
+						description:
+							'Add your first SMTP provider to start sending transactional emails.',
+					},
+					drawer: {
+						title: 'Create SMTP configuration',
+						description: 'Define host, sender, and security settings.',
+						editTitle: 'Edit SMTP configuration',
+						editDescription: 'Update SMTP connection and sender details.',
+						createAction: 'Create SMTP',
+						saveAction: 'Save changes',
+					},
+					form: {
+						nameLabel: 'Configuration name',
+						namePlaceholder: 'Primary SMTP',
+						usernameLabel: 'Username',
+						usernamePlaceholder: 'smtp-user',
+						usernameHint:
+							'Usually your SMTP login, often an email or provider username.',
+						fromNameLabel: 'Sender name',
+						fromNamePlaceholder: 'Billing Team',
+						fromEmailLabel: 'Sender email',
+						fromEmailPlaceholder: 'billing@acme.com',
+						fromEmailHint:
+							'The address recipients will see as the sender in their inbox.',
+						hostLabel: 'Host',
+						hostPlaceholder: 'smtp.mailgun.org',
+						hostHint: 'SMTP server host provided by your email provider.',
+						portLabel: 'Port',
+						portHint:
+							'Common ports: 587 (STARTTLS), 465 (SSL/TLS), or 25 (no encryption).',
+						securityLabel: 'Security',
+						securityHint:
+							'Match this with your provider settings. STARTTLS is most common.',
+						statusLabel: 'Status',
+						statusDescription: 'Enable to use this SMTP configuration.',
+						passwordLabel: 'Password',
+						passwordPlaceholder: 'Type your SMTP password',
+						passwordDescription: 'Stored securely and never shown again.',
+						passwordEditPlaceholder: 'Leave blank to keep current password',
+						passwordEditDescription:
+							'For security, we never reveal the current password.',
+					},
+				},
+				emailTemplates: {
+					title: 'Email templates',
+					description: 'Create and maintain reusable email templates.',
+					subjectLabel: 'Subject preview',
+					updatedAtLabel: 'Updated at',
+					types: {
+						invoice: 'Invoice',
+						reminder: 'Reminder',
+						overdue: 'Overdue',
+					},
+					emptyState: {
+						title: 'No email templates yet',
+						description:
+							'Create your first template to standardize invoice communication.',
+					},
+					drawer: {
+						title: 'Create email template',
+						description: 'Define template type and subject.',
+						editTitle: 'Edit email template',
+						editDescription: 'Adjust template details and status.',
+						createAction: 'Create template',
+						saveAction: 'Save changes',
+					},
+					form: {
+						nameLabel: 'Template name',
+						namePlaceholder: 'Invoice reminder',
+						slugLabel: 'Slug',
+						slugPlaceholder: 'invoice-reminder',
+						typeLabel: 'Template type',
+						subjectLabel: 'Subject',
+						subjectPlaceholder: 'Reminder: your invoice is due soon',
+						bodyLabel: 'Body',
+						bodyPlaceholder: 'Hello client, your invoice is ready.',
+						statusLabel: 'Status',
+						statusDescription: 'Enable to use this template in automations.',
+					},
+				},
 			},
 			notifications: {
 				title: 'Notifications',

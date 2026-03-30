@@ -9,6 +9,7 @@ import { Select } from '../select/Select';
 export const SelectInput = <TItem extends InputItem>({
 	onChange,
 	label,
+	tooltip,
 	description,
 	errors,
 	showErrors,
@@ -58,6 +59,7 @@ export const SelectInput = <TItem extends InputItem>({
 			<BaseField.Label
 				htmlFor={id}
 				required={inputProps.required}
+				tooltip={tooltip}
 			>
 				{label}
 			</BaseField.Label>

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Button } from '../button/Button';
 import { inputButtonClassName, inputButtonsSideClassName } from './consts';
 import { Label } from '@/components/label/Label';
+import { Tooltip } from '@/components/tooltip/Tooltip';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import type {
@@ -13,6 +14,7 @@ import type {
 	BaseFieldRootProps,
 } from './types';
 import { useFormRootContext } from '../form/utils';
+import { CircleHelpIcon } from 'lucide-react';
 
 const Root = ({ className, ...props }: BaseFieldRootProps) => {
 	return (
@@ -74,6 +76,7 @@ const BaseFieldLabel = ({
 	className,
 	children,
 	required,
+	tooltip,
 	...props
 }: BaseFieldLabelProps) => {
 	if (!children) {
@@ -91,6 +94,23 @@ const BaseFieldLabel = ({
 			{...props}
 		>
 			{children}
+
+			{!!tooltip && (
+				<Tooltip.Root>
+					<Tooltip.Trigger asChild>
+						<button
+							type='button'
+							tabIndex={-1}
+							aria-label='Field hint'
+							className='text-muted-foreground hover:text-foreground transition-colors'
+							onClick={(event) => event.preventDefault()}
+						>
+							<CircleHelpIcon className='size-3.5' />
+						</button>
+					</Tooltip.Trigger>
+					<Tooltip.Content>{tooltip}</Tooltip.Content>
+				</Tooltip.Root>
+			)}
 
 			{!!required && <span className='text-destructive'>*</span>}
 		</Label>

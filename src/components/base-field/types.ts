@@ -16,6 +16,7 @@ export type BaseFieldControlProps = ComponentProps<'div'> & {
 
 export type BaseFieldLabelProps = ComponentProps<typeof Label> & {
 	required?: boolean;
+	tooltip?: ReactNode;
 };
 
 export type BaseFieldDescriptionProps = ComponentProps<'p'>;
@@ -39,6 +40,7 @@ export type BaseFieldInputProps<TValue> = {
 	id?: string;
 	name?: string;
 	label?: string;
+	tooltip?: ReactNode;
 	description?: string;
 
 	value?: TValue;

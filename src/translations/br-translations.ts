@@ -166,7 +166,134 @@ export const brTranslations = {
 			},
 			automations: {
 				title: 'Automações',
-				description: 'Gerencie suas automações.',
+				description: 'Configure provedores SMTP e templates de e-mail.',
+				actions: {
+					add: 'Adicionar',
+					duplicate: 'Duplicar',
+				},
+				copySuffix: '(cópia)',
+				status: {
+					active: 'Ativo',
+					inactive: 'Inativo',
+				},
+				shared: {
+					addAction: 'Adicionar',
+					duplicateAction: 'Duplicar',
+					updatedAtLabel: 'Atualizado em',
+					copySuffix: '(cópia)',
+					status: {
+						active: 'Ativo',
+						inactive: 'Inativo',
+					},
+				},
+				smtp: {
+					title: 'Configurações SMTP',
+					description: 'Gerencie seus provedores de envio de e-mail.',
+					senderLabel: 'E-mail remetente',
+					hostLabel: 'Host / Porta',
+					presets: {
+						label: 'Preset de provedor',
+						description:
+							'Selecione um provedor para preencher host, porta e segurança.',
+						placeholder: 'Selecione um provedor...',
+						applyAction: 'Aplicar preset',
+						providers: {
+							gmail: 'Gmail',
+							outlook: 'Outlook (Microsoft 365)',
+							mailgun: 'Mailgun',
+							sendgrid: 'SendGrid',
+						},
+					},
+					securityModes: {
+						starttls: 'STARTTLS',
+						sslTls: 'SSL/TLS',
+						tls: 'TLS',
+						ssl: 'SSL',
+						none: 'Nenhum',
+					},
+					emptyState: {
+						title: 'Nenhuma configuração SMTP ainda',
+						description:
+							'Adicione seu primeiro provedor SMTP para começar a enviar e-mails transacionais.',
+					},
+					drawer: {
+						title: 'Criar configuração SMTP',
+						description: 'Defina host, remetente e opções de segurança.',
+						editTitle: 'Editar configuração SMTP',
+						editDescription: 'Atualize a conexão SMTP e os dados de remetente.',
+						createAction: 'Criar SMTP',
+						saveAction: 'Salvar alterações',
+					},
+					form: {
+						nameLabel: 'Nome da configuração',
+						namePlaceholder: 'SMTP principal',
+						usernameLabel: 'Usuário',
+						usernamePlaceholder: 'usuario-smtp',
+						usernameHint:
+							'Normalmente é o login SMTP, geralmente e-mail ou usuário do provedor.',
+						fromNameLabel: 'Nome do remetente',
+						fromNamePlaceholder: 'Time de faturamento',
+						fromEmailLabel: 'E-mail remetente',
+						fromEmailPlaceholder: 'faturamento@acme.com',
+						fromEmailHint:
+							'Endereço que o destinatário verá como remetente na caixa de entrada.',
+						hostLabel: 'Host',
+						hostPlaceholder: 'smtp.mailgun.org',
+						hostHint: 'Host do servidor SMTP fornecido pelo seu provedor.',
+						portLabel: 'Porta',
+						portHint:
+							'Portas comuns: 587 (STARTTLS), 465 (SSL/TLS) ou 25 (sem criptografia).',
+						securityLabel: 'Segurança',
+						securityHint:
+							'Deve corresponder ao provedor. STARTTLS costuma ser o mais comum.',
+						statusLabel: 'Status',
+						statusDescription: 'Ative para usar esta configuração SMTP.',
+						passwordLabel: 'Senha',
+						passwordPlaceholder: 'Digite sua senha SMTP',
+						passwordDescription: 'Armazenada com segurança e nunca exibida.',
+						passwordEditPlaceholder:
+							'Deixe em branco para manter a senha atual',
+						passwordEditDescription:
+							'Por segurança, a senha atual nunca é exibida.',
+					},
+				},
+				emailTemplates: {
+					title: 'Templates de e-mail',
+					description: 'Crie e mantenha templates reutilizáveis de e-mail.',
+					subjectLabel: 'Prévia do assunto',
+					updatedAtLabel: 'Atualizado em',
+					types: {
+						invoice: 'Fatura',
+						reminder: 'Lembrete',
+						overdue: 'Vencido',
+					},
+					emptyState: {
+						title: 'Nenhum template de e-mail ainda',
+						description:
+							'Crie seu primeiro template para padronizar a comunicação de faturas.',
+					},
+					drawer: {
+						title: 'Criar template de e-mail',
+						description: 'Defina o tipo e o assunto do template.',
+						editTitle: 'Editar template de e-mail',
+						editDescription: 'Ajuste os detalhes e o status do template.',
+						createAction: 'Criar template',
+						saveAction: 'Salvar alterações',
+					},
+					form: {
+						nameLabel: 'Nome do template',
+						namePlaceholder: 'Lembrete de fatura',
+						slugLabel: 'Slug',
+						slugPlaceholder: 'lembrete-fatura',
+						typeLabel: 'Tipo do template',
+						subjectLabel: 'Assunto',
+						subjectPlaceholder: 'Lembrete: sua fatura vence em breve',
+						bodyLabel: 'Corpo',
+						bodyPlaceholder: 'Olá cliente, sua fatura está pronta.',
+						statusLabel: 'Status',
+						statusDescription: 'Ative para usar este template nas automações.',
+					},
+				},
 			},
 			notifications: {
 				title: 'Notificações',

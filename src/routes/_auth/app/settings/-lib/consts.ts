@@ -28,10 +28,24 @@ export const settingsCompanyDrawerActionSchema = z.enum(['create', 'edit']);
 export type SettingsCompanyDrawerAction = z.infer<
 	typeof settingsCompanyDrawerActionSchema
 >;
+export const settingsAutomationDrawerActionSchema = z.enum(['create', 'edit']);
+export type SettingsAutomationDrawerAction = z.infer<
+	typeof settingsAutomationDrawerActionSchema
+>;
+export const settingsAutomationResourceSchema = z.enum([
+	'smtp',
+	'emailTemplate',
+]);
+export type SettingsAutomationResource = z.infer<
+	typeof settingsAutomationResourceSchema
+>;
 
 export const settingsSearchSchema = z.object({
 	tab: settingsTabSchema.optional(),
 	companyAction: settingsCompanyDrawerActionSchema.optional(),
+	automationAction: settingsAutomationDrawerActionSchema.optional(),
+	automationResource: settingsAutomationResourceSchema.optional(),
+	automationId: z.string().optional(),
 });
 
 export const settingsTabs = [

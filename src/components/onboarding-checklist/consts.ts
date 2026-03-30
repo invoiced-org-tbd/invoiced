@@ -28,13 +28,11 @@ export const ADVANCED_SETUP_STEPS: OnboardingStepTemplate[] = [
 		labelKey: 'onboarding.steps.smtp.label',
 		descriptionKey: 'onboarding.steps.smtp.description',
 		to: '/app/settings',
-		manualId: 'smtpSetup',
 	},
 	{
 		id: 'email-templates',
 		labelKey: 'onboarding.steps.emailTemplates.label',
 		descriptionKey: 'onboarding.steps.emailTemplates.description',
 		to: '/app/settings',
-		manualId: 'emailTemplatesSetup',
 	},
 ];

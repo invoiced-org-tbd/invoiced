@@ -20,6 +20,14 @@ export const relations = defineRelations(dbTables, (r) => ({
 			from: r.userTable.id,
 			to: r.contractTable.userId,
 		}),
+		smtpConfigs: r.many.smtpConfigTable({
+			from: r.userTable.id,
+			to: r.smtpConfigTable.userId,
+		}),
+		emailTemplates: r.many.emailTemplateTable({
+			from: r.userTable.id,
+			to: r.emailTemplateTable.userId,
+		}),
 	},
 
 	contractTable: {
