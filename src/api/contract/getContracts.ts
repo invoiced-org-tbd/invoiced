@@ -26,6 +26,12 @@ const getContractsServerFn = createServerFn({
 							address: true,
 						},
 					},
+					invoiceRecurrence: {
+						with: {
+							items: true,
+						},
+					},
+					autoSend: true,
 				},
 			});
 

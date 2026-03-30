@@ -388,6 +388,25 @@ export const brTranslations = {
 	contracts: {
 		name: 'Contrato',
 		title: 'Contratos',
+		list: {
+			pageDescription:
+				'Uma visualização mais elegante para contratos, feita para um ou muitos clientes.',
+			listDescription:
+				'Selecione um contrato para ver os detalhes no painel da direita.',
+			count: '{count} no total',
+			singleLabel: 'Contrato atual',
+			singleBadge: 'Selecionado',
+			emptyBadge: 'Sem contratos',
+			emptyTitle: 'Comece com seu primeiro contrato',
+			emptyDescription:
+				'Adicione um contrato para liberar o fluxo de faturamento e automações.',
+			emptyCta: 'Criar contrato',
+			recurrenceValue: '{count} item(ns) de recorrencia',
+			autoSendOn: 'Envio automático ativado',
+			autoSendOff: 'Envio automático desativado',
+			roleLabel: 'Cargo',
+			updatedAtLabel: 'Última atualização',
+		},
 		form: {
 			descriptionLabel: 'Descrição',
 			role: {

@@ -380,6 +380,24 @@ export const enTranslations = {
 	contracts: {
 		name: 'Contract',
 		title: 'Contracts',
+		list: {
+			pageDescription:
+				'A cleaner view for your contracts, designed for one or many clients.',
+			listDescription: 'Pick a contract to view details on the right panel.',
+			count: '{count} total',
+			singleLabel: 'Current contract',
+			singleBadge: 'Selected',
+			emptyBadge: 'No contracts yet',
+			emptyTitle: 'Start with your first contract',
+			emptyDescription:
+				'Add a contract to unlock billing workflows and automate your invoices.',
+			emptyCta: 'Create contract',
+			recurrenceValue: '{count} recurrence item(s)',
+			autoSendOn: 'Auto-send enabled',
+			autoSendOff: 'Auto-send disabled',
+			roleLabel: 'Role',
+			updatedAtLabel: 'Last update',
+		},
 		form: {
 			descriptionLabel: 'Description',
 			role: {

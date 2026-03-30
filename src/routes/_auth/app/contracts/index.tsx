@@ -1,7 +1,7 @@
 import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { createFileRoute } from '@tanstack/react-router';
-import { ContractsDataTable } from './-lib/contracts-data-table/ContractsDataTable';
+import { ContractsSplitView } from './-lib/contracts-split-view/ContractsSplitView';
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
 import { getEmailTemplatesQueryOptions } from '@/api/email-template/getEmailTemplates';
 import { getSmtpConfigsQueryOptions } from '@/api/smtp/getSmtpConfigs';
@@ -45,7 +45,7 @@ function RouteComponent() {
 			</Page.Header>
 
 			<Page.Content>
-				<ContractsDataTable />
+				<ContractsSplitView />
 			</Page.Content>
 
 			<ContractsUpsertDrawer />
