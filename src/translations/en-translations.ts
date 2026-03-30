@@ -27,6 +27,15 @@ export const enTranslations = {
 		unknownError: 'An unknown error occurred',
 		day: 'Day',
 	},
+	form: {
+		unsavedChanges: {
+			title: 'Unsaved changes',
+			description:
+				'You have unsaved changes. Are you sure you want to leave?',
+			discardAndLeave: 'Discard and leave',
+			stay: 'Stay',
+		},
+	},
 	countries: {
 		notFound: 'Country {country} not found',
 		unitedStates: 'United States',

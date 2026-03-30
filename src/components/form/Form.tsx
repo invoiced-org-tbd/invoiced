@@ -70,6 +70,7 @@ const FormRoot = <TFormSchema extends ZodObject>({
 const FormNavigationBlocker = () => {
 	const form = useFormContext();
 	const formRootContext = useFormRootContext();
+	const { t } = useTranslate();
 
 	const { isDefaultValue } = useStore(form.store, (state) => ({
 		isDefaultValue: state.isDefaultValue,
@@ -116,9 +117,9 @@ const FormNavigationBlocker = () => {
 		>
 			<Dialog.Content>
 				<Dialog.Header>
-					<Dialog.Title>Unsaved changes</Dialog.Title>
+					<Dialog.Title>{t('form.unsavedChanges.title')}</Dialog.Title>
 					<Dialog.Description>
-						You have unsaved changes. Are you sure you want to leave?
+						{t('form.unsavedChanges.description')}
 					</Dialog.Description>
 				</Dialog.Header>
 				<Dialog.Footer>
@@ -127,13 +128,13 @@ const FormNavigationBlocker = () => {
 						isGhost={true}
 						onClick={handleConfirm}
 					>
-						Discard
+						{t('form.unsavedChanges.discardAndLeave')}
 					</Button>
 					<Button
 						variant='secondary'
 						onClick={handleCancel}
 					>
-						Stay
+						{t('form.unsavedChanges.stay')}
 					</Button>
 				</Dialog.Footer>
 			</Dialog.Content>

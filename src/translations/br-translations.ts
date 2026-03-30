@@ -29,6 +29,15 @@ export const brTranslations = {
 		unknownError: 'Ocorreu um erro desconhecido',
 		day: 'Dia',
 	},
+	form: {
+		unsavedChanges: {
+			title: 'Alterações não salvas',
+			description:
+				'Você tem alterações não salvas. Tem certeza de que deseja sair?',
+			discardAndLeave: 'Descartar e sair',
+			stay: 'Permanecer',
+		},
+	},
 	countries: {
 		notFound: 'País {country} não encontrado',
 		unitedStates: 'Estados Unidos',
