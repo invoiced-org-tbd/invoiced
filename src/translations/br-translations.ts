@@ -454,7 +454,7 @@ export const brTranslations = {
 			autoSend: {
 				sectionTitle: 'Envio automático de faturas',
 				sectionDescription:
-					'Opcionalmente envie faturas por e-mail automaticamente usando seu SMTP e templates.',
+					'Envie faturas por e-mail automaticamente usando suas configurações de SMTP e templates.',
 				loading: 'Carregando configurações de automação…',
 				zeroState: {
 					title: 'Falta SMTP ou template de e-mail',

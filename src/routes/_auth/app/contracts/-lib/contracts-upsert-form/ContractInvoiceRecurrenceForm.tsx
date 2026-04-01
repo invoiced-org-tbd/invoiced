@@ -1,17 +1,19 @@
 import { Button } from '@/components/button/Button';
+import { ToggleSection } from '@/components/toggle-section/ToggleSection';
 import { withFieldGroup } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { cn } from '@/utils/classNamesUtils';
+import { formatCurrency } from '@/utils/currencyUtils';
+import { getOrdinalSuffix } from '@/utils/stringUtils';
 import { TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 import { getEmptyContractInvoiceRecurrenceItem } from './contractsUpsertFormSchemas';
-import { ToggleSection } from '@/components/toggle-section/ToggleSection';
 import {
-	getBalancedContractRecurrencePercentages,
 	getContractRecurrenceItemsTotalPercentage,
+	getContractRecurrenceItemsWithBalancedPercentages,
 } from './utils';
-import { cn } from '@/utils/classNamesUtils';
-import { getOrdinalSuffix } from '@/utils/stringUtils';
-import { formatCurrency } from '@/utils/currencyUtils';
+import { Switch } from '@/components/switch/Switch';
 
 type ContractInvoiceRecurrenceFormProps = {
 	rate: number;
@@ -22,6 +24,20 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 	props: {} as ContractInvoiceRecurrenceFormProps,
 	render: ({ group, rate }) => {
 		const { t } = useTranslate();
+		const [balancePercentage, setBalancePercentage] = useState<boolean>();
+
+		const handleBalancePercentageChange = (value: boolean | undefined) => {
+			if (value) {
+				group.setFieldValue(
+					'items',
+					getContractRecurrenceItemsWithBalancedPercentages(
+						group.getFieldValue('items'),
+					),
+				);
+			}
+
+			setBalancePercentage(value);
+		};
 
 		return (
 			<ToggleSection.Root
@@ -44,9 +60,12 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 						children={(field) => {
 							const handleAddItem = () => {
 								const previousItems = field.state.value;
-								let nextDayOfMonth =
-									Math.max(...previousItems.map((item) => item.dayOfMonth), 0) +
-									1;
+								const previousMaxDayOfMonth = Math.max(
+									...previousItems.map((item) => item.dayOfMonth),
+									0,
+								);
+								let nextDayOfMonth = previousMaxDayOfMonth + 1;
+
 								if (nextDayOfMonth > 31) {
 									nextDayOfMonth = 1;
 								}
@@ -55,30 +74,36 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 									...previousItems,
 									getEmptyContractInvoiceRecurrenceItem(nextDayOfMonth),
 								];
-								const balancedPercentages =
-									getBalancedContractRecurrencePercentages(nextItems.length);
 
-								field.handleChange(
-									nextItems.map((item, index) => {
-										const balancedPercentage =
-											balancedPercentages.at(index) ?? 0;
-										return {
-											...item,
-											percentage: balancedPercentage,
-										};
-									}),
-								);
+								if (!balancePercentage) {
+									field.handleChange(nextItems);
+									return;
+								}
+
+								const itemsWithBalancedPercentage =
+									getContractRecurrenceItemsWithBalancedPercentages(nextItems);
+
+								field.handleChange(itemsWithBalancedPercentage);
 							};
 
 							return (
 								<section className='flex flex-col gap-2 items-end'>
-									<Button
-										variant='secondary'
-										size='xxs'
-										onClick={handleAddItem}
-									>
-										{t('common.addItem')}
-									</Button>
+									<div className='flex flex-row gap-2 items-center w-full'>
+										<Switch
+											label='Balance percentages'
+											tooltip='Automatically balance percentages to 100% when adding or removing items'
+											value={balancePercentage}
+											onChange={handleBalancePercentageChange}
+										/>
+
+										<Button
+											variant='secondary'
+											size='xxs'
+											onClick={handleAddItem}
+										>
+											{t('common.addItem')}
+										</Button>
+									</div>
 
 									{field.state.value.map((_, index) => {
 										const percentage = field.state.value[index].percentage;
@@ -86,6 +111,23 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 										const percentageValueFormatted = formatCurrency({
 											value: percentageValue,
 										});
+
+										const handleDeleteItem = () => {
+											const newItems = field.state.value.filter(
+												(_, i) => i !== index,
+											);
+											field.handleChange(newItems);
+
+											if (!balancePercentage) {
+												return;
+											}
+
+											const itemsWithBalancedPercentage =
+												getContractRecurrenceItemsWithBalancedPercentages(
+													newItems,
+												);
+											field.handleChange(itemsWithBalancedPercentage);
+										};
 
 										return (
 											<group.SubSet
@@ -111,6 +153,11 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 												/>
 												<group.AppField
 													name={`items[${index}].percentage`}
+													listeners={{
+														onBlur: () => {
+															setBalancePercentage(false);
+														},
+													}}
 													children={(field) => (
 														<field.NumberInput
 															label={t(
@@ -125,7 +172,7 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 													variant='destructive'
 													isIcon={true}
 													size='xs'
-													onClick={() => field.removeValue(index)}
+													onClick={handleDeleteItem}
 												>
 													<TrashIcon />
 												</Button>

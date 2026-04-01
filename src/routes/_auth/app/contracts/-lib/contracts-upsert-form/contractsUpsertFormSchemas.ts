@@ -64,21 +64,17 @@ const contractInvoiceRecurrenceFormSchema = z
 		}
 	});
 
-const optionalIdString = z.preprocess(
-	(value) => (value === undefined || value === null ? '' : value),
-	z.string(),
-);
-
 const contractAutoSendFormSchema = z
 	.object({
 		enabled: z.boolean(),
-		smtpConfigId: optionalIdString,
-		emailTemplateId: optionalIdString,
+		smtpConfigId: z.string(),
+		emailTemplateId: z.string(),
 	})
 	.superRefine((data, ctx) => {
 		if (!data.enabled) {
 			return;
 		}
+
 		if (!data.smtpConfigId.trim()) {
 			ctx.addIssue({
 				code: 'custom',
@@ -89,6 +85,7 @@ const contractAutoSendFormSchema = z
 				path: ['smtpConfigId'],
 			});
 		}
+
 		if (!data.emailTemplateId.trim()) {
 			ctx.addIssue({
 				code: 'custom',
@@ -153,17 +150,11 @@ export const useContractsUpsertFormDefaultValues = ({
 					getEmptyContractInvoiceRecurrenceItem(),
 				],
 			},
-			autoSend: editContract?.autoSend
-				? {
-						enabled: editContract.autoSend.enabled,
-						smtpConfigId: editContract.autoSend.smtpConfigId ?? '',
-						emailTemplateId: editContract.autoSend.emailTemplateId ?? '',
-					}
-				: {
-						enabled: false,
-						smtpConfigId: '',
-						emailTemplateId: '',
-					},
+			autoSend: {
+				enabled: editContract?.autoSend.enabled ?? false,
+				smtpConfigId: editContract?.autoSend.smtpConfigId ?? '',
+				emailTemplateId: editContract?.autoSend.emailTemplateId ?? '',
+			},
 		} satisfies ContractsUpsertFormSchema,
 		isLoadingEditContract: isFetching,
 	};

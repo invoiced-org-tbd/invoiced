@@ -12,26 +12,29 @@ export const ContractAutoSendForm = withFieldGroup({
 	defaultValues: {} as ContractsUpsertFormSchema['autoSend'],
 	render: ({ group }) => {
 		const { t } = useTranslate();
-		const { data: smtpConfigs = [], isPending: smtpPending } = useQuery(
+		const { data: smtpConfigs, isPending: smtpPending } = useQuery(
 			getSmtpConfigsQueryOptions(),
 		);
-		const { data: emailTemplates = [], isPending: templatesPending } = useQuery(
+		const { data: emailTemplates, isPending: templatesPending } = useQuery(
 			getEmailTemplatesQueryOptions(),
 		);
 
 		const isLoading = smtpPending || templatesPending;
-		const hasSmtp = smtpConfigs.length > 0;
-		const hasTemplates = emailTemplates.length > 0;
+		const hasSmtp = !!smtpConfigs?.length;
+		const hasTemplates = !!emailTemplates?.length;
 		const canConfigure = hasSmtp && hasTemplates;
 
-		const smtpItems = smtpConfigs.map((c) => ({
-			value: c.id,
-			label: c.name,
-		}));
-		const templateItems = emailTemplates.map((tpl) => ({
-			value: tpl.id,
-			label: tpl.name,
-		}));
+		const smtpItems =
+			smtpConfigs?.map((config) => ({
+				value: config.id,
+				label: config.name,
+			})) ?? [];
+
+		const templateItems =
+			emailTemplates?.map((template) => ({
+				value: template.id,
+				label: template.name,
+			})) ?? [];
 
 		return (
 			<ToggleSection.Root

@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const smtpSecuritySchema = z.enum(['none', 'ssl_tls', 'starttls']);
+const smtpSecuritySchema = z.enum(['none', 'ssl_tls', 'starttls']);
 
 export const smtpUpsertSchema = z.object({
 	name: z.string().min(1),

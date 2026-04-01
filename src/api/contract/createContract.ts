@@ -1,32 +1,21 @@
 import { db } from '@/db/client';
-import { contractAutoSendTable } from '@/db/tables/contractAutoSendTable';
-import { contractClientAddressTable } from '@/db/tables/contractClientAddressTable';
-import { contractClientTable } from '@/db/tables/contractClientTable';
-import { contractInvoiceRecurrenceItemTable } from '@/db/tables/contractInvoiceRecurrenceItemTable';
-import { contractInvoiceRecurrenceTable } from '@/db/tables/contractInvoiceRecurrenceTable';
-import { contractRoleTable } from '@/db/tables/contractRoleTable';
-import { contractTable } from '@/db/tables/contractTable';
 import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
 import { invoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
 import { getServerT } from '@/utils/languageUtils';
-import {
-	createMutationOptions,
-	invalidateOnSuccess,
-} from '@/utils/queryOptionsUtils';
+import { createMutationOptions } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
-import { invoiceConfigurationQueryKeys } from '../invoice-configuration/invoiceConfigurationApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
-import { assertContractAutoSendResourcesOwned } from './assertContractAutoSendResourcesOwned';
-import { contractQueryKeys } from './contractApiUtils';
+import { invalidateContractMutationCaches } from './contractApiUtils';
+import { createContract } from './utils/createContract';
 import { setupInvoiceConfiguration } from './utils/setupInvoiceConfiguration';
 
 const createContractParams = z.object({
-	data: contractsUpsertFormSchema,
+	form: contractsUpsertFormSchema,
 	invoiceConfiguration: invoiceConfigurationPersistSchema.optional(),
 });
 
@@ -39,7 +28,7 @@ const createContractServerFn = createServerFn({
 	.inputValidator(createContractParams)
 	.handler(
 		async ({
-			data: { data, invoiceConfiguration },
+			data: { form, invoiceConfiguration },
 			context: { user, language },
 		}) => {
 			try {
@@ -53,73 +42,12 @@ const createContractServerFn = createServerFn({
 						invoiceConfiguration,
 					});
 
-					const [contract] = await tx
-						.insert(contractTable)
-						.values({
-							userId: user.id,
-						})
-						.returning();
-
-					await tx.insert(contractRoleTable).values({
-						contractId: contract.id,
-						description: data.role.description,
-						rate: data.role.rate,
+					await createContract({
+						tx,
+						userId: user.id,
+						form,
+						t,
 					});
-
-					const [contractClient] = await tx
-						.insert(contractClientTable)
-						.values({
-							contractId: contract.id,
-							companyName: data.client.companyName,
-							responsibleName: data.client.responsibleName,
-							responsibleEmail: data.client.responsibleEmail,
-						})
-						.returning();
-
-					await tx.insert(contractClientAddressTable).values({
-						contractClientId: contractClient.id,
-						street1: data.client.address.street1,
-						street2: data.client.address.street2 || null,
-						number: data.client.address.number,
-						postalCode: data.client.address.postalCode,
-						city: data.client.address.city,
-						state: data.client.address.state,
-						country: data.client.address.country,
-					});
-
-					const [invoiceRecurrence] = await tx
-						.insert(contractInvoiceRecurrenceTable)
-						.values({
-							contractId: contract.id,
-						})
-						.returning();
-					const recurrenceItems = data.invoiceRecurrence.items.map((item) => ({
-						contractInvoiceRecurrenceId: invoiceRecurrence.id,
-						dayOfMonth: item.dayOfMonth,
-						percentage: item.percentage,
-					}));
-
-					await tx
-						.insert(contractInvoiceRecurrenceItemTable)
-						.values(recurrenceItems);
-
-					if (data.autoSend.enabled) {
-						const smtpConfigId = data.autoSend.smtpConfigId;
-						const emailTemplateId = data.autoSend.emailTemplateId;
-
-						await assertContractAutoSendResourcesOwned(tx, {
-							userId: user.id,
-							smtpConfigId,
-							emailTemplateId,
-							t,
-						});
-
-						await tx.insert(contractAutoSendTable).values({
-							contractId: contract.id,
-							smtpConfigId,
-							emailTemplateId,
-						});
-					}
 				});
 
 				return createSuccessResponse();
@@ -133,16 +61,9 @@ const createContractServerFn = createServerFn({
 
 export const createContractMutationOptions = () =>
 	createMutationOptions({
-		mutationFn: (data: CreateContractParams) =>
-			createContractServerFn({ data }),
+		mutationFn: (params: CreateContractParams) =>
+			createContractServerFn({ data: params }),
 		onSuccess: (...args) => {
-			invalidateOnSuccess({
-				args,
-				keys: [contractQueryKeys.base()],
-			});
-			invalidateOnSuccess({
-				args,
-				keys: [invoiceConfigurationQueryKeys.base()],
-			});
+			invalidateContractMutationCaches(args);
 		},
 	});

@@ -6,18 +6,22 @@ export const getContractRecurrenceItemsConflictingDays = (
 	const conflictingDays: number[] = [];
 	const conflictingIndexes = new Set<number>();
 
-	for (let i = 0; i < items.length; i++) {
-		const item = items[i];
-		for (let j = 0; j < items.length; j++) {
-			const otherItem = items[j];
+	for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+		const item = items[itemIndex];
+		for (
+			let otherItemIndex = 0;
+			otherItemIndex < items.length;
+			otherItemIndex++
+		) {
+			const otherItem = items[otherItemIndex];
 			if (item === otherItem) {
 				continue;
 			}
 
 			if (item.dayOfMonth === otherItem.dayOfMonth) {
 				conflictingDays.push(item.dayOfMonth);
-				conflictingIndexes.add(i);
-				conflictingIndexes.add(j);
+				conflictingIndexes.add(itemIndex);
+				conflictingIndexes.add(otherItemIndex);
 			}
 		}
 	}
@@ -39,20 +43,19 @@ export const getContractRecurrenceItemsTotalPercentage = (
 	return { totalPercentage };
 };
 
-export const getBalancedContractRecurrencePercentages = (
-	itemsCount: number,
+export const getContractRecurrenceItemsWithBalancedPercentages = (
+	items: ContractInvoiceRecurrenceItemFormSchema[],
 ) => {
-	if (itemsCount <= 0) {
-		return [];
-	}
+	const totalItems = items.length;
+	const percentagePerItem = 100 / totalItems;
+	// in scenario where percentagePerItem is not a whole number, we need to distribute the remainder evenly between the items
+	const remainder = 100 % totalItems;
+	const remainderPerItem = remainder / totalItems;
 
-	const totalBasisPoints = 100 * 100;
-	const baseBasisPoints = Math.floor(totalBasisPoints / itemsCount);
-	const remainderBasisPoints = totalBasisPoints % itemsCount;
-
-	return Array.from({ length: itemsCount }, (_, index) => {
-		const itemBasisPoints =
-			baseBasisPoints + (index < remainderBasisPoints ? 1 : 0);
-		return itemBasisPoints / 100;
-	});
+	return items.map((item, index) => ({
+		...item,
+		percentage: Math.round(
+			percentagePerItem + (index < remainder ? remainderPerItem : 0),
+		),
+	}));
 };

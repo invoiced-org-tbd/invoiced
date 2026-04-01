@@ -12,10 +12,12 @@ import { toast } from 'sonner';
 import { translate } from '@/translations/translate';
 import { getLanguage } from './languageUtils';
 
+export type InvalidateOnSuccessArgs = Parameters<
+	NonNullable<MutationOptions<unknown, unknown, unknown>['onSuccess']>
+>;
+
 type InvalidateOnSuccessParams = {
-	args: Parameters<
-		NonNullable<MutationOptions<unknown, unknown, unknown>['onSuccess']>
-	>;
+	args: InvalidateOnSuccessArgs;
 	keys: QueryKey[];
 };
 export const invalidateOnSuccess = ({

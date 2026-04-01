@@ -1,23 +1,24 @@
-import type { db } from '@/db/client';
-import { ServerError } from '@/utils/serverFnsUtils';
+import '@tanstack/react-start/server-only';
+
+import type { Tx } from '@/db/types';
 import type { TranslationFn } from '@/translations/types';
+import { ServerError } from '@/utils/serverFnsUtils';
 
-type DbTransaction = Parameters<Parameters<(typeof db)['transaction']>[0]>[0];
+type AssertContractAutoSendResourcesOwnedParams = {
+	tx: Tx;
+	userId: string;
+	smtpConfigId: string;
+	emailTemplateId: string;
+	t: TranslationFn;
+};
 
-export async function assertContractAutoSendResourcesOwned(
-	tx: DbTransaction,
-	{
-		userId,
-		smtpConfigId,
-		emailTemplateId,
-		t,
-	}: {
-		userId: string;
-		smtpConfigId: string;
-		emailTemplateId: string;
-		t: TranslationFn;
-	},
-) {
+export const assertContractAutoSendResourcesOwned = async ({
+	tx,
+	userId,
+	smtpConfigId,
+	emailTemplateId,
+	t,
+}: AssertContractAutoSendResourcesOwnedParams) => {
 	const smtp = await tx.query.smtpConfigTable.findFirst({
 		where: {
 			id: smtpConfigId,
@@ -43,4 +44,4 @@ export async function assertContractAutoSendResourcesOwned(
 			message: t('contracts.form.autoSend.invalidEmailTemplate'),
 		});
 	}
-}
+};

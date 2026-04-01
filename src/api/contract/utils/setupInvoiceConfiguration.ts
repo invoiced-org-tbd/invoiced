@@ -5,7 +5,6 @@ import type { Tx } from '@/db/types';
 import type { InvoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
 import type { TranslationFn } from '@/translations/types';
 import { ServerError } from '@/utils/serverFnsUtils';
-import { eq } from 'drizzle-orm';
 
 type SetupInvoiceConfigurationParams = {
 	tx: Tx;
@@ -13,7 +12,6 @@ type SetupInvoiceConfigurationParams = {
 	userId: string;
 	invoiceConfiguration: InvoiceConfigurationPersistSchema | undefined;
 };
-
 export const setupInvoiceConfiguration = async ({
 	tx,
 	t,
@@ -24,13 +22,15 @@ export const setupInvoiceConfiguration = async ({
 		return;
 	}
 
-	const [existingInvoiceConfiguration] = await tx
-		.select({
-			id: invoiceConfigurationTable.id,
-		})
-		.from(invoiceConfigurationTable)
-		.where(eq(invoiceConfigurationTable.userId, userId))
-		.limit(1);
+	const existingInvoiceConfiguration =
+		await tx.query.invoiceConfigurationTable.findFirst({
+			where: {
+				userId,
+			},
+			columns: {
+				id: true,
+			},
+		});
 
 	if (existingInvoiceConfiguration) {
 		throw new ServerError({

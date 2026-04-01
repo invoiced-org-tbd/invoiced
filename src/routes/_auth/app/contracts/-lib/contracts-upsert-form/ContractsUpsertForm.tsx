@@ -66,8 +66,6 @@ export const ContractsUpsertForm = ({
 			value: undefined as InvoiceConfigurationPersistSchema | undefined,
 		},
 		validators: {
-			// Zod `preprocess` on autoSend id fields widens Standard Schema input typing vs form values.
-			// @ts-expect-error — runtime validation matches ContractsUpsertFormSchema
 			onChange: contractsUpsertFormSchema,
 		},
 		onSubmit: async ({ value, meta }) => {
@@ -82,11 +80,12 @@ export const ContractsUpsertForm = ({
 			if (editId) {
 				await updateContract({
 					editId,
-					data: { data: value, invoiceConfiguration: meta.value },
+					form: value,
+					invoiceConfiguration: meta.value,
 				});
 			} else {
 				await createContract({
-					data: value,
+					form: value,
 					invoiceConfiguration: meta.value,
 				});
 			}

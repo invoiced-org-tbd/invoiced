@@ -30,8 +30,7 @@ export const enTranslations = {
 	form: {
 		unsavedChanges: {
 			title: 'Unsaved changes',
-			description:
-				'You have unsaved changes. Are you sure you want to leave?',
+			description: 'You have unsaved changes. Are you sure you want to leave?',
 			discardAndLeave: 'Discard and leave',
 			stay: 'Stay',
 		},
@@ -445,7 +444,7 @@ export const enTranslations = {
 			autoSend: {
 				sectionTitle: 'Invoice auto-send',
 				sectionDescription:
-					'Optionally send invoices by email automatically using your SMTP and templates.',
+					'Send invoices by email automatically using your SMTP and templates configurations.',
 				loading: 'Loading automation settings…',
 				zeroState: {
 					title: 'SMTP or email templates are missing',

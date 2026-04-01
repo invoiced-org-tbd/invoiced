@@ -9,6 +9,7 @@
 		"check:biome": "biome check . --write --error-on-warnings",
 		"check:tsc": "bun run tsc --noEmit",
 		"check:knip": "knip",
+		"check": "bun run check:biome && bun run check:tsc && bun run check:knip",
 		"db:generate": "drizzle-kit generate --config=drizzle.config.ts",
 		"db:migrate": "drizzle-kit migrate --config=drizzle.config.ts",
 		"db:apply": "bun db:generate && bun db:migrate",

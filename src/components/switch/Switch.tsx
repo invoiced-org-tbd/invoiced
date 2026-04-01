@@ -1,7 +1,10 @@
 import { Switch as SwitchPrimitive } from 'radix-ui';
 import { useId } from 'react';
 import { BaseField } from '../base-field/BaseField';
-import { toggleControlVariants } from '../base-field/consts';
+import {
+	switchHeightClassName,
+	toggleControlVariants,
+} from '../base-field/consts';
 import { useBaseField } from '../base-field/useBaseField';
 import { cn } from '@/utils/classNamesUtils';
 import type { SwitchProps } from './types';
@@ -73,7 +76,7 @@ export const Switch = ({
 		return (
 			<BaseField.Control
 				loadingVariant='custom'
-				className='w-auto'
+				className={cn('w-auto', switchHeightClassName)}
 				renderLoading={switchLoadingSkeleton}
 			>
 				{switchControl}
@@ -86,7 +89,7 @@ export const Switch = ({
 			<div className='flex items-center gap-2'>
 				<BaseField.Control
 					loadingVariant='custom'
-					className='w-auto'
+					className={cn('w-auto', switchHeightClassName)}
 					renderLoading={switchLoadingSkeleton}
 				>
 					{switchControl}

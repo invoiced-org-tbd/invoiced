@@ -19,11 +19,16 @@ const getSmtpConfigsServerFn = createServerFn({
 				where: {
 					userId: user.id,
 				},
-				orderBy: (table, { desc }) => [desc(table.updatedAt)],
+				orderBy: {
+					updatedAt: 'desc',
+				},
+				columns: {
+					password: false,
+				},
 			});
 
 			return createSuccessResponse({
-				data: smtpConfigs.map(({ password, ...smtpConfig }) => smtpConfig),
+				data: smtpConfigs,
 			});
 		} catch (error) {
 			throw createErrorResponse({
@@ -38,6 +43,6 @@ export type GetSmtpConfigsResponse = ExtractServerFnData<
 
 export const getSmtpConfigsQueryOptions = () =>
 	createQueryOptions({
-		queryKey: smtpQueryKeys.list(),
+		queryKey: smtpQueryKeys.get(),
 		queryFn: () => getSmtpConfigsServerFn(),
 	});

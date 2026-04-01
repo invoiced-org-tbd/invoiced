@@ -1,5 +1,4 @@
-import type { ResultSet } from '@libsql/client';
-import type { SQLiteTransaction } from 'drizzle-orm/sqlite-core';
-import type * as dbTables from './tables/dbTables';
+import type { db } from './client';
 
-export type Tx = SQLiteTransaction<'async', ResultSet, typeof dbTables>;
+type Db = typeof db;
+export type Tx = Parameters<Parameters<Db['transaction']>[0]>[0];

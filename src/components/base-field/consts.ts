@@ -1,3 +1,4 @@
+import { cn } from '@/utils/classNamesUtils';
 import { cva } from 'class-variance-authority';
 
 // Reuse these variants for future DateInput/NumberInput components by choosing
@@ -22,6 +23,8 @@ export const inputButtonsSideClassName =
 
 export const inputButtonClassName = 'pointer-events-auto';
 
+export const switchHeightClassName = 'h-[18.4px]';
+
 export const toggleControlVariants = cva(
 	'aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 focus-visible:border-primary focus-visible:ring-ring/50 focus-visible:ring-3 focus-visible:aria-invalid:ring-destructive/20 dark:focus-visible:aria-invalid:ring-destructive/40 focus-visible:aria-invalid:ring-3 shrink-0 border peer relative outline-none',
 	{
@@ -37,7 +40,7 @@ export const toggleControlVariants = cva(
 			},
 			size: {
 				checkbox: 'flex size-4 items-center justify-center',
-				switch: 'inline-flex h-[18.4px] w-[32px] items-center',
+				switch: cn('inline-flex w-[32px] items-center', switchHeightClassName),
 			},
 		},
 		defaultVariants: {
