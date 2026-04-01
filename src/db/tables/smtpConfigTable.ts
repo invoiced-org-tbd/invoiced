@@ -4,7 +4,7 @@ import { userIdColumn } from './userTable';
 
 export const smtpConfigTable = s.sqliteTable('smtp_config', {
 	id: u.idColumn(),
-	userId: userIdColumn(),
+
 	name: s.text().notNull(),
 	host: s.text().notNull(),
 	port: s.integer().notNull(),
@@ -13,6 +13,14 @@ export const smtpConfigTable = s.sqliteTable('smtp_config', {
 	password: s.text().notNull(),
 	fromName: s.text(),
 	fromEmail: s.text().notNull(),
+
+	userId: userIdColumn(),
 	createdAt: u.createdAtColumn(),
 	updatedAt: u.updatedAtColumn(),
 });
+
+export const smtpConfigIdColumn = () =>
+	s
+		.text()
+		.notNull()
+		.references(() => smtpConfigTable.id, { onDelete: 'restrict' });

@@ -23,7 +23,11 @@ export const relations = defineRelations(dbTables, (r) => ({
 		invoiceConfiguration: r.one.invoiceConfigurationTable({
 			from: r.userTable.id,
 			to: r.invoiceConfigurationTable.userId,
-			optional: false,
+			optional: true,
+		}),
+		invoices: r.many.invoiceTable({
+			from: r.userTable.id,
+			to: r.invoiceTable.userId,
 		}),
 		smtpConfigs: r.many.smtpConfigTable({
 			from: r.userTable.id,
@@ -65,11 +69,109 @@ export const relations = defineRelations(dbTables, (r) => ({
 		}),
 	},
 
+	contractAutoSendTable: {
+		smtpConfig: r.one.smtpConfigTable({
+			from: r.contractAutoSendTable.smtpConfigId,
+			to: r.smtpConfigTable.id,
+			optional: false,
+		}),
+		emailTemplate: r.one.emailTemplateTable({
+			from: r.contractAutoSendTable.emailTemplateId,
+			to: r.emailTemplateTable.id,
+			optional: false,
+		}),
+	},
+
+	smtpConfigTable: {
+		contractAutoSends: r.many.contractAutoSendTable({
+			from: r.smtpConfigTable.id,
+			to: r.contractAutoSendTable.smtpConfigId,
+		}),
+	},
+
+	emailTemplateTable: {
+		contractAutoSends: r.many.contractAutoSendTable({
+			from: r.emailTemplateTable.id,
+			to: r.contractAutoSendTable.emailTemplateId,
+		}),
+	},
+
 	contractClientTable: {
 		address: r.one.contractClientAddressTable({
 			from: r.contractClientTable.id,
 			to: r.contractClientAddressTable.contractClientId,
 			optional: false,
+		}),
+	},
+
+	invoiceTable: {
+		contract: r.one.contractSnapshotTable({
+			from: r.invoiceTable.id,
+			to: r.contractSnapshotTable.invoiceId,
+			optional: false,
+		}),
+		invoiceConfiguration: r.one.invoiceConfigurationSnapshotTable({
+			from: r.invoiceTable.id,
+			to: r.invoiceConfigurationSnapshotTable.invoiceId,
+			optional: false,
+		}),
+	},
+
+	contractSnapshotTable: {
+		role: r.one.contractRoleSnapshotTable({
+			from: r.contractSnapshotTable.id,
+			to: r.contractRoleSnapshotTable.contractSnapshotId,
+			optional: false,
+		}),
+		client: r.one.contractClientSnapshotTable({
+			from: r.contractSnapshotTable.id,
+			to: r.contractClientSnapshotTable.contractSnapshotId,
+			optional: false,
+		}),
+
+		original: r.one.contractTable({
+			from: r.contractSnapshotTable.originalContractId,
+			to: r.contractTable.id,
+			optional: true,
+		}),
+	},
+
+	contractRoleSnapshotTable: {
+		original: r.one.contractRoleTable({
+			from: r.contractRoleSnapshotTable.originalContractRoleId,
+			to: r.contractRoleTable.id,
+			optional: true,
+		}),
+	},
+
+	contractClientSnapshotTable: {
+		address: r.one.contractClientAddressSnapshotTable({
+			from: r.contractClientSnapshotTable.id,
+			to: r.contractClientAddressSnapshotTable.contractClientSnapshotId,
+			optional: false,
+		}),
+
+		original: r.one.contractClientTable({
+			from: r.contractClientSnapshotTable.originalContractClientId,
+			to: r.contractClientTable.id,
+			optional: true,
+		}),
+	},
+
+	contractClientAddressSnapshotTable: {
+		original: r.one.contractClientAddressTable({
+			from: r.contractClientAddressSnapshotTable
+				.originalContractClientAddressId,
+			to: r.contractClientAddressTable.id,
+			optional: true,
+		}),
+	},
+
+	invoiceConfigurationSnapshotTable: {
+		original: r.one.invoiceConfigurationTable({
+			from: r.invoiceConfigurationSnapshotTable.originalInvoiceConfigurationId,
+			to: r.invoiceConfigurationTable.id,
+			optional: true,
 		}),
 	},
 }));
