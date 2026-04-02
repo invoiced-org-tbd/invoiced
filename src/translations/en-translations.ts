@@ -8,7 +8,6 @@ export const enTranslations = {
 		close: 'Close',
 		edit: 'Edit',
 		delete: 'Delete',
-		account: 'Account',
 		goBack: 'Go back',
 		logOut: 'Log out',
 		lightMode: 'Light mode',
@@ -22,10 +21,8 @@ export const enTranslations = {
 		toggleOptions: 'Toggle options',
 		selectAll: 'Select all',
 		addItem: 'Add item',
-		removeItem: 'Remove item',
 		next: 'Next',
 		unknownError: 'An unknown error occurred',
-		day: 'Day',
 	},
 	form: {
 		unsavedChanges: {
@@ -127,16 +124,12 @@ export const enTranslations = {
 			contracts: 'Contracts',
 			invoices: 'Invoices',
 			cashflow: 'Cash flow',
-			receivableDebtAccounts: 'Accounts receivable/payable',
 			settings: {
 				group: 'Settings',
-				company: 'Company',
-				automation: 'Automation',
 			},
 		},
 		server: {
 			accountUpdatedSuccess: 'Your account has been updated',
-			accountDeletedSuccess: 'Your account has been deleted',
 		},
 	},
 	settings: {
@@ -176,20 +169,6 @@ export const enTranslations = {
 					duplicate: 'Duplicate',
 				},
 				copySuffix: '(copy)',
-				status: {
-					active: 'Active',
-					inactive: 'Inactive',
-				},
-				shared: {
-					addAction: 'Add',
-					duplicateAction: 'Duplicate',
-					updatedAtLabel: 'Updated at',
-					copySuffix: '(copy)',
-					status: {
-						active: 'Active',
-						inactive: 'Inactive',
-					},
-				},
 				smtp: {
 					title: 'SMTP configurations',
 					description: 'Manage your outgoing email providers.',
@@ -210,8 +189,6 @@ export const enTranslations = {
 					securityModes: {
 						starttls: 'STARTTLS',
 						sslTls: 'SSL/TLS',
-						tls: 'TLS',
-						ssl: 'SSL',
 						none: 'None',
 					},
 					emptyState: {
@@ -251,8 +228,6 @@ export const enTranslations = {
 						securityLabel: 'Security',
 						securityHint:
 							'Match this with your provider settings. STARTTLS is most common.',
-						statusLabel: 'Status',
-						statusDescription: 'Enable to use this SMTP configuration.',
 						passwordLabel: 'Password',
 						passwordPlaceholder: 'Type your SMTP password',
 						passwordDescription: 'Stored securely and never shown again.',
@@ -266,11 +241,6 @@ export const enTranslations = {
 					description: 'Create and maintain reusable email templates.',
 					subjectLabel: 'Subject preview',
 					updatedAtLabel: 'Updated at',
-					types: {
-						invoice: 'Invoice',
-						reminder: 'Reminder',
-						overdue: 'Overdue',
-					},
 					emptyState: {
 						title: 'No email templates yet',
 						description:
@@ -291,13 +261,10 @@ export const enTranslations = {
 						namePlaceholder: 'Invoice reminder',
 						slugLabel: 'Slug',
 						slugPlaceholder: 'invoice-reminder',
-						typeLabel: 'Template type',
 						subjectLabel: 'Subject',
 						subjectPlaceholder: 'Reminder: your invoice is due soon',
 						bodyLabel: 'Body',
 						bodyPlaceholder: 'Hello client, your invoice is ready.',
-						statusLabel: 'Status',
-						statusDescription: 'Enable to use this template in automations.',
 					},
 				},
 			},
@@ -342,20 +309,9 @@ export const enTranslations = {
 				},
 			},
 		},
-		placeholderDescription: 'This section is coming soon.',
-	},
-	landing: {
-		backgroundAlt: 'Soft green abstract background',
-		signInWithGoogle: 'Sign in with Google',
-		terms: "By continuing, you agree to your app's terms and privacy policy.",
 	},
 	createCompany: {
-		title: 'Create new Company',
-		description: 'Complete your company details to create a new company.',
-		backgroundAlt: 'Soft green abstract background',
-		logoAlt: 'Company logo',
 		form: {
-			companySectionTitle: 'Company information',
 			nameLabel: 'Company Name',
 			namePlaceholder: 'Acme Inc.',
 			nameDescription: 'Use your business name',
@@ -407,11 +363,9 @@ export const enTranslations = {
 			updatedAtLabel: 'Last update',
 		},
 		form: {
-			descriptionLabel: 'Description',
 			role: {
 				descriptionLabel: 'Role Description',
 				rateLabel: 'Rate',
-				emailLabel: 'Email',
 			},
 			invoiceRecurrence: {
 				sectionTitle: 'Invoice Recurrence',
@@ -490,7 +444,6 @@ export const enTranslations = {
 				'You have an active contract with {companyName} as {roleDescription}.',
 			activeContractMissing:
 				'The client company and role are not fully defined yet.',
-			contractDescriptionLabel: 'Description',
 			salaryLabel: 'Salary',
 			salaryMissing: 'Salary has not been set yet.',
 			billingLabel: 'Billing contact',
@@ -511,9 +464,6 @@ export const enTranslations = {
 			previewButton: 'Preview PDF',
 			title: 'Invoice Preview',
 			description: 'This preview updates from your current form values.',
-			browserOnlyMessage: 'PDF preview is available in the browser.',
-			missingCompanyHint:
-				'Set up your company in Settings > Company to generate invoice previews.',
 			incompleteFieldsHint:
 				'Some fields are incomplete. Preview may show placeholders.',
 		},

@@ -10,7 +10,6 @@ export const brTranslations = {
 		close: 'Fechar',
 		edit: 'Editar',
 		delete: 'Excluir',
-		account: 'Conta',
 		goBack: 'Voltar',
 		logOut: 'Sair',
 		lightMode: 'Modo claro',
@@ -24,10 +23,8 @@ export const brTranslations = {
 		toggleOptions: 'Alternar opções',
 		selectAll: 'Selecionar tudo',
 		addItem: 'Adicionar item',
-		removeItem: 'Remover item',
 		next: 'Próximo',
 		unknownError: 'Ocorreu um erro desconhecido',
-		day: 'Dia',
 	},
 	form: {
 		unsavedChanges: {
@@ -42,17 +39,17 @@ export const brTranslations = {
 		notFound: 'País {country} não encontrado',
 		unitedStates: 'Estados Unidos',
 		brazil: 'Brasil',
-		canada: 'Canada',
-		australia: 'Australia',
+		canada: 'Canadá',
+		australia: 'Austrália',
 		unitedKingdom: 'Reino Unido',
 		argentina: 'Argentina',
 		portugal: 'Portugal',
-		mexico: 'Mexico',
+		mexico: 'México',
 		germany: 'Alemanha',
-		estonia: 'Estonia',
-		austria: 'Austria',
-		lithuania: 'Lituania',
-		netherlands: 'Paises Baixos',
+		estonia: 'Estônia',
+		austria: 'Áustria',
+		lithuania: 'Lituânia',
+		netherlands: 'Países Baixos',
 	},
 	entity: {
 		notFound: '{entity} não encontrado',
@@ -107,7 +104,7 @@ export const brTranslations = {
 	account: {
 		drawerTitle: 'Conta',
 		form: {
-			emailDescription: 'Gerenciado pela sua conta Google',
+			emailDescription: 'Gerenciado pela sua conta do Google',
 			saveChanges: 'Salvar alterações',
 		},
 		dangerZone: {
@@ -131,16 +128,12 @@ export const brTranslations = {
 			contracts: 'Contratos',
 			invoices: 'Faturas',
 			cashflow: 'Fluxo de caixa',
-			receivableDebtAccounts: 'Contas a receber/pagar',
 			settings: {
 				group: 'Configurações',
-				company: 'Empresa',
-				automation: 'Automação',
 			},
 		},
 		server: {
 			accountUpdatedSuccess: 'Sua conta foi atualizada',
-			accountDeletedSuccess: 'Sua conta foi excluida',
 		},
 	},
 	settings: {
@@ -156,7 +149,7 @@ export const brTranslations = {
 				profile: {
 					title: 'Perfil da empresa',
 					description:
-						'Seu workspace está vinculado a um único registro de empresa.',
+						'Seu ambiente de trabalho está vinculado a um único registro de empresa.',
 					noAddress: 'Endereço não informado',
 				},
 				zeroState: {
@@ -181,20 +174,6 @@ export const brTranslations = {
 					duplicate: 'Duplicar',
 				},
 				copySuffix: '(cópia)',
-				status: {
-					active: 'Ativo',
-					inactive: 'Inativo',
-				},
-				shared: {
-					addAction: 'Adicionar',
-					duplicateAction: 'Duplicar',
-					updatedAtLabel: 'Atualizado em',
-					copySuffix: '(cópia)',
-					status: {
-						active: 'Ativo',
-						inactive: 'Inativo',
-					},
-				},
 				smtp: {
 					title: 'Configurações SMTP',
 					description: 'Gerencie seus provedores de envio de e-mail.',
@@ -216,8 +195,6 @@ export const brTranslations = {
 					securityModes: {
 						starttls: 'STARTTLS',
 						sslTls: 'SSL/TLS',
-						tls: 'TLS',
-						ssl: 'SSL',
 						none: 'Nenhum',
 					},
 					emptyState: {
@@ -241,9 +218,9 @@ export const brTranslations = {
 						usernameLabel: 'Usuário',
 						usernamePlaceholder: 'usuario-smtp',
 						usernameHint:
-							'Normalmente é o login SMTP, geralmente e-mail ou usuário do provedor.',
+							'Em geral, é o login SMTP — muitas vezes um e-mail ou o usuário do provedor.',
 						fromNameLabel: 'Nome do remetente',
-						fromNamePlaceholder: 'Time de faturamento',
+						fromNamePlaceholder: 'Equipe de faturamento',
 						fromEmailLabel: 'E-mail remetente',
 						fromEmailPlaceholder: 'faturamento@acme.com',
 						fromEmailHint:
@@ -257,8 +234,6 @@ export const brTranslations = {
 						securityLabel: 'Segurança',
 						securityHint:
 							'Deve corresponder ao provedor. STARTTLS costuma ser o mais comum.',
-						statusLabel: 'Status',
-						statusDescription: 'Ative para usar esta configuração SMTP.',
 						passwordLabel: 'Senha',
 						passwordPlaceholder: 'Digite sua senha SMTP',
 						passwordDescription: 'Armazenada com segurança e nunca exibida.',
@@ -273,11 +248,6 @@ export const brTranslations = {
 					description: 'Crie e mantenha templates reutilizáveis de e-mail.',
 					subjectLabel: 'Prévia do assunto',
 					updatedAtLabel: 'Atualizado em',
-					types: {
-						invoice: 'Fatura',
-						reminder: 'Lembrete',
-						overdue: 'Vencido',
-					},
 					emptyState: {
 						title: 'Nenhum template de e-mail ainda',
 						description:
@@ -298,13 +268,10 @@ export const brTranslations = {
 						namePlaceholder: 'Lembrete de fatura',
 						slugLabel: 'Slug',
 						slugPlaceholder: 'lembrete-fatura',
-						typeLabel: 'Tipo do template',
 						subjectLabel: 'Assunto',
 						subjectPlaceholder: 'Lembrete: sua fatura vence em breve',
 						bodyLabel: 'Corpo',
 						bodyPlaceholder: 'Olá cliente, sua fatura está pronta.',
-						statusLabel: 'Status',
-						statusDescription: 'Ative para usar este template nas automações.',
 					},
 				},
 			},
@@ -313,7 +280,7 @@ export const brTranslations = {
 				description: 'Gerencie suas notificações.',
 			},
 			billingPlans: {
-				title: 'Faturamento e Planos',
+				title: 'Faturamento e planos',
 				description:
 					'Revise seu plano ativo, método de pagamento e faturas recentes.',
 				paymentMethod: {
@@ -321,7 +288,7 @@ export const brTranslations = {
 					description: 'Este é o cartão usado nas renovações da assinatura.',
 					methodLabel: 'Cartão',
 					defaultBadge: 'Padrão',
-					holderLabel: 'Titular',
+					holderLabel: 'Titular do cartão',
 					expiresLabel: 'Validade',
 				},
 				selectedPlan: {
@@ -349,22 +316,9 @@ export const brTranslations = {
 				},
 			},
 		},
-		placeholderDescription: 'Esta seção estará disponível em breve.',
-	},
-	landing: {
-		backgroundAlt: 'Fundo abstrato verde suave',
-		signInWithGoogle: 'Entrar com Google',
-		terms:
-			'Ao continuar, você concorda com os termos e política de privacidade do app.',
 	},
 	createCompany: {
-		title: 'Criar nova empresa',
-		description:
-			'Complete os dados da sua empresa para criar uma nova empresa.',
-		backgroundAlt: 'Fundo abstrato verde suave',
-		logoAlt: 'Logo da empresa',
 		form: {
-			companySectionTitle: 'Informações da empresa',
 			nameLabel: 'Nome da empresa',
 			namePlaceholder: 'Acme Inc.',
 			nameDescription: 'Use o nome do seu negócio',
@@ -379,7 +333,7 @@ export const brTranslations = {
 			postalCodeLabel: 'CEP',
 			postalCodePlaceholder: '01001-000',
 			cityLabel: 'Cidade',
-			cityPlaceholder: 'Sao Paulo',
+			cityPlaceholder: 'São Paulo',
 			stateLabel: 'Estado',
 			statePlaceholder: 'SP',
 			countryLabel: 'País',
@@ -410,22 +364,20 @@ export const brTranslations = {
 			emptyDescription:
 				'Adicione um contrato para liberar o fluxo de faturamento e automações.',
 			emptyCta: 'Criar contrato',
-			recurrenceValue: '{count} item(ns) de recorrencia',
+			recurrenceValue: '{count} item(ns) de recorrência',
 			autoSendOn: 'Envio automático ativado',
 			autoSendOff: 'Envio automático desativado',
 			roleLabel: 'Cargo',
 			updatedAtLabel: 'Última atualização',
 		},
 		form: {
-			descriptionLabel: 'Descrição',
 			role: {
 				descriptionLabel: 'Descrição do cargo',
 				rateLabel: 'Valor',
-				emailLabel: 'E-mail',
 			},
 			invoiceRecurrence: {
-				sectionTitle: 'Recorrencia de faturas',
-				sectionDescription: 'Defina a recorrencia de faturas para o contrato.',
+				sectionTitle: 'Recorrência de faturas',
+				sectionDescription: 'Defina a recorrência de faturas para o contrato.',
 				dayOfMonthLabel: 'Dia do mês',
 				dayOfMonthSuffix: '{suffix} dia do mês',
 				percentageLabel: 'Porcentagem',
@@ -433,7 +385,7 @@ export const brTranslations = {
 				totalPercentageInvalidHint: '(deve ser 100%)',
 				validation: {
 					totalPercentageMustBe100: 'A porcentagem total deve ser 100',
-					duplicateDayOfMonth: 'Dia do mes duplicado',
+					duplicateDayOfMonth: 'Dia do mês duplicado',
 				},
 			},
 			client: {
@@ -487,28 +439,27 @@ export const brTranslations = {
 		tabs: {
 			role: 'Cargo',
 			client: 'Cliente',
-			invoiceRecurrence: 'Recorrencia de Invoices',
+			invoiceRecurrence: 'Recorrência de faturas',
 			autoSend: 'Envio automático',
 		},
 		summary: {
 			title: 'Resumo do contrato',
 			description:
-				'Revise os detalhes do contrato abaixo antes de enviar suas alteracoes.',
-			badge: 'Revisao',
+				'Revise os detalhes do contrato abaixo antes de enviar suas alterações.',
+			badge: 'Revisão',
 			activeContractLabel: 'Contrato ativo',
 			activeContractValue:
-				'Voce tem um contrato ativo com {companyName} como {roleDescription}.',
+				'Você tem um contrato ativo com {companyName} como {roleDescription}.',
 			activeContractMissing:
-				'A empresa cliente e o cargo ainda nao foram definidos por completo.',
-			contractDescriptionLabel: 'Descricao',
-			salaryLabel: 'Salario',
-			salaryMissing: 'O salario ainda nao foi definido.',
+				'A empresa cliente e o cargo ainda não foram definidos por completo.',
+			salaryLabel: 'Salário',
+			salaryMissing: 'O salário ainda não foi definido.',
 			billingLabel: 'Contato de faturamento',
-			billingValue: 'As faturas serao enviadas para {name} ({email}).',
+			billingValue: 'As faturas serão enviadas para {name} ({email}).',
 			billingMissing:
-				'Os dados do contato de faturamento ainda nao foram preenchidos.',
+				'Os dados do contato de faturamento ainda não foram preenchidos.',
 			missingInformationHint:
-				'Adicione estas informacoes para completar o resumo.',
+				'Adicione estas informações para completar o resumo.',
 			autoSendLabel: 'Envio automático',
 			autoSendValue: '{smtpName} · template "{templateName}"',
 			autoSendOff: 'Envio automático desligado para este contrato.',
@@ -519,41 +470,37 @@ export const brTranslations = {
 		},
 		invoicePreview: {
 			previewButton: 'Visualizar PDF',
-			title: 'Pre-visualizacao da fatura',
+			title: 'Pré-visualização da fatura',
 			description:
-				'Esta pre-visualizacao e atualizada com os valores atuais do formulario.',
-			browserOnlyMessage:
-				'A pre-visualizacao do PDF esta disponivel no navegador.',
-			missingCompanyHint:
-				'Configure sua empresa em Configuracoes > Empresa para gerar a pre-visualizacao.',
+				'Esta pré-visualização é atualizada com os valores atuais do formulário.',
 			incompleteFieldsHint:
-				'Alguns campos estao incompletos. A pre-visualizacao pode mostrar placeholders.',
+				'Alguns campos estão incompletos. A pré-visualização pode mostrar placeholders.',
 		},
 		invoiceConfigurationSetup: {
-			title: 'Nome do arquivo da fatura e numeracao',
+			title: 'Nome do arquivo da fatura e numeração',
 			introLead:
-				'Este e o seu primeiro contrato. Defina como os nomes dos arquivos de fatura serao gerados e a partir de qual numero continuar.',
+				'Este é o seu primeiro contrato. Defina como os nomes dos arquivos de fatura serão gerados e a partir de qual número continuar.',
 			introExisting:
-				'Se voce ja emite faturas fora do app, use o mesmo padrao e informe o ultimo numero para manter a sequencia.',
+				'Se você já emite faturas fora do app, use o mesmo padrão e informe o último número para manter a sequência.',
 			patternSectionTitle: 'Prefixo e sufixo',
 			includeSectionTitle: 'Incluir no nome do arquivo',
 			previewCaption: 'Exemplo de nome de arquivo',
-			numberingSectionTitle: 'Numeracao',
+			numberingSectionTitle: 'Numeração',
 			prefixLabel: 'Prefixo',
 			suffixLabel: 'Sufixo',
 			withYearLabel: 'Ano',
-			withMonthLabel: 'Mes',
+			withMonthLabel: 'Mês',
 			withDayLabel: 'Dia',
 			withCompanyNameLabel: 'Nome da empresa',
-			lastInvoiceNumberLabel: 'Ultimo numero da fatura',
-			numberingTabNewLabel: 'Comecando agora',
-			numberingTabExistingLabel: 'Ja faturava fora do app',
-			numberingNewTabHint: 'Sua primeira fatura no app sera numerada como 1.',
+			lastInvoiceNumberLabel: 'Último número da fatura',
+			numberingTabNewLabel: 'Começando agora',
+			numberingTabExistingLabel: 'Já faturava fora do app',
+			numberingNewTabHint: 'Sua primeira fatura no app será numerada como 1.',
 			numberingExistingTabHint:
-				'Informe o ultimo numero de fatura usado fora do app para a sequencia continuar.',
-			finishSetup: 'Concluir configuracao',
+				'Informe o último número de fatura usado fora do app para a sequência continuar.',
+			finishSetup: 'Concluir configuração',
 			alreadyExistsForUser:
-				'Ja existe uma configuracao de fatura para este usuario.',
+				'Já existe uma configuração de fatura para este usuário.',
 		},
 	},
 	invoices: {
@@ -561,29 +508,30 @@ export const brTranslations = {
 	},
 	onboarding: {
 		title: 'Onboarding',
-		completed: '{completed}/{total} concluidos',
+		completed: '{completed}/{total} concluídos',
 		sections: {
-			coreSetup: 'Configuracao base',
+			coreSetup: 'Configuração básica',
 			advancedSetup: 'Configuração avançada',
 		},
 		actions: {
 			dismiss: 'Dispensar onboarding',
 			open: 'Abrir',
-			markAsDone: 'Marcar como concluido',
+			markAsDone: 'Marcar como concluído',
 			markAsNotDone: 'Marcar como pendente',
 		},
 		steps: {
 			company: {
 				label: 'Crie sua empresa',
-				description: 'Configure os dados da sua empresa e informacoes legais.',
+				description:
+					'Configure os dados da sua empresa e as informações legais.',
 			},
 			contract: {
 				label: 'Adicione seu primeiro contrato',
-				description: 'Crie ao menos um contrato para comecar a cobrar.',
+				description: 'Crie ao menos um contrato para começar a cobrar.',
 			},
 			invoice: {
 				label: 'Envie uma fatura',
-				description: 'Marque isso quando sua primeira fatura for enviada.',
+				description: 'Marque quando sua primeira fatura for enviada.',
 			},
 			smtp: {
 				label: 'Configure o SMTP',
@@ -591,17 +539,17 @@ export const brTranslations = {
 			},
 			emailTemplates: {
 				label: 'Configure os templates de e-mail',
-				description: 'Defina templates padrao para e-mails de fatura.',
+				description: 'Defina templates padrão para e-mails de fatura.',
 			},
 		},
 	},
 	pdfCanvasViewer: {
 		loading: {
-			generatingPreview: 'Gerando pre-visualizacao do PDF...',
+			generatingPreview: 'Gerando pré-visualização do PDF...',
 		},
 		error: {
-			renderFailed: 'Nao foi possivel renderizar a pre-visualizacao do PDF.',
-			unavailable: 'A pre-visualizacao do PDF nao esta disponivel no momento.',
+			renderFailed: 'Não foi possível renderizar a pré-visualização do PDF.',
+			unavailable: 'A pré-visualização do PDF não está disponível no momento.',
 		},
 	},
 } as const satisfies TranslationsShape;
