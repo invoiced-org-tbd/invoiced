@@ -1,6 +1,7 @@
 import foucPreventionScript from '@/fouc-prevention.js?url';
 import appCss from '@/styles.css?url';
 import { appConfig } from '@/utils/appConfig';
+import type { AnyFunction } from '@/utils/typesUtils';
 import type { AnyRoute, UpdatableRouteOptions } from '@tanstack/react-router';
 
 type RouteOptions = UpdatableRouteOptions<
@@ -15,8 +16,12 @@ type RouteOptions = UpdatableRouteOptions<
 	unknown,
 	unknown
 >;
+type RouteKeyOption<TKey extends keyof RouteOptions> =
+	NonNullable<RouteOptions[TKey]> extends AnyFunction
+		? ReturnType<NonNullable<RouteOptions[TKey]>>
+		: never;
 
-type HeadOptions = ReturnType<NonNullable<RouteOptions['head']>>;
+type HeadOptions = RouteKeyOption<'head'>;
 export const getRootRouteHead = (): HeadOptions => ({
 	meta: [
 		{
@@ -68,7 +73,7 @@ export const getRootRouteHead = (): HeadOptions => ({
 	],
 });
 
-type ScriptsOptions = ReturnType<NonNullable<RouteOptions['scripts']>>;
+type ScriptsOptions = RouteKeyOption<'scripts'>;
 export const getRootRouteScripts = (): ScriptsOptions => [
 	{
 		src: foucPreventionScript,
