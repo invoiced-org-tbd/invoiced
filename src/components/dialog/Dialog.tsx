@@ -27,6 +27,7 @@ import type {
 	DialogTitleProps,
 	DialogTriggerProps,
 } from './types';
+import { dialogContentVariants } from './consts';
 
 const Root = ({ ...props }: DialogRootProps) => {
 	return (
@@ -78,10 +79,10 @@ const Overlay = ({ className, ...props }: DialogOverlayProps) => {
 };
 
 const Content = ({
-	className,
 	children,
+	className,
+	size,
 	showCloseButton = true,
-	...props
 }: DialogContentProps) => {
 	const [contentElement, setContentElement] = useState<HTMLElement | null>(
 		null,
@@ -94,17 +95,11 @@ const Content = ({
 			<DialogContentPrimitive
 				ref={setContentElement}
 				data-slot='dialog-content'
-				className={cn(
-					'border border-border bg-background data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 duration-100',
-					'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
-					'flex w-max min-w-0 max-w-[min(42rem,calc(100%-2rem))] max-h-[calc(100dvh-2rem)] min-h-0 flex-col overflow-hidden rounded-xl text-sm outline-hidden',
-					className,
-				)}
+				className={dialogContentVariants({ size, className })}
 				onEscapeKeyDown={(e) => {
 					e.preventDefault();
 				}}
 				aria-describedby={undefined}
-				{...props}
 			>
 				<ModalInteractionContainerProvider value={contentElement}>
 					<div className='flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden'>

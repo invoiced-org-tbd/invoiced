@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 import { LANGUAGE_COOKIE_NAME } from '@/utils/languageUtils';
 import Cookies from 'js-cookie';
 
-const LANGUAGE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
+const LANGUAGE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365; // 1 year
 
 const syncLanguageCookie = (language: Language) => {
 	Cookies.set(LANGUAGE_COOKIE_NAME, language, {

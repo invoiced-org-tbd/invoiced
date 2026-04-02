@@ -25,7 +25,7 @@ const getCompanyServerFn = createServerFn({
 			});
 
 			return createSuccessResponse({
-				data: company,
+				data: company || null,
 			});
 		} catch (error) {
 			throw createErrorResponse({

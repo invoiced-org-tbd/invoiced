@@ -11,7 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 
 type UpsertCompanyFormProps = {
 	mode: 'create' | 'edit';
-	company?: NonNullable<GetCompanyResponse>;
+	company?: GetCompanyResponse;
 	onClose: () => void;
 	onSuccess?: () => void;
 };

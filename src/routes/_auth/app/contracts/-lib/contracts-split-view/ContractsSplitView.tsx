@@ -4,6 +4,7 @@ import { Badge } from '@/components/badge/Badge';
 import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
 import { Separator } from '@/components/separator/Separator';
+import { useCompany } from '@/hooks/use-company/useCompany';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
@@ -23,9 +24,12 @@ import { useEffect, useMemo, useState } from 'react';
 type Contract = GetContractsResponse[number];
 
 const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
+const settingsRouteApi = getRouteApi('/_auth/app/settings/');
 
 const ContractEmptyState = ({ onAdd }: { onAdd: () => void }) => {
 	const { t } = useTranslate();
+	const { company } = useCompany();
+	const navigate = settingsRouteApi.useNavigate();
 
 	return (
 		<Card.Root className='border-dashed'>
@@ -37,7 +41,9 @@ const ContractEmptyState = ({ onAdd }: { onAdd: () => void }) => {
 					{t('contracts.list.emptyBadge')}
 				</Badge>
 				<Card.Title className='text-xl'>
-					{t('contracts.list.emptyTitle')}
+					{company
+						? t('contracts.list.emptyTitle')
+						: 'Before you can create a contract, you need to setup your company.'}
 				</Card.Title>
 				<Card.Description>
 					{t('contracts.list.emptyDescription')}
@@ -45,10 +51,28 @@ const ContractEmptyState = ({ onAdd }: { onAdd: () => void }) => {
 			</Card.Header>
 
 			<Card.Content>
-				<Button onClick={onAdd}>
-					<PlusIcon />
-					{t('contracts.list.emptyCta')}
-				</Button>
+				{company ? (
+					<Button onClick={onAdd}>
+						<PlusIcon />
+						{t('contracts.list.emptyCta')}
+					</Button>
+				) : (
+					<Button
+						variant='secondary'
+						onClick={() =>
+							navigate({
+								to: '.',
+								search: (prev) => ({
+									...prev,
+									tab: 'company',
+									companyAction: 'create',
+								}),
+							})
+						}
+					>
+						Create a company first
+					</Button>
+				)}
 			</Card.Content>
 		</Card.Root>
 	);
@@ -278,6 +302,7 @@ const ContractDetailCard = ({
 export const ContractsSplitView = () => {
 	const { t } = useTranslate();
 	const navigate = contractsRouteApi.useNavigate();
+	const { company } = useCompany();
 	const { data = [], isFetching } = useQuery(getContractsQueryOptions());
 	const [selectedContractId, setSelectedContractId] = useState<string | null>(
 		null,
@@ -328,7 +353,7 @@ export const ContractsSplitView = () => {
 		});
 	};
 
-	if (!isFetching && !data.length) {
+	if (!company || (!isFetching && !data.length)) {
 		return <ContractEmptyState onAdd={onAddContract} />;
 	}
 

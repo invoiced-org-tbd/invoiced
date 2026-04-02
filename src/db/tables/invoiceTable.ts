@@ -5,6 +5,8 @@ import { userIdColumn } from './userTable';
 export const invoiceTable = s.sqliteTable('invoice', {
 	id: u.idColumn(),
 
+	issueDate: s.integer({ mode: 'timestamp' }).notNull(),
+
 	userId: userIdColumn(),
 	createdAt: u.createdAtColumn(),
 	updatedAt: u.updatedAtColumn(),

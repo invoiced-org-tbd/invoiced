@@ -1,4 +1,3 @@
-.pdf-canvas-viewer,
 .pdf-canvas-viewer .rpv-core__viewer,
 .pdf-canvas-viewer .rpv-core__inner-container,
 .pdf-canvas-viewer .rpv-core__inner-pages,
@@ -8,4 +7,10 @@
 .pdf-canvas-viewer .rpv-core__text-layer,
 .pdf-canvas-viewer .rpv-core__annotation-layer {
 	background: transparent;
+}
+
+.rpv-core__inner-pages.rpv-core__inner-pages--vertical {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

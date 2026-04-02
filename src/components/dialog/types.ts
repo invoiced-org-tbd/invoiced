@@ -1,5 +1,7 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, PropsWithChildren } from 'react';
 import type * as DialogPrimitive from '@radix-ui/react-dialog';
+import type { VariantProps } from 'class-variance-authority';
+import type { dialogContentVariants } from './consts';
 
 export type DialogRootProps = ComponentProps<typeof DialogPrimitive.Root>;
 
@@ -11,11 +13,14 @@ export type DialogCloseProps = ComponentProps<typeof DialogPrimitive.Close>;
 
 export type DialogOverlayProps = ComponentProps<typeof DialogPrimitive.Overlay>;
 
-export type DialogContentProps = ComponentProps<
-	typeof DialogPrimitive.Content
-> & {
+type DialogContentVariantsProps = VariantProps<typeof dialogContentVariants>;
+type DialogContentSize = NonNullable<DialogContentVariantsProps['size']>;
+
+export type DialogContentProps = PropsWithChildren<{
 	showCloseButton?: boolean;
-};
+	className?: string;
+	size?: DialogContentSize;
+}>;
 
 export type DialogBodyProps = ComponentProps<'div'>;
 

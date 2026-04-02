@@ -10,6 +10,7 @@ import pdfJsWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import './pdf-canvas-viewer.css';
 import type { PDFCanvasViewerProps } from './types';
+import { cn } from '@/utils/classNamesUtils';
 
 export const PDFCanvasViewer = ({
 	children,
@@ -91,10 +92,10 @@ export const PDFCanvasViewer = ({
 
 	return (
 		<div
-			className={
-				className ??
-				'pdf-canvas-viewer h-full w-full rounded-lg bg-transparent overflow-hidden'
-			}
+			className={cn(
+				'pdf-canvas-viewer w-full rounded-lg overflow-hidden h-full',
+				className,
+			)}
 		>
 			<PdfJsWorker workerUrl={pdfJsWorkerUrl}>
 				<PdfJsViewer

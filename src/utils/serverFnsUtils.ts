@@ -49,7 +49,7 @@ type CreateSuccessResponseParams<T> = {
 export const createSuccessResponse = <T = null>(
 	params?: CreateSuccessResponseParams<T>,
 ): SuccessResponse<T> => {
-	const data = params?.data ?? (null as T);
+	const data = params?.data === undefined ? (null as T) : params?.data;
 	const message = params?.message ?? undefined;
 	const statusCode = params?.statusCode ?? HTTP_STATUS_CODES.OK;
 

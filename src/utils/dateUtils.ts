@@ -29,8 +29,8 @@ export const toDate = (value: unknown): Date | null => {
 	return null;
 };
 
-export const formatInvoiceTodayDate = () => {
-	return format(new Date(), 'MMM d, yyyy', {
+export const formatInvoiceIssueDate = (date: Date) => {
+	return format(date, 'MMM d, yyyy', {
 		locale: enUS,
 	});
 };

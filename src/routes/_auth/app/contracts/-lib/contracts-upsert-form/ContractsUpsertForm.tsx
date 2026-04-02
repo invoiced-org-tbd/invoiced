@@ -199,7 +199,7 @@ export const ContractsUpsertForm = ({
 									open={isPreviewOpen}
 									onOpenChange={setIsPreviewOpen}
 									contractData={values}
-									canSubmit={canSubmit}
+									isIncomplete={!canSubmit}
 								/>
 							</>
 						)}

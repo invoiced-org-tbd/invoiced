@@ -2,6 +2,8 @@
 	"$schema": "https://unpkg.com/knip@latest/schema.json",
 	"ignore": [
 		"src/components/form-tabs/FormTabs.tsx",
-		"src/components/form-tabs/types.ts"
+		"src/components/form-tabs/types.ts",
+		"src/components/data-table/data-table-toolbar/baseTableToolbarActions.ts",
+		"src/components/data-table/use-data-table/baseTableRowActions.tsx"
 	]
 }

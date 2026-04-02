@@ -1,6 +1,6 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { formatCurrency } from '@/utils/currencyUtils';
-import { formatInvoiceTodayDate } from '@/utils/dateUtils';
+import { formatInvoiceIssueDate } from '@/utils/dateUtils';
 import { appConfig } from '@/utils/appConfig';
 import type { FC } from 'react';
 import type { InvoicePDFModel, InvoicePDFModelProps } from './types';
@@ -90,10 +90,6 @@ const styles = StyleSheet.create({
 	itemCol: {
 		flex: 1,
 	},
-	rateCol: {
-		width: 110,
-		textAlign: 'right',
-	},
 	amountCol: {
 		width: 110,
 		textAlign: 'right',
@@ -170,6 +166,7 @@ const formatAddressLine = (first?: string | null, second?: string | null) => {
 const InvoicePDFModelBaseV0 = ({
 	contractData,
 	company,
+	issueDate,
 }: InvoicePDFModelProps) => {
 	const { role, client } = contractData;
 
@@ -178,7 +175,6 @@ const InvoicePDFModelBaseV0 = ({
 	const hasRate = Number.isFinite(role.rate) && role.rate > 0;
 	const rateValue = hasRate ? role.rate : 0;
 	const amount = formatCurrency({ value: rateValue });
-	const issueDate = formatInvoiceTodayDate();
 
 	return (
 		<Document>
@@ -191,7 +187,9 @@ const InvoicePDFModelBaseV0 = ({
 
 					<View style={styles.headerMeta}>
 						<Text style={styles.invoiceNumber}>#1</Text>
-						<Text style={styles.issuedDate}>Issued on {issueDate}</Text>
+						<Text style={styles.issuedDate}>
+							Issued on {formatInvoiceIssueDate(issueDate)}
+						</Text>
 					</View>
 				</View>
 				<View style={styles.separator} />
@@ -243,16 +241,12 @@ const InvoicePDFModelBaseV0 = ({
 
 				<View style={styles.tableHeader}>
 					<Text style={[styles.tableHeaderText, styles.itemCol]}>ITEM</Text>
-					<Text style={[styles.tableHeaderText, styles.rateCol]}>RATE</Text>
 					<Text style={[styles.tableHeaderText, styles.amountCol]}>AMOUNT</Text>
 				</View>
 
 				<View style={styles.tableRow}>
 					<Text style={[styles.tableText, styles.itemCol]}>
 						{displayText(role.description)}
-					</Text>
-					<Text style={[styles.tableText, styles.rateCol]}>
-						{hasRate ? amount : 'Not provided'}
 					</Text>
 					<Text style={[styles.tableText, styles.amountCol]}>
 						{hasRate ? amount : 'Not provided'}
@@ -263,7 +257,9 @@ const InvoicePDFModelBaseV0 = ({
 
 				<View style={styles.totalRow}>
 					<Text style={styles.totalLabel}>Total</Text>
-					<Text style={styles.totalAmount}>{hasRate ? amount : '$0.00'}</Text>
+					<Text style={styles.totalAmount}>
+						{hasRate ? amount : formatCurrency({ value: 0 })}
+					</Text>
 				</View>
 
 				<View style={styles.generatedDivider} />

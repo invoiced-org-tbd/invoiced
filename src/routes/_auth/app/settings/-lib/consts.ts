@@ -24,21 +24,11 @@ export const settingsTabSchema = z.enum([
 ]);
 
 export type SettingsTab = z.infer<typeof settingsTabSchema>;
-export const settingsCompanyDrawerActionSchema = z.enum(['create', 'edit']);
-export type SettingsCompanyDrawerAction = z.infer<
-	typeof settingsCompanyDrawerActionSchema
->;
-export const settingsAutomationDrawerActionSchema = z.enum(['create', 'edit']);
-export type SettingsAutomationDrawerAction = z.infer<
-	typeof settingsAutomationDrawerActionSchema
->;
-export const settingsAutomationResourceSchema = z.enum([
-	'smtp',
-	'emailTemplate',
-]);
-export type SettingsAutomationResource = z.infer<
-	typeof settingsAutomationResourceSchema
->;
+const settingsCompanyDrawerActionSchema = z.enum(['create', 'edit']);
+
+const settingsAutomationDrawerActionSchema = z.enum(['create', 'edit']);
+
+const settingsAutomationResourceSchema = z.enum(['smtp', 'emailTemplate']);
 
 export const settingsSearchSchema = z.object({
 	tab: settingsTabSchema.optional(),
