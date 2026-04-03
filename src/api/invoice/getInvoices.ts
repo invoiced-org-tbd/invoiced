@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { db } from '@/db/client';
+import type { ExtractServerFnData } from '@/utils/serverFnsUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -32,6 +33,8 @@ const getInvoicesServerFn = createServerFn({
 			});
 		}
 	});
+
+export type GetInvoicesResponse = ExtractServerFnData<typeof getInvoicesServerFn>;
 
 export const getInvoicesQueryOptions = () =>
 	createQueryOptions({

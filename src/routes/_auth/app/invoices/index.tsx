@@ -3,8 +3,16 @@ import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+import { zodValidator } from '@tanstack/zod-adapter';
+import z from 'zod';
+import { InvoicesList } from './-lib/invoices-list/InvoicesList';
+
+const invoicesSearchSchema = z.object({
+	selectedInvoiceId: z.string().optional(),
+});
 
 export const Route = createFileRoute('/_auth/app/invoices/')({
+	validateSearch: zodValidator(invoicesSearchSchema),
 	component: RouteComponent,
 	loader: async ({ context }) => {
 		context.queryClient.prefetchQuery(getInvoicesQueryOptions());
@@ -13,8 +21,12 @@ export const Route = createFileRoute('/_auth/app/invoices/')({
 
 function RouteComponent() {
 	const { t } = useTranslate();
+	const { selectedInvoiceId } = Route.useSearch();
 
 	const { data: invoices } = useSuspenseQuery(getInvoicesQueryOptions());
+	const resolvedInvoiceData =
+		invoices.find((invoice) => invoice.id === selectedInvoiceId) ?? invoices[0];
+	const hasInvoices = !!resolvedInvoiceData;
 
 	return (
 		<Page.Root>
@@ -23,16 +35,16 @@ function RouteComponent() {
 			</Page.Header>
 
 			<Page.Content>
-				<div>
-					{invoices.map((invoice) => (
-						<div
-							className='bg-muted p-4 rounded-lg'
-							key={invoice.id}
-						>
-							{JSON.stringify(invoice, null, 2)}
-						</div>
-					))}
-				</div>
+				{hasInvoices ? (
+					<InvoicesList
+						invoices={invoices}
+						selectedInvoice={resolvedInvoiceData}
+					/>
+				) : (
+					<div className='bg-muted rounded-lg p-6 text-sm text-muted-foreground'>
+						No invoices yet.
+					</div>
+				)}
 			</Page.Content>
 		</Page.Root>
 	);

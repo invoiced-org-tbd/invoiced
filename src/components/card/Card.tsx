@@ -13,7 +13,7 @@ const Root = ({ className, ...props }: CardRootProps) => {
 		<div
 			data-slot='card'
 			className={cn(
-				'bg-card text-card-foreground rounded-xl border shadow-sm',
+				'bg-card text-card-foreground rounded-xl border shadow-xs',
 				className,
 			)}
 			{...props}

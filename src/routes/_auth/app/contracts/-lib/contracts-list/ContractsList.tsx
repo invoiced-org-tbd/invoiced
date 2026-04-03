@@ -1,33 +1,30 @@
 import type { GetContractsResponse } from '@/api/contract/getContracts';
+import { CardListView } from '@/components/card-list-view/CardListView';
 import { ContractCard } from './ContractCard';
 import { ContractListSelector } from './ContractListSelector';
 
 export type ContractsListProps = {
 	contracts: GetContractsResponse;
-	selectedContractId: string;
+	selectedContract: GetContractsResponse[number];
 	onSelectContract: (contract: GetContractsResponse[number]) => void;
 	onCreateNewContract: () => void;
 };
 export const ContractsList = ({
 	contracts,
-	selectedContractId,
+	selectedContract,
 	onSelectContract,
 	onCreateNewContract,
 }: ContractsListProps) => {
-	const selectedContract =
-		contracts.find((contract) => contract.id === selectedContractId) ??
-		contracts[0];
-
 	return (
-		<section className='flex gap-8'>
+		<CardListView.Root>
 			<ContractListSelector
 				contracts={contracts}
-				selectedContractId={selectedContractId}
+				selectedContract={selectedContract}
 				onSelectContract={onSelectContract}
 				onCreateNewContract={onCreateNewContract}
 			/>
 
 			<ContractCard contract={selectedContract} />
-		</section>
+		</CardListView.Root>
 	);
 };

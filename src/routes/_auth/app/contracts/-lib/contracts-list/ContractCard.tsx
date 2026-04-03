@@ -1,5 +1,5 @@
 import type { GetContractsResponse } from '@/api/contract/getContracts';
-import { Card } from '@/components/card/Card';
+import { CardListView } from '@/components/card-list-view/CardListView';
 import { ContractCardContent } from './ContractCardContent';
 import { ContractCardFooter } from './ContractCardFooter';
 import { ContractCardHeader } from './ContractCardHeader';
@@ -9,9 +9,7 @@ type ContractCardProps = {
 };
 export const ContractCard = ({ contract }: ContractCardProps) => {
 	return (
-		<Card.Root className='w-full flex flex-col justify-between relative border-t-0'>
-			<div className='pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/55 to-transparent' />
-
+		<CardListView.Card.Root>
 			<div className='space-y-4'>
 				<ContractCardHeader contract={contract} />
 
@@ -19,6 +17,6 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
 			</div>
 
 			<ContractCardFooter contract={contract} />
-		</Card.Root>
+		</CardListView.Card.Root>
 	);
 };

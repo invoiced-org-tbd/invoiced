@@ -10,6 +10,7 @@ import { ContractsList } from './-lib/contracts-list/ContractsList';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsZeroState } from './-lib/contracts-zero-state/ContractsZeroState';
 import { InvoiceCreationDrawer } from '@/components/invoice-creation-drawer/InvoiceCreationDrawer';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 
 const contractStepsSchema = z.enum([
 	'role',
@@ -41,6 +42,7 @@ function RouteComponent() {
 	const navigate = Route.useNavigate();
 	const { selectedContractId, isCreatingInvoice } = Route.useSearch();
 
+	const { t } = useTranslate();
 	const { data: contracts } = useSuspenseQuery(getContractsQueryOptions());
 
 	const handleCreateNewContract = () => {
@@ -78,11 +80,15 @@ function RouteComponent() {
 
 	return (
 		<Page.Root>
+			<Page.Header>
+				<Page.Title>{t('contracts.title')}</Page.Title>
+			</Page.Header>
+
 			<Page.Content>
 				{hasContracts ? (
 					<ContractsList
 						contracts={contracts}
-						selectedContractId={resolvedSelectedContractId}
+						selectedContract={resolvedContractData}
 						onSelectContract={handleSelectContract}
 						onCreateNewContract={handleCreateNewContract}
 					/>
