@@ -34,7 +34,7 @@ const createContractServerFn = createServerFn({
 			try {
 				const t = getServerT(language);
 
-				await db.transaction(async (tx) => {
+				const { contractId } = await db.transaction(async (tx) => {
 					await setupInvoiceConfiguration({
 						tx,
 						t,
@@ -42,15 +42,21 @@ const createContractServerFn = createServerFn({
 						invoiceConfiguration,
 					});
 
-					await createContract({
+					const { contractId } = await createContract({
 						tx,
 						userId: user.id,
 						form,
 						t,
 					});
+
+					return { contractId };
 				});
 
-				return createSuccessResponse();
+				return createSuccessResponse({
+					data: {
+						contractId,
+					},
+				});
 			} catch (error) {
 				throw createErrorResponse({
 					error,

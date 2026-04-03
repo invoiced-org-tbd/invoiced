@@ -345,6 +345,8 @@ export const enTranslations = {
 		name: 'Contract',
 		title: 'Contracts',
 		list: {
+			addContract: 'Add Contract',
+			createInvoice: 'Create Invoice',
 			pageDescription:
 				'A cleaner view for your contracts, designed for one or many clients.',
 			listDescription: 'Pick a contract to view details on the right panel.',
@@ -361,6 +363,45 @@ export const enTranslations = {
 			autoSendOff: 'Auto-send disabled',
 			roleLabel: 'Role',
 			updatedAtLabel: 'Last update',
+			financialDetails: 'Financial Details',
+			monthlyRate: 'Monthly Rate',
+			billingContact: 'Billing Contact',
+			addressLabel: 'Address',
+			paymentSchedule: 'Payment Schedule',
+			recurrenceEveryLabel: 'Every',
+			recurrenceDayLabel: 'Day',
+		},
+		zeroState: {
+			withCompany: {
+				badge: 'No contracts yet',
+				title: 'Start with your first contract',
+				description:
+					'Pick a client, define how often invoices run, and choose when they are sent. You can change these details later.',
+				cta: 'Create your first contract',
+				ariaConfigure: 'What you will configure',
+				roleTitle: 'Your role',
+				roleDescription: 'How you are listed on this contract.',
+				clientProjectTitle: 'Client & project',
+				clientProjectDescription: 'Who is billed and what the work is called.',
+				scheduleSendingTitle: 'Schedule & sending',
+				scheduleSendingDescription:
+					'How often invoices run and whether they are emailed automatically.',
+			},
+			withoutCompany: {
+				badge: 'Company required',
+				title: 'Set up your company first',
+				description:
+					'Contracts need a company profile so invoices show the right legal name, email, and address. Add yours in settings, then come back here.',
+				cta: 'Set up your company',
+				ariaNextSteps: 'Next steps',
+				step1Label: 'Step 1',
+				step1Title: 'Company',
+				step1Description: 'Name, contact email, and billing address.',
+				step2Label: 'Step 2',
+				step2Title: 'First contract',
+				step2Description:
+					'Client, schedule, and invoice rules, after your company exists.',
+			},
 		},
 		form: {
 			role: {
@@ -375,6 +416,9 @@ export const enTranslations = {
 				percentageLabel: 'Percentage',
 				totalPercentageLabel: 'Total percentage: {value}%',
 				totalPercentageInvalidHint: '(must be 100%)',
+				balancePercentagesLabel: 'Balance percentages',
+				balancePercentagesTooltip:
+					'Automatically balance percentages to 100% when adding or removing items',
 				validation: {
 					totalPercentageMustBe100: 'Total percentage must be 100',
 					duplicateDayOfMonth: 'Duplicate day of month',

@@ -9,6 +9,7 @@
 		"check:biome": "biome check . --write --error-on-warnings",
 		"check:tsc": "bun run tsc --noEmit",
 		"check:knip": "knip",
+		"check:translations": "bun --bun tools/check-translations.ts",
 		"check": "bun run check:biome && bun run check:tsc && bun run check:knip",
 		"db:generate": "drizzle-kit generate --config=drizzle.config.ts",
 		"db:migrate": "drizzle-kit migrate --config=drizzle.config.ts",
@@ -67,6 +68,7 @@
 		"zustand": "^5.0.11"
 	},
 	"devDependencies": {
+		"@types/bun": "^1.3.11",
 		"@types/js-cookie": "^3.0.6",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",

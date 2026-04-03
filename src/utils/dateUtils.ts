@@ -1,6 +1,11 @@
+import type { Language } from '@/hooks/use-language/types';
 import { format, isValid, parseISO } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { getLanguage } from './languageUtils';
+import { ptBR, enUS } from 'date-fns/locale';
 
+const getLocale = (language: Language) => {
+	return language === 'br' ? ptBR : enUS;
+};
 export const toDate = (value: unknown): Date | null => {
 	if (value instanceof Date) {
 		return isValid(value) ? value : null;
@@ -32,5 +37,17 @@ export const toDate = (value: unknown): Date | null => {
 export const formatInvoiceIssueDate = (date: Date) => {
 	return format(date, 'MMM d, yyyy', {
 		locale: enUS,
+	});
+};
+
+type FormatUpdatedAtParams = {
+	date: Date;
+	language?: Language;
+};
+export const formatUpdatedAt = ({ date, language }: FormatUpdatedAtParams) => {
+	const resolvedLanguage = language ?? getLanguage();
+
+	return format(date, 'PPp', {
+		locale: getLocale(resolvedLanguage),
 	});
 };

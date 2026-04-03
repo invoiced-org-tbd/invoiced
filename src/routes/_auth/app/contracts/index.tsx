@@ -1,14 +1,14 @@
-import { Page } from '@/components/page/Page';
-import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { createFileRoute } from '@tanstack/react-router';
-import { ContractsSplitView } from './-lib/contracts-split-view/ContractsSplitView';
+import type { GetContractsResponse } from '@/api/contract/getContracts';
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
-import { getEmailTemplatesQueryOptions } from '@/api/email-template/getEmailTemplates';
-import { getSmtpConfigsQueryOptions } from '@/api/smtp/getSmtpConfigs';
+import { Page } from '@/components/page/Page';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
 import z from 'zod';
-import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog/ContractsDeleteDialog';
+import { ContractsList } from './-lib/contracts-list/ContractsList';
+import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
+import { ContractsZeroState } from './-lib/contracts-zero-state/ContractsZeroState';
 
 const contractStepsSchema = z.enum([
 	'role',
@@ -19,9 +19,10 @@ const contractStepsSchema = z.enum([
 
 export type ContractStep = z.infer<typeof contractStepsSchema>;
 const contractsSearchSchema = z.object({
+	selectedContractId: z.string().optional(),
 	isCreating: z.boolean().optional(),
-	editId: z.string().optional(),
-	deleteId: z.string().optional(),
+	isEditing: z.boolean().optional(),
+	isDeleting: z.boolean().optional(),
 	step: contractStepsSchema.optional(),
 });
 export type ContractsSearchSchema = z.infer<typeof contractsSearchSchema>;
@@ -30,27 +31,54 @@ export const Route = createFileRoute('/_auth/app/contracts/')({
 	validateSearch: zodValidator(contractsSearchSchema),
 	loader: async ({ context }) => {
 		context.queryClient.prefetchQuery(getContractsQueryOptions());
-		context.queryClient.prefetchQuery(getSmtpConfigsQueryOptions());
-		context.queryClient.prefetchQuery(getEmailTemplatesQueryOptions());
 	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { t } = useTranslate();
+	const navigate = Route.useNavigate();
+	const { selectedContractId } = Route.useSearch();
+
+	const { data: contracts } = useSuspenseQuery(getContractsQueryOptions());
+
+	const handleCreateNewContract = () => {
+		navigate({
+			search: (prev) => ({
+				...prev,
+				isCreating: true,
+			}),
+		});
+	};
+
+	const handleSelectContract = (contract: GetContractsResponse[number]) => {
+		navigate({
+			search: (prev) => ({
+				...prev,
+				selectedContractId: contract.id,
+			}),
+		});
+	};
+
+	const resolvedSelectedContractId = selectedContractId ?? contracts?.[0]?.id;
+	const hasContracts = !!resolvedSelectedContractId;
 
 	return (
 		<Page.Root>
-			<Page.Header>
-				<Page.Title>{t('contracts.title')}</Page.Title>
-			</Page.Header>
-
 			<Page.Content>
-				<ContractsSplitView />
+				{hasContracts ? (
+					<ContractsList
+						contracts={contracts}
+						selectedContractId={resolvedSelectedContractId}
+						onSelectContract={handleSelectContract}
+						onCreateNewContract={handleCreateNewContract}
+					/>
+				) : (
+					<ContractsZeroState onCreateNewContract={handleCreateNewContract} />
+				)}
 			</Page.Content>
 
-			<ContractsUpsertDrawer />
-			<ContractsDeleteDialog />
+			<ContractsUpsertDrawer selectedContractId={resolvedSelectedContractId} />
+			<ContractsDeleteDialog selectedContractId={resolvedSelectedContractId} />
 		</Page.Root>
 	);
 }

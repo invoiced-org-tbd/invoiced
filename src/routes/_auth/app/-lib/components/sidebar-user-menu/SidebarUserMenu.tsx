@@ -13,6 +13,25 @@ import { useTheme } from '@/hooks/use-theme/useTheme';
 import { useLogOut } from '@/hooks/use-log-out/useLogOut';
 import { useUser } from '@/hooks/use-user/useUser';
 import { LanguageFlag } from '@/components/language-flag/LanguageFlag';
+import { cn } from '@/utils/classNamesUtils';
+
+const Avatar = () => {
+	const user = useUser();
+
+	const initial = user.name[0].toUpperCase();
+
+	return (
+		<span
+			className={cn(
+				'flex items-center justify-center overflow-hidden',
+				'size-7 md:size-8 shrink-0 select-none rounded-lg',
+				'bg-primary/20 text-primary-muted',
+			)}
+		>
+			<span className='text-xs font-medium'>{initial}</span>
+		</span>
+	);
+};
 
 export const SidebarUserMenu = () => {
 	const user = useUser();
@@ -26,12 +45,6 @@ export const SidebarUserMenu = () => {
 	const setLanguage = useLanguage((state) => state.setLanguage);
 
 	const displayName = user.name ?? user.email;
-	const initials = displayName
-		.split(' ')
-		.filter(Boolean)
-		.slice(0, 2)
-		.map((part) => part[0]?.toUpperCase() ?? '')
-		.join('');
 
 	return (
 		<DropdownMenu.Root>
@@ -41,22 +54,7 @@ export const SidebarUserMenu = () => {
 					size='lg'
 					tooltip={displayName}
 				>
-					<span
-						data-size='default'
-						data-slot='avatar'
-						className='relative flex size-7 shrink-0 select-none items-center justify-center overflow-hidden rounded-lg bg-sidebar-accent text-sidebar-accent-foreground md:size-8'
-					>
-						{user.image ? (
-							<img
-								alt={displayName}
-								className='aspect-square size-full object-cover'
-								data-slot='avatar-image'
-								src={user.image}
-							/>
-						) : (
-							<span className='text-xs font-medium'>{initials}</span>
-						)}
-					</span>
+					<Avatar />
 
 					<div className='hidden flex-1 text-left text-sm leading-tight md:grid'>
 						<span className='truncate font-medium'>{displayName}</span>
@@ -79,16 +77,7 @@ export const SidebarUserMenu = () => {
 							data-slot='avatar'
 							className='relative flex size-8 shrink-0 select-none items-center justify-center overflow-hidden rounded-lg bg-sidebar-accent text-sidebar-accent-foreground'
 						>
-							{user.image ? (
-								<img
-									alt={displayName}
-									className='aspect-square size-full object-cover'
-									data-slot='avatar-image'
-									src={user.image}
-								/>
-							) : (
-								<span className='text-xs font-medium'>{initials}</span>
-							)}
+							<Avatar />
 						</span>
 
 						<div className='grid flex-1 text-left text-sm leading-tight'>

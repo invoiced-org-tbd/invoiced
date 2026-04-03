@@ -24,7 +24,9 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 	props: {} as ContractInvoiceRecurrenceFormProps,
 	render: ({ group, rate }) => {
 		const { t } = useTranslate();
-		const [balancePercentage, setBalancePercentage] = useState<boolean>();
+		const [balancePercentage, setBalancePercentage] = useState<
+			boolean | undefined
+		>(true);
 
 		const handleBalancePercentageChange = (value: boolean | undefined) => {
 			if (value) {
@@ -90,8 +92,12 @@ export const ContractInvoiceRecurrenceForm = withFieldGroup({
 								<section className='flex flex-col gap-2 items-end'>
 									<div className='flex flex-row gap-2 items-center w-full'>
 										<Switch
-											label='Balance percentages'
-											tooltip='Automatically balance percentages to 100% when adding or removing items'
+											label={t(
+												'contracts.form.invoiceRecurrence.balancePercentagesLabel',
+											)}
+											tooltip={t(
+												'contracts.form.invoiceRecurrence.balancePercentagesTooltip',
+											)}
 											value={balancePercentage}
 											onChange={handleBalancePercentageChange}
 										/>

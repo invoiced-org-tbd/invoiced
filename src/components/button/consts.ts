@@ -33,11 +33,11 @@ export const buttonVariants = cva(
 				true: 'pointer-events-none',
 			},
 			size: {
-				xxs: 'py-1 px-3 text-xs',
-				xs: 'py-1.5 px-3.5 text-xs',
-				sm: 'py-2 px-3.5 text-sm',
-				md: 'py-2.5 px-3.5 text-sm',
-				lg: 'py-3 px-4 text-lg',
+				xxs: 'py-1 px-3 text-xs [&_svg:not([class*=size-])]:size-3.5',
+				xs: 'py-1.5 px-3.5 text-xs [&_svg:not([class*=size-])]:size-4',
+				sm: 'py-2 px-3.5 text-sm [&_svg:not([class*=size-])]:size-4',
+				md: 'py-2.5 px-3.5 text-sm [&_svg:not([class*=size-])]:size-4.5',
+				lg: 'py-3 px-4 text-lg [&_svg:not([class*=size-])]:size-5',
 			},
 			isIcon: {
 				true: 'p-0 rounded-full',
@@ -90,27 +90,27 @@ export const buttonVariants = cva(
 			{
 				isIcon: true,
 				size: 'xxs',
-				className: 'size-5 min-w-5 [&_svg:not([class*=size-])]:size-3.5',
+				className: 'size-5 min-w-5',
 			},
 			{
 				isIcon: true,
 				size: 'xs',
-				className: 'size-6 min-w-6 [&_svg:not([class*=size-])]:size-4',
+				className: 'size-6 min-w-6',
 			},
 			{
 				isIcon: true,
 				size: 'sm',
-				className: 'size-7 min-w-7 [&_svg:not([class*=size-])]:size-4',
+				className: 'size-7 min-w-7',
 			},
 			{
 				isIcon: true,
 				size: 'md',
-				className: 'size-8 min-w-8 [&_svg:not([class*=size-])]:size-4.5',
+				className: 'size-8 min-w-8',
 			},
 			{
 				isIcon: true,
 				size: 'lg',
-				className: 'size-9 min-w-9 [&_svg:not([class*=size-])]:size-5',
+				className: 'size-9 min-w-9',
 			},
 		],
 		defaultVariants: {

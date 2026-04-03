@@ -72,4 +72,8 @@ export const createContract = async ({
 		t,
 		autoSend: form.autoSend,
 	});
+
+	return {
+		contractId: contract.id,
+	};
 };

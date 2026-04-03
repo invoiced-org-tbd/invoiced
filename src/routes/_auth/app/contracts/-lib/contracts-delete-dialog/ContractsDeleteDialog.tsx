@@ -7,12 +7,16 @@ import { getRouteApi } from '@tanstack/react-router';
 
 const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
 
-export const ContractsDeleteDialog = () => {
+type ContractsDeleteDialogProps = {
+	selectedContractId: string;
+};
+export const ContractsDeleteDialog = ({
+	selectedContractId,
+}: ContractsDeleteDialogProps) => {
 	const { t } = useTranslate();
 
-	const { deleteId } = contractsRouteApi.useSearch();
 	const navigate = contractsRouteApi.useNavigate();
-	const isOpen = !!deleteId;
+	const { isDeleting } = contractsRouteApi.useSearch();
 
 	const { mutateAsync: deleteContract, isPending } = useMutation(
 		deleteContractMutationOptions(),
@@ -22,23 +26,20 @@ export const ContractsDeleteDialog = () => {
 		navigate({
 			search: (prev) => ({
 				...prev,
-				deleteId: undefined,
+				selectedContractId: undefined,
+				isDeleting: undefined,
 			}),
 		});
 	};
 
 	const handleDelete = async () => {
-		if (!deleteId) {
-			return;
-		}
-
-		await deleteContract({ id: deleteId });
+		await deleteContract({ id: selectedContractId });
 		handleClose();
 	};
 
 	return (
 		<Dialog.Root
-			open={isOpen}
+			open={isDeleting}
 			onOpenChange={handleClose}
 		>
 			<Dialog.Content>

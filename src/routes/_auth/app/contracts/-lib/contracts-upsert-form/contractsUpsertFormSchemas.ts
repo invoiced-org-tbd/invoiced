@@ -1,12 +1,12 @@
 import { getEditContractQueryOptions } from '@/api/contract/getEditContract';
 import { addressFormWithCountrySchema } from '@/components/address-form/addressFormSchemas';
+import { translate } from '@/translations/translate';
+import { getLanguage } from '@/utils/languageUtils';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
-import { getLanguage } from '@/utils/languageUtils';
-import { translate } from '@/translations/translate';
 import {
-	getContractRecurrenceItemsTotalPercentage,
 	getContractRecurrenceItemsConflictingDays,
+	getContractRecurrenceItemsTotalPercentage,
 } from './utils';
 
 const contractRoleFormSchema = z.object({
@@ -115,15 +115,22 @@ export const getEmptyContractInvoiceRecurrenceItem = (dayOfMonth = 1) =>
 		percentage: 100,
 	}) satisfies ContractInvoiceRecurrenceItemFormSchema;
 
+type UseContractsUpsertFormDefaultValuesParams = {
+	selectedContractId: string;
+	isEditing?: boolean;
+};
 export const useContractsUpsertFormDefaultValues = ({
-	editId,
-}: {
-	editId?: string;
-}) => {
-	const { data: editContract, isFetching } = useQuery({
-		...getEditContractQueryOptions({ id: editId ?? '' }),
-		enabled: !!editId,
+	selectedContractId,
+	isEditing,
+}: UseContractsUpsertFormDefaultValuesParams) => {
+	const { data, isFetching } = useQuery({
+		...getEditContractQueryOptions({
+			id: selectedContractId,
+		}),
+		enabled: !!isEditing,
 	});
+
+	const editContract = isEditing ? data : undefined;
 
 	return {
 		defaultValues: {

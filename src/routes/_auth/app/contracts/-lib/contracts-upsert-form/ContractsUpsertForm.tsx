@@ -1,5 +1,6 @@
 import { createContractMutationOptions } from '@/api/contract/createContract';
 import { updateContractMutationOptions } from '@/api/contract/updateContract';
+import { getInvoiceConfigurationQueryOptions } from '@/api/invoice-configuration/getInvoiceConfiguration';
 import { Button } from '@/components/button/Button';
 import { Drawer } from '@/components/drawer/Drawer';
 import { useAppForm } from '@/hooks/use-app-form/useAppForm';
@@ -11,22 +12,15 @@ import { useState } from 'react';
 import type { ContractsSearchSchema, ContractStep } from '../..';
 import { ContractAutoSendForm } from './ContractAutoSendForm';
 import { ContractClientForm } from './ContractClientForm';
+import { ContractInvoiceConfigurationDialog } from './ContractInvoiceConfigurationDialog';
 import { ContractInvoiceRecurrenceForm } from './ContractInvoiceRecurrenceForm';
 import { ContractRoleForm } from './ContractRoleForm';
 import { ContractsInvoicePreviewDialog } from './ContractsInvoicePreviewDialog';
-import { ContractSummary } from './ContractSummary';
 import {
 	contractsUpsertFormSchema,
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
-import { ContractInvoiceConfigurationDialog } from './ContractInvoiceConfigurationDialog';
 import type { InvoiceConfigurationPersistSchema } from './invoiceConfigurationFormSchemas';
-import { getInvoiceConfigurationQueryOptions } from '@/api/invoice-configuration/getInvoiceConfiguration';
-
-type ContractsUpsertFormProps = {
-	editId?: string;
-	onClose: () => void;
-};
 
 const contractSteps = [
 	{ value: 'role', labelKey: 'contracts.tabs.role' },
@@ -37,8 +31,14 @@ const contractSteps = [
 	labelKey: `contracts.tabs.${ContractStep}`;
 })[];
 
+type ContractsUpsertFormProps = {
+	selectedContractId: string;
+	isEditing?: boolean;
+	onClose: (redirectId?: string) => void;
+};
 export const ContractsUpsertForm = ({
-	editId,
+	selectedContractId,
+	isEditing,
 	onClose,
 }: ContractsUpsertFormProps) => {
 	const { t } = useTranslate();
@@ -49,9 +49,7 @@ export const ContractsUpsertForm = ({
 		useState(false);
 
 	const { defaultValues, isLoadingEditContract } =
-		useContractsUpsertFormDefaultValues({
-			editId,
-		});
+		useContractsUpsertFormDefaultValues({ selectedContractId, isEditing });
 
 	const { mutateAsync: createContract } = useMutation(
 		createContractMutationOptions(),
@@ -77,26 +75,29 @@ export const ContractsUpsertForm = ({
 				return;
 			}
 
-			if (editId) {
+			let createdContractId: string | undefined;
+			if (isEditing) {
 				await updateContract({
-					editId,
+					editId: selectedContractId,
 					form: value,
 					invoiceConfiguration: meta.value,
 				});
 			} else {
-				await createContract({
+				const { contractId } = await createContract({
 					form: value,
 					invoiceConfiguration: meta.value,
 				});
+
+				createdContractId = contractId;
 			}
 
-			onClose();
+			onClose(createdContractId);
 		},
 	});
 
 	const { FormSteps } = useFormStepper({
 		form,
-		mode: editId ? 'edit' : 'create',
+		mode: isEditing ? 'edit' : 'create',
 		steps: contractSteps,
 		searchParamKey: 'step',
 	});
@@ -157,26 +158,12 @@ export const ContractsUpsertForm = ({
 						/>
 					</FormSteps.Content>
 				</FormSteps.Root>
-
-				<section className='mt-auto'>
-					<form.Subscribe
-						selector={(state) => state.values}
-						children={(data) => {
-							return (
-								<ContractSummary
-									data={data}
-									isLoading={isLoadingEditContract}
-								/>
-							);
-						}}
-					/>
-				</section>
 			</Drawer.Body>
 
 			<Drawer.Footer>
 				<form.CancelButton
 					size='sm'
-					onClick={onClose}
+					onClick={() => onClose()}
 				/>
 
 				<div className='flex items-center gap-2 ml-auto'>

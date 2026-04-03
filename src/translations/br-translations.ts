@@ -352,15 +352,17 @@ export const brTranslations = {
 		name: 'Contrato',
 		title: 'Contratos',
 		list: {
+			addContract: 'Adicionar contrato',
+			createInvoice: 'Criar fatura',
 			pageDescription:
 				'Uma visualização mais elegante para contratos, feita para um ou muitos clientes.',
 			listDescription:
-				'Selecione um contrato para ver os detalhes no painel da direita.',
+				'Selecione um contrato para ver os detalhes no painel à direita.',
 			count: '{count} no total',
 			singleLabel: 'Contrato atual',
 			singleBadge: 'Selecionado',
 			emptyBadge: 'Sem contratos',
-			emptyTitle: 'Comece com seu primeiro contrato',
+			emptyTitle: 'Começe com seu primeiro contrato',
 			emptyDescription:
 				'Adicione um contrato para liberar o fluxo de faturamento e automações.',
 			emptyCta: 'Criar contrato',
@@ -369,6 +371,46 @@ export const brTranslations = {
 			autoSendOff: 'Envio automático desativado',
 			roleLabel: 'Cargo',
 			updatedAtLabel: 'Última atualização',
+			financialDetails: 'Informações financeiras',
+			monthlyRate: 'Remuneração mensal',
+			billingContact: 'Contato para faturamento',
+			addressLabel: 'Endereço',
+			paymentSchedule: 'Calendário de cobrança',
+			recurrenceEveryLabel: 'Todo',
+			recurrenceDayLabel: 'Dia',
+		},
+		zeroState: {
+			withCompany: {
+				badge: 'Sem contratos ainda',
+				title: 'Começe com seu primeiro contrato',
+				description:
+					'Escolha um cliente, defina a frequência das faturas e quando serão enviadas. Você pode alterar esses detalhes depois.',
+				cta: 'Criar seu primeiro contrato',
+				ariaConfigure: 'O que você irá configurar',
+				roleTitle: 'Sua função',
+				roleDescription: 'Como você é apresentado neste contrato.',
+				clientProjectTitle: 'Cliente e projeto',
+				clientProjectDescription:
+					'Quem será cobrado e como o trabalho se chama.',
+				scheduleSendingTitle: 'Agenda e envio',
+				scheduleSendingDescription:
+					'Com que frequência as faturas são emitidas e se serão enviadas por e-mail automaticamente.',
+			},
+			withoutCompany: {
+				badge: 'Empresa obrigatória',
+				title: 'Configure sua empresa primeiro',
+				description:
+					'O contrato precisa de um perfil de empresa para que as faturas exibam o nome legal, e-mail e endereço corretos. Adicione em configurações e volte aqui.',
+				cta: 'Configurar sua empresa',
+				ariaNextSteps: 'Próximos passos',
+				step1Label: 'Passo 1',
+				step1Title: 'Empresa',
+				step1Description: 'Nome, e-mail de contato e endereço de cobrança.',
+				step2Label: 'Passo 2',
+				step2Title: 'Primeiro contrato',
+				step2Description:
+					'Cliente, agenda e regras de faturamento, depois que sua empresa existir.',
+			},
 		},
 		form: {
 			role: {
@@ -383,6 +425,9 @@ export const brTranslations = {
 				percentageLabel: 'Porcentagem',
 				totalPercentageLabel: 'Porcentagem total: {value}%',
 				totalPercentageInvalidHint: '(deve ser 100%)',
+				balancePercentagesLabel: 'Balanceamento de porcentagens',
+				balancePercentagesTooltip:
+					'Balanceia automaticamente as porcentagens para 100% ao adicionar ou remover itens',
 				validation: {
 					totalPercentageMustBe100: 'A porcentagem total deve ser 100',
 					duplicateDayOfMonth: 'Dia do mês duplicado',
@@ -454,7 +499,7 @@ export const brTranslations = {
 				'A empresa cliente e o cargo ainda não foram definidos por completo.',
 			salaryLabel: 'Salário',
 			salaryMissing: 'O salário ainda não foi definido.',
-			billingLabel: 'Contato de faturamento',
+			billingLabel: 'Contato para faturamento',
 			billingValue: 'As faturas serão enviadas para {name} ({email}).',
 			billingMissing:
 				'Os dados do contato de faturamento ainda não foram preenchidos.',
@@ -474,7 +519,7 @@ export const brTranslations = {
 			description:
 				'Esta pré-visualização é atualizada com os valores atuais do formulário.',
 			incompleteFieldsHint:
-				'Alguns campos estão incompletos. A pré-visualização pode mostrar placeholders.',
+				'Alguns campos estão incompletos. A pré-visualização pode mostrar valores de exemplo.',
 		},
 		invoiceConfigurationSetup: {
 			title: 'Nome do arquivo da fatura e numeração',
@@ -494,8 +539,8 @@ export const brTranslations = {
 			withCompanyNameLabel: 'Nome da empresa',
 			lastInvoiceNumberLabel: 'Último número da fatura',
 			numberingTabNewLabel: 'Começando agora',
-			numberingTabExistingLabel: 'Já faturava fora do app',
-			numberingNewTabHint: 'Sua primeira fatura no app será numerada como 1.',
+			numberingTabExistingLabel: 'Já emito faturas fora do app',
+			numberingNewTabHint: 'Sua primeira fatura no app começará no número 1.',
 			numberingExistingTabHint:
 				'Informe o último número de fatura usado fora do app para a sequência continuar.',
 			finishSetup: 'Concluir configuração',

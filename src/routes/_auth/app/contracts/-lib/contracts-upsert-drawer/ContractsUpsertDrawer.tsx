@@ -5,19 +5,25 @@ import { ContractsUpsertForm } from '../contracts-upsert-form/ContractsUpsertFor
 
 const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
 
-export const ContractsUpsertDrawer = () => {
+type ContractsUpsertDrawerProps = {
+	selectedContractId: string;
+};
+export const ContractsUpsertDrawer = ({
+	selectedContractId,
+}: ContractsUpsertDrawerProps) => {
 	const { t } = useTranslate();
-	const { isCreating, editId } = contractsRouteApi.useSearch();
+	const { isCreating, isEditing } = contractsRouteApi.useSearch();
 	const navigate = contractsRouteApi.useNavigate();
 
-	const isOpen = isCreating || !!editId;
+	const isOpen = isCreating || isEditing;
 
-	const handleClose = () => {
+	const handleClose = (redirectId?: string) => {
 		navigate({
 			search: (prev) => ({
 				...prev,
+				selectedContractId: redirectId ?? selectedContractId,
 				isCreating: undefined,
-				editId: undefined,
+				isEditing: undefined,
 				step: undefined,
 			}),
 		});
@@ -26,7 +32,7 @@ export const ContractsUpsertDrawer = () => {
 	return (
 		<Drawer.Root
 			open={isOpen}
-			onOpenChange={handleClose}
+			onOpenChange={() => handleClose()}
 		>
 			<Drawer.Content>
 				<Drawer.Header>
@@ -42,7 +48,8 @@ export const ContractsUpsertDrawer = () => {
 				</Drawer.Header>
 
 				<ContractsUpsertForm
-					editId={editId}
+					isEditing={isEditing}
+					selectedContractId={selectedContractId}
 					onClose={handleClose}
 				/>
 			</Drawer.Content>
