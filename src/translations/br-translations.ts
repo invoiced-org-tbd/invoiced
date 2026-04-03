@@ -550,6 +550,21 @@ export const brTranslations = {
 	},
 	invoices: {
 		title: 'Faturas',
+		creation: {
+			drawerTitle: 'Criação de fatura',
+			form: {
+				recurrenceLabel: 'Recorrência',
+			},
+			validation: {
+				itemsRequiredInCustomMode:
+					'Os itens são obrigatórios no modo personalizado',
+			},
+		},
+		server: {
+			invoiceConfigurationRequired:
+				'Configure as opções de fatura antes de criar faturas',
+			recurrenceItemNotFound: 'Item de recorrência não encontrado',
+		},
 	},
 	onboarding: {
 		title: 'Onboarding',

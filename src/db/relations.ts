@@ -105,6 +105,10 @@ export const relations = defineRelations(dbTables, (r) => ({
 	},
 
 	invoiceTable: {
+		items: r.many.invoiceItemsTable({
+			from: r.invoiceTable.id,
+			to: r.invoiceItemsTable.invoiceId,
+		}),
 		contract: r.one.contractSnapshotTable({
 			from: r.invoiceTable.id,
 			to: r.contractSnapshotTable.invoiceId,
@@ -118,11 +122,6 @@ export const relations = defineRelations(dbTables, (r) => ({
 	},
 
 	contractSnapshotTable: {
-		role: r.one.contractRoleSnapshotTable({
-			from: r.contractSnapshotTable.id,
-			to: r.contractRoleSnapshotTable.contractSnapshotId,
-			optional: false,
-		}),
 		client: r.one.contractClientSnapshotTable({
 			from: r.contractSnapshotTable.id,
 			to: r.contractClientSnapshotTable.contractSnapshotId,
@@ -132,14 +131,6 @@ export const relations = defineRelations(dbTables, (r) => ({
 		original: r.one.contractTable({
 			from: r.contractSnapshotTable.originalContractId,
 			to: r.contractTable.id,
-			optional: true,
-		}),
-	},
-
-	contractRoleSnapshotTable: {
-		original: r.one.contractRoleTable({
-			from: r.contractRoleSnapshotTable.originalContractRoleId,
-			to: r.contractRoleTable.id,
 			optional: true,
 		}),
 	},

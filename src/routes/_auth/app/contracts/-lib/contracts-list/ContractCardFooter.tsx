@@ -16,17 +16,6 @@ export const ContractCardFooter = ({ contract }: ContractCardFooterProps) => {
 	const { t } = useTranslate();
 	const { language } = useLanguage();
 
-	const navigate = contractsRouteApi.useNavigate();
-
-	const handleDeleteClick = () => {
-		navigate({
-			search: (prev) => ({
-				...prev,
-				isDeleting: true,
-			}),
-		});
-	};
-
 	return (
 		<Card.Footer className='flex-row justify-between items-center border-t pt-5 mx-2 px-2'>
 			<div>
@@ -37,15 +26,19 @@ export const ContractCardFooter = ({ contract }: ContractCardFooterProps) => {
 			</div>
 
 			<div>
-				<Button
-					variant='destructive'
-					size='xxs'
-					isOutlined
-					onClick={handleDeleteClick}
+				<contractsRouteApi.Link
+					to='.'
+					search={(prev) => ({ ...prev, isDeleting: true })}
 				>
-					<TrashIcon />
-					{t('common.delete')}
-				</Button>
+					<Button
+						variant='destructive'
+						size='xxs'
+						isOutlined
+					>
+						<TrashIcon />
+						{t('common.delete')}
+					</Button>
+				</contractsRouteApi.Link>
 			</div>
 		</Card.Footer>
 	);

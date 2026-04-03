@@ -2,7 +2,10 @@ import type { GetContractsResponse } from '@/api/contract/getContracts';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
+import { getRouteApi } from '@tanstack/react-router';
 import { PlusIcon } from 'lucide-react';
+
+const contractsRouteApi = getRouteApi('/_auth/app/contracts/');
 
 type ContractListSelectorProps = {
 	contracts: GetContractsResponse;
@@ -35,11 +38,12 @@ export const ContractListSelector = ({
 					const isSelected = contract.id === selectedContractId;
 
 					return (
-						<button
-							type='button'
+						<contractsRouteApi.Link
 							key={contract.id}
+							to='.'
+							search={(prev) => ({ ...prev, selectedContractId: contract.id })}
 							className={cn(
-								'text-sm text-muted-foreground space-y-0.5 w-full text-left rounded-lg p-2 cursor-pointer transition-colors',
+								'block text-sm text-muted-foreground space-y-0.5 w-full text-left rounded-lg p-2 cursor-pointer transition-colors',
 								isSelected ? 'bg-primary/10' : 'hover:bg-primary/5',
 							)}
 							onClick={() => onSelectContract(contract)}
@@ -56,7 +60,7 @@ export const ContractListSelector = ({
 									{formatCurrency({ value: contract.role.rate })}
 								</p>
 							</div>
-						</button>
+						</contractsRouteApi.Link>
 					);
 				})}
 

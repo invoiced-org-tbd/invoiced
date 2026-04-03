@@ -541,6 +541,20 @@ export const enTranslations = {
 	},
 	invoices: {
 		title: 'Invoices',
+		creation: {
+			drawerTitle: 'Invoice Creation',
+			form: {
+				recurrenceLabel: 'Recurrence',
+			},
+			validation: {
+				itemsRequiredInCustomMode: 'Items are required in custom mode',
+			},
+		},
+		server: {
+			invoiceConfigurationRequired:
+				'Please set up your invoice configuration before creating invoices',
+			recurrenceItemNotFound: 'Recurrence item not found',
+		},
 	},
 	onboarding: {
 		title: 'Onboarding',

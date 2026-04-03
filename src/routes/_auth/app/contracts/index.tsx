@@ -9,6 +9,7 @@ import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog/ContractsD
 import { ContractsList } from './-lib/contracts-list/ContractsList';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsZeroState } from './-lib/contracts-zero-state/ContractsZeroState';
+import { InvoiceCreationDrawer } from '@/components/invoice-creation-drawer/InvoiceCreationDrawer';
 
 const contractStepsSchema = z.enum([
 	'role',
@@ -23,6 +24,7 @@ const contractsSearchSchema = z.object({
 	isCreating: z.boolean().optional(),
 	isEditing: z.boolean().optional(),
 	isDeleting: z.boolean().optional(),
+	isCreatingInvoice: z.boolean().optional(),
 	step: contractStepsSchema.optional(),
 });
 export type ContractsSearchSchema = z.infer<typeof contractsSearchSchema>;
@@ -37,7 +39,7 @@ export const Route = createFileRoute('/_auth/app/contracts/')({
 
 function RouteComponent() {
 	const navigate = Route.useNavigate();
-	const { selectedContractId } = Route.useSearch();
+	const { selectedContractId, isCreatingInvoice } = Route.useSearch();
 
 	const { data: contracts } = useSuspenseQuery(getContractsQueryOptions());
 
@@ -59,7 +61,19 @@ function RouteComponent() {
 		});
 	};
 
-	const resolvedSelectedContractId = selectedContractId ?? contracts?.[0]?.id;
+	const handleCreateInvoiceClose = () => {
+		navigate({
+			search: (prev) => ({
+				...prev,
+				isCreatingInvoice: undefined,
+			}),
+		});
+	};
+
+	const resolvedContractData =
+		contracts.find((contract) => contract.id === selectedContractId) ??
+		contracts[0];
+	const resolvedSelectedContractId = resolvedContractData.id;
 	const hasContracts = !!resolvedSelectedContractId;
 
 	return (
@@ -79,6 +93,12 @@ function RouteComponent() {
 
 			<ContractsUpsertDrawer selectedContractId={resolvedSelectedContractId} />
 			<ContractsDeleteDialog selectedContractId={resolvedSelectedContractId} />
+
+			<InvoiceCreationDrawer
+				isOpen={!!isCreatingInvoice}
+				onClose={handleCreateInvoiceClose}
+				contractData={resolvedContractData}
+			/>
 		</Page.Root>
 	);
 }

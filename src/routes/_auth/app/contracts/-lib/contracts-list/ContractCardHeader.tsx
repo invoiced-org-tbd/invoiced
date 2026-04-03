@@ -45,13 +45,18 @@ export const ContractCardHeader = ({ contract }: ContractCardHeaderProps) => {
 					</Button>
 				</contractsRouteApi.Link>
 
-				<Button
-					variant='primary'
-					size='xs'
+				<contractsRouteApi.Link
+					to='.'
+					search={(prev) => ({ ...prev, isCreatingInvoice: true })}
 				>
-					<ReceiptTextIcon />
-					{t('contracts.list.createInvoice')}
-				</Button>
+					<Button
+						variant='primary'
+						size='xs'
+					>
+						<ReceiptTextIcon />
+						{t('contracts.list.createInvoice')}
+					</Button>
+				</contractsRouteApi.Link>
 			</div>
 		</Card.Header>
 	);
