@@ -24,6 +24,7 @@ export const brTranslations = {
 		selectAll: 'Selecionar tudo',
 		addItem: 'Adicionar item',
 		next: 'Próximo',
+		open: 'Abrir',
 		unknownError: 'Ocorreu um erro desconhecido',
 	},
 	form: {
