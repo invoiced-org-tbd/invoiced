@@ -18,9 +18,15 @@ const getInvoicesServerFn = createServerFn({
 			const invoices = await db.query.invoiceTable.findMany({
 				where: {
 					userId: user.id,
+					isDeleted: false,
 				},
 				with: {
 					items: true,
+					contract: {
+						with: {
+							client: true,
+						},
+					},
 				},
 			});
 
@@ -34,7 +40,9 @@ const getInvoicesServerFn = createServerFn({
 		}
 	});
 
-export type GetInvoicesResponse = ExtractServerFnData<typeof getInvoicesServerFn>;
+export type GetInvoicesResponse = ExtractServerFnData<
+	typeof getInvoicesServerFn
+>;
 
 export const getInvoicesQueryOptions = () =>
 	createQueryOptions({

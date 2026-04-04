@@ -74,8 +74,8 @@ function RouteComponent() {
 
 	const resolvedContractData =
 		contracts.find((contract) => contract.id === selectedContractId) ??
-		contracts[0];
-	const resolvedSelectedContractId = resolvedContractData.id;
+		contracts?.[0];
+	const resolvedSelectedContractId = resolvedContractData?.id ?? '';
 	const hasContracts = !!resolvedSelectedContractId;
 
 	return (

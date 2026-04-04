@@ -1,28 +1,37 @@
-import type { InvoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+type CommonInvoiceConfiguration = {
+	prefix: string;
+	suffix: string | null;
+	withYear: boolean;
+	withMonth: boolean;
+	withDay: boolean;
+	lastInvoiceNumber: number;
+	withCompanyName: boolean;
+};
 
 type GetInvoiceFileNameParams = {
-	invoiceConfiguration: InvoiceConfigurationPersistSchema;
+	invoiceConfiguration: CommonInvoiceConfiguration;
 	companyName: string;
-	dayOfMonth: number;
+	date: Date;
 };
 
 // characters not safe for filename segments to be replaced with _
 const unsafeFilenameSegmentChars = /[^a-zA-Z0-9_-]+/g;
 
-const sanitizeFilenameSegment = (value: string) => {
+const sanitizeFilenameSegment = (value?: string | null) => {
+	if (!value) {
+		return '';
+	}
+
 	return value
 		.replace(unsafeFilenameSegmentChars, '_')
 		.replace(/_+/g, '_') // remove multiple underscores
 		.replace(/^_+|_+$/g, ''); // remove leading and trailing underscores
 };
 
-const isValidDayOfMonth = (value: number) =>
-	Number.isInteger(value) && value >= 1 && value <= 31;
-
 export const getInvoiceFileName = ({
 	invoiceConfiguration,
 	companyName,
-	dayOfMonth,
+	date,
 }: GetInvoiceFileNameParams) => {
 	let invoiceFileName = '';
 
@@ -44,12 +53,16 @@ export const getInvoiceFileName = ({
 		}
 	}
 
-	if (invoiceConfiguration.withDay && isValidDayOfMonth(dayOfMonth)) {
-		parts.push(String(dayOfMonth).padStart(2, '0'));
+	if (invoiceConfiguration.withDay) {
+		const day = date.getDate();
+
+		parts.push(String(day).padStart(2, '0'));
 	}
 
 	if (invoiceConfiguration.withMonth) {
-		parts.push(String(new Date().getMonth() + 1).padStart(2, '0'));
+		const month = date.getMonth() + 1;
+
+		parts.push(String(month).padStart(2, '0'));
 	}
 
 	if (invoiceConfiguration.withYear) {

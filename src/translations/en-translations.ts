@@ -540,7 +540,30 @@ export const enTranslations = {
 		},
 	},
 	invoices: {
+		name: 'Invoice',
 		title: 'Invoices',
+		list: {
+			emptyState: 'No invoices yet.',
+			createInvoice: 'Create invoice',
+			viewInvoice: 'View invoice',
+			deleteInvoice: 'Delete invoice',
+			itemSingular: 'item',
+			itemPlural: 'items',
+			itemsCount: '{count} items',
+			sections: {
+				financial: 'Financial',
+				client: 'Client',
+				issue: 'Issue',
+				items: 'Items',
+			},
+			labels: {
+				totalAmount: 'Total amount',
+				company: 'Company',
+				issueDate: 'Issue date',
+				invoiceItem: 'Invoice item',
+			},
+			noItems: 'No items on this invoice.',
+		},
 		creation: {
 			drawerTitle: 'Invoice Creation',
 			form: {
@@ -554,6 +577,8 @@ export const enTranslations = {
 			invoiceConfigurationRequired:
 				'Please set up your invoice configuration before creating invoices',
 			recurrenceItemNotFound: 'Recurrence item not found',
+			notFound: 'Invoice not found',
+			deletedSuccess: 'Invoice deleted',
 		},
 	},
 	onboarding: {

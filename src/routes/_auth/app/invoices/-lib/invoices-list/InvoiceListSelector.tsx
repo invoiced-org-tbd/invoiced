@@ -1,6 +1,7 @@
 import type { GetInvoicesResponse } from '@/api/invoice/getInvoices';
 import { CardListView } from '@/components/card-list-view/CardListView';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { formatCurrency } from '@/utils/currencyUtils';
 import { getRouteApi } from '@tanstack/react-router';
 import { PlusIcon } from 'lucide-react';
 
@@ -28,6 +29,10 @@ export const InvoiceListSelector = ({
 			<CardListView.List.Content>
 				{invoices.map((invoice) => {
 					const isSelected = invoice.id === selectedInvoice.id;
+					const totalAmount = invoice.items.reduce(
+						(acc, item) => acc + item.amount,
+						0,
+					);
 
 					return (
 						<CardListView.List.Item
@@ -39,7 +44,20 @@ export const InvoiceListSelector = ({
 								to='.'
 								search={(prev) => ({ ...prev, selectedInvoiceId: invoice.id })}
 							>
-								<p className='font-medium text-foreground'>{invoice.id}</p>
+								<p className='font-medium text-foreground'>
+									{invoice.fileName}
+								</p>
+								<p>
+									{invoice.contract.client.companyName},{' '}
+									{invoice.items.length === 1
+										? invoice.items[0].description
+										: t('invoices.list.itemsCount', {
+												count: invoice.items.length,
+											})}
+								</p>
+								<p className='text-primary-muted'>
+									{formatCurrency({ value: totalAmount })}
+								</p>
 							</invoicesRouteApi.Link>
 						</CardListView.List.Item>
 					);
@@ -48,7 +66,7 @@ export const InvoiceListSelector = ({
 				<CardListView.List.CreateItem asChild>
 					<button type='button'>
 						<PlusIcon className='size-4' />
-						Create invoice
+						{t('invoices.list.createInvoice')}
 					</button>
 				</CardListView.List.CreateItem>
 			</CardListView.List.Content>

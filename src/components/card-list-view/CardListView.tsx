@@ -27,7 +27,7 @@ const ListRoot = ({ className, children, ...props }: CardListViewListRootProps) 
 		<section
 			data-slot='card-list-view-list'
 			className={cn(
-				'w-max min-w-3xs h-full border border-border/60 border-t-0 shadow-xs rounded-lg relative',
+				'min-w-3xs shrink-0 h-full border border-border/60 border-t-0 shadow-xs rounded-lg relative',
 				className,
 			)}
 			{...props}

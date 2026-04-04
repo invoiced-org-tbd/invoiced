@@ -6,6 +6,9 @@ export const invoiceTable = s.sqliteTable('invoice', {
 	id: u.idColumn(),
 
 	issueDate: s.integer({ mode: 'timestamp' }).notNull(),
+	fileName: s.text().notNull(),
+
+	isDeleted: s.integer({ mode: 'boolean' }).notNull().default(false),
 
 	userId: userIdColumn(),
 	createdAt: u.createdAtColumn(),

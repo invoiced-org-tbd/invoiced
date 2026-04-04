@@ -21,6 +21,7 @@ import { contractClientAddressSnapshotTable } from '@/db/tables/contractClientAd
 import { getRecurrenceItemDate } from '@/components/invoice-creation-drawer/utils';
 import { invoiceConfigurationSnapshotTable } from '@/db/tables/invoiceConfigurationSnapshotTable';
 import { getServerT } from '@/utils/languageUtils';
+import { getInvoiceFileName } from '../invoice-configuration/utils/getInvoiceFileName';
 
 const createInvoiceParams = z.object({
 	form: invoiceCreationFormSchema,
@@ -118,10 +119,17 @@ const createInvoiceServerFn = createServerFn({
 					issueDate = recurrenceDate;
 				}
 
+				const { invoiceFileName } = getInvoiceFileName({
+					invoiceConfiguration,
+					companyName: contract.client.companyName,
+					date: issueDate,
+				});
+
 				const [invoice] = await tx
 					.insert(invoiceTable)
 					.values({
 						issueDate,
+						fileName: invoiceFileName,
 						userId: user.id,
 					})
 					.returning({ id: invoiceTable.id });

@@ -11,6 +11,7 @@ import {
 	useInvoiceConfigurationFormDefaultValues,
 } from './invoiceConfigurationFormSchemas';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
+import { setDay } from 'date-fns';
 
 type ContractInvoiceConfigurationFormProps = {
 	contractValues: ContractsUpsertFormSchema;
@@ -41,10 +42,12 @@ export const ContractInvoiceConfigurationForm = ({
 
 	const values = useStore(form.store, (state) => state.values);
 
+	const dayOfMonth = contractValues.invoiceRecurrence.items[0].dayOfMonth;
+	const date = dayOfMonth ? setDay(new Date(), dayOfMonth) : new Date();
 	const { invoiceFileName } = getInvoiceFileName({
 		invoiceConfiguration: values,
 		companyName: contractValues.client.companyName,
-		dayOfMonth: contractValues.invoiceRecurrence.items[0].dayOfMonth,
+		date,
 	});
 
 	const handleNumberingModeChange = (v: string) => {

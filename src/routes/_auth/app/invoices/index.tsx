@@ -42,7 +42,7 @@ function RouteComponent() {
 					/>
 				) : (
 					<div className='bg-muted rounded-lg p-6 text-sm text-muted-foreground'>
-						No invoices yet.
+						{t('invoices.list.emptyState')}
 					</div>
 				)}
 			</Page.Content>

@@ -16,7 +16,7 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
 				<InvoiceCardContent invoice={invoice} />
 			</div>
 
-			<InvoiceCardFooter invoice={invoice} />
+			<InvoiceCardFooter />
 		</CardListView.Card.Root>
 	);
 };

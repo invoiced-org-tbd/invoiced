@@ -362,7 +362,7 @@ export const brTranslations = {
 			singleLabel: 'Contrato atual',
 			singleBadge: 'Selecionado',
 			emptyBadge: 'Sem contratos',
-			emptyTitle: 'Começe com seu primeiro contrato',
+			emptyTitle: 'Comece com seu primeiro contrato',
 			emptyDescription:
 				'Adicione um contrato para liberar o fluxo de faturamento e automações.',
 			emptyCta: 'Criar contrato',
@@ -382,7 +382,7 @@ export const brTranslations = {
 		zeroState: {
 			withCompany: {
 				badge: 'Sem contratos ainda',
-				title: 'Começe com seu primeiro contrato',
+				title: 'Comece com seu primeiro contrato',
 				description:
 					'Escolha um cliente, defina a frequência das faturas e quando serão enviadas. Você pode alterar esses detalhes depois.',
 				cta: 'Criar seu primeiro contrato',
@@ -549,7 +549,30 @@ export const brTranslations = {
 		},
 	},
 	invoices: {
+		name: 'Fatura',
 		title: 'Faturas',
+		list: {
+			emptyState: 'Nenhuma fatura ainda.',
+			createInvoice: 'Criar fatura',
+			viewInvoice: 'Ver fatura',
+			deleteInvoice: 'Excluir fatura',
+			itemSingular: 'item',
+			itemPlural: 'itens',
+			itemsCount: '{count} itens',
+			sections: {
+				financial: 'Financeiro',
+				client: 'Cliente',
+				issue: 'Emissão',
+				items: 'Itens',
+			},
+			labels: {
+				totalAmount: 'Valor total',
+				company: 'Empresa',
+				issueDate: 'Data de emissão',
+				invoiceItem: 'Item da fatura',
+			},
+			noItems: 'Nenhum item nesta fatura.',
+		},
 		creation: {
 			drawerTitle: 'Criação de fatura',
 			form: {
@@ -564,6 +587,8 @@ export const brTranslations = {
 			invoiceConfigurationRequired:
 				'Configure as opções de fatura antes de criar faturas',
 			recurrenceItemNotFound: 'Item de recorrência não encontrado',
+			notFound: 'Fatura não encontrada',
+			deletedSuccess: 'Fatura excluída',
 		},
 	},
 	onboarding: {
