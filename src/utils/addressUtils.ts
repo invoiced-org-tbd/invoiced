@@ -10,14 +10,18 @@ type FormatAddressSingleLineParams = {
 	address: Address;
 };
 
-export const formatAddressSingleLine = ({
-	address,
-}: FormatAddressSingleLineParams) => {
+export const useFormatAddressSingleLine = () => {
 	const { getCountryName } = useGetCountryName();
 
-	const { country, street1, street2, number, postalCode, city, state } =
-		address;
-	const countryName = getCountryName(country ?? 'us');
+	const fomattedAddress = ({ address }: FormatAddressSingleLineParams) => {
+		const { country, street1, street2, number, postalCode, city, state } =
+			address;
+		const countryName = getCountryName(country ?? 'us');
 
-	return `${street1} ${street2 ?? ''} ${number} ${postalCode} ${city} ${state} ${countryName}`;
+		return `${street1} ${street2 ?? ''} ${number} ${postalCode} ${city} ${state} ${countryName}`;
+	};
+
+	return {
+		fomattedAddress,
+	};
 };
