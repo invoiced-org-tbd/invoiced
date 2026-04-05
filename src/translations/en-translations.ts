@@ -22,6 +22,7 @@ export const enTranslations = {
 		selectAll: 'Select all',
 		addItem: 'Add item',
 		next: 'Next',
+		open: 'Open',
 		unknownError: 'An unknown error occurred',
 	},
 	form: {
