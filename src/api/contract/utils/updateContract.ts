@@ -28,6 +28,18 @@ export const updateContract = async ({
 	form,
 	t,
 }: UpdateContractParams) => {
+	const company = await tx.query.companyTable.findFirst({
+		where: {
+			userId,
+		},
+	});
+
+	if (!company) {
+		throw new ServerError({
+			message: t('contracts.server.companySetupRequiredBeforeUpdate'),
+		});
+	}
+
 	await tx
 		.update(contractRoleTable)
 		.set({
