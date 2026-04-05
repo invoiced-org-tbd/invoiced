@@ -1,7 +1,7 @@
 import type { GetContractsResponse } from '@/api/contract/getContracts';
 import { Card } from '@/components/card/Card';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { formatAddressSingleLine } from '@/utils/addressUtils';
+import { useFormatAddressSingleLine } from '@/utils/addressUtils';
 import { cn } from '@/utils/classNamesUtils';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { getOrdinalSuffix } from '@/utils/stringUtils';
@@ -45,6 +45,7 @@ type ContractCardContentProps = {
 };
 export const ContractCardContent = ({ contract }: ContractCardContentProps) => {
 	const { t } = useTranslate();
+	const { formatAddress } = useFormatAddressSingleLine();
 
 	return (
 		<Card.Content className='grid grid-cols-4 gap-4'>
@@ -75,9 +76,7 @@ export const ContractCardContent = ({ contract }: ContractCardContentProps) => {
 					/>
 					<ContentSectionItem
 						label={t('contracts.list.addressLabel')}
-						value={formatAddressSingleLine({
-							address: contract.client.address,
-						})}
+						value={formatAddress({ address: contract.client.address })}
 					/>
 				</div>
 			</ContentSection>
