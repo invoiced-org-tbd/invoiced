@@ -45,7 +45,7 @@ type ContractCardContentProps = {
 };
 export const ContractCardContent = ({ contract }: ContractCardContentProps) => {
 	const { t } = useTranslate();
-	const { fomattedAddress } = useFormatAddressSingleLine();
+	const { formatAddress } = useFormatAddressSingleLine();
 
 	return (
 		<Card.Content className='grid grid-cols-4 gap-4'>
@@ -76,7 +76,7 @@ export const ContractCardContent = ({ contract }: ContractCardContentProps) => {
 					/>
 					<ContentSectionItem
 						label={t('contracts.list.addressLabel')}
-						value={fomattedAddress({ address: contract.client.address })}
+						value={formatAddress({ address: contract.client.address })}
 					/>
 				</div>
 			</ContentSection>

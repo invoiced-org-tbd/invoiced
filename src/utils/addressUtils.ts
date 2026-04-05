@@ -13,7 +13,7 @@ type FormatAddressSingleLineParams = {
 export const useFormatAddressSingleLine = () => {
 	const { getCountryName } = useGetCountryName();
 
-	const fomattedAddress = ({ address }: FormatAddressSingleLineParams) => {
+	const formatAddress = ({ address }: FormatAddressSingleLineParams) => {
 		const { country, street1, street2, number, postalCode, city, state } =
 			address;
 		const countryName = getCountryName(country ?? 'us');
@@ -22,6 +22,6 @@ export const useFormatAddressSingleLine = () => {
 	};
 
 	return {
-		fomattedAddress,
+		formatAddress,
 	};
 };
