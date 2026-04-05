@@ -548,6 +548,12 @@ export const brTranslations = {
 			alreadyExistsForUser:
 				'Já existe uma configuração de fatura para este usuário.',
 		},
+		server: {
+			companySetupRequiredBeforeCreate:
+				'Configure sua empresa antes de criar um contrato',
+			companySetupRequiredBeforeUpdate:
+				'Configure sua empresa antes de atualizar um contrato',
+		},
 	},
 	invoices: {
 		name: 'Fatura',

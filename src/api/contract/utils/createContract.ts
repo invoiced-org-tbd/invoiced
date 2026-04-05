@@ -10,6 +10,7 @@ import type { TranslationFn } from '@/translations/types';
 import { createContractAddress } from './createContractAddress';
 import { createContractInvoiceRecurrenceItems } from './createContractInvoiceRecurrenceItems';
 import { setupContractCreateAutoSend } from './setupContractCreateAutoSend';
+import { ServerError } from '@/utils/serverFnsUtils';
 
 type CreateContractParams = {
 	tx: Tx;
@@ -23,6 +24,18 @@ export const createContract = async ({
 	form,
 	t,
 }: CreateContractParams) => {
+	const company = await tx.query.companyTable.findFirst({
+		where: {
+			userId,
+		},
+	});
+
+	if (!company) {
+		throw new ServerError({
+			message: t('contracts.server.companySetupRequiredBeforeCreate'),
+		});
+	}
+
 	const [contract] = await tx
 		.insert(contractTable)
 		.values({

@@ -539,6 +539,12 @@ export const enTranslations = {
 			alreadyExistsForUser:
 				'There is already an invoice configuration for this user.',
 		},
+		server: {
+			companySetupRequiredBeforeCreate:
+				'Please setup your company before creating a contract.',
+			companySetupRequiredBeforeUpdate:
+				'Please setup your company before updating a contract.',
+		},
 	},
 	invoices: {
 		name: 'Invoice',
