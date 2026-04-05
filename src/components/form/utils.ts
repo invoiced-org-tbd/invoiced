@@ -83,6 +83,29 @@ export const isDangerousNavigation = ({
 	return false;
 };
 
+type PersistedFormLike<TValues> = {
+	state: {
+		values: TValues;
+	};
+	reset: (values?: TValues, options?: { keepDefaultValues?: boolean }) => void;
+};
+
+type RunAfterSubmitSuccessParams<TValues, TResult> = {
+	form: PersistedFormLike<TValues>;
+	action: () => TResult;
+};
+
+// this prevents navigation blocking when editing an entity - e.g. contract updated, when closing the form is isDirty so triggers the blocker
+export const runAfterSubmitSuccess = <TValues, TResult>({
+	form,
+	action,
+}: RunAfterSubmitSuccessParams<TValues, TResult>) => {
+	form.reset(form.state.values, {
+		keepDefaultValues: false,
+	});
+	return action();
+};
+
 export const FormRootContext = createContext<FormRootContextValue | undefined>(
 	undefined,
 );

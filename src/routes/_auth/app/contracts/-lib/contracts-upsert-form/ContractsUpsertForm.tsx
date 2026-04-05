@@ -9,6 +9,7 @@ import { useFormStepper } from '@/hooks/use-app-form/useFormStepper';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { runAfterSubmitSuccess } from '@/components/form/utils';
 import type { ContractsSearchSchema, ContractStep } from '../..';
 import { ContractAutoSendForm } from './ContractAutoSendForm';
 import { ContractClientForm } from './ContractClientForm';
@@ -75,6 +76,12 @@ export const ContractsUpsertForm = ({
 				return;
 			}
 
+			// prevent saving when there's nothing to save (no changes)
+			if (form.state.isDefaultValue && !!invoiceConfiguration) {
+				onClose();
+				return;
+			}
+
 			let createdContractId: string | undefined;
 			if (isEditing) {
 				await updateContract({
@@ -91,7 +98,10 @@ export const ContractsUpsertForm = ({
 				createdContractId = contractId;
 			}
 
-			onClose(createdContractId);
+			runAfterSubmitSuccess({
+				form,
+				action: () => onClose(createdContractId),
+			});
 		},
 	});
 

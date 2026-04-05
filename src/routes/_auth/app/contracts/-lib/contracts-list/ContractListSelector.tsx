@@ -41,7 +41,10 @@ export const ContractListSelector = ({
 						>
 							<contractsRouteApi.Link
 								to='.'
-								search={(prev) => ({ ...prev, selectedContractId: contract.id })}
+								search={(prev) => ({
+									...prev,
+									selectedContractId: contract.id,
+								})}
 								onClick={() => onSelectContract(contract)}
 							>
 								<div>

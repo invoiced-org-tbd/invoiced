@@ -10,7 +10,11 @@ type ContentSectionProps = PropsWithChildren<{
 	title: string;
 	className?: string;
 }>;
-const ContentSection = ({ title, className, children }: ContentSectionProps) => {
+const ContentSection = ({
+	title,
+	className,
+	children,
+}: ContentSectionProps) => {
 	return (
 		<section className={cn('space-y-2', className)}>
 			<p className='text-xs font-semibold uppercase tracking-wide text-primary-muted'>
