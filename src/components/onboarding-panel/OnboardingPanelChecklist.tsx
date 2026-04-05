@@ -2,10 +2,7 @@ import { Card } from '@/components/card/Card';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { AnimatePresence, motion } from 'framer-motion';
 import { OnboardingPanelStepRow } from './OnboardingPanelStepRow';
-import type {
-	OnboardingPanelManualStepId,
-	OnboardingPanelStep,
-} from './types';
+import type { OnboardingPanelManualStepId, OnboardingPanelStep } from './types';
 
 type OnboardingPanelChecklistProps = {
 	isExpanded: boolean;

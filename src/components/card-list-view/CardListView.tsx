@@ -22,7 +22,11 @@ const Root = ({ className, ...props }: CardListViewRootProps) => {
 	);
 };
 
-const ListRoot = ({ className, children, ...props }: CardListViewListRootProps) => {
+const ListRoot = ({
+	className,
+	children,
+	...props
+}: CardListViewListRootProps) => {
 	return (
 		<section
 			data-slot='card-list-view-list'
@@ -42,7 +46,10 @@ const ListTitle = ({ className, ...props }: CardListViewListTitleProps) => {
 	return (
 		<p
 			data-slot='card-list-view-list-title'
-			className={cn('text-sm font-medium border-b border-border/60 p-3', className)}
+			className={cn(
+				'text-sm font-medium border-b border-border/60 p-3',
+				className,
+			)}
 			{...props}
 		/>
 	);
@@ -95,10 +102,17 @@ const ListCreateItem = ({
 	);
 };
 
-const CardRoot = ({ className, children, ...props }: CardListViewCardRootProps) => {
+const CardRoot = ({
+	className,
+	children,
+	...props
+}: CardListViewCardRootProps) => {
 	return (
 		<Card.Root
-			className={cn('w-full flex flex-col justify-between relative border-t-0', className)}
+			className={cn(
+				'w-full flex flex-col justify-between relative border-t-0',
+				className,
+			)}
 			{...props}
 		>
 			<div className='pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/55 to-transparent' />

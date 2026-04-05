@@ -2,13 +2,9 @@ import { Separator } from '@/components/separator/Separator';
 import { useFormContext } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { cn } from '@/utils/classNamesUtils';
-import { useStore } from '@tanstack/react-form';
-import { useBlocker } from '@tanstack/react-router';
 import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
 import type { ZodObject } from 'zod';
-import { Button } from '../button/Button';
-import { Dialog } from '../dialog/Dialog';
 import type {
 	FormCancelButtonProps,
 	FormGroupProps,
@@ -19,11 +15,9 @@ import type {
 	FormSubSetProps,
 } from './types';
 import type { FormRootContextValue } from './utils';
-import {
-	FormRootContext,
-	isDangerousNavigation,
-	useFormRootContext,
-} from './utils';
+import { FormRootContext, useFormRootContext } from './utils';
+import { FormNavigationBlocker } from './FormNavigationBlocker';
+import { Button } from '../button/Button';
 
 const FormRoot = <TFormSchema extends ZodObject>({
 	className,
@@ -64,81 +58,6 @@ const FormRoot = <TFormSchema extends ZodObject>({
 				<FormNavigationBlocker />
 			</formApi.AppForm>
 		</FormRootContext.Provider>
-	);
-};
-
-const FormNavigationBlocker = () => {
-	const form = useFormContext();
-	const formRootContext = useFormRootContext();
-	const { t } = useTranslate();
-
-	const { isDefaultValue } = useStore(form.store, (state) => ({
-		isDefaultValue: state.isDefaultValue,
-	}));
-
-	const { status, reset, proceed } = useBlocker({
-		withResolver: true,
-		shouldBlockFn: ({ current, next }) => {
-			if (isDefaultValue) {
-				return false;
-			}
-
-			const safeSearchParamKeys = formRootContext?.safeSearchParamKeys ?? [];
-
-			return isDangerousNavigation({
-				current,
-				next,
-				safeSearchParamKeys,
-			});
-		},
-	});
-	const isBlocked = status === 'blocked';
-
-	const handleCancel = () => {
-		if (!isBlocked) {
-			return;
-		}
-
-		reset();
-	};
-
-	const handleConfirm = () => {
-		if (!isBlocked) {
-			return;
-		}
-
-		proceed();
-	};
-
-	return (
-		<Dialog.Root
-			open={isBlocked}
-			onOpenChange={handleCancel}
-		>
-			<Dialog.Content>
-				<Dialog.Header>
-					<Dialog.Title>{t('form.unsavedChanges.title')}</Dialog.Title>
-					<Dialog.Description>
-						{t('form.unsavedChanges.description')}
-					</Dialog.Description>
-				</Dialog.Header>
-				<Dialog.Footer>
-					<Button
-						variant='destructive'
-						isGhost={true}
-						onClick={handleConfirm}
-					>
-						{t('form.unsavedChanges.discardAndLeave')}
-					</Button>
-					<Button
-						variant='secondary'
-						onClick={handleCancel}
-					>
-						{t('form.unsavedChanges.stay')}
-					</Button>
-				</Dialog.Footer>
-			</Dialog.Content>
-		</Dialog.Root>
 	);
 };
 
