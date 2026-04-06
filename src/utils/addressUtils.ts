@@ -1,10 +1,12 @@
+import type { GetCompanyResponse } from '@/api/company/getCompany';
 import type { GetContractsResponse } from '@/api/contract/getContracts';
 import type { AddressFormValues } from '@/components/address-form/types';
 import { useGetCountryName } from '@/lib/countries';
 
 type Address =
 	| AddressFormValues
-	| GetContractsResponse[number]['client']['address'];
+	| GetContractsResponse[number]['client']['address']
+	| NonNullable<GetCompanyResponse>['address'];
 
 type FormatAddressSingleLineParams = {
 	address: Address;

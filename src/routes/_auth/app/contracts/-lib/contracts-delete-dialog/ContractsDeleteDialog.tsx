@@ -24,11 +24,7 @@ export const ContractsDeleteDialog = ({
 
 	const handleClose = () => {
 		navigate({
-			search: (prev) => ({
-				...prev,
-				selectedContractId: undefined,
-				isDeleting: undefined,
-			}),
+			search: {},
 		});
 	};
 

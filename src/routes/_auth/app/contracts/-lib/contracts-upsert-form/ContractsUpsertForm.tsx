@@ -171,10 +171,9 @@ export const ContractsUpsertForm = ({
 			</Drawer.Body>
 
 			<Drawer.Footer>
-				<form.CancelButton
-					size='sm'
-					onClick={() => onClose()}
-				/>
+				<Drawer.Close asChild>
+					<form.CancelButton />
+				</Drawer.Close>
 
 				<div className='flex items-center gap-2 ml-auto'>
 					<form.Subscribe

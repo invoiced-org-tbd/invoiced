@@ -143,6 +143,7 @@ export const enTranslations = {
 			company: {
 				title: 'Company',
 				description: 'Manage your company information.',
+				entityName: 'company',
 				profile: {
 					title: 'Company profile',
 					description: 'Your workspace is linked to a single company record.',
@@ -173,6 +174,7 @@ export const enTranslations = {
 				smtp: {
 					title: 'SMTP configurations',
 					description: 'Manage your outgoing email providers.',
+					entityName: 'SMTP configuration',
 					senderLabel: 'Sender email',
 					hostLabel: 'Host / Port',
 					presets: {
@@ -240,6 +242,7 @@ export const enTranslations = {
 				emailTemplates: {
 					title: 'Email templates',
 					description: 'Create and maintain reusable email templates.',
+					entityName: 'email template',
 					subjectLabel: 'Subject preview',
 					updatedAtLabel: 'Updated at',
 					emptyState: {
@@ -254,8 +257,17 @@ export const enTranslations = {
 						description: 'Define template type and subject.',
 						editTitle: 'Edit email template',
 						editDescription: 'Adjust template details and status.',
+						duplicateTitle: 'Duplicate email template',
+						duplicateDescription:
+							'Create a copy from an existing template.',
 						createAction: 'Create template',
 						saveAction: 'Save changes',
+					},
+					feedback: {
+						duplicateSuccess: 'Email template duplicated successfully',
+					},
+					errors: {
+						createFailed: 'Failed to create email template',
 					},
 					form: {
 						nameLabel: 'Template name',

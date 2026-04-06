@@ -147,6 +147,7 @@ export const brTranslations = {
 			company: {
 				title: 'Empresa',
 				description: 'Gerencie suas informações de empresa.',
+				entityName: 'empresa',
 				profile: {
 					title: 'Perfil da empresa',
 					description:
@@ -178,6 +179,7 @@ export const brTranslations = {
 				smtp: {
 					title: 'Configurações SMTP',
 					description: 'Gerencie seus provedores de envio de e-mail.',
+					entityName: 'configuração SMTP',
 					senderLabel: 'E-mail remetente',
 					hostLabel: 'Host / Porta',
 					presets: {
@@ -247,6 +249,7 @@ export const brTranslations = {
 				emailTemplates: {
 					title: 'Templates de e-mail',
 					description: 'Crie e mantenha templates reutilizáveis de e-mail.',
+					entityName: 'template de e-mail',
 					subjectLabel: 'Prévia do assunto',
 					updatedAtLabel: 'Atualizado em',
 					emptyState: {
@@ -261,8 +264,17 @@ export const brTranslations = {
 						description: 'Defina o tipo e o assunto do template.',
 						editTitle: 'Editar template de e-mail',
 						editDescription: 'Ajuste os detalhes e o status do template.',
+						duplicateTitle: 'Duplicar template de e-mail',
+						duplicateDescription:
+							'Crie uma cópia a partir de um template existente.',
 						createAction: 'Criar template',
 						saveAction: 'Salvar alterações',
+					},
+					feedback: {
+						duplicateSuccess: 'Template de e-mail duplicado com sucesso',
+					},
+					errors: {
+						createFailed: 'Falha ao criar template de e-mail',
 					},
 					form: {
 						nameLabel: 'Nome do template',

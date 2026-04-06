@@ -10,13 +10,17 @@ import {
 	HTTP_STATUS_CODES,
 	ServerError,
 } from '@/utils/serverFnsUtils';
+import { getServerT } from '@/utils/languageUtils';
 import { createServerFn } from '@tanstack/react-start';
-import type z from 'zod';
+import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { emailTemplateQueryKeys } from './emailTemplateApiUtils';
-import { emailTemplateUpsertSchema } from './emailTemplateUpsertSchema';
+import { emailTemplateUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/emailTemplateUpsertFormSchema';
 
-const createEmailTemplateParams = emailTemplateUpsertSchema.clone();
+const createEmailTemplateParams = z.object({
+	form: emailTemplateUpsertFormSchema,
+});
+
 type CreateEmailTemplateParams = z.infer<typeof createEmailTemplateParams>;
 
 const createEmailTemplateServerFn = createServerFn({
@@ -24,22 +28,24 @@ const createEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createEmailTemplateParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data: { form }, context: { user, language } }) => {
 		try {
+			const t = getServerT(language);
+
 			const [createdTemplate] = await db
 				.insert(emailTemplateTable)
 				.values({
 					userId: user.id,
-					name: data.name,
-					slug: data.slug,
-					subject: data.subject,
-					body: data.body,
+					name: form.name,
+					slug: form.slug,
+					subject: form.subject,
+					body: form.body,
 				})
 				.returning();
 
 			if (!createdTemplate) {
 				throw new ServerError({
-					message: 'Failed to create email template',
+					message: t('settings.tabs.automations.emailTemplates.errors.createFailed'),
 					statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
 				});
 			}
@@ -54,8 +60,8 @@ const createEmailTemplateServerFn = createServerFn({
 
 export const createEmailTemplateMutationOptions = () =>
 	createMutationOptions({
-		mutationFn: (data: CreateEmailTemplateParams) =>
-			createEmailTemplateServerFn({ data }),
+		mutationFn: (params: CreateEmailTemplateParams) =>
+			createEmailTemplateServerFn({ data: params }),
 		onSuccess: (...args) => {
 			invalidateOnSuccess({
 				args,

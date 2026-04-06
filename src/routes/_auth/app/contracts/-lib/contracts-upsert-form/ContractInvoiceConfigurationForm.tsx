@@ -216,6 +216,7 @@ export const ContractInvoiceConfigurationForm = ({
 				<Dialog.Close asChild>
 					<form.CancelButton />
 				</Dialog.Close>
+
 				<form.SubmitButton>
 					{t('contracts.invoiceConfigurationSetup.finishSetup')}
 				</form.SubmitButton>

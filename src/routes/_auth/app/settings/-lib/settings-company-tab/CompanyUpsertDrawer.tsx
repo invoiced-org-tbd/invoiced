@@ -1,29 +1,24 @@
 import { Drawer } from '@/components/drawer/Drawer';
-import type { GetCompanyResponse } from '@/api/company/getCompany';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { getRouteApi } from '@tanstack/react-router';
-import { UpsertCompanyForm } from './UpsertCompanyForm';
+import { CompanyUpsertForm } from './CompanyUpsertForm';
 
 const settingsRouteApi = getRouteApi('/_auth/app/settings/');
 
-type UpsertCompanyDrawerProps = {
-	company: GetCompanyResponse;
-};
-
-export const UpsertCompanyDrawer = ({ company }: UpsertCompanyDrawerProps) => {
-	const { t } = useTranslate();
-	const { companyAction } = settingsRouteApi.useSearch();
+export const CompanyUpsertDrawer = () => {
+	const { isSettingUpCompany, isEditingCompany } = settingsRouteApi.useSearch();
 	const navigate = settingsRouteApi.useNavigate();
 
-	const isOpen = !!companyAction;
-	const isEditing = companyAction === 'edit';
-	const mode = isEditing && company ? 'edit' : 'create';
+	const { t } = useTranslate();
+
+	const isOpen = isSettingUpCompany || isEditingCompany;
 
 	const handleClose = () => {
 		navigate({
 			search: (prev) => ({
 				...prev,
-				companyAction: undefined,
+				isSettingUpCompany: undefined,
+				isEditingCompany: undefined,
 			}),
 		});
 	};
@@ -36,20 +31,18 @@ export const UpsertCompanyDrawer = ({ company }: UpsertCompanyDrawerProps) => {
 			<Drawer.Content>
 				<Drawer.Header>
 					<Drawer.Title>
-						{isEditing
+						{isSettingUpCompany
 							? t('settings.tabs.company.drawer.editTitle')
 							: t('settings.tabs.company.drawer.title')}
 					</Drawer.Title>
 					<Drawer.Description>
-						{isEditing
+						{isSettingUpCompany
 							? t('settings.tabs.company.drawer.editDescription')
 							: t('settings.tabs.company.drawer.description')}
 					</Drawer.Description>
 				</Drawer.Header>
-				<UpsertCompanyForm
-					mode={mode}
-					company={mode === 'edit' ? company : undefined}
-					onSuccess={handleClose}
+				<CompanyUpsertForm
+					isEditingCompany={isEditingCompany}
 					onClose={handleClose}
 				/>
 			</Drawer.Content>

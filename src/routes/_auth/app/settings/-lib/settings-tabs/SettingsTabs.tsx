@@ -1,21 +1,32 @@
 import { Tabs } from '@/components/tabs/Tabs';
-import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { settingsTabs } from '../consts';
-import type { SettingsTab } from '../consts';
+import type { SettingsTab } from '../..';
+import { settingsTabsSchema } from '../..';
+import { useSettingsTabs } from './consts';
+
+const assertIsSettingsTab = (value: string): value is SettingsTab => {
+	return settingsTabsSchema.options.some((option) => option === value);
+};
 
 type SettingsTabsProps = {
 	activeTab: SettingsTab;
-	onTabChange: (value: string) => void;
+	onTabChange: (value: SettingsTab) => void;
 };
-
 export const SettingsTabs = ({ activeTab, onTabChange }: SettingsTabsProps) => {
-	const { t } = useTranslate();
+	const { settingsTabs } = useSettingsTabs();
+
+	const handleTabChange = (value: string) => {
+		if (!assertIsSettingsTab(value)) {
+			return;
+		}
+
+		onTabChange(value);
+	};
 
 	return (
 		<Tabs.Root
 			orientation='vertical'
 			value={activeTab}
-			onValueChange={onTabChange}
+			onValueChange={handleTabChange}
 			className='grid md:grid-cols-[220px_1fr]'
 		>
 			<Tabs.List className='h-fit items-stretch p-1'>
@@ -27,7 +38,7 @@ export const SettingsTabs = ({ activeTab, onTabChange }: SettingsTabsProps) => {
 							value={item.value}
 						>
 							<Icon />
-							{t(item.labelKey)}
+							{item.label}
 						</Tabs.Trigger>
 					);
 				})}

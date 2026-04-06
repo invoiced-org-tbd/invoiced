@@ -1,5 +1,7 @@
 import { db } from '@/db/client';
 import { emailTemplateTable } from '@/db/tables/emailTemplateTable';
+import { emailTemplateUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/emailTemplateUpsertFormSchema';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -7,21 +9,17 @@ import {
 import {
 	createErrorResponse,
 	createSuccessResponse,
-	HTTP_STATUS_CODES,
-	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
 import { and, eq } from 'drizzle-orm';
 import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { emailTemplateQueryKeys } from './emailTemplateApiUtils';
-import { emailTemplateUpsertSchema } from './emailTemplateUpsertSchema';
 
-const updateEmailTemplateParams = emailTemplateUpsertSchema
-	.extend({
-		id: z.string().min(1),
-	})
-	.clone();
+const updateEmailTemplateParams = z.object({
+	editId: z.string().min(1),
+	form: emailTemplateUpsertFormSchema,
+});
 
 type UpdateEmailTemplateParams = z.infer<typeof updateEmailTemplateParams>;
 
@@ -30,33 +28,37 @@ const updateEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateEmailTemplateParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data: { form, editId }, context: { user, language } }) => {
 		try {
+			const t = getServerT(language);
+
 			const currentTemplate = await db.query.emailTemplateTable.findFirst({
 				where: {
-					id: data.id,
+					id: editId,
 					userId: user.id,
 				},
 			});
 
 			if (!currentTemplate) {
-				throw new ServerError({
-					message: 'Email template not found',
-					statusCode: HTTP_STATUS_CODES.NOT_FOUND,
+				return createSuccessResponse({
+					data: null,
+					message: t('entity.notFound', {
+						entity: t('settings.tabs.automations.emailTemplates.entityName'),
+					}),
 				});
 			}
 
 			await db
 				.update(emailTemplateTable)
 				.set({
-					name: data.name,
-					slug: data.slug,
-					subject: data.subject,
-					body: data.body,
+					name: form.name,
+					slug: form.slug,
+					subject: form.subject,
+					body: form.body,
 				})
 				.where(
 					and(
-						eq(emailTemplateTable.id, data.id),
+						eq(emailTemplateTable.id, currentTemplate.id),
 						eq(emailTemplateTable.userId, user.id),
 					),
 				);
@@ -71,8 +73,8 @@ const updateEmailTemplateServerFn = createServerFn({
 
 export const updateEmailTemplateMutationOptions = () =>
 	createMutationOptions({
-		mutationFn: (data: UpdateEmailTemplateParams) =>
-			updateEmailTemplateServerFn({ data }),
+		mutationFn: (params: UpdateEmailTemplateParams) =>
+			updateEmailTemplateServerFn({ data: params }),
 		onSuccess: (...args) => {
 			invalidateOnSuccess({
 				args,

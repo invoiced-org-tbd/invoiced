@@ -1,80 +1,35 @@
 import { createCompanyMutationOptions } from '@/api/company/createCompany';
-import type { GetCompanyResponse } from '@/api/company/getCompany';
-import { companyUpsertFormSchema } from '@/api/company/companyUpsertSchema';
-import type { CompanyUpsertFormSchema } from '@/api/company/companyUpsertSchema';
 import { updateCompanyMutationOptions } from '@/api/company/updateCompany';
 import { AddressForm } from '@/components/address-form/AddressForm';
 import { Drawer } from '@/components/drawer/Drawer';
 import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
+import {
+	companyUpsertFormSchema,
+	useUpsertCompanyFormDefaultValues,
+} from './companyUpsertFormSchemas';
+import { runAfterSubmitSuccess } from '@/components/form/utils';
 
 type UpsertCompanyFormProps = {
-	mode: 'create' | 'edit';
-	company?: GetCompanyResponse;
+	isEditingCompany?: boolean;
 	onClose: () => void;
-	onSuccess?: () => void;
 };
-
-const useUpsertCompanyFormDefaultValues = ({
-	mode,
-	company,
-}: {
-	mode: UpsertCompanyFormProps['mode'];
-	company?: UpsertCompanyFormProps['company'];
-}) => {
-	return {
-		defaultValues:
-			mode === 'edit' && company
-				? {
-						general: {
-							name: company.name,
-							email: company.email,
-						},
-						address: {
-							street1: company.address?.street1 ?? '',
-							street2: company.address?.street2 ?? '',
-							number: company.address?.number ?? '',
-							postalCode: company.address?.postalCode ?? '',
-							city: company.address?.city ?? '',
-							state: company.address?.state ?? '',
-						},
-					}
-				: {
-						general: {
-							name: '',
-							email: '',
-						},
-						address: {
-							street1: '',
-							street2: '',
-							number: '',
-							postalCode: '',
-							city: '',
-							state: '',
-						},
-					},
-	} satisfies {
-		defaultValues: CompanyUpsertFormSchema;
-	};
-};
-
-export const UpsertCompanyForm = ({
-	mode,
-	company,
+export const CompanyUpsertForm = ({
+	isEditingCompany,
 	onClose,
-	onSuccess,
 }: UpsertCompanyFormProps) => {
 	const { t } = useTranslate();
+
 	const { mutateAsync: createCompany } = useMutation(
 		createCompanyMutationOptions(),
 	);
 	const { mutateAsync: updateCompany } = useMutation(
 		updateCompanyMutationOptions(),
 	);
+
 	const { defaultValues } = useUpsertCompanyFormDefaultValues({
-		mode,
-		company,
+		isEditingCompany,
 	});
 
 	const form = useAppForm({
@@ -83,12 +38,16 @@ export const UpsertCompanyForm = ({
 			onChange: companyUpsertFormSchema,
 		},
 		onSubmit: async ({ value }) => {
-			if (mode === 'edit') {
-				await updateCompany(value);
+			if (isEditingCompany) {
+				await updateCompany({ form: value });
 			} else {
-				await createCompany(value);
+				await createCompany({ form: value });
 			}
-			onSuccess?.();
+
+			runAfterSubmitSuccess({
+				form,
+				action: onClose,
+			});
 		},
 	});
 
@@ -146,19 +105,12 @@ export const UpsertCompanyForm = ({
 				</form.Group>
 			</Drawer.Body>
 
-			<Drawer.Footer>
-				<form.CancelButton
-					size='sm'
-					onClick={onClose}
-				/>
-				<form.SubmitButton
-					size='sm'
-					className='ml-auto'
-				>
-					{mode === 'edit'
-						? t('settings.tabs.company.drawer.saveAction')
-						: t('createCompany.form.submit')}
-				</form.SubmitButton>
+			<Drawer.Footer className='justify-end'>
+				<Drawer.Close asChild>
+					<form.CancelButton />
+				</Drawer.Close>
+
+				<form.SubmitButton />
 			</Drawer.Footer>
 		</form.Root>
 	);
