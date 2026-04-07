@@ -9,16 +9,17 @@ import {
 import {
 	createErrorResponse,
 	createSuccessResponse,
-	HTTP_STATUS_CODES,
-	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import type z from 'zod';
+import z from 'zod';
 import { companyQueryKeys } from './companyApiUtils';
-import { companyUpsertFormSchema } from './companyUpsertSchema';
 import { sessionMiddleware } from '../sessionMiddleware';
+import { companyUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-company-tab/companyUpsertFormSchemas';
+import { getServerT } from '@/utils/languageUtils';
 
-const updateCompanyParams = companyUpsertFormSchema.clone();
+const updateCompanyParams = z.object({
+	form: companyUpsertFormSchema,
+});
 type UpdateCompanyParams = z.infer<typeof updateCompanyParams>;
 
 const updateCompanyServerFn = createServerFn({
@@ -26,25 +27,29 @@ const updateCompanyServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateCompanyParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data: { form }, context: { user, language } }) => {
 		try {
+			const t = getServerT(language);
+
 			const currentCompany = await db.query.companyTable.findFirst({
 				where: {
 					userId: user.id,
 				},
-				with: {
-					address: true,
+				columns: {
+					id: true,
 				},
 			});
 
 			if (!currentCompany) {
-				throw new ServerError({
-					message: 'Company not found',
-					statusCode: HTTP_STATUS_CODES.NOT_FOUND,
+				return createSuccessResponse({
+					data: null,
+					message: t('entity.notFound', {
+						entity: t('settings.tabs.company.entityName'),
+					}),
 				});
 			}
 
-			const { general, address } = data;
+			const { general, address } = form;
 
 			await db.transaction(async (tx) => {
 				await tx
@@ -55,32 +60,18 @@ const updateCompanyServerFn = createServerFn({
 					})
 					.where(eq(companyTable.id, currentCompany.id));
 
-				if (currentCompany.address) {
-					await tx
-						.update(companyAddressTable)
-						.set({
-							street1: address.street1,
-							street2: address.street2 || null,
-							number: address.number,
-							postalCode: address.postalCode,
-							city: address.city,
-							state: address.state,
-							country: 'br',
-						})
-						.where(eq(companyAddressTable.companyId, currentCompany.id));
-					return;
-				}
-
-				await tx.insert(companyAddressTable).values({
-					companyId: currentCompany.id,
-					street1: address.street1,
-					street2: address.street2 || null,
-					number: address.number,
-					postalCode: address.postalCode,
-					city: address.city,
-					state: address.state,
-					country: 'br',
-				});
+				await tx
+					.update(companyAddressTable)
+					.set({
+						street1: address.street1,
+						street2: address.street2 || null,
+						number: address.number,
+						postalCode: address.postalCode,
+						city: address.city,
+						state: address.state,
+						country: 'br',
+					})
+					.where(eq(companyAddressTable.companyId, currentCompany.id));
 			});
 
 			return createSuccessResponse();

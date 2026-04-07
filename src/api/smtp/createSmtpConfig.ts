@@ -1,5 +1,6 @@
 import { db } from '@/db/client';
 import { smtpConfigTable } from '@/db/tables/smtpConfigTable';
+import { smtpCreateFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/smtpUpsertFormSchemas';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -7,16 +8,15 @@ import {
 import {
 	createErrorResponse,
 	createSuccessResponse,
-	HTTP_STATUS_CODES,
-	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import type z from 'zod';
+import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { smtpQueryKeys } from './smtpApiUtils';
-import { smtpUpsertSchema } from './smtpUpsertSchema';
 
-const createSmtpConfigParams = smtpUpsertSchema.clone();
+const createSmtpConfigParams = z.object({
+	form: smtpCreateFormSchema,
+});
 type CreateSmtpConfigParams = z.infer<typeof createSmtpConfigParams>;
 
 const createSmtpConfigServerFn = createServerFn({
@@ -24,36 +24,19 @@ const createSmtpConfigServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createSmtpConfigParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data: { form }, context: { user } }) => {
 		try {
-			if (!data.password) {
-				throw new ServerError({
-					message: 'SMTP password is required',
-					statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
-				});
-			}
-
-			const [createdSmtpConfig] = await db
-				.insert(smtpConfigTable)
-				.values({
-					userId: user.id,
-					name: data.name,
-					host: data.host,
-					port: data.port,
-					security: data.security,
-					username: data.username,
-					password: data.password,
-					fromName: data.fromName || null,
-					fromEmail: data.fromEmail,
-				})
-				.returning();
-
-			if (!createdSmtpConfig) {
-				throw new ServerError({
-					message: 'Failed to create SMTP config',
-					statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
-				});
-			}
+			await db.insert(smtpConfigTable).values({
+				userId: user.id,
+				name: form.name,
+				host: form.host,
+				port: form.port,
+				security: form.security,
+				username: form.username,
+				password: form.password,
+				fromName: form.fromName,
+				fromEmail: form.fromEmail,
+			});
 
 			return createSuccessResponse();
 		} catch (error) {

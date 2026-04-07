@@ -1,105 +1,84 @@
-import { Drawer } from '@/components/drawer/Drawer';
 import { createSmtpConfigMutationOptions } from '@/api/smtp/createSmtpConfig';
-import type { GetSmtpConfigsResponse } from '@/api/smtp/getSmtpConfigs';
-import { smtpUpsertSchema } from '@/api/smtp/smtpUpsertSchema';
-import type { SmtpUpsertSchema } from '@/api/smtp/smtpUpsertSchema';
 import { updateSmtpConfigMutationOptions } from '@/api/smtp/updateSmtpConfig';
 import { Button } from '@/components/button/Button';
+import { Drawer } from '@/components/drawer/Drawer';
+import { runAfterSubmitSuccess } from '@/components/form/utils';
 import { SelectInput } from '@/components/select-input/SelectInput';
 import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
+import type { SmtpCreateFormSchema } from './smtpUpsertFormSchemas';
+import {
+	smtpCreateFormSchema,
+	smtpUpdateFormSchema,
+	useSmtpUpsertFormDefaultValues,
+} from './smtpUpsertFormSchemas';
+import type { SmtpProviderPreset } from './utils';
+import { useSmtpProviderPresetItems, useSmtpSecurityItems } from './utils';
 
 type UpsertSmtpFormProps = {
-	mode: 'create' | 'edit';
-	smtpConfig?: GetSmtpConfigsResponse[number];
+	editId?: string;
+	isEditing?: boolean;
 	onClose: () => void;
-	onSuccess: () => void;
 };
-
-type SmtpProviderPreset = 'gmail' | 'outlook' | 'mailgun' | 'sendgrid';
-
-const smtpProviderPresets: Record<
-	SmtpProviderPreset,
-	{ host: string; port: number; security: SmtpUpsertSchema['security'] }
-> = {
-	gmail: { host: 'smtp.gmail.com', port: 587, security: 'starttls' },
-	outlook: { host: 'smtp.office365.com', port: 587, security: 'starttls' },
-	mailgun: { host: 'smtp.mailgun.org', port: 587, security: 'starttls' },
-	sendgrid: { host: 'smtp.sendgrid.net', port: 587, security: 'starttls' },
-};
-
-const toDefaultValues = (
-	mode: UpsertSmtpFormProps['mode'],
-	smtpConfig?: GetSmtpConfigsResponse[number],
-): SmtpUpsertSchema => {
-	if (mode === 'edit' && smtpConfig) {
-		return {
-			name: smtpConfig.name,
-			username: smtpConfig.username,
-			password: '',
-			fromName: smtpConfig.fromName ?? '',
-			fromEmail: smtpConfig.fromEmail,
-			host: smtpConfig.host,
-			port: smtpConfig.port,
-			security: smtpConfig.security,
-		};
-	}
-
-	return {
-		name: '',
-		username: '',
-		password: '',
-		fromName: '',
-		fromEmail: '',
-		host: '',
-		port: 587,
-		security: 'starttls',
-	};
-};
-
-export const UpsertSmtpForm = ({
-	mode,
-	smtpConfig,
+export const SmtpUpsertForm = ({
+	editId,
+	isEditing,
 	onClose,
-	onSuccess,
 }: UpsertSmtpFormProps) => {
 	const { t } = useTranslate();
+
+	const { defaultValues, isLoadingEditSmtpConfig } =
+		useSmtpUpsertFormDefaultValues({
+			editId,
+		});
+
+	const { providerPresetItems } = useSmtpProviderPresetItems();
+	const { securityItems } = useSmtpSecurityItems();
+
 	const [selectedPreset, setSelectedPreset] = useState<
 		SmtpProviderPreset | undefined
-	>();
+	>(providerPresetItems[0].value);
+
 	const { mutateAsync: createSmtpConfig } = useMutation(
 		createSmtpConfigMutationOptions(),
 	);
 	const { mutateAsync: updateSmtpConfig } = useMutation(
 		updateSmtpConfigMutationOptions(),
 	);
+
+	const schema = isEditing ? smtpUpdateFormSchema : smtpCreateFormSchema;
 	const form = useAppForm({
-		defaultValues: toDefaultValues(mode, smtpConfig),
+		defaultValues,
 		validators: {
-			onChange: smtpUpsertSchema,
+			onChange: schema,
 		},
 		onSubmit: async ({ value }) => {
-			if (mode === 'edit' && smtpConfig) {
+			if (isEditing) {
 				await updateSmtpConfig({
-					id: smtpConfig.id,
-					...value,
-					password: value.password || undefined,
+					editId: editId ?? '',
+					form: value,
 				});
 			} else {
-				await createSmtpConfig(value);
+				await createSmtpConfig({ form: value as SmtpCreateFormSchema });
 			}
-			onSuccess();
+
+			runAfterSubmitSuccess({
+				form,
+				action: onClose,
+			});
 		},
 	});
 
-	const applyPreset = () => {
-		if (!selectedPreset) {
+	const handleApplyProviderPreset = () => {
+		const preset = providerPresetItems.find(
+			(item) => item.value === selectedPreset,
+		);
+		if (!preset) {
 			return;
 		}
 
-		const preset = smtpProviderPresets[selectedPreset];
 		form.setFieldValue('host', preset.host);
 		form.setFieldValue('port', preset.port);
 		form.setFieldValue('security', preset.security);
@@ -108,7 +87,8 @@ export const UpsertSmtpForm = ({
 	return (
 		<form.Root
 			form={form}
-			schema={smtpUpsertSchema}
+			schema={schema}
+			isLoading={isLoadingEditSmtpConfig}
 		>
 			<Drawer.Body>
 				<form.Group>
@@ -123,47 +103,21 @@ export const UpsertSmtpForm = ({
 									'settings.tabs.automations.smtp.presets.placeholder',
 								)}
 								value={selectedPreset}
-								onChange={(value) =>
-									setSelectedPreset(value as SmtpProviderPreset | undefined)
-								}
-								items={[
-									{
-										label: t(
-											'settings.tabs.automations.smtp.presets.providers.gmail',
-										),
-										value: 'gmail',
-									},
-									{
-										label: t(
-											'settings.tabs.automations.smtp.presets.providers.outlook',
-										),
-										value: 'outlook',
-									},
-									{
-										label: t(
-											'settings.tabs.automations.smtp.presets.providers.mailgun',
-										),
-										value: 'mailgun',
-									},
-									{
-										label: t(
-											'settings.tabs.automations.smtp.presets.providers.sendgrid',
-										),
-										value: 'sendgrid',
-									},
-								]}
-								allowEmpty
+								onChange={setSelectedPreset}
+								items={providerPresetItems}
+								allowEmpty={false}
 							/>
 							<Button
 								size='sm'
 								variant='secondary'
-								onClick={applyPreset}
+								onClick={handleApplyProviderPreset}
 								disabled={!selectedPreset}
 							>
 								{t('settings.tabs.automations.smtp.presets.applyAction')}
 							</Button>
 						</div>
 					</div>
+
 					<form.AppField
 						name='name'
 						children={(field) => (
@@ -230,30 +184,12 @@ export const UpsertSmtpForm = ({
 									tooltip={t(
 										'settings.tabs.automations.smtp.form.securityHint',
 									)}
-									items={[
-										{
-											label: t(
-												'settings.tabs.automations.smtp.securityModes.starttls',
-											),
-											value: 'starttls',
-										},
-										{
-											label: t(
-												'settings.tabs.automations.smtp.securityModes.sslTls',
-											),
-											value: 'ssl_tls',
-										},
-										{
-											label: t(
-												'settings.tabs.automations.smtp.securityModes.none',
-											),
-											value: 'none',
-										},
-									]}
+									items={securityItems}
 								/>
 							)}
 						/>
 					</div>
+
 					<form.AppField
 						name='fromName'
 						children={(field) => (
@@ -272,12 +208,12 @@ export const UpsertSmtpForm = ({
 								type='password'
 								label={t('settings.tabs.automations.smtp.form.passwordLabel')}
 								tooltip={t(
-									mode === 'edit'
+									isEditing
 										? 'settings.tabs.automations.smtp.form.passwordEditDescription'
 										: 'settings.tabs.automations.smtp.form.passwordDescription',
 								)}
 								placeholder={t(
-									mode === 'edit'
+									isEditing
 										? 'settings.tabs.automations.smtp.form.passwordEditPlaceholder'
 										: 'settings.tabs.automations.smtp.form.passwordPlaceholder',
 								)}
@@ -287,18 +223,11 @@ export const UpsertSmtpForm = ({
 				</form.Group>
 			</Drawer.Body>
 			<Drawer.Footer>
-				<form.CancelButton
-					size='sm'
-					onClick={onClose}
-				/>
-				<form.SubmitButton
-					size='sm'
-					className='ml-auto'
-				>
-					{mode === 'edit'
-						? t('settings.tabs.automations.smtp.drawer.saveAction')
-						: t('settings.tabs.automations.smtp.drawer.createAction')}
-				</form.SubmitButton>
+				<Drawer.Close asChild>
+					<form.CancelButton />
+				</Drawer.Close>
+
+				<form.SubmitButton />
 			</Drawer.Footer>
 		</form.Root>
 	);

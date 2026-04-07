@@ -1,5 +1,7 @@
 import { db } from '@/db/client';
 import { smtpConfigTable } from '@/db/tables/smtpConfigTable';
+import { smtpUpdateFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/smtpUpsertFormSchemas';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -7,7 +9,6 @@ import {
 import {
 	createErrorResponse,
 	createSuccessResponse,
-	HTTP_STATUS_CODES,
 	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
@@ -15,13 +16,11 @@ import { and, eq } from 'drizzle-orm';
 import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { smtpQueryKeys } from './smtpApiUtils';
-import { smtpUpsertSchema } from './smtpUpsertSchema';
 
-const updateSmtpConfigParams = smtpUpsertSchema
-	.extend({
-		id: z.string().min(1),
-	})
-	.clone();
+const updateSmtpConfigParams = z.object({
+	form: smtpUpdateFormSchema,
+	editId: z.string().min(1),
+});
 
 type UpdateSmtpConfigParams = z.infer<typeof updateSmtpConfigParams>;
 
@@ -30,37 +29,48 @@ const updateSmtpConfigServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateSmtpConfigParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data: { form, editId }, context: { user, language } }) => {
 		try {
+			const t = getServerT(language);
+
 			const currentConfig = await db.query.smtpConfigTable.findFirst({
 				where: {
-					id: data.id,
+					id: editId,
 					userId: user.id,
+				},
+				columns: {
+					id: true,
 				},
 			});
 
 			if (!currentConfig) {
 				throw new ServerError({
-					message: 'SMTP config not found',
-					statusCode: HTTP_STATUS_CODES.NOT_FOUND,
+					message: t('entity.notFound', {
+						entity: t('settings.tabs.automations.smtp.entityName'),
+					}),
 				});
+			}
+
+			const updateData: Partial<typeof smtpConfigTable.$inferInsert> = {
+				name: form.name,
+				host: form.host,
+				port: form.port,
+				security: form.security,
+				username: form.username,
+				fromName: form.fromName || null,
+				fromEmail: form.fromEmail,
+			};
+
+			if (form.password) {
+				updateData.password = form.password;
 			}
 
 			await db
 				.update(smtpConfigTable)
-				.set({
-					name: data.name,
-					host: data.host,
-					port: data.port,
-					security: data.security,
-					username: data.username,
-					password: data.password || currentConfig.password,
-					fromName: data.fromName || null,
-					fromEmail: data.fromEmail,
-				})
+				.set(updateData)
 				.where(
 					and(
-						eq(smtpConfigTable.id, data.id),
+						eq(smtpConfigTable.id, currentConfig.id),
 						eq(smtpConfigTable.userId, user.id),
 					),
 				);

@@ -1,50 +1,36 @@
 import { Drawer } from '@/components/drawer/Drawer';
 import { createEmailTemplateMutationOptions } from '@/api/email-template/createEmailTemplate';
-import { emailTemplateUpsertSchema } from '@/api/email-template/emailTemplateUpsertSchema';
-import type { EmailTemplateUpsertSchema } from '@/api/email-template/emailTemplateUpsertSchema';
-import type { GetEmailTemplatesResponse } from '@/api/email-template/getEmailTemplates';
 import { updateEmailTemplateMutationOptions } from '@/api/email-template/updateEmailTemplate';
 import { useAppForm } from '@/hooks/use-app-form/useAppForm';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation } from '@tanstack/react-query';
 import { slugify } from '@/utils/stringUtils';
+import {
+	emailTemplateUpsertFormSchema,
+	useEmailTemplateUpsertFormDefaultValues,
+} from './emailTemplateUpsertFormSchema';
+import { runAfterSubmitSuccess } from '@/components/form/utils';
+import { duplicateEmailTemplateMutationOptions } from '@/api/email-template/duplicateEmailTemplate';
 
 type UpsertEmailTemplateFormProps = {
-	mode: 'create' | 'edit';
-	emailTemplate?: GetEmailTemplatesResponse[number];
+	editId?: string;
+	isEditing?: boolean;
+	isDuplicating?: boolean;
 	onClose: () => void;
-	onSuccess: () => void;
 };
-
-const toDefaultValues = (
-	mode: UpsertEmailTemplateFormProps['mode'],
-	emailTemplate?: GetEmailTemplatesResponse[number],
-): EmailTemplateUpsertSchema => {
-	if (mode === 'edit' && emailTemplate) {
-		return {
-			name: emailTemplate.name,
-			slug: emailTemplate.slug,
-			subject: emailTemplate.subject,
-			body: emailTemplate.body,
-		};
-	}
-
-	return {
-		name: '',
-		slug: '',
-		subject: '',
-		body: '',
-	};
-};
-
 export const UpsertEmailTemplateForm = ({
-	mode,
-	emailTemplate,
+	editId,
+	isEditing,
+	isDuplicating,
 	onClose,
-	onSuccess,
 }: UpsertEmailTemplateFormProps) => {
 	const { t } = useTranslate();
-	const initialValues = toDefaultValues(mode, emailTemplate);
+
+	const { defaultValues, isLoadingEditEmailTemplate } =
+		useEmailTemplateUpsertFormDefaultValues({
+			editId,
+			isDuplicating,
+		});
 
 	const { mutateAsync: createEmailTemplate } = useMutation(
 		createEmailTemplateMutationOptions(),
@@ -52,33 +38,64 @@ export const UpsertEmailTemplateForm = ({
 	const { mutateAsync: updateEmailTemplate } = useMutation(
 		updateEmailTemplateMutationOptions(),
 	);
+
+	const { mutateAsync: duplicateEmailTemplate } = useMutation(
+		duplicateEmailTemplateMutationOptions(),
+	);
+
 	const form = useAppForm({
-		defaultValues: initialValues,
+		defaultValues,
 		validators: {
-			onChange: emailTemplateUpsertSchema,
+			onChange: emailTemplateUpsertFormSchema,
 		},
 		onSubmit: async ({ value }) => {
-			if (mode === 'edit' && emailTemplate) {
+			if (isEditing) {
 				await updateEmailTemplate({
-					id: emailTemplate.id,
-					...value,
+					editId: editId ?? '',
+					form: value,
 				});
+			} else if (isDuplicating) {
+				await duplicateEmailTemplate({ editId: editId ?? '' });
 			} else {
-				await createEmailTemplate(value);
+				await createEmailTemplate({ form: value });
 			}
-			onSuccess();
+
+			runAfterSubmitSuccess({
+				form,
+				action: onClose,
+			});
 		},
 	});
+
+	const handleNameChange = (value: string | undefined) => {
+		const slugMeta = form.getFieldMeta('slug');
+		if (slugMeta?.isDirty) {
+			return;
+		}
+
+		let newValue = '';
+		if (value) {
+			newValue = slugify(value);
+		}
+
+		form.setFieldValue('slug', newValue, {
+			dontUpdateMeta: true,
+		});
+	};
 
 	return (
 		<form.Root
 			form={form}
-			schema={emailTemplateUpsertSchema}
+			schema={emailTemplateUpsertFormSchema}
+			isLoading={isLoadingEditEmailTemplate}
 		>
 			<Drawer.Body>
 				<form.Group>
 					<form.AppField
 						name='name'
+						listeners={{
+							onChange: ({ value }) => handleNameChange(value),
+						}}
 						children={(field) => (
 							<field.TextInput
 								label={t(
@@ -87,20 +104,6 @@ export const UpsertEmailTemplateForm = ({
 								placeholder={t(
 									'settings.tabs.automations.emailTemplates.form.namePlaceholder',
 								)}
-								onChange={(value) => {
-									const nextName = value ?? '';
-									field.handleChange(nextName);
-									const slugMeta = form.getFieldMeta('slug');
-
-									if (slugMeta?.isDirty) {
-										return;
-									}
-
-									form.setFieldValue('slug', slugify(nextName), {
-										dontRunListeners: true,
-										dontUpdateMeta: true,
-									});
-								}}
 							/>
 						)}
 					/>
@@ -146,18 +149,11 @@ export const UpsertEmailTemplateForm = ({
 				</form.Group>
 			</Drawer.Body>
 			<Drawer.Footer>
-				<form.CancelButton
-					size='sm'
-					onClick={onClose}
-				/>
-				<form.SubmitButton
-					size='sm'
-					className='ml-auto'
-				>
-					{mode === 'edit'
-						? t('settings.tabs.automations.emailTemplates.drawer.saveAction')
-						: t('settings.tabs.automations.emailTemplates.drawer.createAction')}
-				</form.SubmitButton>
+				<Drawer.Close asChild>
+					<form.CancelButton />
+				</Drawer.Close>
+
+				<form.SubmitButton />
 			</Drawer.Footer>
 		</form.Root>
 	);

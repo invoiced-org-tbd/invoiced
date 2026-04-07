@@ -101,45 +101,41 @@ export const OnboardingPanelStepRow = ({
 							{step.id === 'contract' ? (
 								<Link
 									to='/app/contracts'
-									search={(prev) => ({
-										...prev,
+									search={{
 										isCreating: true,
-									})}
+									}}
 								>
 									<ChevronRightIcon />
 								</Link>
 							) : step.id === 'company' ? (
 								<Link
 									to='/app/settings'
-									search={(prev) => ({
-										...prev,
+									search={{
 										tab: 'company',
-										companyAction: 'create',
-									})}
+										isSettingUpCompany: true,
+									}}
 								>
 									<ChevronRightIcon />
 								</Link>
 							) : step.id === 'smtp' ? (
 								<Link
 									to='/app/settings'
-									search={(prev) => ({
-										...prev,
+									search={{
 										tab: 'automations',
 										automationResource: 'smtp',
-										automationAction: 'create',
-									})}
+										isCreatingAutomation: true,
+									}}
 								>
 									<ChevronRightIcon />
 								</Link>
 							) : step.id === 'email-templates' ? (
 								<Link
 									to='/app/settings'
-									search={(prev) => ({
-										...prev,
+									search={{
 										tab: 'automations',
 										automationResource: 'emailTemplate',
-										automationAction: 'create',
-									})}
+										isCreatingAutomation: true,
+									}}
 								>
 									<ChevronRightIcon />
 								</Link>

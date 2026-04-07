@@ -1,66 +1,84 @@
 import { Drawer } from '@/components/drawer/Drawer';
-import type { GetEmailTemplatesResponse } from '@/api/email-template/getEmailTemplates';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { getRouteApi } from '@tanstack/react-router';
 import { UpsertEmailTemplateForm } from './UpsertEmailTemplateForm';
 
 const settingsRouteApi = getRouteApi('/_auth/app/settings/');
 
-type UpsertEmailTemplateDrawerProps = {
-	emailTemplates: GetEmailTemplatesResponse;
-};
-
-export const UpsertEmailTemplateDrawer = ({
-	emailTemplates,
-}: UpsertEmailTemplateDrawerProps) => {
+export const UpsertEmailTemplateDrawer = () => {
 	const { t } = useTranslate();
-	const { automationAction, automationId, automationResource } =
-		settingsRouteApi.useSearch();
+	const {
+		isCreatingAutomation,
+		isEditingAutomation,
+		automationId,
+		automationResource,
+		isDuplicatingEmailTemplate,
+	} = settingsRouteApi.useSearch();
 	const navigate = settingsRouteApi.useNavigate();
-	const emailTemplate = emailTemplates.find((item) => item.id === automationId);
 
-	const isEmailTemplateDrawer =
-		automationResource === 'emailTemplate' && !!automationAction;
-	const isEditing = automationAction === 'edit' && !!emailTemplate;
-	const mode = isEditing ? 'edit' : 'create';
-	const onClose = () => {
+	const isEmailTemplateDrawer = automationResource === 'emailTemplate';
+	const isCreating = isCreatingAutomation && isEmailTemplateDrawer;
+	const isEditing =
+		isEditingAutomation && isEmailTemplateDrawer && !!automationId;
+	const isDuplicating =
+		isDuplicatingEmailTemplate && isEmailTemplateDrawer && !!automationId;
+	const editId = isEditing || isDuplicating ? automationId : undefined;
+
+	const isOpen = isCreating || isEditing || isDuplicating;
+
+	const handleClose = () => {
 		navigate({
-			search: (prev) => ({
-				...prev,
-				automationAction: undefined,
-				automationResource: undefined,
-				automationId: undefined,
-			}),
+			search: {
+				tab: 'automations',
+			},
 		});
 	};
 
+	const getTitle = () => {
+		if (isEditing) {
+			return t('settings.tabs.automations.emailTemplates.drawer.editTitle');
+		}
+		if (isDuplicating) {
+			return t(
+				'settings.tabs.automations.emailTemplates.drawer.duplicateTitle',
+			);
+		}
+
+		return t('settings.tabs.automations.emailTemplates.drawer.title');
+	};
+	const title = getTitle();
+
+	const getDescription = () => {
+		if (isEditing) {
+			return t(
+				'settings.tabs.automations.emailTemplates.drawer.editDescription',
+			);
+		}
+		if (isDuplicating) {
+			return t(
+				'settings.tabs.automations.emailTemplates.drawer.duplicateDescription',
+			);
+		}
+		return t('settings.tabs.automations.emailTemplates.drawer.description');
+	};
+	const description = getDescription();
+
 	return (
 		<Drawer.Root
-			open={isEmailTemplateDrawer}
-			onOpenChange={onClose}
+			open={isOpen}
+			onOpenChange={handleClose}
 		>
 			<Drawer.Content>
 				<Drawer.Header>
-					<Drawer.Title>
-						{isEditing
-							? t('settings.tabs.automations.emailTemplates.drawer.editTitle')
-							: t('settings.tabs.automations.emailTemplates.drawer.title')}
-					</Drawer.Title>
-					<Drawer.Description>
-						{isEditing
-							? t(
-									'settings.tabs.automations.emailTemplates.drawer.editDescription',
-								)
-							: t(
-									'settings.tabs.automations.emailTemplates.drawer.description',
-								)}
-					</Drawer.Description>
+					<Drawer.Title>{title}</Drawer.Title>
+					<Drawer.Description>{description}</Drawer.Description>
 				</Drawer.Header>
+
 				<UpsertEmailTemplateForm
-					mode={mode}
-					emailTemplate={emailTemplate}
-					onClose={onClose}
-					onSuccess={onClose}
+					editId={editId}
+					isEditing={isEditing}
+					isDuplicating={isDuplicating}
+					onClose={handleClose}
 				/>
 			</Drawer.Content>
 		</Drawer.Root>

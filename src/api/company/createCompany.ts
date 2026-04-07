@@ -1,7 +1,6 @@
 import { db } from '@/db/client';
 import { companyAddressTable } from '@/db/tables/companyAddressTable';
 import { companyTable } from '@/db/tables/companyTable';
-import { companyUpsertFormSchema } from './companyUpsertSchema';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -9,15 +8,16 @@ import {
 import {
 	createErrorResponse,
 	createSuccessResponse,
-	HTTP_STATUS_CODES,
-	ServerError,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
-import type z from 'zod';
+import z from 'zod';
 import { companyQueryKeys } from './companyApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
+import { companyUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-company-tab/companyUpsertFormSchemas';
 
-const createCompanyParams = companyUpsertFormSchema.clone();
+const createCompanyParams = z.object({
+	form: companyUpsertFormSchema,
+});
 
 type CreateCompanyParams = z.infer<typeof createCompanyParams>;
 
@@ -26,9 +26,9 @@ const createCompanyServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createCompanyParams)
-	.handler(async ({ data, context: { user } }) => {
+	.handler(async ({ data: { form }, context: { user } }) => {
 		try {
-			const { general, address } = data;
+			const { general, address } = form;
 
 			await db.transaction(async (tx) => {
 				const [createdCompany] = await tx
@@ -38,14 +38,9 @@ const createCompanyServerFn = createServerFn({
 						name: general.name,
 						userId: user.id,
 					})
-					.returning();
-
-				if (!createdCompany) {
-					throw new ServerError({
-						message: 'Failed to create company',
-						statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
+					.returning({
+						id: companyTable.id,
 					});
-				}
 
 				await tx.insert(companyAddressTable).values({
 					companyId: createdCompany.id,

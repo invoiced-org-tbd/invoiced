@@ -29,11 +29,10 @@ export const ContractsZeroState = ({
 	const goToCompanySetup = () => {
 		navigate({
 			to: '.',
-			search: (prev) => ({
-				...prev,
+			search: {
 				tab: 'company',
-				companyAction: 'create',
-			}),
+				isSettingUpCompany: true,
+			},
 		});
 	};
 

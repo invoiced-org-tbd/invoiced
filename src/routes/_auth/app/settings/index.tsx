@@ -2,8 +2,32 @@ import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
+import z from 'zod';
 import { SettingsTabs } from './-lib/settings-tabs/SettingsTabs';
-import { settingsSearchSchema, settingsTabSchema } from './-lib/consts';
+
+export const settingsTabsSchema = z.enum([
+	'account',
+	'company',
+	'automations',
+	'notifications',
+	'billingPlans',
+]);
+
+export type SettingsTab = z.infer<typeof settingsTabsSchema>;
+
+const settingsSearchSchema = z.object({
+	tab: settingsTabsSchema.optional(),
+
+	isEditingCompany: z.boolean().optional(),
+	isSettingUpCompany: z.boolean().optional(),
+
+	isCreatingAutomation: z.boolean().optional(),
+	isEditingAutomation: z.boolean().optional(),
+	isDuplicatingEmailTemplate: z.boolean().optional(),
+	isDeletingAutomation: z.boolean().optional(),
+	automationId: z.string().optional(),
+	automationResource: z.enum(['smtp', 'emailTemplate']).optional(),
+});
 
 export const Route = createFileRoute('/_auth/app/settings/')({
 	validateSearch: zodValidator(settingsSearchSchema),
@@ -15,28 +39,13 @@ function RouteComponent() {
 	const { tab } = Route.useSearch();
 	const navigate = Route.useNavigate();
 
-	const activeTab = tab ?? 'account';
+	const activeTab = tab ?? settingsTabsSchema.options[0];
 
-	const handleTabChange = (value: string) => {
-		const parsedTab = settingsTabSchema.safeParse(value);
-		if (!parsedTab.success) {
-			return;
-		}
-
+	const handleTabChange = (value: SettingsTab) => {
 		navigate({
 			search: (prev) => ({
 				...prev,
-				tab: parsedTab.data,
-				companyAction:
-					parsedTab.data === 'company' ? prev.companyAction : undefined,
-				automationAction:
-					parsedTab.data === 'automations' ? prev.automationAction : undefined,
-				automationResource:
-					parsedTab.data === 'automations'
-						? prev.automationResource
-						: undefined,
-				automationId:
-					parsedTab.data === 'automations' ? prev.automationId : undefined,
+				tab: value,
 			}),
 		});
 	};

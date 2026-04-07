@@ -60,7 +60,10 @@ export const InvoiceCreationForm = ({
 			/>
 
 			<Drawer.Footer>
-				<form.CancelButton onClick={onClose} />
+				<Drawer.Close asChild>
+					<form.CancelButton />
+				</Drawer.Close>
+
 				<form.SubmitButton />
 			</Drawer.Footer>
 		</form.Root>
