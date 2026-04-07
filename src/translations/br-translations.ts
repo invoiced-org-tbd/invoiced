@@ -26,6 +26,7 @@ export const brTranslations = {
 		next: 'Próximo',
 		open: 'Abrir',
 		unknownError: 'Ocorreu um erro desconhecido',
+		loading: 'Carregando…',
 	},
 	form: {
 		unsavedChanges: {
@@ -166,6 +167,31 @@ export const brTranslations = {
 					editTitle: 'Editar empresa',
 					editDescription: 'Atualize os dados e o endereço da sua empresa.',
 					saveAction: 'Salvar alterações',
+				},
+			},
+			invoice: {
+				title: 'Fatura',
+				description:
+					'Configurações globais para nomes de arquivo das faturas geradas e numeração.',
+				entityName: 'configuração de fatura',
+				saveChanges: 'Salvar alterações',
+				previewCompanyPlaceholder: 'Empresa',
+				profile: {
+					title: 'Nome do arquivo da fatura e numeração',
+					description:
+						'Como os nomes de arquivo são montados e como a numeração segue.',
+					emptyText: '—',
+				},
+				editDialog: {
+					title: 'Editar nome do arquivo e numeração da fatura',
+					description:
+						'Atualize prefixo, sufixo, partes do nome do arquivo e numeração.',
+				},
+				zeroState: {
+					title: 'Nome de arquivo da fatura ainda não configurado',
+					description:
+						'O nome do arquivo e a numeração são definidos ao criar o primeiro contrato. Abra contratos para concluir.',
+					primaryAction: 'Ir para contratos',
 				},
 			},
 			automations: {

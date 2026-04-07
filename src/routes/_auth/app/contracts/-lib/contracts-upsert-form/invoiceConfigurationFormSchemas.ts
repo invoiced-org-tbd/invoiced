@@ -37,9 +37,28 @@ export const invoiceConfigurationFormSchema = invoiceConfigurationPersistSchema
 		}
 	});
 
-type InvoiceConfigurationFormSchema = z.infer<
+export type InvoiceConfigurationFormSchema = z.infer<
 	typeof invoiceConfigurationFormSchema
 >;
+
+export const mapInvoiceConfigurationRowToFormValues = (row: {
+	prefix: string;
+	suffix: string | null;
+	withYear: boolean;
+	withMonth: boolean;
+	withDay: boolean;
+	withCompanyName: boolean;
+	lastInvoiceNumber: number;
+}): InvoiceConfigurationFormSchema => ({
+	prefix: row.prefix,
+	suffix: row.suffix ?? '',
+	withYear: row.withYear,
+	withMonth: row.withMonth,
+	withDay: row.withDay,
+	withCompanyName: row.withCompanyName,
+	lastInvoiceNumber: row.lastInvoiceNumber,
+	invoiceNumberingMode: row.lastInvoiceNumber === 0 ? 'new' : 'existing',
+});
 
 export const useInvoiceConfigurationFormDefaultValues = () => {
 	return {
