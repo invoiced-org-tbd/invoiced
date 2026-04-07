@@ -45,7 +45,9 @@ const createEmailTemplateServerFn = createServerFn({
 
 			if (!createdTemplate) {
 				throw new ServerError({
-					message: t('settings.tabs.automations.emailTemplates.errors.createFailed'),
+					message: t(
+						'settings.tabs.automations.emailTemplates.errors.createFailed',
+					),
 					statusCode: HTTP_STATUS_CODES.BAD_REQUEST,
 				});
 			}
