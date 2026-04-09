@@ -8,16 +8,18 @@ import {
 import { createInvoiceMutationOptions } from '@/api/invoice/createInvoice';
 import { useMutation } from '@tanstack/react-query';
 import { Drawer } from '../drawer/Drawer';
+import { getRouteApi } from '@tanstack/react-router';
+
+const invoiceRouteApi = getRouteApi('/_auth/app/invoices/');
 
 type InvoiceCreationFormProps = {
 	contractData: GetContractsResponse[number];
-	onClose: () => void;
 };
 export const InvoiceCreationForm = ({
 	contractData,
-	onClose,
 }: InvoiceCreationFormProps) => {
 	const { t } = useTranslate();
+	const navigate = invoiceRouteApi.useNavigate();
 	const { defaultValues } = useInvoiceCreationFormDefaultValues({
 		contractData,
 	});
@@ -32,12 +34,17 @@ export const InvoiceCreationForm = ({
 			onChange: invoiceCreationFormSchema,
 		},
 		onSubmit: async (data) => {
-			await createInvoice({
+			const invoice = await createInvoice({
 				form: data.value,
 				contractId: contractData.id,
 			});
 
-			onClose();
+			navigate({
+				to: '.',
+				search: {
+					selectedInvoiceId: invoice.id,
+				},
+			});
 		},
 	});
 

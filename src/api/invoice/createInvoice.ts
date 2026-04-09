@@ -45,7 +45,7 @@ const createInvoiceServerFn = createServerFn({
 			const t = getServerT(language);
 			const { form, contractId } = data;
 
-			await db.transaction(async (tx) => {
+			const invoice = await db.transaction(async (tx) => {
 				const contract = await tx.query.contractTable.findFirst({
 					where: {
 						id: contractId,
@@ -194,9 +194,13 @@ const createInvoiceServerFn = createServerFn({
 					contractClientSnapshotId: contractClientSnapshot.id,
 					originalContractClientAddressId,
 				});
+
+				return invoice;
 			});
 
-			return createSuccessResponse();
+			return createSuccessResponse({
+				data: invoice,
+			});
 		} catch (error) {
 			throw createErrorResponse({
 				error,
