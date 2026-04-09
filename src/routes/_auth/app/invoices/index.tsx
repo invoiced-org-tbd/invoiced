@@ -14,8 +14,34 @@ const invoicesSearchSchema = z.object({
 export const Route = createFileRoute('/_auth/app/invoices/')({
 	validateSearch: zodValidator(invoicesSearchSchema),
 	component: RouteComponent,
-	loader: async ({ context }) => {
-		context.queryClient.prefetchQuery(getInvoicesQueryOptions());
+	beforeLoad: async ({ context, search }) => {
+		const invoices = await context.queryClient.fetchQuery(
+			getInvoicesQueryOptions(),
+		);
+
+		if (!invoices.length) {
+			if (!Object.keys(search).length) {
+				return;
+			}
+
+			// if there's no invoices, search should be empty
+			throw Route.redirect({
+				to: '.',
+				search: {},
+			});
+		}
+
+		const selectedInvoice = invoices.find(
+			(invoice) => invoice.id === search.selectedInvoiceId,
+		);
+		if (!selectedInvoice) {
+			throw Route.redirect({
+				to: '.',
+				search: {
+					selectedInvoiceId: invoices[0].id,
+				},
+			});
+		}
 	},
 });
 
