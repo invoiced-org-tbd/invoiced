@@ -19,6 +19,9 @@ const getContractsServerFn = createServerFn({
 				where: {
 					userId: user.id,
 				},
+				orderBy: {
+					createdAt: 'desc',
+				},
 				with: {
 					role: true,
 					client: {

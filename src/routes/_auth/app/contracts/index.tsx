@@ -1,6 +1,8 @@
 import type { GetContractsResponse } from '@/api/contract/getContracts';
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
+import { InvoiceCreationDrawer } from '@/components/invoice-creation-drawer/InvoiceCreationDrawer';
 import { Page } from '@/components/page/Page';
+import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
@@ -9,8 +11,6 @@ import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog/ContractsD
 import { ContractsList } from './-lib/contracts-list/ContractsList';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsZeroState } from './-lib/contracts-zero-state/ContractsZeroState';
-import { InvoiceCreationDrawer } from '@/components/invoice-creation-drawer/InvoiceCreationDrawer';
-import { useTranslate } from '@/hooks/use-translate/useTranslate';
 
 const contractStepsSchema = z.enum([
 	'role',
@@ -32,15 +32,41 @@ export type ContractsSearchSchema = z.infer<typeof contractsSearchSchema>;
 
 export const Route = createFileRoute('/_auth/app/contracts/')({
 	validateSearch: zodValidator(contractsSearchSchema),
-	loader: async ({ context }) => {
-		context.queryClient.prefetchQuery(getContractsQueryOptions());
+	beforeLoad: async ({ context, search }) => {
+		const contracts = await context.queryClient.fetchQuery(
+			getContractsQueryOptions(),
+		);
+
+		if (!contracts.length) {
+			if (!Object.keys(search).length) {
+				return;
+			}
+
+			// if there's no contracts, search should be empty (no creating, editing etc)
+			throw Route.redirect({
+				to: '.',
+				search: {},
+			});
+		}
+
+		const selectedContract = contracts.find(
+			(contract) => contract.id === search.selectedContractId,
+		);
+		if (!selectedContract) {
+			throw Route.redirect({
+				to: '.',
+				search: {
+					selectedContractId: contracts[0].id,
+				},
+			});
+		}
 	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
 	const navigate = Route.useNavigate();
-	const { selectedContractId, isCreatingInvoice } = Route.useSearch();
+	const { selectedContractId } = Route.useSearch();
 
 	const { t } = useTranslate();
 	const { data: contracts } = useSuspenseQuery(getContractsQueryOptions());
@@ -59,15 +85,6 @@ function RouteComponent() {
 			search: (prev) => ({
 				...prev,
 				selectedContractId: contract.id,
-			}),
-		});
-	};
-
-	const handleCreateInvoiceClose = () => {
-		navigate({
-			search: (prev) => ({
-				...prev,
-				isCreatingInvoice: undefined,
 			}),
 		});
 	};
@@ -100,11 +117,7 @@ function RouteComponent() {
 			<ContractsUpsertDrawer selectedContractId={resolvedSelectedContractId} />
 			<ContractsDeleteDialog selectedContractId={resolvedSelectedContractId} />
 
-			<InvoiceCreationDrawer
-				isOpen={!!isCreatingInvoice}
-				onClose={handleCreateInvoiceClose}
-				contractData={resolvedContractData}
-			/>
+			<InvoiceCreationDrawer contractData={resolvedContractData} />
 		</Page.Root>
 	);
 }
