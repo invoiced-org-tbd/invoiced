@@ -60,17 +60,13 @@ export const mapInvoiceConfigurationRowToFormValues = (row: {
 	invoiceNumberingMode: row.lastInvoiceNumber === 0 ? 'new' : 'existing',
 });
 
-export const useInvoiceConfigurationFormDefaultValues = () => {
-	return {
-		defaultValues: {
-			prefix: 'INV',
-			suffix: '',
-			withYear: true,
-			withMonth: true,
-			withDay: true,
-			withCompanyName: true,
-			lastInvoiceNumber: 0,
-			invoiceNumberingMode: 'new',
-		} satisfies InvoiceConfigurationFormSchema as InvoiceConfigurationFormSchema,
-	};
-};
+export const invoiceConfigurationFormDefaultValues = {
+	prefix: 'INV',
+	suffix: '',
+	withYear: true,
+	withMonth: true,
+	withDay: true,
+	withCompanyName: true,
+	lastInvoiceNumber: 0,
+	invoiceNumberingMode: 'new',
+} satisfies InvoiceConfigurationFormSchema as InvoiceConfigurationFormSchema;

@@ -1,6 +1,6 @@
 import { db } from '@/db/client';
 import { invoiceConfigurationTable } from '@/db/tables/invoiceConfigurationTable';
-import { invoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+import { invoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,

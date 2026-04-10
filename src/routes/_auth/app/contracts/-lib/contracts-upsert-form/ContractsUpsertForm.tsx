@@ -21,7 +21,7 @@ import {
 	contractsUpsertFormSchema,
 	useContractsUpsertFormDefaultValues,
 } from './contractsUpsertFormSchemas';
-import type { InvoiceConfigurationPersistSchema } from './invoiceConfigurationFormSchemas';
+import type { InvoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 
 const contractSteps = [
 	{ value: 'role', labelKey: 'contracts.tabs.role' },

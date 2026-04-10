@@ -5,9 +5,9 @@ import { useCompany } from '@/hooks/use-company/useCompany';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
-import { ContractInvoiceConfigurationForm } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/ContractInvoiceConfigurationForm';
-import type { InvoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
-import { mapInvoiceConfigurationRowToFormValues } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+import { InvoiceConfigurationForm } from '@/components/invoice-configuration-form/InvoiceConfigurationForm';
+import type { InvoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
+import { mapInvoiceConfigurationRowToFormValues } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 
 const settingsRouteApi = getRouteApi('/_auth/app/settings/');
 
@@ -48,11 +48,7 @@ export const InvoiceConfigurationEditDialog = () => {
 	return (
 		<Dialog.Root
 			open={open}
-			onOpenChange={(nextOpen) => {
-				if (!nextOpen) {
-					handleClose();
-				}
-			}}
+			onOpenChange={handleClose}
 		>
 			<Dialog.Content>
 				<Dialog.Header>
@@ -71,7 +67,7 @@ export const InvoiceConfigurationEditDialog = () => {
 						</p>
 					</Dialog.Body>
 				) : invoiceConfiguration ? (
-					<ContractInvoiceConfigurationForm
+					<InvoiceConfigurationForm
 						key={invoiceConfiguration.id}
 						defaultValues={mapInvoiceConfigurationRowToFormValues(
 							invoiceConfiguration,

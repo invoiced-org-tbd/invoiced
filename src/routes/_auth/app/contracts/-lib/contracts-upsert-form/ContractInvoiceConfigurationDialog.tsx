@@ -1,9 +1,9 @@
 import { Dialog } from '@/components/dialog/Dialog';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { setDay } from 'date-fns';
-import type { InvoiceConfigurationPersistSchema } from './invoiceConfigurationFormSchemas';
-import { useInvoiceConfigurationFormDefaultValues } from './invoiceConfigurationFormSchemas';
-import { ContractInvoiceConfigurationForm } from './ContractInvoiceConfigurationForm';
+import { setDate } from 'date-fns';
+import { InvoiceConfigurationForm } from '@/components/invoice-configuration-form/InvoiceConfigurationForm';
+import type { InvoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
+import { invoiceConfigurationFormDefaultValues } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
 
 type ContractInvoiceConfigurationDialogProps = {
@@ -20,10 +20,10 @@ export const ContractInvoiceConfigurationDialog = ({
 	onSuccess,
 }: ContractInvoiceConfigurationDialogProps) => {
 	const { t } = useTranslate();
-	const { defaultValues } = useInvoiceConfigurationFormDefaultValues();
+	const defaultValues = invoiceConfigurationFormDefaultValues;
 	const dayOfMonth = contractValues.invoiceRecurrence.items[0].dayOfMonth;
 	const previewReferenceDate = dayOfMonth
-		? setDay(new Date(), dayOfMonth)
+		? setDate(new Date(), dayOfMonth)
 		: new Date();
 
 	return (
@@ -44,7 +44,7 @@ export const ContractInvoiceConfigurationDialog = ({
 					</Dialog.Description>
 				</Dialog.Header>
 
-				<ContractInvoiceConfigurationForm
+				<InvoiceConfigurationForm
 					defaultValues={defaultValues}
 					previewCompanyName={contractValues.client.companyName}
 					previewReferenceDate={previewReferenceDate}
