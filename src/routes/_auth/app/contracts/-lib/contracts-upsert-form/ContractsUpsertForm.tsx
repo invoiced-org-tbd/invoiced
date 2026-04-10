@@ -211,14 +211,9 @@ export const ContractsUpsertForm = ({
 				children={(values) => (
 					<ContractInvoiceConfigurationDialog
 						open={isInvoiceConfigurationOpen}
+						onOpenChange={setIsInvoiceConfigurationOpen}
 						contractValues={values}
-						onClose={() => setIsInvoiceConfigurationOpen(false)}
-						onSuccess={(data) => {
-							form.handleSubmit({
-								value: data,
-							});
-							setIsInvoiceConfigurationOpen(false);
-						}}
+						onSubmit={(data) => form.handleSubmit({ value: data })}
 					/>
 				)}
 			/>

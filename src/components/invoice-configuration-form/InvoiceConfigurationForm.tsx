@@ -15,7 +15,7 @@ export type InvoiceConfigurationFormProps = {
 	defaultValues: InvoiceConfigurationFormSchema;
 	previewCompanyName: string;
 	previewReferenceDate: Date;
-	onSuccess: (data: InvoiceConfigurationPersistSchema) => void;
+	onSuccess: (data: InvoiceConfigurationPersistSchema) => void | Promise<void>;
 	submitLabel: string;
 };
 
@@ -31,9 +31,9 @@ export const InvoiceConfigurationForm = ({
 		validators: {
 			onChange: wrappedInvoiceConfigurationFormSchema,
 		},
-		onSubmit: ({ value }) => {
+		onSubmit: async ({ value }) => {
 			const { invoiceNumberingMode, ...rest } = value.invoiceConfiguration;
-			onSuccess({
+			await onSuccess({
 				...rest,
 				lastInvoiceNumber:
 					invoiceNumberingMode === 'new' ? 0 : rest.lastInvoiceNumber,

@@ -20,7 +20,7 @@ export const SettingsInvoiceTab = () => {
 		navigate({
 			search: (prev) => ({
 				...prev,
-				isEditingInvoiceConfiguration: true,
+				isEditing: true,
 			}),
 		});
 	};

@@ -13,13 +13,13 @@ const settingsRouteApi = getRouteApi('/_auth/app/settings/');
 
 export const InvoiceConfigurationEditDialog = () => {
 	const { t } = useTranslate();
-	const { isEditingInvoiceConfiguration } = settingsRouteApi.useSearch();
+	const { isEditing } = settingsRouteApi.useSearch();
 	const navigate = settingsRouteApi.useNavigate();
 	const { company } = useCompany();
 
 	const { data: invoiceConfiguration, isLoading } = useQuery({
 		...getInvoiceConfigurationQueryOptions(),
-		enabled: !!isEditingInvoiceConfiguration,
+		enabled: !!isEditing,
 	});
 
 	const { mutateAsync: updateInvoiceConfiguration } = useMutation(
@@ -30,7 +30,7 @@ export const InvoiceConfigurationEditDialog = () => {
 		navigate({
 			search: (prev) => ({
 				...prev,
-				isEditingInvoiceConfiguration: undefined,
+				isEditing: undefined,
 			}),
 		});
 	};
@@ -43,14 +43,14 @@ export const InvoiceConfigurationEditDialog = () => {
 		handleClose();
 	};
 
-	const open = !!isEditingInvoiceConfiguration;
+	const open = !!isEditing;
 
 	return (
 		<Dialog.Root
 			open={open}
 			onOpenChange={handleClose}
 		>
-			<Dialog.Content>
+			<Dialog.Content size='lg'>
 				<Dialog.Header>
 					<Dialog.Title>
 						{t('settings.tabs.invoice.editDialog.title')}

@@ -21,7 +21,7 @@ const settingsSearchSchema = z.object({
 
 	isEditingCompany: z.boolean().optional(),
 	isSettingUpCompany: z.boolean().optional(),
-	isEditingInvoiceConfiguration: z.boolean().optional(),
+	isEditing: z.boolean().optional(),
 
 	isCreatingAutomation: z.boolean().optional(),
 	isEditingAutomation: z.boolean().optional(),
