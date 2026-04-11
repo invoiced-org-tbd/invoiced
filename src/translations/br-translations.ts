@@ -69,6 +69,16 @@ export const brTranslations = {
 		maxCharacters: 'Digite no máximo {maximum} caracteres',
 		maxNumber: 'Digite um valor menor ou igual a {maximum}',
 	},
+	richTextField: {
+		toolbar: {
+			label: 'Formatação',
+			bold: 'Negrito',
+			italic: 'Itálico',
+			underline: 'Sublinhado',
+			bulletList: 'Lista com marcadores',
+			orderedList: 'Lista numerada',
+		},
+	},
 	a11y: {
 		inputAction: 'Ação do campo',
 		toggleSidebar: 'Alternar barra lateral',

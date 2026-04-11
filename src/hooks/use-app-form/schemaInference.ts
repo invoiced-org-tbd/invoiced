@@ -5,6 +5,7 @@ import type { NumberInputProps } from '@/components/number-input/types';
 import type { SelectInputProps } from '@/components/select-input/types';
 import type { SwitchProps } from '@/components/switch/types';
 import type { TextareaInputProps } from '@/components/textarea-input/TextareaInput';
+import type { RichTextFieldProps } from '@/components/rich-text-field/types';
 import type { TextInputProps } from '@/components/text-input/types';
 import {
 	ZodArray,
@@ -27,6 +28,7 @@ import {
 export type FormInputPropsByMode = {
 	text: TextInputProps;
 	textarea: TextareaInputProps;
+	'rich-text': RichTextFieldProps;
 	number: NumberInputProps;
 	select: SelectInputProps;
 	'multi-select': MultiSelectInputProps;
@@ -340,6 +342,7 @@ const resolveBooleanProps = ({
 export const modeResolvers = {
 	text: resolveTextProps,
 	textarea: resolveTextProps,
+	'rich-text': resolveTextProps,
 	number: resolveNumberProps,
 	select: resolveSelectProps,
 	'multi-select': resolveMultiSelectProps,

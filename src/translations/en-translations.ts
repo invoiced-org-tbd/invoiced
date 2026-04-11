@@ -66,6 +66,16 @@ export const enTranslations = {
 		maxCharacters: 'Please enter at most {maximum} characters',
 		maxNumber: 'Please enter a value less than or equal to {maximum}',
 	},
+	richTextField: {
+		toolbar: {
+			label: 'Formatting',
+			bold: 'Bold',
+			italic: 'Italic',
+			underline: 'Underline',
+			bulletList: 'Bullet list',
+			orderedList: 'Ordered list',
+		},
+	},
 	a11y: {
 		inputAction: 'Input action',
 		toggleSidebar: 'Toggle Sidebar',
@@ -258,8 +268,7 @@ export const enTranslations = {
 						editTitle: 'Edit email template',
 						editDescription: 'Adjust template details and status.',
 						duplicateTitle: 'Duplicate email template',
-						duplicateDescription:
-							'Create a copy from an existing template.',
+						duplicateDescription: 'Create a copy from an existing template.',
 						createAction: 'Create template',
 						saveAction: 'Save changes',
 					},
