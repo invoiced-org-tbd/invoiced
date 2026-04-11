@@ -2,7 +2,7 @@ import '@tanstack/react-start/server-only';
 
 import { invoiceConfigurationTable } from '@/db/tables/invoiceConfigurationTable';
 import type { Tx } from '@/db/types';
-import type { InvoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+import type { InvoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 import type { TranslationFn } from '@/translations/types';
 import { ServerError } from '@/utils/serverFnsUtils';
 
