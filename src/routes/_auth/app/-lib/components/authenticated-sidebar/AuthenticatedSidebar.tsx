@@ -74,7 +74,7 @@ export const AuthenticatedSidebar = () => {
 
 			<div
 				data-slot='authenticated-sidebar-footer'
-				className='px-2 py-1 space-y-2'
+				className='px-2 py-1 space-y-3'
 			>
 				<SidebarLinkItem
 					item={{
@@ -104,6 +104,7 @@ const SidebarLinkItem = ({ item }: SidebarLinkItemProps) => {
 			<Sidebar.MenuButton
 				asChild
 				tooltip={item.label}
+				size={'lg'}
 			>
 				<Link
 					to={item.to}

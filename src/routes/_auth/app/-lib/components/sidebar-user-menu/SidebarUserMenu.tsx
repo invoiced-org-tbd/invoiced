@@ -6,7 +6,6 @@ import {
 	SunIcon,
 } from 'lucide-react';
 import { DropdownMenu } from '@/components/dropdown-menu/DropdownMenu';
-import { Sidebar } from '@/components/sidebar/Sidebar';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useTheme } from '@/hooks/use-theme/useTheme';
@@ -18,17 +17,20 @@ import { cn } from '@/utils/classNamesUtils';
 const Avatar = () => {
 	const user = useUser();
 
-	const initial = user.name[0].toUpperCase();
+	const initials = user.name
+		?.split(' ')
+		.map((name) => name[0].toUpperCase())
+		.join('');
 
 	return (
 		<span
 			className={cn(
 				'flex items-center justify-center overflow-hidden',
-				'size-7 md:size-8 shrink-0 select-none rounded-lg',
+				'size-7 md:size-12 shrink-0 select-none cursor-pointer rounded-md',
 				'bg-primary/20 text-primary-muted',
 			)}
 		>
-			<span className='text-xs font-medium'>{initial}</span>
+			<span className='text-xs font-medium'>{initials}</span>
 		</span>
 	);
 };
@@ -49,11 +51,7 @@ export const SidebarUserMenu = () => {
 	return (
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild>
-				<Sidebar.MenuButton
-					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground max-md:mx-auto max-md:size-8 max-md:w-8 max-md:justify-center max-md:gap-0 max-md:p-0'
-					size='lg'
-					tooltip={displayName}
-				>
+				<div className='flex items-center gap-2'>
 					<Avatar />
 
 					<div className='hidden flex-1 text-left text-sm leading-tight md:grid'>
@@ -62,13 +60,14 @@ export const SidebarUserMenu = () => {
 					</div>
 
 					<ChevronsUpDownIcon className='ml-auto hidden size-4 md:block' />
-				</Sidebar.MenuButton>
+				</div>
 			</DropdownMenu.Trigger>
 
 			<DropdownMenu.Content
 				align='end'
 				className='min-w-56 rounded-lg'
 				side='right'
+				sideOffset={10}
 			>
 				<DropdownMenu.Label className='p-0 font-normal'>
 					<div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>

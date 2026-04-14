@@ -1,4 +1,4 @@
-import { accountFormSchema } from '@/components/account-drawer/account-drawer-form/accountFormSchemas';
+import { accountFormSchema } from '@/routes/_auth/app/settings/-lib/settings-account-tab/accountFormSchemas';
 import { db } from '@/db/client';
 import { userTable } from '@/db/tables/userTable';
 import { getServerT } from '@/utils/languageUtils';

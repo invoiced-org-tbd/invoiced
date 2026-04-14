@@ -1,4 +1,3 @@
-import { AccountDrawer } from '@/components/account-drawer/AccountDrawer';
 import { OnboardingPanel } from '@/components/onboarding-panel/OnboardingPanel';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
@@ -13,12 +12,9 @@ function AppLayout() {
 		<Sidebar.Root inset>
 			<AuthenticatedSidebar />
 
-			<Sidebar.Inset>
-				<Outlet />
-			</Sidebar.Inset>
+			<Outlet />
 
 			<OnboardingPanel />
-			<AccountDrawer />
 		</Sidebar.Root>
 	);
 }
