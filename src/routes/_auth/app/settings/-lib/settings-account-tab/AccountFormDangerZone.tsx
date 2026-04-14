@@ -60,7 +60,6 @@ export const AccountFormDangerZone = () => {
 								variant='secondary'
 								onClick={() => setIsConfirmationOpen(false)}
 								disabled={isPending}
-								size='xxs'
 							>
 								{t('common.cancel')}
 							</Button>
@@ -68,7 +67,6 @@ export const AccountFormDangerZone = () => {
 								variant='destructive'
 								onClick={() => deleteAccount()}
 								isLoading={isPending}
-								size='xxs'
 							>
 								{t('account.dangerZone.deleteMyAccount')}
 							</Button>
