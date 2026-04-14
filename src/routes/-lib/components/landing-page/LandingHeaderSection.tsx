@@ -2,7 +2,6 @@ import { Button } from '@/components/button/Button';
 import { Link } from '@tanstack/react-router';
 import { FileText } from 'lucide-react';
 import type { LandingSectionActionProps } from './landingSectionTypes';
-import { LanguageSwitcher } from '@/components/language-switcher/LanguageSwitcher';
 import { ThemeSwitcher } from '@/components/theme-switcher/ThemeSwitcher';
 
 export const LandingHeaderSection = ({
@@ -48,7 +47,6 @@ export const LandingHeaderSection = ({
 
 				<div className='flex items-center gap-2'>
 					<ThemeSwitcher />
-					<LanguageSwitcher />
 					<div className='items-center gap-2 hidden md:flex'>
 						<Button
 							onClick={onGoogleSignIn}

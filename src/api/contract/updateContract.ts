@@ -1,6 +1,6 @@
 import { db } from '@/db/client';
 import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
-import { invoiceConfigurationPersistSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/invoiceConfigurationFormSchemas';
+import { invoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 import { getServerT } from '@/utils/languageUtils';
 import { createMutationOptions } from '@/utils/queryOptionsUtils';
 import {

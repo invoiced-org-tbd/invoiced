@@ -4,6 +4,7 @@ import {
 	BotIcon,
 	Building2Icon,
 	CreditCardIcon,
+	FileTextIcon,
 	UserIcon,
 } from 'lucide-react';
 import type { FC } from 'react';
@@ -12,6 +13,7 @@ import { SettingsAccountTab } from '../settings-account-tab/SettingsAccountTab';
 import { SettingsAutomationsTab } from '../settings-automations-tab/SettingsAutomationsTab';
 import { SettingsBillingPlansTab } from '../settings-billing-plans-tab/SettingsBillingPlansTab';
 import { SettingsCompanyTab } from '../settings-company-tab/SettingsCompanyTab';
+import { SettingsInvoiceTab } from '../settings-invoice-tab/SettingsInvoiceTab';
 import { SettingsNotificationsTab } from '../settings-notifications-tab/SettingsNotificationsTab';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 
@@ -37,6 +39,12 @@ export const useSettingsTabs = () => {
 			label: t('settings.tabs.company.title'),
 			icon: Building2Icon,
 			Content: SettingsCompanyTab,
+		},
+		{
+			value: 'invoice',
+			label: t('settings.tabs.invoice.title'),
+			icon: FileTextIcon,
+			Content: SettingsInvoiceTab,
 		},
 		{
 			value: 'automations',
