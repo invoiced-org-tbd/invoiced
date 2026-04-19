@@ -2,6 +2,9 @@ import { Card } from '@/components/card/Card';
 import { TrashIcon } from 'lucide-react';
 import { Button } from '@/components/button/Button';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { getRouteApi } from '@tanstack/react-router';
+
+const invoicesRouteApi = getRouteApi('/_auth/app/invoices/');
 
 export const InvoiceCardFooter = () => {
 	const { t } = useTranslate();
@@ -11,14 +14,19 @@ export const InvoiceCardFooter = () => {
 			<div></div>
 
 			<div>
-				<Button
-					variant='destructive'
-					size='xxs'
-					isOutlined
+				<invoicesRouteApi.Link
+					to='.'
+					search={(prev) => ({ ...prev, isDeletingInvoice: true })}
 				>
-					<TrashIcon />
-					{t('invoices.list.deleteInvoice')}
-				</Button>
+					<Button
+						variant='destructive'
+						size='xxs'
+						isOutlined
+					>
+						<TrashIcon />
+						{t('invoices.list.deleteInvoice')}
+					</Button>
+				</invoicesRouteApi.Link>
 			</div>
 		</Card.Footer>
 	);

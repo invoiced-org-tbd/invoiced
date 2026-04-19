@@ -3,11 +3,13 @@ import type { GetInvoicesResponse } from '@/api/invoice/getInvoices';
 import { FileTextIcon } from 'lucide-react';
 import { Button } from '@/components/button/Button';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { getRouteApi } from '@tanstack/react-router';
+
+const invoicesRouteApi = getRouteApi('/_auth/app/invoices/');
 
 type InvoiceCardHeaderProps = {
 	invoice: GetInvoicesResponse[number];
 };
-
 export const InvoiceCardHeader = ({ invoice }: InvoiceCardHeaderProps) => {
 	const { t } = useTranslate();
 
@@ -33,13 +35,21 @@ export const InvoiceCardHeader = ({ invoice }: InvoiceCardHeaderProps) => {
 			</div>
 
 			<div className='flex items-center gap-2'>
-				<Button
-					variant='secondary'
-					size='xs'
+				<invoicesRouteApi.Link
+					to='.'
+					search={{
+						selectedInvoiceId: invoice.id,
+						isViewingInvoice: true,
+					}}
 				>
-					<FileTextIcon />
-					{t('invoices.list.viewInvoice')}
-				</Button>
+					<Button
+						variant='secondary'
+						size='xs'
+					>
+						<FileTextIcon />
+						{t('invoices.list.viewInvoice')}
+					</Button>
+				</invoicesRouteApi.Link>
 			</div>
 		</Card.Header>
 	);

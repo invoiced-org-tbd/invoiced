@@ -21,7 +21,7 @@ export const companyUpsertFormSchema = z.object({
 	address: addressFormSchema,
 });
 
-export type CompanyUpsertFormSchema = z.infer<typeof companyUpsertFormSchema>;
+type CompanyUpsertFormSchema = z.infer<typeof companyUpsertFormSchema>;
 
 type UseUpsertCompanyFormDefaultValuesParams = {
 	isEditingCompany?: boolean;
