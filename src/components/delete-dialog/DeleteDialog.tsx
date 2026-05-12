@@ -62,13 +62,15 @@ export const DeleteDialog = <
 					<Dialog.Description>{description}</Dialog.Description>
 				</Dialog.Header>
 				<Dialog.Footer>
-					<Button
-						variant='secondary'
-						onClick={onClose}
-						disabled={isPending}
-					>
-						{t('common.cancel')}
-					</Button>
+					<Dialog.Close asChild>
+						<Button
+							variant='secondary'
+							onClick={onClose}
+							disabled={isPending}
+						>
+							{t('common.cancel')}
+						</Button>
+					</Dialog.Close>
 					<Button
 						onClick={handleDelete}
 						variant='destructive'
