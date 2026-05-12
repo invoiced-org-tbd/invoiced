@@ -8,6 +8,7 @@ import { SettingsTabs } from './-lib/settings-tabs/SettingsTabs';
 export const settingsTabsSchema = z.enum([
 	'account',
 	'company',
+	'invoice',
 	'automations',
 	'notifications',
 	'billingPlans',
@@ -20,6 +21,7 @@ const settingsSearchSchema = z.object({
 
 	isEditingCompany: z.boolean().optional(),
 	isSettingUpCompany: z.boolean().optional(),
+	isEditing: z.boolean().optional(),
 
 	isCreatingAutomation: z.boolean().optional(),
 	isEditingAutomation: z.boolean().optional(),

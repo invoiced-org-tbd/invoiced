@@ -24,6 +24,7 @@ export const enTranslations = {
 		next: 'Next',
 		open: 'Open',
 		unknownError: 'An unknown error occurred',
+		loading: 'Loading…',
 	},
 	form: {
 		unsavedChanges: {
@@ -163,6 +164,31 @@ export const enTranslations = {
 					saveAction: 'Save changes',
 				},
 			},
+			invoice: {
+				title: 'Invoice',
+				description:
+					'Global settings for generated invoice file names and numbering.',
+				entityName: 'invoice configuration',
+				saveChanges: 'Save changes',
+				previewCompanyPlaceholder: 'Company',
+				profile: {
+					title: 'Invoice file name and numbering',
+					description:
+						'How generated invoice file names are built and how numbering continues.',
+					emptyText: '—',
+				},
+				editDialog: {
+					title: 'Edit invoice file name and numbering',
+					description:
+						'Update prefix, suffix, parts of the file name, and invoice numbering.',
+				},
+				zeroState: {
+					title: 'Invoice naming not configured yet',
+					description:
+						'File name and numbering are set when you create your first contract. Open contracts to finish setup.',
+					primaryAction: 'Go to contracts',
+				},
+			},
 			automations: {
 				title: 'Automations',
 				description: 'Configure SMTP providers and email templates.',
@@ -258,8 +284,7 @@ export const enTranslations = {
 						editTitle: 'Edit email template',
 						editDescription: 'Adjust template details and status.',
 						duplicateTitle: 'Duplicate email template',
-						duplicateDescription:
-							'Create a copy from an existing template.',
+						duplicateDescription: 'Create a copy from an existing template.',
 						createAction: 'Create template',
 						saveAction: 'Save changes',
 					},

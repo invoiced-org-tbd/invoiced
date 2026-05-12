@@ -3,11 +3,12 @@
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
+	"packageManager": "bun@1.3.3",
 	"scripts": {
 		"dev": "vite dev --port 3000",
 		"build": "vite build",
 		"check:biome": "biome check . --write --error-on-warnings",
-		"check:tsc": "bun run tsc --noEmit",
+		"check:tsc": "bunx tsc --noEmit",
 		"check:knip": "knip",
 		"check:translations": "bun --bun tools/check-translations.ts",
 		"check": "bun run check:biome && bun run check:tsc && bun run check:knip",
