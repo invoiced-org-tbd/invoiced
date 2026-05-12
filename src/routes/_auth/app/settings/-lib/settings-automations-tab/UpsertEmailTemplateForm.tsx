@@ -136,12 +136,9 @@ export const UpsertEmailTemplateForm = ({
 					<form.AppField
 						name='body'
 						children={(field) => (
-							<field.TextareaInput
+							<field.RichTextField
 								label={t(
 									'settings.tabs.automations.emailTemplates.form.bodyLabel',
-								)}
-								placeholder={t(
-									'settings.tabs.automations.emailTemplates.form.bodyPlaceholder',
 								)}
 							/>
 						)}
