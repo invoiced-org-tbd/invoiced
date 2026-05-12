@@ -24,9 +24,14 @@ const getInvoicesServerFn = createServerFn({
 					items: true,
 					contract: {
 						with: {
-							client: true,
+							client: {
+								with: {
+									address: true,
+								},
+							},
 						},
 					},
+					invoiceConfiguration: true,
 				},
 			});
 

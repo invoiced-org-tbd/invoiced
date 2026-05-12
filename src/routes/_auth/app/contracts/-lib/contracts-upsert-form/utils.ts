@@ -1,4 +1,11 @@
-import type { ContractInvoiceRecurrenceItemFormSchema } from './contractsUpsertFormSchemas';
+import type { InvoicePDFData } from '@/components/invoice-pdf/types';
+import { useCompany } from '@/hooks/use-company/useCompany';
+import { assertCompany } from '@/utils/typesUtils';
+import { startOfToday } from 'date-fns';
+import type {
+	ContractInvoiceRecurrenceItemFormSchema,
+	ContractsUpsertFormSchema,
+} from './contractsUpsertFormSchemas';
 
 export const getContractRecurrenceItemsConflictingDays = (
 	items: ContractInvoiceRecurrenceItemFormSchema[],
@@ -58,4 +65,39 @@ export const getContractRecurrenceItemsWithBalancedPercentages = (
 			percentagePerItem + (index < remainder ? remainderPerItem : 0),
 		),
 	}));
+};
+
+export const useContractPreviewToInvoicePDFData = () => {
+	const { company } = useCompany();
+
+	const toInvoicePDFData = (
+		contract: ContractsUpsertFormSchema,
+	): InvoicePDFData => {
+		assertCompany(company);
+
+		return {
+			from: {
+				name: company.name,
+				address: company.address,
+				email: company.email,
+			},
+			to: {
+				name: contract.client.companyName,
+				address: contract.client.address,
+				email: contract.client.responsibleEmail,
+			},
+			items: [
+				{
+					description: contract.role.description,
+					rate: contract.role.rate,
+				},
+			],
+			issueDate: startOfToday(),
+			invoiceNumber: 1,
+		};
+	};
+
+	return {
+		toInvoicePDFData,
+	};
 };
