@@ -1,15 +1,18 @@
-import type { GetCompanyResponse } from '@/api/company/getCompany';
-import type { GetContractsResponse } from '@/api/contract/getContracts';
-import type { AddressFormValues } from '@/components/address-form/types';
+import type { CountryCode } from '@/db/tables/addressTableBase';
 import { useGetCountryName } from '@/lib/countries';
 
-type Address =
-	| AddressFormValues
-	| GetContractsResponse[number]['client']['address']
-	| NonNullable<GetCompanyResponse>['address'];
+export type AddressLike = {
+	street1: string;
+	street2: string | null;
+	number: string;
+	postalCode: string;
+	city: string;
+	state: string;
+	country: CountryCode;
+};
 
 type FormatAddressSingleLineParams = {
-	address: Address;
+	address: AddressLike;
 };
 
 export const useFormatAddressSingleLine = () => {

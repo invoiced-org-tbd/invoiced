@@ -1,30 +1,24 @@
 import { Button } from '@/components/button/Button';
 import { Dialog } from '@/components/dialog/Dialog';
 import { InvoicePDF } from '@/components/invoice-pdf/InvoicePDF';
-import { useCompany } from '@/hooks/use-company/useCompany';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { startOfToday } from 'date-fns';
-import type { InvoicePDFContractData } from '@/components/invoice-pdf/types';
+import type { ContractsUpsertFormSchema } from './contractsUpsertFormSchemas';
+import { useContractPreviewToInvoicePDFData } from './utils';
 
 type ContractsInvoicePreviewDialogProps = {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	contractData: InvoicePDFContractData;
+	contract: ContractsUpsertFormSchema;
 	isIncomplete?: boolean;
 };
-
 export const ContractsInvoicePreviewDialog = ({
 	open,
 	onOpenChange,
-	contractData,
+	contract,
 	isIncomplete = false,
 }: ContractsInvoicePreviewDialogProps) => {
-	const { company } = useCompany();
 	const { t } = useTranslate();
-
-	if (!company) {
-		return null;
-	}
+	const { toInvoicePDFData } = useContractPreviewToInvoicePDFData();
 
 	return (
 		<Dialog.Root
@@ -39,9 +33,7 @@ export const ContractsInvoicePreviewDialog = ({
 				<Dialog.Body>
 					<InvoicePDF
 						model='base-v0'
-						contractData={contractData}
-						company={company}
-						issueDate={startOfToday()}
+						data={toInvoicePDFData(contract)}
 					/>
 				</Dialog.Body>
 

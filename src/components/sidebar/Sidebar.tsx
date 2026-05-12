@@ -106,7 +106,7 @@ const Panel = ({
 
 const Inset = ({ className, ...props }: SidebarInsetProps) => {
 	return (
-		<main
+		<div
 			data-slot='sidebar-inset'
 			className={cn(
 				'relative flex min-h-0 min-w-0 flex-1 flex-col bg-background',
@@ -258,7 +258,7 @@ const Trigger = ({
 			isIcon={true}
 			isGhost={true}
 			size='md'
-			className={cn('size-8 rounded-md', className)}
+			className={cn('size-12 rounded-md', className)}
 			onClick={(event) => {
 				onClick?.(event);
 				toggleSidebar();

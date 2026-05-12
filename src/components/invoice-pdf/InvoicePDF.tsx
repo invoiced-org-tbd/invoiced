@@ -2,12 +2,7 @@ import { PDFCanvasViewer } from '@/components/pdf-canvas-viewer/PDFCanvasViewer'
 import { invoicePDFModelMap } from './invoiceModels';
 import type { InvoicePDFProps } from './types';
 
-export const InvoicePDF = ({
-	model,
-	contractData,
-	company,
-	issueDate,
-}: InvoicePDFProps) => {
+export const InvoicePDF = ({ model, data, className }: InvoicePDFProps) => {
 	if (typeof window === 'undefined') {
 		return null;
 	}
@@ -15,12 +10,8 @@ export const InvoicePDF = ({
 	const Model = invoicePDFModelMap[model] ?? invoicePDFModelMap['base-v0'];
 
 	return (
-		<PDFCanvasViewer className='bg-muted'>
-			<Model
-				contractData={contractData}
-				company={company}
-				issueDate={issueDate}
-			/>
+		<PDFCanvasViewer className={className}>
+			<Model data={data} />
 		</PDFCanvasViewer>
 	);
 };

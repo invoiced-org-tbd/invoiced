@@ -16,7 +16,7 @@ const Root = ({ className, ...props }: CardListViewRootProps) => {
 	return (
 		<section
 			data-slot='card-list-view'
-			className={cn('flex gap-8', className)}
+			className={cn('flex gap-8 h-full', className)}
 			{...props}
 		/>
 	);
@@ -31,7 +31,7 @@ const ListRoot = ({
 		<section
 			data-slot='card-list-view-list'
 			className={cn(
-				'min-w-3xs shrink-0 h-full border border-border/60 border-t-0 shadow-xs rounded-lg relative',
+				'min-w-3xs shrink-0 h-fit border border-border/60 border-t-0 shadow-xs rounded-lg relative',
 				className,
 			)}
 			{...props}

@@ -1,7 +1,7 @@
-import z from 'zod';
 import type { GetContractsResponse } from '@/api/contract/getContracts';
 import { translate } from '@/translations/translate';
 import { getLanguage } from '@/utils/languageUtils';
+import z from 'zod';
 import { getClosestFutureRecurrenceItem, getRecurrenceItemDate } from './utils';
 
 const invoiceItemsFormSchema = z.object({
@@ -9,8 +9,7 @@ const invoiceItemsFormSchema = z.object({
 	amount: z.number().min(1),
 });
 
-export const invoiceCreationModeSchema = z.enum(['from-recurrence', 'custom']);
-export type InvoiceCreationMode = z.infer<typeof invoiceCreationModeSchema>;
+const invoiceCreationModeSchema = z.enum(['from-recurrence', 'custom']);
 
 export const invoiceCreationFormSchema = z
 	.object({
