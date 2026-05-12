@@ -14,3 +14,9 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.rpv-core__page-layer.rpv-core__page-layer--single::after {
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	box-shadow: none;
+}

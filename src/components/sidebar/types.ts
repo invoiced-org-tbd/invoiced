@@ -18,7 +18,7 @@ export type SidebarPanelProps = ComponentProps<'div'> & {
 	collapsible?: SidebarCollapsible;
 };
 
-export type SidebarInsetProps = ComponentProps<'main'>;
+export type SidebarInsetProps = ComponentProps<'div'>;
 
 export type SidebarContentProps = ComponentProps<'div'>;
 

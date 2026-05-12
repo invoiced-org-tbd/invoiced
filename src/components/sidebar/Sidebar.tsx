@@ -106,7 +106,7 @@ const Panel = ({
 
 const Inset = ({ className, ...props }: SidebarInsetProps) => {
 	return (
-		<main
+		<div
 			data-slot='sidebar-inset'
 			className={cn(
 				'relative flex min-h-0 min-w-0 flex-1 flex-col bg-background',

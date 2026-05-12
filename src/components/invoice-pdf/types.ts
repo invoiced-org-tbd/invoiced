@@ -1,22 +1,31 @@
-import type { GetCompanyResponse } from '@/api/company/getCompany';
-import type { GetContractsResponse } from '@/api/contract/getContracts';
-import type { ContractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
+import type { AddressLike } from '@/utils/addressUtils';
 import z from 'zod';
 
 export const invoicePDFModelSchema = z.enum(['base-v0']);
 
 export type InvoicePDFModel = z.infer<typeof invoicePDFModelSchema>;
 
-export type InvoicePDFContractData =
-	| GetContractsResponse[number]
-	| ContractsUpsertFormSchema;
-
-export type InvoicePDFModelProps = {
-	issueDate: Date;
-	contractData: InvoicePDFContractData;
-	company: NonNullable<GetCompanyResponse>;
+type InvoicePDFItem = {
+	description: string;
+	rate: number;
 };
 
-export type InvoicePDFProps = InvoicePDFModelProps & {
+type InvoicePDFParty = {
+	name: string;
+	email: string;
+	address: AddressLike;
+};
+
+export type InvoicePDFData = {
+	from: InvoicePDFParty;
+	to: InvoicePDFParty;
+	items: InvoicePDFItem[];
+	issueDate: Date;
+	invoiceNumber: number;
+};
+
+export type InvoicePDFProps = {
 	model: InvoicePDFModel;
+	data: InvoicePDFData;
+	className?: string;
 };

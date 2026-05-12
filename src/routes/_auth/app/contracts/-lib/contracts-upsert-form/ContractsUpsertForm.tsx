@@ -194,7 +194,7 @@ export const ContractsUpsertForm = ({
 								<ContractsInvoicePreviewDialog
 									open={isPreviewOpen}
 									onOpenChange={setIsPreviewOpen}
-									contractData={values}
+									contract={values}
 									isIncomplete={!canSubmit}
 								/>
 							</>
