@@ -75,7 +75,6 @@ const Trigger = <TParamsKey extends string = string>(
 		(state) => state.submissionAttempts,
 	);
 	const errors = useStore(form.store, (state) => state.errors);
-	let hasErrors = false;
 
 	for (const key in errors[0]) {
 		const paths = key.split('.');
@@ -95,7 +94,6 @@ const Trigger = <TParamsKey extends string = string>(
 				continue;
 			}
 
-			hasErrors = true;
 			break;
 		}
 	}
@@ -104,7 +102,6 @@ const Trigger = <TParamsKey extends string = string>(
 
 	return (
 		<Tabs.Trigger
-			variant={hasErrors ? 'error' : 'default'}
 			{...props}
 			disabled={isDisabled}
 		/>

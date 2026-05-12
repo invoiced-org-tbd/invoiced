@@ -3,7 +3,7 @@ import { CardListView } from '@/components/card-list-view/CardListView';
 import { ContractCard } from './ContractCard';
 import { ContractListSelector } from './ContractListSelector';
 
-export type ContractsListProps = {
+type ContractsListProps = {
 	contracts: GetContractsResponse;
 	selectedContract: GetContractsResponse[number];
 	onSelectContract: (contract: GetContractsResponse[number]) => void;

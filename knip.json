@@ -1,5 +1,6 @@
 {
 	"$schema": "https://unpkg.com/knip@latest/schema.json",
+<<<<<<< HEAD
 	"ignore": [
 		"src/components/form-tabs/FormTabs.tsx",
 		"src/components/form-tabs/types.ts",
@@ -7,4 +8,7 @@
 		"src/components/data-table/use-data-table/baseTableRowActions.tsx",
 		"src/lib/email-template-variables/replaceEmailTemplateVariables.ts"
 	]
+=======
+	"ignore": ["tools/**"]
+>>>>>>> b63c1e9f158d7a9fa3d6d595fc074827a5e2ef45
 }

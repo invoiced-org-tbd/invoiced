@@ -1,10 +1,10 @@
-import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { useGetCountryName } from '@/lib/countries';
+import { appConfig } from '@/utils/appConfig';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { formatInvoiceIssueDate } from '@/utils/dateUtils';
-import { appConfig } from '@/utils/appConfig';
+import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import type { FC } from 'react';
-import type { InvoicePDFModel, InvoicePDFModelProps } from './types';
-import { useGetCountryName } from '@/lib/countries';
+import type { InvoicePDFData, InvoicePDFModel } from './types';
 
 const styles = StyleSheet.create({
 	page: {
@@ -163,18 +163,17 @@ const formatAddressLine = (first?: string | null, second?: string | null) => {
 	return value || 'Not provided';
 };
 
-const InvoicePDFModelBaseV0 = ({
-	contractData,
-	company,
-	issueDate,
-}: InvoicePDFModelProps) => {
-	const { role, client } = contractData;
+const InvoicePDFModelBaseV0 = ({ data }: { data: InvoicePDFData }) => {
+	const { to, from, items: baseItems, issueDate, invoiceNumber } = data;
 
 	const { getCountryName } = useGetCountryName();
 
-	const hasRate = Number.isFinite(role.rate) && role.rate > 0;
-	const rateValue = hasRate ? role.rate : 0;
-	const amount = formatCurrency({ value: rateValue });
+	const items = baseItems.length
+		? baseItems
+		: [{ description: 'Not provided', rate: 0 }];
+
+	const total = items.reduce((acc, item) => acc + item.rate, 0);
+	const totalValue = formatCurrency({ value: total });
 
 	return (
 		<Document>
@@ -183,10 +182,10 @@ const InvoicePDFModelBaseV0 = ({
 				style={styles.page}
 			>
 				<View style={styles.header}>
-					<Text style={styles.issuerName}>{displayText(company.name)}</Text>
+					<Text style={styles.issuerName}>{displayText(from.name)}</Text>
 
 					<View style={styles.headerMeta}>
-						<Text style={styles.invoiceNumber}>#1</Text>
+						<Text style={styles.invoiceNumber}>#{invoiceNumber}</Text>
 						<Text style={styles.issuedDate}>
 							Issued on {formatInvoiceIssueDate(issueDate)}
 						</Text>
@@ -199,43 +198,37 @@ const InvoicePDFModelBaseV0 = ({
 				<View style={styles.addressSection}>
 					<View style={styles.addressColumn}>
 						<Text style={styles.label}>From</Text>
-						<Text style={styles.addressCompany}>
-							{displayText(company.name)}
-						</Text>
+						<Text style={styles.addressCompany}>{displayText(from.name)}</Text>
 						<Text style={styles.addressLine}>
 							{formatAddressLine(
-								company.address.street1 ?? company.address.street2,
-								company.address.number,
+								from.address.street1 ?? from.address.street2,
+								from.address.number,
 							)}
 						</Text>
 						<Text style={styles.addressLine}>
-							{formatAddressLine(company.address.city, company.address.state)},{' '}
-							{getCountryName(company.address.country)}
+							{formatAddressLine(from.address.city, from.address.state)},{' '}
+							{getCountryName(from.address.country)}
 						</Text>
 						<Text style={styles.addressLine}>
-							{displayText(company.address.postalCode)}
+							{displayText(from.address.postalCode)}
 						</Text>
-						<Text style={styles.addressLine}>{displayText(company.email)}</Text>
+						<Text style={styles.addressLine}>{displayText(from.email)}</Text>
 					</View>
 
 					<View style={styles.addressColumn}>
 						<Text style={styles.label}>Billed to</Text>
-						<Text style={styles.addressCompany}>
-							{displayText(client.companyName)}
+						<Text style={styles.addressCompany}>{displayText(to.name)}</Text>
+						<Text style={styles.addressLine}>
+							{formatAddressLine(to.address.street1, to.address.number)}
 						</Text>
 						<Text style={styles.addressLine}>
-							{formatAddressLine(client.address.street1, client.address.number)}
+							{formatAddressLine(to.address.city, to.address.state)},{' '}
+							{getCountryName(to.address.country)}
 						</Text>
 						<Text style={styles.addressLine}>
-							{formatAddressLine(client.address.city, client.address.state)},{' '}
-							{getCountryName(client.address.country)}
+							{displayText(to.address.postalCode)}
 						</Text>
-						<Text style={styles.addressLine}>
-							{displayText(client.address.postalCode)}
-						</Text>
-						<Text style={styles.addressLine}>
-							{displayText(client.responsibleEmail)}
-						</Text>
+						<Text style={styles.addressLine}>{displayText(to.email)}</Text>
 					</View>
 				</View>
 
@@ -244,22 +237,25 @@ const InvoicePDFModelBaseV0 = ({
 					<Text style={[styles.tableHeaderText, styles.amountCol]}>AMOUNT</Text>
 				</View>
 
-				<View style={styles.tableRow}>
-					<Text style={[styles.tableText, styles.itemCol]}>
-						{displayText(role.description)}
-					</Text>
-					<Text style={[styles.tableText, styles.amountCol]}>
-						{hasRate ? amount : 'Not provided'}
-					</Text>
-				</View>
+				{items.map((item, index) => (
+					<View
+						style={styles.tableRow}
+						key={index}
+					>
+						<Text style={[styles.tableText, styles.itemCol]}>
+							{displayText(item.description)}
+						</Text>
+						<Text style={[styles.tableText, styles.amountCol]}>
+							{formatCurrency({ value: item.rate })}
+						</Text>
+					</View>
+				))}
 
 				<View style={styles.totalDivider} />
 
 				<View style={styles.totalRow}>
 					<Text style={styles.totalLabel}>Total</Text>
-					<Text style={styles.totalAmount}>
-						{hasRate ? amount : formatCurrency({ value: 0 })}
-					</Text>
+					<Text style={styles.totalAmount}>{totalValue}</Text>
 				</View>
 
 				<View style={styles.generatedDivider} />
@@ -273,4 +269,4 @@ const InvoicePDFModelBaseV0 = ({
 
 export const invoicePDFModelMap = {
 	'base-v0': InvoicePDFModelBaseV0,
-} as const satisfies Record<InvoicePDFModel, FC<InvoicePDFModelProps>>;
+} as const satisfies Record<InvoicePDFModel, FC<{ data: InvoicePDFData }>>;

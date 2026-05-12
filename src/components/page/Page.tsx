@@ -10,7 +10,7 @@ import type {
 const Root = ({ children, className, ...props }: PageRootProps) => {
 	return (
 		<main
-			className={cn('min-h-0 flex-1 p-8', className)}
+			className={cn('min-h-0 flex flex-1 flex-col pt-3 gap-4', className)}
 			{...props}
 		>
 			{children}
@@ -32,7 +32,7 @@ const Header = ({ children, className, ...props }: PageHeaderProps) => {
 const Title = ({ children, className, ...props }: PageTitleProps) => {
 	return (
 		<h1
-			className={cn('text-2xl font-semibold leading-none', className)}
+			className={cn('text-3xl font-bold leading-none', className)}
 			{...props}
 		>
 			{children}
@@ -58,7 +58,10 @@ const Description = ({
 const Content = ({ children, className, ...props }: PageContentProps) => {
 	return (
 		<section
-			className={cn('py-4', className)}
+			className={cn(
+				'flex-1 p-4 bg-background rounded-xl border border-sidebar-border shadow-xs',
+				className,
+			)}
 			{...props}
 		>
 			{children}

@@ -9,6 +9,8 @@ import { InvoicesList } from './-lib/invoices-list/InvoicesList';
 
 const invoicesSearchSchema = z.object({
 	selectedInvoiceId: z.string().optional(),
+	isViewingInvoice: z.boolean().optional(),
+	isDeletingInvoice: z.boolean().optional(),
 });
 
 export const Route = createFileRoute('/_auth/app/invoices/')({

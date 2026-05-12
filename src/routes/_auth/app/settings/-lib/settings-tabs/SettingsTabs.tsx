@@ -29,7 +29,10 @@ export const SettingsTabs = ({ activeTab, onTabChange }: SettingsTabsProps) => {
 			onValueChange={handleTabChange}
 			className='grid md:grid-cols-[220px_1fr]'
 		>
-			<Tabs.List className='h-fit items-stretch p-1'>
+			<Tabs.List
+				variant={'line'}
+				className='w-full'
+			>
 				{settingsTabs.map((item) => {
 					const Icon = item.icon;
 					return (
