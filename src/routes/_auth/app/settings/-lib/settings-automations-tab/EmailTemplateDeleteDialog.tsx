@@ -49,16 +49,12 @@ export const EmailTemplateDeleteDialog = () => {
 				<Dialog.Header>
 					<Dialog.Title>
 						{t('entity.deleteTitle', {
-							entity: t(
-								'settings.tabs.automations.emailTemplates.entityName',
-							),
+							entity: t('settings.tabs.automations.emailTemplates.entityName'),
 						})}
 					</Dialog.Title>
 					<Dialog.Description>
 						{t('entity.deleteConfirmation', {
-							entity: t(
-								'settings.tabs.automations.emailTemplates.entityName',
-							),
+							entity: t('settings.tabs.automations.emailTemplates.entityName'),
 						})}
 					</Dialog.Description>
 				</Dialog.Header>

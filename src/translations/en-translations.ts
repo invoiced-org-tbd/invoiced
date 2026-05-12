@@ -284,8 +284,7 @@ export const enTranslations = {
 						editTitle: 'Edit email template',
 						editDescription: 'Adjust template details and status.',
 						duplicateTitle: 'Duplicate email template',
-						duplicateDescription:
-							'Create a copy from an existing template.',
+						duplicateDescription: 'Create a copy from an existing template.',
 						createAction: 'Create template',
 						saveAction: 'Save changes',
 					},

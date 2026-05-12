@@ -258,7 +258,7 @@ const Trigger = ({
 			isIcon={true}
 			isGhost={true}
 			size='md'
-			className={cn('size-8 rounded-md', className)}
+			className={cn('size-12 rounded-md', className)}
 			onClick={(event) => {
 				onClick?.(event);
 				toggleSidebar();

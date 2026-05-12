@@ -137,16 +137,10 @@ export const InvoiceConfigurationFormFields = withFieldGroup({
 						className='gap-3'
 					>
 						<Tabs.List className='w-full'>
-							<Tabs.Trigger
-								value='new'
-								className='min-w-0 flex-1'
-							>
+							<Tabs.Trigger value='new'>
 								{t('contracts.invoiceConfigurationSetup.numberingTabNewLabel')}
 							</Tabs.Trigger>
-							<Tabs.Trigger
-								value='existing'
-								className='min-w-0 flex-1'
-							>
+							<Tabs.Trigger value='existing'>
 								{t(
 									'contracts.invoiceConfigurationSetup.numberingTabExistingLabel',
 								)}
