@@ -1,5 +1,6 @@
 import { db } from '@/db/client';
 import { smtpConfigTable } from '@/db/tables/smtpConfigTable';
+import { encryptStoredSmtpPassword } from '@/lib/smtpPasswordCrypto';
 import { smtpCreateFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/smtpUpsertFormSchemas';
 import {
 	createMutationOptions,
@@ -33,7 +34,7 @@ const createSmtpConfigServerFn = createServerFn({
 				port: form.port,
 				security: form.security,
 				username: form.username,
-				password: form.password,
+				password: encryptStoredSmtpPassword(form.password),
 				fromName: form.fromName,
 				fromEmail: form.fromEmail,
 			});
