@@ -1,5 +1,7 @@
+import { deleteContractMutationOptions } from '@/api/contract/deleteContract';
 import type { GetContractsResponse } from '@/api/contract/getContracts';
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
+import { DeleteDialog } from '@/components/delete-dialog/DeleteDialog';
 import { InvoiceCreationDrawer } from '@/components/invoice-creation-drawer/InvoiceCreationDrawer';
 import { Page } from '@/components/page/Page';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
@@ -7,7 +9,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
 import z from 'zod';
-import { ContractsDeleteDialog } from './-lib/contracts-delete-dialog/ContractsDeleteDialog';
 import { ContractsList } from './-lib/contracts-list/ContractsList';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsZeroState } from './-lib/contracts-zero-state/ContractsZeroState';
@@ -66,7 +67,7 @@ export const Route = createFileRoute('/_auth/app/contracts/')({
 
 function RouteComponent() {
 	const navigate = Route.useNavigate();
-	const { selectedContractId } = Route.useSearch();
+	const { isDeleting, selectedContractId } = Route.useSearch();
 
 	const { t } = useTranslate();
 	const { data: contracts } = useSuspenseQuery(getContractsQueryOptions());
@@ -86,6 +87,12 @@ function RouteComponent() {
 				...prev,
 				selectedContractId: contract.id,
 			}),
+		});
+	};
+
+	const handleCloseDeleteDialog = () => {
+		navigate({
+			search: {},
 		});
 	};
 
@@ -115,7 +122,18 @@ function RouteComponent() {
 			</Page.Content>
 
 			<ContractsUpsertDrawer selectedContractId={resolvedSelectedContractId} />
-			<ContractsDeleteDialog selectedContractId={resolvedSelectedContractId} />
+			<DeleteDialog
+				title={t('entity.deleteTitle', {
+					entity: t('contracts.name'),
+				})}
+				description={t('entity.deleteConfirmation', {
+					entity: t('contracts.name'),
+				})}
+				selectedId={resolvedSelectedContractId}
+				open={!!isDeleting}
+				onClose={handleCloseDeleteDialog}
+				deleteMutationOptions={deleteContractMutationOptions()}
+			/>
 
 			<InvoiceCreationDrawer contractData={resolvedContractData} />
 		</Page.Root>

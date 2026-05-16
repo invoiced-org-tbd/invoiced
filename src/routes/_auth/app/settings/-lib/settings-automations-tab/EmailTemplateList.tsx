@@ -1,6 +1,8 @@
+import { deleteEmailTemplateMutationOptions } from '@/api/email-template/deleteEmailTemplate';
 import { getEmailTemplatesQueryOptions } from '@/api/email-template/getEmailTemplates';
 import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
+import { DeleteDialog } from '@/components/delete-dialog/DeleteDialog';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
 import { useQuery } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
@@ -8,12 +10,13 @@ import { PlusIcon } from 'lucide-react';
 import { EmailTemplateItem } from './EmailTemplateItem';
 import { EmailTemplateZeroState } from './EmailTemplateZeroState';
 import { UpsertEmailTemplateDrawer } from './UpsertEmailTemplateDrawer';
-import { EmailTemplateDeleteDialog } from './EmailTemplateDeleteDialog';
 
 const settingsRouteApi = getRouteApi('/_auth/app/settings/');
 
 export const EmailTemplateList = () => {
 	const navigate = settingsRouteApi.useNavigate();
+	const { automationId, automationResource, isDeletingAutomation } =
+		settingsRouteApi.useSearch();
 
 	const { t } = useTranslate();
 
@@ -30,6 +33,19 @@ export const EmailTemplateList = () => {
 				automationResource: 'emailTemplate',
 				isCreatingAutomation: true,
 			}),
+		});
+	};
+
+	const isDeleteDialogOpen =
+		!!isDeletingAutomation &&
+		!!automationId &&
+		automationResource === 'emailTemplate';
+
+	const handleCloseDeleteDialog = () => {
+		navigate({
+			search: {
+				tab: 'automations',
+			},
 		});
 	};
 
@@ -75,7 +91,18 @@ export const EmailTemplateList = () => {
 			</Card.Root>
 
 			<UpsertEmailTemplateDrawer />
-			<EmailTemplateDeleteDialog />
+			<DeleteDialog
+				title={t('entity.deleteTitle', {
+					entity: t('settings.tabs.automations.emailTemplates.entityName'),
+				})}
+				description={t('entity.deleteConfirmation', {
+					entity: t('settings.tabs.automations.emailTemplates.entityName'),
+				})}
+				selectedId={automationId ?? ''}
+				open={isDeleteDialogOpen}
+				onClose={handleCloseDeleteDialog}
+				deleteMutationOptions={deleteEmailTemplateMutationOptions()}
+			/>
 		</>
 	);
 };
