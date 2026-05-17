@@ -14,7 +14,7 @@ import {
 import { createServerFn } from '@tanstack/react-start';
 import { eq } from 'drizzle-orm';
 import z from 'zod';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { invoiceConfigurationQueryKeys } from './invoiceConfigurationApiUtils';
 
@@ -30,9 +30,9 @@ const updateInvoiceConfigurationServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateInvoiceConfigurationParams)
-	.handler(async ({ data: { form }, context: { user, language } }) => {
+	.handler(async ({ data: { form }, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const existing = await db.query.invoiceConfigurationTable.findFirst({
 				where: {

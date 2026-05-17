@@ -9,8 +9,7 @@ import type {
 } from '@tanstack/react-query';
 import type { SuccessResponse } from './serverFnsUtils';
 import { toast } from 'sonner';
-import { translate } from '@/translations/translate';
-import { getLanguage } from './languageUtils';
+import { getT } from './languageUtils';
 
 export type InvalidateOnSuccessArgs = Parameters<
 	NonNullable<MutationOptions<unknown, unknown, unknown>['onSuccess']>
@@ -50,8 +49,8 @@ const handleError = (error: unknown) => {
 	}
 
 	if (!message) {
-		const language = getLanguage();
-		message = translate(language, 'common.unknownError');
+		const t = getT();
+		message = t('common.unknownError');
 	}
 
 	toast.error(message);

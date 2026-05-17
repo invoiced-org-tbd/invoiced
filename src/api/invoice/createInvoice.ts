@@ -8,7 +8,7 @@ import { invoiceConfigurationSnapshotTable } from '@/db/tables/invoiceConfigurat
 import { invoiceConfigurationTable } from '@/db/tables/invoiceConfigurationTable';
 import { invoiceItemsTable } from '@/db/tables/invoiceItemsTable';
 import { invoiceTable } from '@/db/tables/invoiceTable';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -41,9 +41,10 @@ const createInvoiceServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createInvoiceParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
+
 			const { form, contractId } = data;
 
 			const invoice = await db.transaction(async (tx) => {

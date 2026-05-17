@@ -1,6 +1,5 @@
 import type { GetContractsResponse } from '@/api/contract/getContracts';
-import { translate } from '@/translations/translate';
-import { getLanguage } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import z from 'zod';
 import { getClosestFutureRecurrenceItem, getRecurrenceItemDate } from './utils';
 
@@ -24,13 +23,12 @@ export const invoiceCreationFormSchema = z
 		}
 
 		if (data.items.length === 0) {
+			const t = getT();
+
 			ctx.addIssue({
 				code: 'custom',
 				path: ['items'],
-				message: translate(
-					getLanguage(),
-					'invoices.creation.validation.itemsRequiredInCustomMode',
-				),
+				message: t('invoices.creation.validation.itemsRequiredInCustomMode'),
 			});
 		}
 	});

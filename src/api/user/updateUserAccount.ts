@@ -1,7 +1,7 @@
 import { accountFormSchema } from '@/routes/_auth/app/settings/-lib/settings-account-tab/accountFormSchemas';
 import { db } from '@/db/client';
 import { userTable } from '@/db/tables/userTable';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -25,9 +25,9 @@ const updateUserAccountServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateUserAccountParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			await db
 				.update(userTable)

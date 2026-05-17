@@ -1,7 +1,7 @@
 import { db } from '@/db/client';
 import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
 import { invoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { createMutationOptions } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
@@ -31,10 +31,10 @@ const updateContractServerFn = createServerFn({
 	.handler(
 		async ({
 			data: { editId, form, invoiceConfiguration },
-			context: { user, language },
+			context: { user },
 		}) => {
 			try {
-				const t = getServerT(language);
+				const t = getT();
 
 				await db.transaction(async (tx) => {
 					const contract = await tx.query.contractTable.findFirst({

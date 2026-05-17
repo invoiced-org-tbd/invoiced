@@ -1,7 +1,7 @@
 import { db } from '@/db/client';
 import { emailTemplateTable } from '@/db/tables/emailTemplateTable';
 import { emailTemplateUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/emailTemplateUpsertFormSchema';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -28,9 +28,9 @@ const updateEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateEmailTemplateParams)
-	.handler(async ({ data: { form, editId }, context: { user, language } }) => {
+	.handler(async ({ data: { form, editId }, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const currentTemplate = await db.query.emailTemplateTable.findFirst({
 				where: {

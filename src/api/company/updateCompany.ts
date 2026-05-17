@@ -1,7 +1,8 @@
 import { db } from '@/db/client';
 import { companyAddressTable } from '@/db/tables/companyAddressTable';
 import { companyTable } from '@/db/tables/companyTable';
-import { eq } from 'drizzle-orm';
+import { companyUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-company-tab/companyUpsertFormSchemas';
+import { getT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -11,11 +12,10 @@ import {
 	createSuccessResponse,
 } from '@/utils/serverFnsUtils';
 import { createServerFn } from '@tanstack/react-start';
+import { eq } from 'drizzle-orm';
 import z from 'zod';
-import { companyQueryKeys } from './companyApiUtils';
 import { sessionMiddleware } from '../sessionMiddleware';
-import { companyUpsertFormSchema } from '@/routes/_auth/app/settings/-lib/settings-company-tab/companyUpsertFormSchemas';
-import { getServerT } from '@/utils/languageUtils';
+import { companyQueryKeys } from './companyApiUtils';
 
 const updateCompanyParams = z.object({
 	form: companyUpsertFormSchema,
@@ -27,9 +27,9 @@ const updateCompanyServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(updateCompanyParams)
-	.handler(async ({ data: { form }, context: { user, language } }) => {
+	.handler(async ({ data: { form }, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const currentCompany = await db.query.companyTable.findFirst({
 				where: {

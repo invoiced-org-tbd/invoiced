@@ -1,6 +1,5 @@
-import type { Language } from '@/hooks/use-language/types';
+import { getT } from '@/utils/languageUtils';
 import z from 'zod';
-import { translate } from '@/translations/translate';
 
 type ZodIssue = {
 	input?: unknown;
@@ -10,15 +9,17 @@ type ZodIssue = {
 	format?: unknown;
 };
 
-const getInvalidTypeMessage = (language: Language, issue: ZodIssue) => {
+const getInvalidTypeMessage = (issue: ZodIssue) => {
+	const t = getT();
+
 	if ('input' in issue && (issue.input === undefined || issue.input === null)) {
-		return translate(language, 'validation.required');
+		return t('validation.required');
 	}
 
-	return translate(language, 'validation.invalidType');
+	return t('validation.invalidType');
 };
 
-const getTooSmallMessage = (language: Language, issue: ZodIssue) => {
+const getTooSmallMessage = (issue: ZodIssue) => {
 	if (!('origin' in issue) || !('minimum' in issue)) {
 		return undefined;
 	}
@@ -38,30 +39,33 @@ const getTooSmallMessage = (language: Language, issue: ZodIssue) => {
 		return undefined;
 	}
 
+	const t = getT();
+
 	if (issue.origin === 'string' && minimum <= 1) {
-		return translate(language, 'validation.required');
+		return t('validation.required');
 	}
 
 	if (issue.origin === 'string') {
-		return translate(language, 'validation.minCharacters', {
+		return t('validation.minCharacters', {
 			minimum,
 		});
 	}
 
-	return translate(language, 'validation.minNumber', {
+	return t('validation.minNumber', {
 		minimum,
 	});
 };
 
-const getInvalidFormatMessage = (language: Language, issue: ZodIssue) => {
+const getInvalidFormatMessage = (issue: ZodIssue) => {
 	if (!('format' in issue) || issue.format !== 'email') {
 		return undefined;
 	}
+	const t = getT();
 
-	return translate(language, 'validation.invalidEmail');
+	return t('validation.invalidEmail');
 };
 
-const getTooBigMessage = (language: Language, issue: ZodIssue) => {
+const getTooBigMessage = (issue: ZodIssue) => {
 	if (!('origin' in issue) || !('maximum' in issue)) {
 		return undefined;
 	}
@@ -77,14 +81,16 @@ const getTooBigMessage = (language: Language, issue: ZodIssue) => {
 		return undefined;
 	}
 
+	const t = getT();
+
 	if (issue.origin === 'string') {
-		return translate(language, 'validation.maxCharacters', {
+		return t('validation.maxCharacters', {
 			maximum,
 		});
 	}
 
 	if (issue.origin === 'number') {
-		return translate(language, 'validation.maxNumber', {
+		return t('validation.maxNumber', {
 			maximum,
 		});
 	}
@@ -92,18 +98,18 @@ const getTooBigMessage = (language: Language, issue: ZodIssue) => {
 	return undefined;
 };
 
-export const setupZodErrorMap = (language: Language) => {
+export const setupZodErrorMap = () => {
 	z.config({
 		customError: (issue) => {
 			switch (issue.code) {
 				case 'invalid_type':
-					return getInvalidTypeMessage(language, issue);
+					return getInvalidTypeMessage(issue);
 				case 'too_small':
-					return getTooSmallMessage(language, issue);
+					return getTooSmallMessage(issue);
 				case 'too_big':
-					return getTooBigMessage(language, issue);
+					return getTooBigMessage(issue);
 				case 'invalid_format':
-					return getInvalidFormatMessage(language, issue);
+					return getInvalidFormatMessage(issue);
 				default:
 					return undefined;
 			}

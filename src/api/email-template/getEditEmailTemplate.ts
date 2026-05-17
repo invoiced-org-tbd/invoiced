@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { db } from '@/db/client';
 import {
 	createErrorResponse,
@@ -23,9 +23,9 @@ const getEditEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(getEditEmailTemplateParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const emailTemplate = await db.query.emailTemplateTable.findFirst({
 				where: {

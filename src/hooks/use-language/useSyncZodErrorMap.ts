@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import { setupZodErrorMap } from '@/lib/zodErrorMap';
-import { useLanguage } from './useLanguage';
+import { useEffect } from 'react';
 
-export const useSyncZodErrorMap = () => {
-	const language = useLanguage((state) => state.language);
-
+export const useSetupZodErrorMap = () => {
 	useEffect(() => {
-		setupZodErrorMap(language);
-	}, [language]);
+		setupZodErrorMap();
+	}, []);
 };

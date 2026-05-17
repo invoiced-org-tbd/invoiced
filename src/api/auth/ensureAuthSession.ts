@@ -3,7 +3,6 @@ import { createSuccessResponse } from '@/utils/serverFnsUtils';
 import { redirect } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
-import { getLanguage } from '@/utils/languageUtils';
 
 export const ensureAuthSessionServerFn = createServerFn({
 	method: 'GET',
@@ -15,6 +14,5 @@ export const ensureAuthSessionServerFn = createServerFn({
 		throw redirect({ to: '/', replace: true });
 	}
 
-	const language = getLanguage();
-	return createSuccessResponse({ data: { ...session, language } });
+	return createSuccessResponse({ data: session });
 });

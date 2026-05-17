@@ -4,7 +4,7 @@ import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -27,8 +27,9 @@ const deleteEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(deleteEmailTemplateParams)
-	.handler(async ({ data, context: { user, language } }) => {
-		const t = getServerT(language);
+	.handler(async ({ data, context: { user } }) => {
+		const t = getT();
+
 		try {
 			await db
 				.delete(emailTemplateTable)

@@ -14,7 +14,7 @@ import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { invoiceQueryKeys } from './invoiceApiUtils';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 
 const deleteInvoiceParams = z.object({
 	id: z.string(),
@@ -27,9 +27,10 @@ const deleteInvoiceServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(deleteInvoiceParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
+
 			const { id } = data;
 
 			const [invoice] = await db

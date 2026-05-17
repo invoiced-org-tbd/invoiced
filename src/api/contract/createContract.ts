@@ -1,7 +1,7 @@
+import { invoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
 import { db } from '@/db/client';
 import { contractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
-import { invoiceConfigurationPersistSchema } from '@/components/invoice-configuration-form/invoiceConfigurationFormSchemas';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { createMutationOptions } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
@@ -27,12 +27,9 @@ const createContractServerFn = createServerFn({
 	.middleware([sessionMiddleware])
 	.inputValidator(createContractParams)
 	.handler(
-		async ({
-			data: { form, invoiceConfiguration },
-			context: { user, language },
-		}) => {
+		async ({ data: { form, invoiceConfiguration }, context: { user } }) => {
 			try {
-				const t = getServerT(language);
+				const t = getT();
 
 				const { contractId } = await db.transaction(async (tx) => {
 					await setupInvoiceConfiguration({
