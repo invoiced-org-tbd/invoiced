@@ -43,12 +43,10 @@ CREATE TABLE `company` (
 CREATE TABLE `contractAutoSend` (
 	`id` text PRIMARY KEY,
 	`contractId` text NOT NULL,
-	`smtpConfigId` text NOT NULL,
 	`emailTemplateId` text NOT NULL,
 	`createdAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	`updatedAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	CONSTRAINT `fk_contractAutoSend_contractId_contract_id_fk` FOREIGN KEY (`contractId`) REFERENCES `contract`(`id`) ON DELETE CASCADE,
-	CONSTRAINT `fk_contractAutoSend_smtpConfigId_smtp_config_id_fk` FOREIGN KEY (`smtpConfigId`) REFERENCES `smtp_config`(`id`) ON DELETE RESTRICT,
 	CONSTRAINT `fk_contractAutoSend_emailTemplateId_email_template_id_fk` FOREIGN KEY (`emailTemplateId`) REFERENCES `email_template`(`id`) ON DELETE RESTRICT
 );
 --> statement-breakpoint
@@ -233,22 +231,6 @@ CREATE TABLE `session` (
 	`createdAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	`updatedAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	CONSTRAINT `fk_session_userId_user_id_fk` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE
-);
---> statement-breakpoint
-CREATE TABLE `smtp_config` (
-	`id` text PRIMARY KEY,
-	`name` text NOT NULL,
-	`host` text NOT NULL,
-	`port` integer NOT NULL,
-	`security` text NOT NULL,
-	`username` text NOT NULL,
-	`password` text NOT NULL,
-	`fromName` text,
-	`fromEmail` text NOT NULL,
-	`userId` text NOT NULL,
-	`createdAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	`updatedAt` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	CONSTRAINT `fk_smtp_config_userId_user_id_fk` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE
 );
 --> statement-breakpoint
 CREATE TABLE `user` (
