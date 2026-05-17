@@ -535,6 +535,7 @@ export const brTranslations = {
 			createInvoice: 'Criar fatura',
 			viewInvoice: 'Ver fatura',
 			sendToAccounting: 'Enviar para contabilidade',
+			downloadInvoice: 'Baixar fatura',
 			deleteInvoice: 'Excluir fatura',
 			itemSingular: 'item',
 			itemPlural: 'itens',

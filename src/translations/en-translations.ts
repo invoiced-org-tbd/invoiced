@@ -525,6 +525,7 @@ export const enTranslations = {
 			createInvoice: 'Create invoice',
 			viewInvoice: 'View invoice',
 			sendToAccounting: 'Send to accounting',
+			downloadInvoice: 'Download invoice',
 			deleteInvoice: 'Delete invoice',
 			itemSingular: 'item',
 			itemPlural: 'items',

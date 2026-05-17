@@ -1,27 +1,28 @@
 import { invoiceCreationFormSchema } from '@/components/invoice-creation-drawer/invoiceCreationFormSchemas';
-import { createServerFn } from '@tanstack/react-start';
-import { sessionMiddleware } from '../sessionMiddleware';
-import z from 'zod';
+import { getRecurrenceItemDate } from '@/components/invoice-creation-drawer/utils';
+import { db } from '@/db/client';
+import { contractClientAddressSnapshotTable } from '@/db/tables/contractClientAddressSnapshotTable';
+import { contractClientSnapshotTable } from '@/db/tables/contractClientSnapshotTable';
+import { contractSnapshotTable } from '@/db/tables/contractSnapshotTable';
+import { invoiceConfigurationSnapshotTable } from '@/db/tables/invoiceConfigurationSnapshotTable';
+import { invoiceConfigurationTable } from '@/db/tables/invoiceConfigurationTable';
+import { invoiceItemsTable } from '@/db/tables/invoiceItemsTable';
+import { invoiceTable } from '@/db/tables/invoiceTable';
+import { getServerT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
 } from '@/utils/queryOptionsUtils';
-import { invoiceQueryKeys } from './invoiceApiUtils';
-import { db } from '@/db/client';
 import {
 	createErrorResponse,
 	createSuccessResponse,
 	ServerError,
 } from '@/utils/serverFnsUtils';
-import { invoiceItemsTable } from '@/db/tables/invoiceItemsTable';
-import { invoiceTable } from '@/db/tables/invoiceTable';
-import { contractSnapshotTable } from '@/db/tables/contractSnapshotTable';
-import { contractClientSnapshotTable } from '@/db/tables/contractClientSnapshotTable';
-import { contractClientAddressSnapshotTable } from '@/db/tables/contractClientAddressSnapshotTable';
-import { getRecurrenceItemDate } from '@/components/invoice-creation-drawer/utils';
-import { invoiceConfigurationSnapshotTable } from '@/db/tables/invoiceConfigurationSnapshotTable';
-import { getServerT } from '@/utils/languageUtils';
+import { createServerFn } from '@tanstack/react-start';
+import z from 'zod';
 import { getInvoiceFileName } from '../invoice-configuration/utils/getInvoiceFileName';
+import { sessionMiddleware } from '../sessionMiddleware';
+import { invoiceQueryKeys } from './invoiceApiUtils';
 
 const createInvoiceParams = z.object({
 	form: invoiceCreationFormSchema,
@@ -78,15 +79,31 @@ const createInvoiceServerFn = createServerFn({
 					});
 				}
 
-				const invoiceConfiguration =
+				const existingInvoiceConfiguration =
 					await tx.query.invoiceConfigurationTable.findFirst({
 						where: {
 							userId: user.id,
 						},
 						columns: {
-							...snapshotIgnoredColumns,
+							lastInvoiceNumber: true,
 						},
 					});
+
+				if (!existingInvoiceConfiguration) {
+					throw new ServerError({
+						message: t('invoices.server.invoiceConfigurationRequired'),
+					});
+				}
+
+				const [
+					{ createdAt: _icca, updatedAt: _icua, ...invoiceConfiguration },
+				] = await tx
+					.update(invoiceConfigurationTable)
+					.set({
+						lastInvoiceNumber:
+							existingInvoiceConfiguration.lastInvoiceNumber + 1,
+					})
+					.returning();
 
 				if (!invoiceConfiguration) {
 					throw new ServerError({

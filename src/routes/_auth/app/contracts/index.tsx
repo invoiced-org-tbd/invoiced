@@ -12,6 +12,7 @@ import z from 'zod';
 import { ContractsList } from './-lib/contracts-list/ContractsList';
 import { ContractsUpsertDrawer } from './-lib/contracts-upsert-drawer/ContractsUpsertDrawer';
 import { ContractsZeroState } from './-lib/contracts-zero-state/ContractsZeroState';
+import { objectKeys } from '@/utils/objectUtils';
 
 const contractStepsSchema = z.enum([
 	'role',
@@ -39,11 +40,15 @@ export const Route = createFileRoute('/_auth/app/contracts/')({
 		);
 
 		if (!contracts.length) {
-			if (!Object.keys(search).length || search.isCreating) {
+			// if there's no contracts, search should be empty - except for creating a new contract
+			const searchKeys = objectKeys(search);
+			const hasExtraKeys = searchKeys.some(
+				(key) => key !== 'isCreating' && key !== 'step',
+			);
+			if (!hasExtraKeys) {
 				return;
 			}
 
-			// With no contracts, only the create flow is allowed in search params
 			throw Route.redirect({
 				to: '.',
 				search: {},

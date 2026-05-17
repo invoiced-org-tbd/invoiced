@@ -264,11 +264,6 @@ export const InvoicePdfDocumentBaseV0 = ({
 					<Text style={styles.totalLabel}>Total</Text>
 					<Text style={styles.totalAmount}>{totalValue}</Text>
 				</View>
-
-				<View style={styles.generatedDivider} />
-				<Text style={styles.generatedWith}>
-					Generated with {appConfig.appName}
-				</Text>
 			</Page>
 		</Document>
 	);
