@@ -80,9 +80,9 @@ function RouteComponent() {
 						  <p className='text-2xl font-medium text-foreground'>{t('invoices.list.emptyState')}</p>
 							<p className='text-sm text-muted-foreground'>{t('invoices.list.emptyStateDescription')}</p>
 						</div>
-						<Link to='/app/contracts'>
-							<Button variant='primary' size='lg'>{t('invoices.list.createInvoice')}</Button>
-						</Link>
+						<Button asChild variant='primary' size='lg'>
+							<Link to='/app/contracts'>{t('invoices.list.createInvoice')}</Link>
+						</Button>
 					</div>
 				)}
 			</Page.Content>
