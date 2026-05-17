@@ -1,9 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import type { ComponentProps, ReactNode } from 'react';
 import type { VariantProps } from 'class-variance-authority';
-import type {
-	timelineIndicatorVariants,
-} from './consts';
+import type { timelineIndicatorVariants } from './consts';
 
 export type TimelineState = 'completed' | 'current' | 'upcoming' | 'error';
 

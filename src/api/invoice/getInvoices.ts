@@ -8,6 +8,7 @@ import {
 } from '@/utils/serverFnsUtils';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
 import { invoiceQueryKeys } from './invoiceApiUtils';
+import { invoiceForEmailQueryWith } from './invoiceEmailQuery';
 
 const getInvoicesServerFn = createServerFn({
 	method: 'GET',
@@ -20,19 +21,7 @@ const getInvoicesServerFn = createServerFn({
 					userId: user.id,
 					isDeleted: false,
 				},
-				with: {
-					items: true,
-					contract: {
-						with: {
-							client: {
-								with: {
-									address: true,
-								},
-							},
-						},
-					},
-					invoiceConfiguration: true,
-				},
+				with: invoiceForEmailQueryWith,
 			});
 
 			return createSuccessResponse({

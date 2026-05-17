@@ -1,5 +1,4 @@
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import { SmtpConfigList } from './SmtpConfigList';
 import { EmailTemplateList } from './EmailTemplateList';
 
 export const SettingsAutomationsTab = () => {
@@ -16,11 +15,7 @@ export const SettingsAutomationsTab = () => {
 				</p>
 			</header>
 
-			<div className='grid gap-4 lg:grid-cols-2'>
-				<SmtpConfigList />
-
-				<EmailTemplateList />
-			</div>
+			<EmailTemplateList />
 		</div>
 	);
 };

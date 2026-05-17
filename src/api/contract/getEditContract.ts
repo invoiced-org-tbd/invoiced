@@ -63,12 +63,10 @@ const getEditContractServerFn = createServerFn({
 					autoSend: autoSendRow
 						? {
 								enabled: true,
-								smtpConfigId: autoSendRow.smtpConfigId,
 								emailTemplateId: autoSendRow.emailTemplateId,
 							}
 						: {
 								enabled: false,
-								smtpConfigId: '',
 								emailTemplateId: '',
 							},
 				},

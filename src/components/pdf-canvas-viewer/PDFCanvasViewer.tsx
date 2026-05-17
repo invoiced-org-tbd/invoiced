@@ -17,6 +17,8 @@ export const PDFCanvasViewer = ({
 	className,
 }: PDFCanvasViewerProps) => {
 	const { t } = useTranslate();
+	const tRef = useRef(t);
+	tRef.current = t;
 	const [fileUrl, setFileUrl] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -48,7 +50,7 @@ export const PDFCanvasViewer = ({
 				setErrorMessage(
 					error instanceof Error
 						? error.message
-						: t('pdfCanvasViewer.error.renderFailed'),
+						: tRef.current('pdfCanvasViewer.error.renderFailed'),
 				);
 				setFileUrl(null);
 			} finally {
@@ -63,7 +65,7 @@ export const PDFCanvasViewer = ({
 		return () => {
 			isDisposed = true;
 		};
-	}, [children, t]);
+	}, [children]);
 
 	useEffect(() => {
 		return () => {

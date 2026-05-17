@@ -11,6 +11,10 @@ const envServerSchema = z.object({
 	BETTER_AUTH_SECRET: z.string().nonempty('BETTER_AUTH_SECRET is required'),
 	GOOGLE_CLIENT_ID: z.string().nonempty('GOOGLE_CLIENT_ID is required'),
 	GOOGLE_CLIENT_SECRET: z.string().nonempty('GOOGLE_CLIENT_SECRET is required'),
+	/** Required to send invoice emails via Resend. */
+	RESEND_API_KEY: z.string().optional(),
+	/** Optional. Defaults to onboarding@resend.dev (sandbox). Use a verified domain address in production. */
+	RESEND_FROM: z.string().optional(),
 });
 
 export const envServer = envServerSchema.parse(process.env);

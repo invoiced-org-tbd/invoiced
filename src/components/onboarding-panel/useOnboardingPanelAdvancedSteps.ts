@@ -11,13 +11,6 @@ export const useOnboardingPanelAdvancedSteps = ({
 
 	const advancedSteps = [
 		{
-			id: 'smtp',
-			to: '/app/settings',
-			label: t('onboarding.steps.smtp.label'),
-			description: t('onboarding.steps.smtp.description'),
-			done: doneMap.smtp,
-		},
-		{
 			id: 'email-templates',
 			to: '/app/settings',
 			label: t('onboarding.steps.emailTemplates.label'),

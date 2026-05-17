@@ -24,20 +24,17 @@ export const setupContractCreateAutoSend = async ({
 		return;
 	}
 
-	const smtpConfigId = autoSend.smtpConfigId;
 	const emailTemplateId = autoSend.emailTemplateId;
 
 	await assertContractAutoSendResourcesOwned({
 		tx,
 		userId,
-		smtpConfigId,
 		emailTemplateId,
 		t,
 	});
 
 	await tx.insert(contractAutoSendTable).values({
 		contractId,
-		smtpConfigId,
 		emailTemplateId,
 	});
 };

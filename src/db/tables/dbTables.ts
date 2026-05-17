@@ -17,6 +17,5 @@ export { invoiceConfigurationTable } from './invoiceConfigurationTable';
 export { invoiceItemsTable } from './invoiceItemsTable';
 export { invoiceTable } from './invoiceTable';
 export { sessionTable } from './sessionTable';
-export { smtpConfigTable } from './smtpConfigTable';
 export { userTable } from './userTable';
 export { verificationTable } from './verificationTable';
