@@ -67,23 +67,11 @@ const contractInvoiceRecurrenceFormSchema = z
 const contractAutoSendFormSchema = z
 	.object({
 		enabled: z.boolean(),
-		smtpConfigId: z.string(),
 		emailTemplateId: z.string(),
 	})
 	.superRefine((data, ctx) => {
 		if (!data.enabled) {
 			return;
-		}
-
-		if (!data.smtpConfigId.trim()) {
-			ctx.addIssue({
-				code: 'custom',
-				message: translate(
-					getLanguage(),
-					'contracts.form.autoSend.validation.smtpRequired',
-				),
-				path: ['smtpConfigId'],
-			});
 		}
 
 		if (!data.emailTemplateId.trim()) {
@@ -159,7 +147,6 @@ export const useContractsUpsertFormDefaultValues = ({
 			},
 			autoSend: {
 				enabled: editContract?.autoSend.enabled ?? false,
-				smtpConfigId: editContract?.autoSend.smtpConfigId ?? '',
 				emailTemplateId: editContract?.autoSend.emailTemplateId ?? '',
 			},
 		} satisfies ContractsUpsertFormSchema,

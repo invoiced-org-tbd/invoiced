@@ -1,5 +1,5 @@
-import { CardListView } from '@/components/card-list-view/CardListView';
 import type { GetInvoicesResponse } from '@/api/invoice/getInvoices';
+import { CardListView } from '@/components/card-list-view/CardListView';
 import { InvoiceCardContent } from './InvoiceCardContent';
 import { InvoiceCardFooter } from './InvoiceCardFooter';
 import { InvoiceCardHeader } from './InvoiceCardHeader';
@@ -16,7 +16,7 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
 				<InvoiceCardContent invoice={invoice} />
 			</div>
 
-			<InvoiceCardFooter />
+			<InvoiceCardFooter invoice={invoice} />
 		</CardListView.Card.Root>
 	);
 };

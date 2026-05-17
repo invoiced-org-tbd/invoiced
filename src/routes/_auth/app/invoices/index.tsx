@@ -6,6 +6,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
 import z from 'zod';
 import { InvoicesList } from './-lib/invoices-list/InvoicesList';
+import { objectKeys } from '@/utils/objectUtils';
 
 const invoicesSearchSchema = z.object({
 	selectedInvoiceId: z.string().optional(),
@@ -22,7 +23,8 @@ export const Route = createFileRoute('/_auth/app/invoices/')({
 		);
 
 		if (!invoices.length) {
-			if (!Object.keys(search).length) {
+			const searchKeys = objectKeys(search);
+			if (!searchKeys.length) {
 				return;
 			}
 

@@ -1,4 +1,5 @@
-import { useGetCountryName } from '@/lib/countries';
+import type { Country } from '@/db/tables/addressTableBase';
+import { getInvoicePdfCountryName } from '@/lib/invoice-pdf/invoicePdfLocale';
 import { appConfig } from '@/utils/appConfig';
 import { formatCurrency } from '@/utils/currencyUtils';
 import { formatInvoiceIssueDate } from '@/utils/dateUtils';
@@ -163,10 +164,16 @@ const formatAddressLine = (first?: string | null, second?: string | null) => {
 	return value || 'Not provided';
 };
 
-const InvoicePDFModelBaseV0 = ({ data }: { data: InvoicePDFData }) => {
-	const { to, from, items: baseItems, issueDate, invoiceNumber } = data;
+export type InvoicePdfDocumentBaseV0Props = {
+	data: InvoicePDFData;
+	getCountryName: (countryCode: Country['code']) => string;
+};
 
-	const { getCountryName } = useGetCountryName();
+export const InvoicePdfDocumentBaseV0 = ({
+	data,
+	getCountryName,
+}: InvoicePdfDocumentBaseV0Props) => {
+	const { to, from, items: baseItems, issueDate, invoiceNumber } = data;
 
 	const items = baseItems.length
 		? baseItems
@@ -257,15 +264,17 @@ const InvoicePDFModelBaseV0 = ({ data }: { data: InvoicePDFData }) => {
 					<Text style={styles.totalLabel}>Total</Text>
 					<Text style={styles.totalAmount}>{totalValue}</Text>
 				</View>
-
-				<View style={styles.generatedDivider} />
-				<Text style={styles.generatedWith}>
-					Generated with {appConfig.appName}
-				</Text>
 			</Page>
 		</Document>
 	);
 };
+
+const InvoicePDFModelBaseV0 = ({ data }: { data: InvoicePDFData }) => (
+	<InvoicePdfDocumentBaseV0
+		data={data}
+		getCountryName={getInvoicePdfCountryName}
+	/>
+);
 
 export const invoicePDFModelMap = {
 	'base-v0': InvoicePDFModelBaseV0,

@@ -117,17 +117,6 @@ export const OnboardingPanelStepRow = ({
 								>
 									<ChevronRightIcon />
 								</Link>
-							) : step.id === 'smtp' ? (
-								<Link
-									to='/app/settings'
-									search={{
-										tab: 'automations',
-										automationResource: 'smtp',
-										isCreatingAutomation: true,
-									}}
-								>
-									<ChevronRightIcon />
-								</Link>
 							) : step.id === 'email-templates' ? (
 								<Link
 									to='/app/settings'

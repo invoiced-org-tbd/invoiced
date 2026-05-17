@@ -1,7 +1,7 @@
 import type { Country } from '@/db/tables/addressTableBase';
 import { countries } from '@/db/tables/addressTableBase';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
-import type { TranslationKey } from '@/translations/types';
+import type { TranslationKey, TranslationFn } from '@/translations/types';
 
 export type BaseCountry = {
 	name: TranslationKey;
@@ -15,17 +15,23 @@ const getCountryByCode = (countryCode: Country['code']) => {
 	return countries.find((country) => country.code === countryCode);
 };
 
+export const getCountryDisplayName = (
+	t: TranslationFn,
+	countryCode: Country['code'],
+) => {
+	const country = getCountryByCode(countryCode);
+	if (!country) {
+		return t('countries.notFound', { country: countryCode });
+	}
+
+	return t(country.name);
+};
+
 export const useGetCountryName = () => {
 	const { t } = useTranslate();
 
-	const getCountryName = (countryCode: Country['code']) => {
-		const country = getCountryByCode(countryCode);
-		if (!country) {
-			return t('countries.notFound', { country: countryCode });
-		}
-
-		return t(country.name);
-	};
+	const getCountryName = (countryCode: Country['code']) =>
+		getCountryDisplayName(t, countryCode);
 
 	return {
 		getCountryName,

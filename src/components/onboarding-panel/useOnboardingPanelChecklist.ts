@@ -1,6 +1,5 @@
 import { getContractsQueryOptions } from '@/api/contract/getContracts';
 import { getEmailTemplatesQueryOptions } from '@/api/email-template/getEmailTemplates';
-import { getSmtpConfigsQueryOptions } from '@/api/smtp/getSmtpConfigs';
 import { useOnboardingPanel } from '@/hooks/use-onboarding-panel/useOnboardingPanel';
 import { useCompany } from '@/hooks/use-company/useCompany';
 import { useQuery } from '@tanstack/react-query';
@@ -19,27 +18,21 @@ export const useOnboardingPanelChecklist = () => {
 	const { data: contracts, isPending: isContractsPending } = useQuery(
 		getContractsQueryOptions(),
 	);
-	const { data: smtpConfigs, isPending: isSmtpConfigsPending } = useQuery(
-		getSmtpConfigsQueryOptions(),
-	);
 	const { data: emailTemplates, isPending: isEmailTemplatesPending } = useQuery(
 		getEmailTemplatesQueryOptions(),
 	);
 
-	const isLoadingPanelData =
-		isContractsPending || isSmtpConfigsPending || isEmailTemplatesPending;
+	const isLoadingPanelData = isContractsPending || isEmailTemplatesPending;
 
 	const isCreateCompanyDone = !!company;
 	const isCreateContractDone = !!contracts?.length;
 	const isSendInvoiceDone = manualSteps.invoiceSent;
-	const isCreateSmtpDone = !!smtpConfigs?.length;
 	const isCreateEmailTemplatesDone = !!emailTemplates?.length;
 
 	const doneMap = {
 		company: isCreateCompanyDone,
 		contract: isCreateContractDone,
 		invoice: isSendInvoiceDone,
-		smtp: isCreateSmtpDone,
 		'email-templates': isCreateEmailTemplatesDone,
 	} satisfies OnboardingPanelDoneMap;
 
@@ -57,7 +50,6 @@ export const useOnboardingPanelChecklist = () => {
 		isCreateCompanyDone,
 		isCreateContractDone,
 		isSendInvoiceDone,
-		isCreateSmtpDone,
 		isCreateEmailTemplatesDone,
 		isLoadingPanelData,
 		coreSteps,
