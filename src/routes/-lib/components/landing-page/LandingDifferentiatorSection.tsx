@@ -1,16 +1,12 @@
 import { Card } from '@/components/card/Card';
 import { Check, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
-import { fadeUp, getMotionProps } from './landingMotion';
+import { fadeUp, motionInViewProps } from './landingMotion';
 import { landingCopy } from './landingCopy';
 import { LandingSection } from './LandingSection';
 import { LandingSectionHeader } from './LandingSectionHeader';
 
 export const LandingDifferentiatorSection = () => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
-
 	return (
 		<LandingSection
 			id='differentiator'
@@ -24,7 +20,7 @@ export const LandingDifferentiatorSection = () => {
 			<motion.div
 				className='grid gap-6 md:grid-cols-2'
 				variants={fadeUp}
-				{...motionProps}
+				{...motionInViewProps}
 			>
 				<Card.Root>
 					<Card.Content className='p-6 md:p-8'>

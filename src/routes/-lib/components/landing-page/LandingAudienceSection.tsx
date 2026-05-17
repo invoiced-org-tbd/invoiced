@@ -1,14 +1,10 @@
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
-import { getMotionProps } from './landingMotion';
+import { fadeUp, motionInViewProps } from './landingMotion';
 import { landingCopy } from './landingCopy';
 import { LandingSection } from './LandingSection';
 import { LandingSectionHeader } from './LandingSectionHeader';
 
 export const LandingAudienceSection = () => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
-
 	return (
 		<LandingSection
 			id='audience'
@@ -20,7 +16,8 @@ export const LandingAudienceSection = () => {
 			/>
 			<motion.div
 				className='flex flex-wrap justify-center gap-3'
-				{...motionProps}
+				variants={fadeUp}
+				{...motionInViewProps}
 			>
 				{landingCopy.audience.examples.map((example) => (
 					<span

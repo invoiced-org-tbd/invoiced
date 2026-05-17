@@ -2,8 +2,11 @@ import { Button } from '@/components/button/Button';
 import { Link } from '@tanstack/react-router';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
-import { staggerContainer, staggerItem } from './landingMotion';
+import {
+	landingTransition,
+	staggerContainer,
+	staggerItem,
+} from './landingMotion';
 import { landingCopy } from './landingCopy';
 import type { LandingSectionActionProps } from './landingSectionTypes';
 
@@ -11,15 +14,14 @@ export const LandingHeroSection = ({
 	isRedirecting,
 	onGoogleSignIn,
 }: LandingSectionActionProps) => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-
 	return (
 		<section className='py-16 md:py-24 lg:py-28'>
 			<motion.div
 				className='mx-auto max-w-7xl px-4 md:px-12'
 				variants={staggerContainer(0.1)}
-				initial={prefersReducedMotion ? false : 'hidden'}
-				animate={prefersReducedMotion ? undefined : 'visible'}
+				initial='hidden'
+				animate='visible'
+				transition={landingTransition}
 			>
 				<div className='mx-auto max-w-4xl text-center'>
 					<motion.p

@@ -7,7 +7,10 @@ export const LandingFooterSection = () => {
 		<footer className='border-t border-border py-12'>
 			<div className='mx-auto max-w-7xl px-4 md:px-12'>
 				<div className='flex flex-col gap-8 md:flex-row md:items-start md:justify-between'>
-					<div className='max-w-sm'>
+					<div
+						id='contato'
+						className='max-w-sm scroll-mt-24'
+					>
 						<div className='mb-3 flex items-center gap-2'>
 							<div className='flex size-8 items-center justify-center rounded-xl bg-primary'>
 								<FileText className='size-4 text-primary-foreground' />
@@ -19,18 +22,40 @@ export const LandingFooterSection = () => {
 						</p>
 					</div>
 					<nav className='flex flex-wrap gap-x-6 gap-y-2'>
-						{landingCopy.footer.links.map((link) => (
-							<Link
-								key={link.label}
-								to='.'
-								hash={link.hash}
-								className='text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground'
-							>
-								{link.label}
-							</Link>
-						))}
+						{landingCopy.footer.links.map((link) =>
+							'href' in link ? (
+								<a
+									key={link.label}
+									href={link.href}
+									className='text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground'
+								>
+									{link.label}
+								</a>
+							) : (
+								<Link
+									key={link.label}
+									to='.'
+									hash={link.hash}
+									className='text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground'
+								>
+									{link.label}
+								</Link>
+							),
+						)}
 					</nav>
 				</div>
+				<div
+					id='termos'
+					className='scroll-mt-24'
+					tabIndex={-1}
+					aria-hidden
+				/>
+				<div
+					id='privacidade'
+					className='scroll-mt-24'
+					tabIndex={-1}
+					aria-hidden
+				/>
 				<p className='mt-8 text-center text-xs text-muted-foreground md:text-left'>
 					{landingCopy.footer.closing}
 				</p>

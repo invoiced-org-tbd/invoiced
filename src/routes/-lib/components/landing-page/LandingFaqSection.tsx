@@ -1,15 +1,22 @@
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
 import { cn } from '@/utils/classNamesUtils';
-import { getMotionProps, staggerContainer, staggerItem } from './landingMotion';
+import {
+	motionInViewProps,
+	staggerContainer,
+	staggerItem,
+} from './landingMotion';
 import { landingCopy } from './landingCopy';
 import { LandingSection } from './LandingSection';
 import { LandingSectionHeader } from './LandingSectionHeader';
 
-export const LandingFaqSection = () => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
+const getFaqAnchorId = (answer: string) => {
+	if (answer.includes('roadmap')) {
+		return 'roadmap';
+	}
+	return undefined;
+};
 
+export const LandingFaqSection = () => {
 	return (
 		<LandingSection
 			id='faq'
@@ -20,14 +27,15 @@ export const LandingFaqSection = () => {
 			<motion.div
 				className='mx-auto max-w-3xl space-y-3'
 				variants={staggerContainer(0.06)}
-				{...motionProps}
+				{...motionInViewProps}
 			>
 				{landingCopy.faq.items.map((item) => (
 					<motion.div
 						key={item.question}
-						variants={prefersReducedMotion ? undefined : staggerItem}
+						variants={staggerItem}
 					>
 						<details
+							id={getFaqAnchorId(item.answer)}
 							className={cn(
 								'group rounded-3xl border border-border bg-card px-6 py-4',
 								'open:pb-5',

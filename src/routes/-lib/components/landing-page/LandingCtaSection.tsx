@@ -2,8 +2,7 @@ import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
-import { getMotionProps, scaleIn } from './landingMotion';
+import { motionInViewProps, scaleIn } from './landingMotion';
 import { landingCopy } from './landingCopy';
 import { LandingSection } from './LandingSection';
 import type { LandingSectionActionProps } from './landingSectionTypes';
@@ -12,14 +11,11 @@ export const LandingCtaSection = ({
 	isRedirecting,
 	onGoogleSignIn,
 }: LandingSectionActionProps) => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
-
 	return (
 		<LandingSection animate={false}>
 			<motion.div
 				variants={scaleIn}
-				{...motionProps}
+				{...motionInViewProps}
 			>
 				<Card.Root className='border-0 bg-primary text-primary-foreground'>
 					<Card.Content className='px-6 py-14 text-center md:px-12 md:py-16'>

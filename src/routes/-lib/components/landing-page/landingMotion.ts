@@ -34,12 +34,9 @@ export const scaleIn: Variants = {
 	visible: { opacity: 1, scale: 1 },
 };
 
-export const getMotionProps = (prefersReducedMotion: boolean) => ({
-	initial: prefersReducedMotion ? false : ('hidden' as const),
-	animate: prefersReducedMotion ? undefined : ('visible' as const),
-	whileInView: prefersReducedMotion ? undefined : ('visible' as const),
-	viewport: prefersReducedMotion
-		? undefined
-		: { once: true, margin: '-80px' as const },
-	transition: prefersReducedMotion ? { duration: 0 } : landingTransition,
-});
+export const motionInViewProps = {
+	initial: 'hidden' as const,
+	whileInView: 'visible' as const,
+	viewport: { once: true, margin: '-80px' as const },
+	transition: landingTransition,
+};

@@ -2,10 +2,9 @@ import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
 import { cn } from '@/utils/classNamesUtils';
 import {
-	getMotionProps,
+	motionInViewProps,
 	scaleIn,
 	staggerContainer,
 	staggerItem,
@@ -19,9 +18,6 @@ export const LandingPricingSection = ({
 	isRedirecting,
 	onGoogleSignIn,
 }: LandingSectionActionProps) => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
-
 	return (
 		<LandingSection
 			id='pricing'
@@ -31,18 +27,12 @@ export const LandingPricingSection = ({
 			<motion.div
 				className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-3'
 				variants={staggerContainer(0.1)}
-				{...motionProps}
+				{...motionInViewProps}
 			>
 				{landingCopy.pricing.plans.map((plan) => (
 					<motion.div
 						key={plan.name}
-						variants={
-							prefersReducedMotion
-								? undefined
-								: plan.highlighted
-									? scaleIn
-									: staggerItem
-						}
+						variants={plan.highlighted ? scaleIn : staggerItem}
 						className='flex'
 					>
 						<Card.Root

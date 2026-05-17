@@ -1,16 +1,16 @@
 import { Card } from '@/components/card/Card';
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
-import { getMotionProps, staggerContainer, staggerItem } from './landingMotion';
+import {
+	motionInViewProps,
+	staggerContainer,
+	staggerItem,
+} from './landingMotion';
 import { landingCopy } from './landingCopy';
 import { LandingSection } from './LandingSection';
 import { LandingSectionHeader } from './LandingSectionHeader';
 
 export const LandingSolutionSection = () => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
-
 	return (
 		<LandingSection
 			id='solution'
@@ -20,12 +20,12 @@ export const LandingSolutionSection = () => {
 			<motion.div
 				className='grid gap-6 md:grid-cols-2'
 				variants={staggerContainer(0.08)}
-				{...motionProps}
+				{...motionInViewProps}
 			>
 				{landingCopy.solution.features.map((feature) => (
 					<motion.div
 						key={feature.label}
-						variants={prefersReducedMotion ? undefined : staggerItem}
+						variants={staggerItem}
 					>
 						<Card.Root className='h-full border-border/80'>
 							<Card.Content className='p-6 md:p-8'>

@@ -1,8 +1,7 @@
 import { cn } from '@/utils/classNamesUtils';
 import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
-import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
-import { fadeUp, getMotionProps } from './landingMotion';
+import { fadeUp, motionInViewProps } from './landingMotion';
 
 type LandingSectionProps = {
 	id?: string;
@@ -19,10 +18,7 @@ export const LandingSection = ({
 	muted = false,
 	animate = true,
 }: LandingSectionProps) => {
-	const prefersReducedMotion = usePrefersReducedMotion();
-	const motionProps = getMotionProps(prefersReducedMotion);
-
-	if (!animate || prefersReducedMotion) {
+	if (!animate) {
 		return (
 			<section
 				id={id}
@@ -41,7 +37,7 @@ export const LandingSection = ({
 			<motion.div
 				className='mx-auto max-w-7xl px-4 md:px-12'
 				variants={fadeUp}
-				{...motionProps}
+				{...motionInViewProps}
 			>
 				{children}
 			</motion.div>
