@@ -67,6 +67,16 @@ export const enTranslations = {
 		maxCharacters: 'Please enter at most {maximum} characters',
 		maxNumber: 'Please enter a value less than or equal to {maximum}',
 	},
+	richTextField: {
+		toolbar: {
+			label: 'Formatting',
+			bold: 'Bold',
+			italic: 'Italic',
+			underline: 'Underline',
+			bulletList: 'Bullet list',
+			orderedList: 'Ordered list',
+		},
+	},
 	a11y: {
 		inputAction: 'Input action',
 		toggleSidebar: 'Toggle Sidebar',

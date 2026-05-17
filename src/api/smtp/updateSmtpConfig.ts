@@ -1,5 +1,6 @@
 import { db } from '@/db/client';
 import { smtpConfigTable } from '@/db/tables/smtpConfigTable';
+import { encryptStoredSmtpPassword } from '@/lib/smtpPasswordCrypto';
 import { smtpUpdateFormSchema } from '@/routes/_auth/app/settings/-lib/settings-automations-tab/smtpUpsertFormSchemas';
 import { getServerT } from '@/utils/languageUtils';
 import {
@@ -62,7 +63,7 @@ const updateSmtpConfigServerFn = createServerFn({
 			};
 
 			if (form.password) {
-				updateData.password = form.password;
+				updateData.password = encryptStoredSmtpPassword(form.password);
 			}
 
 			await db
