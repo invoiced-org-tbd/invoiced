@@ -4,7 +4,7 @@ export const SIDEBAR_WIDTH = '16rem';
 export const SIDEBAR_WIDTH_ICON = '4rem';
 
 export const sidebarMenuButtonVariants = cva(
-	'peer/menu-button ring-sidebar-ring data-active:hover:bg-primary/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-active:bg-primary data-active:text-sidebar-accent-foreground data-active:font-medium flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0',
+	'peer/menu-button ring-sidebar-ring data-active:hover:bg-primary/80 data-active:hover:text-primary-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-active:bg-primary data-active:text-primary-foreground data-active:font-medium flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0',
 	{
 		variants: {
 			variant: {

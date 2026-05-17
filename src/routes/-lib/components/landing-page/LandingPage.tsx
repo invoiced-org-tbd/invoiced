@@ -4,9 +4,13 @@ import { useState } from 'react';
 import { LandingHeaderSection } from './LandingHeaderSection';
 import { LandingHeroSection } from './LandingHeroSection';
 import { LandingStatsSection } from './LandingStatsSection';
-import { LandingFeaturesSection } from './LandingFeaturesSection';
+import { LandingProblemSection } from './LandingProblemSection';
+import { LandingSolutionSection } from './LandingSolutionSection';
 import { LandingHowItWorksSection } from './LandingHowItWorksSection';
+import { LandingAudienceSection } from './LandingAudienceSection';
+import { LandingDifferentiatorSection } from './LandingDifferentiatorSection';
 import { LandingPricingSection } from './LandingPricingSection';
+import { LandingFaqSection } from './LandingFaqSection';
 import { LandingCtaSection } from './LandingCtaSection';
 import { LandingFooterSection } from './LandingFooterSection';
 
@@ -36,21 +40,27 @@ export const LandingPage = () => {
 				isRedirecting={isRedirecting}
 				onGoogleSignIn={handleGoogleSignIn}
 			/>
-			<LandingHeroSection
-				isRedirecting={isRedirecting}
-				onGoogleSignIn={handleGoogleSignIn}
-			/>
-			<LandingStatsSection />
-			<LandingFeaturesSection />
-			<LandingHowItWorksSection />
-			<LandingPricingSection
-				isRedirecting={isRedirecting}
-				onGoogleSignIn={handleGoogleSignIn}
-			/>
-			<LandingCtaSection
-				isRedirecting={isRedirecting}
-				onGoogleSignIn={handleGoogleSignIn}
-			/>
+			<main>
+				<LandingHeroSection
+					isRedirecting={isRedirecting}
+					onGoogleSignIn={handleGoogleSignIn}
+				/>
+				<LandingStatsSection />
+				<LandingProblemSection />
+				<LandingSolutionSection />
+				<LandingHowItWorksSection />
+				<LandingAudienceSection />
+				<LandingDifferentiatorSection />
+				<LandingPricingSection
+					isRedirecting={isRedirecting}
+					onGoogleSignIn={handleGoogleSignIn}
+				/>
+				<LandingFaqSection />
+				<LandingCtaSection
+					isRedirecting={isRedirecting}
+					onGoogleSignIn={handleGoogleSignIn}
+				/>
+			</main>
 			<LandingFooterSection />
 		</div>
 	);

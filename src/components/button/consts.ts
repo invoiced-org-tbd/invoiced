@@ -3,7 +3,7 @@ import { cn } from '@/utils/classNamesUtils';
 
 export const buttonVariants = cva(
 	cn(
-		'flex items-center justify-center whitespace-nowrap rounded-lg transition-colors gap-2',
+		'flex items-center justify-center whitespace-nowrap rounded-3xl transition-colors gap-2',
 		'font-semibold text-foreground cursor-pointer',
 		'focus-visible:outline-none focus-visible:ring-3',
 		'border w-fit h-max leading-none!',
@@ -14,7 +14,7 @@ export const buttonVariants = cva(
 		variants: {
 			variant: {
 				primary:
-					'bg-primary hover:bg-primary/80 border-primary hover:border-primary/80 focus-visible:ring-primary/25',
+					'bg-primary text-primary-foreground hover:bg-primary/80 border-primary hover:border-primary/80 focus-visible:ring-primary/25',
 				secondary:
 					'bg-secondary hover:bg-secondary/80 border-secondary hover:border-secondary/80 focus-visible:ring-secondary',
 				destructive:

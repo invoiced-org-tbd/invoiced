@@ -42,7 +42,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
 	return (
 		<html
-			lang='en'
+			lang='pt-BR'
 			suppressHydrationWarning={true}
 		>
 			<head>
