@@ -13,6 +13,11 @@ This project is a mini-erp focused on invoice management for devs in Brazil that
 - Bun
 - Biome
 
+## Git & pull requests
+
+- All pull requests merge into **`dev`**, not `main`. When creating a PR, use `gh pr create --base dev`.
+- Before opening a new PR, check for an existing one: `gh pr list --head <branch> --base dev`.
+
 ## Warnings
 
 - do not run bun scripts unless told to
