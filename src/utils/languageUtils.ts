@@ -1,17 +1,13 @@
 import type { Language } from '@/hooks/use-language/types';
 import { useLanguage } from '@/hooks/use-language/useLanguage';
-import { translate } from '@/translations/translate';
-import type {
-	TranslationFn,
-	TranslationKey,
-	TranslationRuntimeParams,
-} from '@/translations/types';
+import { createTranslationFunction } from '@/translations/translate';
+import type { TranslationFn } from '@/translations/types';
 import { createIsomorphicFn } from '@tanstack/react-start';
 import { getCookie } from '@tanstack/react-start/server';
 
 export const LANGUAGE_COOKIE_NAME = 'app_locale';
 
-const isLanguage = (value: string): value is Language => {
+export const isLanguage = (value: string): value is Language => {
 	return value === 'en' || value === 'br';
 };
 
@@ -23,17 +19,9 @@ const resolveLanguage = (languageCandidate: string | undefined): Language => {
 	return isLanguage(languageCandidate) ? languageCandidate : 'en';
 };
 
-export const getServerT = (language: Language): TranslationFn => {
-	const runTranslate = translate as (
-		language: Language,
-		path: TranslationKey,
-		params?: TranslationRuntimeParams,
-	) => string;
-
-	return ((...args: [TranslationKey, TranslationRuntimeParams?]) =>
-		runTranslate(language, args[0], args[1])) as TranslationFn;
-};
-
+/**
+ * Stateless language getter for use in server fns and outside of render cycles (e.g. zod schemas)
+ */
 export const getLanguage = createIsomorphicFn()
 	.client(() => {
 		const language = useLanguage.getState().language;
@@ -43,3 +31,11 @@ export const getLanguage = createIsomorphicFn()
 		const language = resolveLanguage(getCookie(LANGUAGE_COOKIE_NAME));
 		return language;
 	});
+
+/**
+ * Stateless translation function for use in server fns and outside of render cycles (e.g. zod schemas)
+ */
+export const getT = (): TranslationFn => {
+	const language = getLanguage();
+	return createTranslationFunction(language);
+};

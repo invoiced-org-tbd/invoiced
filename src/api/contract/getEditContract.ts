@@ -1,5 +1,5 @@
 import { db } from '@/db/client';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { createQueryOptions } from '@/utils/queryOptionsUtils';
 import {
 	createErrorResponse,
@@ -21,9 +21,9 @@ const getEditContractServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(getEditContractParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const contract = await db.query.contractTable.findFirst({
 				where: {

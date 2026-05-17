@@ -1,6 +1,6 @@
 import { db } from '@/db/client';
 import { contractTable } from '@/db/tables/contractTable';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import {
 	createMutationOptions,
 	invalidateOnSuccess,
@@ -27,9 +27,9 @@ const deleteContractServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(deleteContractParams)
-	.handler(async ({ data, context: { user, language } }) => {
+	.handler(async ({ data, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const { rowsAffected } = await db
 				.delete(contractTable)

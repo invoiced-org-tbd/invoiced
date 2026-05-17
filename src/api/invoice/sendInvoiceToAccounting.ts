@@ -10,7 +10,7 @@ import {
 	createSuccessResponse,
 	ServerError,
 } from '@/utils/serverFnsUtils';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
@@ -40,8 +40,9 @@ const sendInvoiceToAccountingServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(sendInvoiceToAccountingParams)
-	.handler(async ({ data, context: { user, language } }) => {
-		const t = getServerT(language);
+	.handler(async ({ data, context: { user } }) => {
+		const t = getT();
+
 		try {
 			const { invoiceId } = data;
 

@@ -1,5 +1,4 @@
-import { translate } from '@/translations/translate';
-import { getLanguage } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import z from 'zod';
 
 const invoiceNumberingModeSchema = z.enum(['new', 'existing']);
@@ -27,10 +26,12 @@ export const invoiceConfigurationFormSchema = invoiceConfigurationPersistSchema
 			data.invoiceNumberingMode === 'existing' &&
 			data.lastInvoiceNumber < 1
 		) {
+			const t = getT();
+
 			ctx.addIssue({
 				code: 'custom',
 				path: ['lastInvoiceNumber'],
-				message: translate(getLanguage(), 'validation.minNumber', {
+				message: t('validation.minNumber', {
 					minimum: 1,
 				}),
 			});

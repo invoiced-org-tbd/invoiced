@@ -1,19 +1,10 @@
 import { addressFormSchema } from '@/components/address-form/addressFormSchemas';
 import { useCompany } from '@/hooks/use-company/useCompany';
-import { translate } from '@/translations/translate';
-import { getLanguage } from '@/utils/languageUtils';
 import z from 'zod';
 
-const requiredMessage = translate(getLanguage(), 'validation.required');
-const invalidEmailMessage = translate(getLanguage(), 'validation.invalidEmail');
-
 const generalFormSchema = z.object({
-	name: z.string().min(1, {
-		message: requiredMessage,
-	}),
-	email: z.email({
-		message: invalidEmailMessage,
-	}),
+	name: z.string().min(1),
+	email: z.email(),
 });
 
 export const companyUpsertFormSchema = z.object({

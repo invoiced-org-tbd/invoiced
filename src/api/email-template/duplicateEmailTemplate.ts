@@ -1,7 +1,7 @@
 import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
 import { createServerFn } from '@tanstack/react-start';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import {
 	createErrorResponse,
 	createSuccessResponse,
@@ -26,9 +26,9 @@ const duplicateEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(duplicateEmailTemplateParams)
-	.handler(async ({ data: { editId }, context: { user, language } }) => {
+	.handler(async ({ data: { editId }, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const baseEmailTemplate = await db.query.emailTemplateTable.findFirst({
 				where: {

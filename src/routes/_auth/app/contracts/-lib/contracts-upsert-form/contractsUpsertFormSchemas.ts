@@ -1,7 +1,6 @@
 import { getEditContractQueryOptions } from '@/api/contract/getEditContract';
 import { addressFormWithCountrySchema } from '@/components/address-form/addressFormSchemas';
-import { translate } from '@/translations/translate';
-import { getLanguage } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { useQuery } from '@tanstack/react-query';
 import z from 'zod';
 import {
@@ -37,11 +36,12 @@ const contractInvoiceRecurrenceFormSchema = z
 		const { totalPercentage } = getContractRecurrenceItemsTotalPercentage(
 			data.items,
 		);
+		const t = getT();
+
 		if (totalPercentage !== 100) {
 			ctx.addIssue({
 				code: 'custom',
-				message: translate(
-					getLanguage(),
+				message: t(
 					'contracts.form.invoiceRecurrence.validation.totalPercentageMustBe100',
 				),
 				path: ['items'],
@@ -54,8 +54,7 @@ const contractInvoiceRecurrenceFormSchema = z
 			for (const index of conflictingIndexes) {
 				ctx.addIssue({
 					code: 'custom',
-					message: translate(
-						getLanguage(),
+					message: t(
 						'contracts.form.invoiceRecurrence.validation.duplicateDayOfMonth',
 					),
 					path: ['items', index, 'dayOfMonth'],
@@ -75,12 +74,11 @@ const contractAutoSendFormSchema = z
 		}
 
 		if (!data.emailTemplateId.trim()) {
+			const t = getT();
+
 			ctx.addIssue({
 				code: 'custom',
-				message: translate(
-					getLanguage(),
-					'contracts.form.autoSend.validation.templateRequired',
-				),
+				message: t('contracts.form.autoSend.validation.templateRequired'),
 				path: ['emailTemplateId'],
 			});
 		}

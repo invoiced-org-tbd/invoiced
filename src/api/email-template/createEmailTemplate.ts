@@ -10,7 +10,7 @@ import {
 	HTTP_STATUS_CODES,
 	ServerError,
 } from '@/utils/serverFnsUtils';
-import { getServerT } from '@/utils/languageUtils';
+import { getT } from '@/utils/languageUtils';
 import { createServerFn } from '@tanstack/react-start';
 import z from 'zod';
 import { sessionMiddleware } from '../sessionMiddleware';
@@ -28,9 +28,9 @@ const createEmailTemplateServerFn = createServerFn({
 })
 	.middleware([sessionMiddleware])
 	.inputValidator(createEmailTemplateParams)
-	.handler(async ({ data: { form }, context: { user, language } }) => {
+	.handler(async ({ data: { form }, context: { user } }) => {
 		try {
-			const t = getServerT(language);
+			const t = getT();
 
 			const [createdTemplate] = await db
 				.insert(emailTemplateTable)
