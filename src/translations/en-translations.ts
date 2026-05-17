@@ -590,6 +590,7 @@ export const enTranslations = {
 			emptyState: 'No invoices yet.',
 			createInvoice: 'Create invoice',
 			viewInvoice: 'View invoice',
+			downloadInvoice: 'Download invoice',
 			deleteInvoice: 'Delete invoice',
 			itemSingular: 'item',
 			itemPlural: 'items',

@@ -600,6 +600,7 @@ export const brTranslations = {
 			emptyState: 'Nenhuma fatura ainda.',
 			createInvoice: 'Criar fatura',
 			viewInvoice: 'Ver fatura',
+			downloadInvoice: 'Baixar fatura',
 			deleteInvoice: 'Excluir fatura',
 			itemSingular: 'item',
 			itemPlural: 'itens',
