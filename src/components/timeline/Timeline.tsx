@@ -1,9 +1,5 @@
 import { cn } from '@/utils/classNamesUtils';
-import {
-	CheckIcon,
-	CircleIcon,
-	XIcon,
-} from 'lucide-react';
+import { CheckIcon, CircleIcon, XIcon } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { createContext, useContext } from 'react';
 import {
@@ -33,7 +29,9 @@ type TimelineItemContextValue = {
 	isLast: boolean;
 };
 
-const TimelineItemContext = createContext<TimelineItemContextValue | null>(null);
+const TimelineItemContext = createContext<TimelineItemContextValue | null>(
+	null,
+);
 
 const useTimelineItemContext = () => {
 	const context = useContext(TimelineItemContext);
@@ -98,7 +96,10 @@ const Indicator = ({
 			data-slot='timeline-indicator'
 			role='status'
 			aria-live='polite'
-			className={cn(timelineIndicatorVariants({ state: resolvedState }), className)}
+			className={cn(
+				timelineIndicatorVariants({ state: resolvedState }),
+				className,
+			)}
 			{...props}
 		>
 			{children ?? (
@@ -131,7 +132,10 @@ const Connector = ({
 		<hr
 			data-slot='timeline-connector'
 			aria-orientation='vertical'
-			className={cn(timelineConnectorVariants({ state: resolvedState }), className)}
+			className={cn(
+				timelineConnectorVariants({ state: resolvedState }),
+				className,
+			)}
 			{...props}
 		/>
 	);

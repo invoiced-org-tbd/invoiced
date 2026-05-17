@@ -1,30 +1,38 @@
-const stats = [
-	{ value: '2.500+', label: 'Profissionais ativos' },
-	{ value: '50k+', label: 'Notas emitidas' },
-	{ value: '99.9%', label: 'Uptime garantido' },
-	{ value: '4.9/5', label: 'Avaliação média' },
-];
+import { motion } from 'framer-motion';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
+import { getMotionProps, staggerContainer, staggerItem } from './landingMotion';
+import { landingCopy } from './landingCopy';
+import { LandingSection } from './LandingSection';
 
 export const LandingStatsSection = () => {
+	const prefersReducedMotion = usePrefersReducedMotion();
+	const motionProps = getMotionProps(prefersReducedMotion);
+
 	return (
-		<section className='py-12 border-y border-border/40 bg-muted/30'>
-			<div className='container mx-auto px-4'>
-				<div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-					{stats.map((stat) => (
-						<div
-							key={stat.label}
-							className='text-center'
-						>
-							<div className='text-2xl md:text-3xl font-semibold text-foreground'>
-								{stat.value}
-							</div>
-							<div className='text-sm text-muted-foreground mt-1'>
-								{stat.label}
-							</div>
-						</div>
-					))}
-				</div>
-			</div>
-		</section>
+		<LandingSection
+			muted
+			animate={false}
+		>
+			<motion.div
+				className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'
+				variants={staggerContainer()}
+				{...motionProps}
+			>
+				{landingCopy.stats.map((stat) => (
+					<motion.div
+						key={stat.value}
+						variants={prefersReducedMotion ? undefined : staggerItem}
+						className='text-center'
+					>
+						<p className='text-xl font-extrabold tracking-tight md:text-2xl'>
+							{stat.value}
+						</p>
+						<p className='mt-2 text-sm text-muted-foreground'>
+							{stat.description}
+						</p>
+					</motion.div>
+				))}
+			</motion.div>
+		</LandingSection>
 	);
 };

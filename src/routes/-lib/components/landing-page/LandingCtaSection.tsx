@@ -1,47 +1,59 @@
 import { Button } from '@/components/button/Button';
 import { Card } from '@/components/card/Card';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion/usePrefersReducedMotion';
+import { getMotionProps, scaleIn } from './landingMotion';
+import { landingCopy } from './landingCopy';
+import { LandingSection } from './LandingSection';
 import type { LandingSectionActionProps } from './landingSectionTypes';
 
 export const LandingCtaSection = ({
 	isRedirecting,
 	onGoogleSignIn,
 }: LandingSectionActionProps) => {
+	const prefersReducedMotion = usePrefersReducedMotion();
+	const motionProps = getMotionProps(prefersReducedMotion);
+
 	return (
-		<section className='py-24'>
-			<div className='container mx-auto px-4'>
-				<Card.Root className='bg-primary text-primary-foreground border-0'>
-					<Card.Content className='py-16 text-center'>
-						<h2 className='text-3xl md:text-4xl font-semibold mb-4'>
-							Pronto para simplificar seu faturamento?
+		<LandingSection animate={false}>
+			<motion.div
+				variants={scaleIn}
+				{...motionProps}
+			>
+				<Card.Root className='border-0 bg-primary text-primary-foreground'>
+					<Card.Content className='px-6 py-14 text-center md:px-12 md:py-16'>
+						<h2 className='text-3xl font-extrabold tracking-tight text-balance md:text-4xl'>
+							{landingCopy.cta.title}
 						</h2>
-						<p className='text-primary-foreground/80 text-lg mb-8 max-w-xl mx-auto'>
-							Junte-se a milhares de profissionais PJ que já usam o Invoiced.
+						<p className='mx-auto mt-4 max-w-xl text-lg text-primary-foreground/85'>
+							{landingCopy.cta.supporting}
 						</p>
-						<div className='flex flex-col sm:flex-row items-center justify-center gap-4'>
+						<div className='mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row'>
 							<Button
 								size='lg'
 								variant='secondary'
 								onClick={onGoogleSignIn}
 								isLoading={isRedirecting}
+								className='w-full sm:w-auto'
 							>
-								Criar conta grátis
+								{landingCopy.cta.primaryCta}
 								<ArrowRight className='ml-2 size-4' />
 							</Button>
-						</div>
-						<div className='flex items-center justify-center gap-6 mt-8 text-sm text-primary-foreground/70'>
-							<span className='flex items-center gap-1.5'>
-								<CheckCircle2 className='size-4' />
-								Sem cartão de crédito
-							</span>
-							<span className='flex items-center gap-1.5'>
-								<CheckCircle2 className='size-4' />
-								Cancele quando quiser
-							</span>
+							<Button
+								size='lg'
+								isOutlined
+								variant='secondary'
+								onClick={onGoogleSignIn}
+								isLoading={isRedirecting}
+								className='w-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 sm:w-auto'
+							>
+								{landingCopy.cta.secondaryCta}
+							</Button>
 						</div>
 					</Card.Content>
 				</Card.Root>
-			</div>
-		</section>
+			</motion.div>
+		</LandingSection>
 	);
 };
