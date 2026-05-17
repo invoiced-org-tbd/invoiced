@@ -522,6 +522,8 @@ export const enTranslations = {
 		title: 'Invoices',
 		list: {
 			emptyState: 'No invoices yet.',
+			emptyStateDescription:
+				'Create an invoice from a contract on the Contracts page.',
 			createInvoice: 'Create invoice',
 			viewInvoice: 'View invoice',
 			sendToAccounting: 'Send to accounting',

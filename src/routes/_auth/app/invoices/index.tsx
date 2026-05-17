@@ -7,6 +7,9 @@ import { zodValidator } from '@tanstack/zod-adapter';
 import z from 'zod';
 import { InvoicesList } from './-lib/invoices-list/InvoicesList';
 import { objectKeys } from '@/utils/objectUtils';
+import { FileIcon } from 'lucide-react';
+import { Button } from '@/components/button/Button';
+import { Link } from '@tanstack/react-router';
 
 const invoicesSearchSchema = z.object({
 	selectedInvoiceId: z.string().optional(),
@@ -71,8 +74,15 @@ function RouteComponent() {
 						selectedInvoice={resolvedInvoiceData}
 					/>
 				) : (
-					<div className='bg-muted rounded-lg p-6 text-sm text-muted-foreground'>
-						{t('invoices.list.emptyState')}
+					<div className='text-sm text-muted-foreground flex flex-col gap-8 items-center justify-center h-full'>
+						<FileIcon className='size-20 text-primary' />
+						<div className='flex flex-col gap-2 items-center justify-center'>
+						  <p className='text-2xl font-medium text-foreground'>{t('invoices.list.emptyState')}</p>
+							<p className='text-sm text-muted-foreground'>{t('invoices.list.emptyStateDescription')}</p>
+						</div>
+						<Link to='/app/contracts'>
+							<Button variant='primary' size='lg'>{t('invoices.list.createInvoice')}</Button>
+						</Link>
 					</div>
 				)}
 			</Page.Content>

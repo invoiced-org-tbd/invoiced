@@ -532,6 +532,8 @@ export const brTranslations = {
 		title: 'Faturas',
 		list: {
 			emptyState: 'Nenhuma fatura ainda.',
+			emptyStateDescription:
+				'Crie uma fatura a partir de um contrato na página de Contratos.',
 			createInvoice: 'Criar fatura',
 			viewInvoice: 'Ver fatura',
 			sendToAccounting: 'Enviar para contabilidade',
