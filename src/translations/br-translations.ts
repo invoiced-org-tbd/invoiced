@@ -206,82 +206,13 @@ export const brTranslations = {
 			},
 			automations: {
 				title: 'Automações',
-				description: 'Configure provedores SMTP e templates de e-mail.',
+				description:
+					'Configure templates de e-mail para envio automático de faturas.',
 				actions: {
 					add: 'Adicionar',
 					duplicate: 'Duplicar',
 				},
 				copySuffix: '(cópia)',
-				smtp: {
-					title: 'Configurações SMTP',
-					description: 'Gerencie seus provedores de envio de e-mail.',
-					entityName: 'configuração SMTP',
-					senderLabel: 'E-mail remetente',
-					hostLabel: 'Host / Porta',
-					presets: {
-						label: 'Preset de provedor',
-						description:
-							'Selecione um provedor para preencher host, porta e segurança.',
-						placeholder: 'Selecione um provedor...',
-						applyAction: 'Aplicar preset',
-						providers: {
-							gmail: 'Gmail',
-							outlook: 'Outlook (Microsoft 365)',
-							mailgun: 'Mailgun',
-							sendgrid: 'SendGrid',
-						},
-					},
-					securityModes: {
-						starttls: 'STARTTLS',
-						sslTls: 'SSL/TLS',
-						none: 'Nenhum',
-					},
-					emptyState: {
-						title: 'Nenhuma configuração SMTP ainda',
-						description:
-							'Adicione seu primeiro provedor SMTP para começar a enviar e-mails transacionais.',
-					},
-					deleteBlockedByContractAutoSend:
-						'Esta configuração SMTP está em uso no envio automático de faturas de um contrato. Desative ou altere o envio automático nesses contratos antes de excluir.',
-					drawer: {
-						title: 'Criar configuração SMTP',
-						description: 'Defina host, remetente e opções de segurança.',
-						editTitle: 'Editar configuração SMTP',
-						editDescription: 'Atualize a conexão SMTP e os dados de remetente.',
-						createAction: 'Criar SMTP',
-						saveAction: 'Salvar alterações',
-					},
-					form: {
-						nameLabel: 'Nome da configuração',
-						namePlaceholder: 'SMTP principal',
-						usernameLabel: 'Usuário',
-						usernamePlaceholder: 'usuario-smtp',
-						usernameHint:
-							'Em geral, é o login SMTP — muitas vezes um e-mail ou o usuário do provedor.',
-						fromNameLabel: 'Nome do remetente',
-						fromNamePlaceholder: 'Equipe de faturamento',
-						fromEmailLabel: 'E-mail remetente',
-						fromEmailPlaceholder: 'faturamento@acme.com',
-						fromEmailHint:
-							'Endereço que o destinatário verá como remetente na caixa de entrada.',
-						hostLabel: 'Host',
-						hostPlaceholder: 'smtp.mailgun.org',
-						hostHint: 'Host do servidor SMTP fornecido pelo seu provedor.',
-						portLabel: 'Porta',
-						portHint:
-							'Portas comuns: 587 (STARTTLS), 465 (SSL/TLS) ou 25 (sem criptografia).',
-						securityLabel: 'Segurança',
-						securityHint:
-							'Deve corresponder ao provedor. STARTTLS costuma ser o mais comum.',
-						passwordLabel: 'Senha',
-						passwordPlaceholder: 'Digite sua senha SMTP',
-						passwordDescription: 'Armazenada com segurança e nunca exibida.',
-						passwordEditPlaceholder:
-							'Deixe em branco para manter a senha atual',
-						passwordEditDescription:
-							'Por segurança, a senha atual nunca é exibida.',
-					},
-				},
 				emailTemplates: {
 					title: 'Templates de e-mail',
 					description: 'Crie e mantenha templates reutilizáveis de e-mail.',
@@ -500,32 +431,25 @@ export const brTranslations = {
 			autoSend: {
 				sectionTitle: 'Envio automático de faturas',
 				sectionDescription:
-					'Envie faturas por e-mail automaticamente usando suas configurações de SMTP e templates.',
+					'Envie faturas por e-mail automaticamente usando o Resend e seus templates.',
 				loading: 'Carregando configurações de automação…',
 				zeroState: {
-					title: 'Falta SMTP ou template de e-mail',
+					title: 'Faltam templates de e-mail',
 					description:
-						'Adicione ao menos uma configuração SMTP e um template de e-mail em Configurações > Automações antes de ativar o envio automático.',
+						'Adicione ao menos um template de e-mail em Configurações > Automações antes de ativar o envio automático.',
 					cta: 'Abrir Automações',
 				},
 				enabledLabel: 'Ativar envio automático',
 				enabledDescription:
-					'Quando ativado, as faturas deste contrato podem ser enviadas por e-mail com as opções abaixo.',
-				smtpLabel: 'Configuração SMTP',
-				smtpDescription: 'Servidor de e-mail usado para enviar as faturas.',
-				smtpPlaceholder: 'Selecione o SMTP',
+					'Quando ativado, as faturas deste contrato podem ser enviadas por e-mail com o template abaixo.',
 				templateLabel: 'Template de e-mail',
 				templateDescription:
 					'Template aplicado ao assunto e corpo dos e-mails de fatura.',
 				templatePlaceholder: 'Selecione o template',
 				validation: {
-					smtpRequired:
-						'Selecione uma configuração SMTP quando o envio automático estiver ativado.',
 					templateRequired:
 						'Selecione um template de e-mail quando o envio automático estiver ativado.',
 				},
-				invalidSmtpConfiguration:
-					'A configuração SMTP selecionada não foi encontrada ou não pertence à sua conta.',
 				invalidEmailTemplate:
 					'O template de e-mail selecionado não foi encontrado ou não pertence à sua conta.',
 			},
@@ -555,12 +479,12 @@ export const brTranslations = {
 			missingInformationHint:
 				'Adicione estas informações para completar o resumo.',
 			autoSendLabel: 'Envio automático',
-			autoSendValue: '{smtpName} · template "{templateName}"',
+			autoSendValue: 'Template "{templateName}"',
 			autoSendOff: 'Envio automático desligado para este contrato.',
 			autoSendIncomplete:
-				'Selecione SMTP e template para concluir o envio automático.',
+				'Selecione um template de e-mail para concluir o envio automático.',
 			autoSendIncompleteHint:
-				'Abra a etapa Envio automático e escolha uma configuração SMTP e um template de e-mail.',
+				'Abra a etapa Envio automático e escolha um template de e-mail.',
 		},
 		invoicePreview: {
 			previewButton: 'Visualizar PDF',
@@ -610,6 +534,7 @@ export const brTranslations = {
 			emptyState: 'Nenhuma fatura ainda.',
 			createInvoice: 'Criar fatura',
 			viewInvoice: 'Ver fatura',
+			sendToAccounting: 'Enviar para contabilidade',
 			deleteInvoice: 'Excluir fatura',
 			itemSingular: 'item',
 			itemPlural: 'itens',
@@ -638,12 +563,32 @@ export const brTranslations = {
 					'Os itens são obrigatórios no modo personalizado',
 			},
 		},
+		emailToAccounting: {
+			subject: 'Fatura: {fileName}',
+			bodyText:
+				'Segue em anexo o PDF da fatura ({fileName}) referente a {clientCompany}.',
+			bodyHtml:
+				'<p>Segue em anexo o PDF da fatura (<strong>{fileName}</strong>) referente a <strong>{clientCompany}</strong>.</p>',
+		},
 		server: {
 			invoiceConfigurationRequired:
 				'Configure as opções de fatura antes de criar faturas',
 			recurrenceItemNotFound: 'Item de recorrência não encontrado',
 			notFound: 'Fatura não encontrada',
 			deletedSuccess: 'Fatura excluída',
+			sendToAccountingSuccess: 'PDF da fatura enviado para {email}.',
+			resendNotConfigured:
+				'O envio de e-mail não está configurado. Adicione RESEND_API_KEY no ambiente do servidor.',
+			invalidResponsibleEmail:
+				'O e-mail de contato de cobrança do contrato está ausente ou inválido. Atualize o e-mail do responsável no contrato.',
+			companyRequiredForEmail:
+				'Configure sua empresa antes de enviar faturas por e-mail.',
+			emailProviderError:
+				'O provedor de e-mail não pôde enviar a mensagem. Tente novamente mais tarde.',
+			resendSandboxRecipient:
+				'No modo de teste do Resend, o envio só chega ao e-mail da sua conta Resend. Verifique um domínio em resend.com/domains, configure RESEND_FROM com esse domínio ou use o e-mail da sua conta como responsável do contrato durante os testes.',
+			autoSendNotConfigured:
+				'O contrato desta fatura não tem envio automático de faturas configurado com um modelo de e-mail.',
 		},
 	},
 	onboarding: {
@@ -672,10 +617,6 @@ export const brTranslations = {
 			invoice: {
 				label: 'Envie uma fatura',
 				description: 'Marque quando sua primeira fatura for enviada.',
-			},
-			smtp: {
-				label: 'Configure o SMTP',
-				description: 'Configure seu provedor SMTP para envio de e-mails.',
 			},
 			emailTemplates: {
 				label: 'Configure os templates de e-mail',

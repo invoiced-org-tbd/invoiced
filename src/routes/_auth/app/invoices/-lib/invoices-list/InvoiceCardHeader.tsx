@@ -1,9 +1,12 @@
+import { sendInvoiceToAccountingMutationOptions } from '@/api/invoice/sendInvoiceToAccounting';
 import { Card } from '@/components/card/Card';
 import type { GetInvoicesResponse } from '@/api/invoice/getInvoices';
-import { FileTextIcon } from 'lucide-react';
+import { FileTextIcon, MailIcon } from 'lucide-react';
 import { Button } from '@/components/button/Button';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { useMutation } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
+import { invoiceHasAutoSendConfigured } from '@/lib/invoice/invoiceAutoSend';
 
 const invoicesRouteApi = getRouteApi('/_auth/app/invoices/');
 
@@ -12,6 +15,11 @@ type InvoiceCardHeaderProps = {
 };
 export const InvoiceCardHeader = ({ invoice }: InvoiceCardHeaderProps) => {
 	const { t } = useTranslate();
+
+	const { mutate: sendToAccounting, isPending: isSendingToAccounting } =
+		useMutation(sendInvoiceToAccountingMutationOptions());
+
+	const canSendToAccounting = invoiceHasAutoSendConfigured(invoice);
 
 	return (
 		<Card.Header className='border-b flex-row justify-between items-center'>
@@ -35,6 +43,23 @@ export const InvoiceCardHeader = ({ invoice }: InvoiceCardHeaderProps) => {
 			</div>
 
 			<div className='flex items-center gap-2'>
+				{canSendToAccounting ? (
+					<Button
+						variant='secondary'
+						size='xs'
+						type='button'
+						isLoading={isSendingToAccounting}
+						onClick={() =>
+							sendToAccounting({
+								invoiceId: invoice.id,
+							})
+						}
+					>
+						<MailIcon />
+						{t('invoices.list.sendToAccounting')}
+					</Button>
+				) : null}
+
 				<invoicesRouteApi.Link
 					to='.'
 					search={{

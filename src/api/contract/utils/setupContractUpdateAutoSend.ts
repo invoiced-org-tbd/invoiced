@@ -29,13 +29,11 @@ export const setupContractUpdateAutoSend = async ({
 		return;
 	}
 
-	const smtpConfigId = autoSend.smtpConfigId;
 	const emailTemplateId = autoSend.emailTemplateId;
 
 	await assertContractAutoSendResourcesOwned({
 		tx,
 		userId,
-		smtpConfigId,
 		emailTemplateId,
 		t,
 	});
@@ -50,14 +48,12 @@ export const setupContractUpdateAutoSend = async ({
 		await tx
 			.update(contractAutoSendTable)
 			.set({
-				smtpConfigId,
 				emailTemplateId,
 			})
 			.where(eq(contractAutoSendTable.contractId, contractId));
 	} else {
 		await tx.insert(contractAutoSendTable).values({
 			contractId,
-			smtpConfigId,
 			emailTemplateId,
 		});
 	}

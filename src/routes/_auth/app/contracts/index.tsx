@@ -39,11 +39,11 @@ export const Route = createFileRoute('/_auth/app/contracts/')({
 		);
 
 		if (!contracts.length) {
-			if (!Object.keys(search).length) {
+			if (!Object.keys(search).length || search.isCreating) {
 				return;
 			}
 
-			// if there's no contracts, search should be empty (no creating, editing etc)
+			// With no contracts, only the create flow is allowed in search params
 			throw Route.redirect({
 				to: '.',
 				search: {},

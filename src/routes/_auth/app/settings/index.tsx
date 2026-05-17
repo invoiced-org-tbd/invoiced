@@ -28,7 +28,7 @@ const settingsSearchSchema = z.object({
 	isDuplicatingEmailTemplate: z.boolean().optional(),
 	isDeletingAutomation: z.boolean().optional(),
 	automationId: z.string().optional(),
-	automationResource: z.enum(['smtp', 'emailTemplate']).optional(),
+	automationResource: z.enum(['emailTemplate']).optional(),
 });
 
 export const Route = createFileRoute('/_auth/app/settings/')({

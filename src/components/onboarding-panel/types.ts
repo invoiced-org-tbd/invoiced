@@ -6,7 +6,6 @@ type OnboardingPanelStepId =
 	| 'company'
 	| 'contract'
 	| 'invoice'
-	| 'smtp'
 	| 'email-templates';
 
 export type OnboardingPanelStep = {

@@ -77,7 +77,7 @@ export const ContractsUpsertForm = ({
 			}
 
 			// prevent saving when there's nothing to save (no changes)
-			if (form.state.isDefaultValue && !!invoiceConfiguration) {
+			if (form.state.isDefaultValue && invoiceConfiguration) {
 				onClose();
 				return;
 			}

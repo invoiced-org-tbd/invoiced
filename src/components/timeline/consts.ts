@@ -15,19 +15,22 @@ export const timelineRootVariants = cva(
 	},
 );
 
-export const timelineItemVariants = cva('group/timeline-item grid items-start gap-x-0', {
-	variants: {
-		state: {
-			completed: 'text-primary',
-			current: 'text-primary',
-			upcoming: 'text-muted-foreground',
-			error: 'text-destructive',
+export const timelineItemVariants = cva(
+	'group/timeline-item grid items-start gap-x-0',
+	{
+		variants: {
+			state: {
+				completed: 'text-primary',
+				current: 'text-primary',
+				upcoming: 'text-muted-foreground',
+				error: 'text-destructive',
+			},
+		},
+		defaultVariants: {
+			state: 'upcoming',
 		},
 	},
-	defaultVariants: {
-		state: 'upcoming',
-	},
-});
+);
 
 export const timelineIndicatorVariants = cva(
 	'col-start-2 col-end-3 row-start-1 row-end-1 my-2.5 flex size-4.5 shrink-0 items-center justify-center rounded-full border',

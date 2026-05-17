@@ -5,6 +5,7 @@ import { useAuthenticatedSidebarNavItems } from './consts';
 import type { SidebarNavLinkItem } from './types';
 import { useCompany } from '@/hooks/use-company/useCompany';
 import { useTranslate } from '@/hooks/use-translate/useTranslate';
+import { appConfig } from '@/utils/appConfig';
 import { Settings } from 'lucide-react';
 
 export const AuthenticatedSidebar = () => {
@@ -23,7 +24,7 @@ export const AuthenticatedSidebar = () => {
 			>
 				<section className='flex items-center truncate'>
 					<span className='truncate pl-1 text-sm font-semibold text-sidebar-foreground transition-opacity'>
-						{company?.name ?? t('settings.tabs.company.title')}
+						{company?.name ?? appConfig.appDisplayName}
 					</span>
 				</section>
 

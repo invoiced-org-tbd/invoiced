@@ -39,6 +39,13 @@ const handleError = (error: unknown) => {
 			message = error.message;
 		} else if (typeof error === 'string') {
 			message = error;
+		} else if (
+			typeof error === 'object' &&
+			error !== null &&
+			'message' in error &&
+			typeof error.message === 'string'
+		) {
+			message = error.message;
 		}
 	}
 

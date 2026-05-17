@@ -201,80 +201,12 @@ export const enTranslations = {
 			},
 			automations: {
 				title: 'Automations',
-				description: 'Configure SMTP providers and email templates.',
+				description: 'Configure email templates for automated invoice emails.',
 				actions: {
 					add: 'Add',
 					duplicate: 'Duplicate',
 				},
 				copySuffix: '(copy)',
-				smtp: {
-					title: 'SMTP configurations',
-					description: 'Manage your outgoing email providers.',
-					entityName: 'SMTP configuration',
-					senderLabel: 'Sender email',
-					hostLabel: 'Host / Port',
-					presets: {
-						label: 'Provider preset',
-						description: 'Pick a provider to prefill host, port, and security.',
-						placeholder: 'Select a provider...',
-						applyAction: 'Apply preset',
-						providers: {
-							gmail: 'Gmail',
-							outlook: 'Outlook (Microsoft 365)',
-							mailgun: 'Mailgun',
-							sendgrid: 'SendGrid',
-						},
-					},
-					securityModes: {
-						starttls: 'STARTTLS',
-						sslTls: 'SSL/TLS',
-						none: 'None',
-					},
-					emptyState: {
-						title: 'No SMTP configuration yet',
-						description:
-							'Add your first SMTP provider to start sending transactional emails.',
-					},
-					deleteBlockedByContractAutoSend:
-						"This SMTP configuration is used by a contract's invoice auto-send settings. Disable or change auto-send on those contracts before deleting.",
-					drawer: {
-						title: 'Create SMTP configuration',
-						description: 'Define host, sender, and security settings.',
-						editTitle: 'Edit SMTP configuration',
-						editDescription: 'Update SMTP connection and sender details.',
-						createAction: 'Create SMTP',
-						saveAction: 'Save changes',
-					},
-					form: {
-						nameLabel: 'Configuration name',
-						namePlaceholder: 'Primary SMTP',
-						usernameLabel: 'Username',
-						usernamePlaceholder: 'smtp-user',
-						usernameHint:
-							'Usually your SMTP login, often an email or provider username.',
-						fromNameLabel: 'Sender name',
-						fromNamePlaceholder: 'Billing Team',
-						fromEmailLabel: 'Sender email',
-						fromEmailPlaceholder: 'billing@acme.com',
-						fromEmailHint:
-							'The address recipients will see as the sender in their inbox.',
-						hostLabel: 'Host',
-						hostPlaceholder: 'smtp.mailgun.org',
-						hostHint: 'SMTP server host provided by your email provider.',
-						portLabel: 'Port',
-						portHint:
-							'Common ports: 587 (STARTTLS), 465 (SSL/TLS), or 25 (no encryption).',
-						securityLabel: 'Security',
-						securityHint:
-							'Match this with your provider settings. STARTTLS is most common.',
-						passwordLabel: 'Password',
-						passwordPlaceholder: 'Type your SMTP password',
-						passwordDescription: 'Stored securely and never shown again.',
-						passwordEditPlaceholder: 'Leave blank to keep current password',
-						passwordEditDescription:
-							'For security, we never reveal the current password.',
-					},
-				},
 				emailTemplates: {
 					title: 'Email templates',
 					description: 'Create and maintain reusable email templates.',
@@ -490,32 +422,25 @@ export const enTranslations = {
 			autoSend: {
 				sectionTitle: 'Invoice auto-send',
 				sectionDescription:
-					'Send invoices by email automatically using your SMTP and templates configurations.',
+					'Send invoices by email automatically using Resend and your email templates.',
 				loading: 'Loading automation settings…',
 				zeroState: {
-					title: 'SMTP or email templates are missing',
+					title: 'Email templates are missing',
 					description:
-						'Add at least one SMTP configuration and one email template in Settings > Automations before you can enable auto-send.',
+						'Add at least one email template in Settings > Automations before you can enable auto-send.',
 					cta: 'Open Automations',
 				},
 				enabledLabel: 'Enable auto-send',
 				enabledDescription:
-					'When enabled, invoices for this contract can be emailed using the selections below.',
-				smtpLabel: 'SMTP configuration',
-				smtpDescription: 'Outbound mail server used to send invoice emails.',
-				smtpPlaceholder: 'Select SMTP',
+					'When enabled, invoices for this contract can be emailed using the template below.',
 				templateLabel: 'Email template',
 				templateDescription:
 					'Template applied to the body and subject of invoice emails.',
 				templatePlaceholder: 'Select template',
 				validation: {
-					smtpRequired:
-						'Select an SMTP configuration when auto-send is enabled.',
 					templateRequired:
 						'Select an email template when auto-send is enabled.',
 				},
-				invalidSmtpConfiguration:
-					'The selected SMTP configuration was not found or does not belong to your account.',
 				invalidEmailTemplate:
 					'The selected email template was not found or does not belong to your account.',
 			},
@@ -545,12 +470,11 @@ export const enTranslations = {
 			missingInformationHint:
 				'Add this information to make the summary complete.',
 			autoSendLabel: 'Auto-send',
-			autoSendValue: '{smtpName} · template "{templateName}"',
+			autoSendValue: 'Template "{templateName}"',
 			autoSendOff: 'Auto-send is off for this contract.',
-			autoSendIncomplete:
-				'Select both SMTP and a template to finish auto-send.',
+			autoSendIncomplete: 'Select an email template to finish auto-send.',
 			autoSendIncompleteHint:
-				'Open the Auto-send step and pick an SMTP configuration and email template.',
+				'Open the Auto-send step and pick an email template.',
 		},
 		invoicePreview: {
 			previewButton: 'Preview PDF',
@@ -600,6 +524,7 @@ export const enTranslations = {
 			emptyState: 'No invoices yet.',
 			createInvoice: 'Create invoice',
 			viewInvoice: 'View invoice',
+			sendToAccounting: 'Send to accounting',
 			deleteInvoice: 'Delete invoice',
 			itemSingular: 'item',
 			itemPlural: 'items',
@@ -627,12 +552,32 @@ export const enTranslations = {
 				itemsRequiredInCustomMode: 'Items are required in custom mode',
 			},
 		},
+		emailToAccounting: {
+			subject: 'Invoice: {fileName}',
+			bodyText:
+				'Please find the invoice PDF ({fileName}) attached for {clientCompany}.',
+			bodyHtml:
+				'<p>Please find the invoice PDF (<strong>{fileName}</strong>) attached for <strong>{clientCompany}</strong>.</p>',
+		},
 		server: {
 			invoiceConfigurationRequired:
 				'Please set up your invoice configuration before creating invoices',
 			recurrenceItemNotFound: 'Recurrence item not found',
 			notFound: 'Invoice not found',
 			deletedSuccess: 'Invoice deleted',
+			sendToAccountingSuccess: 'Invoice PDF sent to {email}.',
+			resendNotConfigured:
+				'Email sending is not configured. Add RESEND_API_KEY to your server environment.',
+			invalidResponsibleEmail:
+				'The contract billing contact email is missing or invalid. Update the responsible email on the contract.',
+			companyRequiredForEmail:
+				'Set up your company before sending invoice emails.',
+			emailProviderError:
+				'The email provider could not send this message. Try again later.',
+			resendSandboxRecipient:
+				'Resend test mode only delivers to your Resend account email. Verify a domain at resend.com/domains, set RESEND_FROM to that domain, or use your account email as the contract responsible email while testing.',
+			autoSendNotConfigured:
+				'This invoice’s contract does not have invoice auto-send configured with an email template.',
 		},
 	},
 	onboarding: {
@@ -660,10 +605,6 @@ export const enTranslations = {
 			invoice: {
 				label: 'Send an Invoice',
 				description: 'Mark this when your first invoice is sent.',
-			},
-			smtp: {
-				label: 'Setup SMTP',
-				description: 'Configure your SMTP provider for outbound email.',
 			},
 			emailTemplates: {
 				label: 'Setup email templates',
