@@ -254,38 +254,28 @@ export const enTranslations = {
 			},
 			billingPlans: {
 				title: 'Billing & Plans',
-				description:
-					'Review your active plan, payment method, and recent invoices.',
-				paymentMethod: {
-					title: 'Selected payment method',
-					description: 'This is the card used for your subscription renewals.',
-					methodLabel: 'Card',
-					defaultBadge: 'Default',
-					holderLabel: 'Card holder',
-					expiresLabel: 'Expires',
+				description: 'Review your active plan and manage your subscription.',
+				noSubscription: 'No active subscription. Choose a plan to continue.',
+				cancelSubscription: 'Cancel subscription',
+				cancelSuccess: 'Subscription cancelled successfully.',
+				cancelError: 'Could not cancel subscription.',
+				changePlan: 'Switch to {plan}',
+				changePlanSuccess: 'Plan change scheduled for the next billing cycle.',
+				changePlanError: 'Could not change plan.',
+				statuses: {
+					active: 'Active',
+					trialing: 'Trial',
+					cancelled: 'Cancelled',
+					pastDue: 'Past due',
 				},
 				selectedPlan: {
-					title: 'Selected plan',
-					description: 'Overview of your current subscription plan.',
+					title: 'Current plan',
+					description: 'Overview of your subscription.',
 					planLabel: 'Plan',
-					activeBadge: 'Active',
 					priceLabel: 'Price',
+					month: 'month',
 					renewalLabel: 'Renews on',
-				},
-				history: {
-					title: 'Billing history',
-					description: 'Track your monthly billing activity.',
-					period: 'Period',
-					invoice: 'Invoice',
-					issuedAt: 'Issued at',
-					amount: 'Amount',
-					status: 'Status',
-					statuses: {
-						paid: 'Paid',
-						processing: 'Processing',
-						pending: 'Pending',
-						failed: 'Failed',
-					},
+					trialEndsLabel: 'Trial ends on',
 				},
 			},
 		},
@@ -443,6 +433,11 @@ export const enTranslations = {
 				},
 				invalidEmailTemplate:
 					'The selected email template was not found or does not belong to your account.',
+				proOnly: {
+					title: 'Pro plan feature',
+					description:
+						'Automatic invoice sending is available on the Pro plan. Upgrade in Billing & Plans.',
+				},
 			},
 		},
 		tabs: {
@@ -613,6 +608,42 @@ export const enTranslations = {
 				label: 'Setup email templates',
 				description: 'Define your default invoice email templates.',
 			},
+		},
+	},
+	planSelection: {
+		title: 'Choose your plan',
+		description:
+			'Select the plan that fits your billing workflow. You can change anytime.',
+		trialBadge: '7-day free trial on all plans',
+		recommended: 'Recommended',
+		perMonth: '/month',
+		ctaStarter: 'Subscribe to Starter',
+		ctaPro: 'Subscribe to Pro',
+		checkoutError: 'Could not start checkout. Please try again.',
+		features: {
+			starter: {
+				contract: '1 active contract',
+				manualSend: 'Manual invoice sending',
+				miniErp: 'Integrated mini ERP',
+			},
+			pro: {
+				unlimitedContracts: 'Unlimited contracts',
+				autoSend: 'Automatic invoice sending',
+				miniErp: 'Integrated mini ERP',
+			},
+		},
+	},
+	subscription: {
+		server: {
+			subscriptionRequired:
+				'An active subscription is required to use Invoiced.',
+			contractLimitReached:
+				'Your plan allows only 1 active contract. Upgrade to Pro.',
+			autoSendProOnly: 'Auto-send is only available on the Pro plan.',
+			noActiveSubscription: 'No active subscription found.',
+			cancelled: 'Subscription cancelled.',
+			alreadyOnPlan: 'You are already on this plan.',
+			planChangeScheduled: 'Plan change scheduled.',
 		},
 	},
 	pdfCanvasViewer: {

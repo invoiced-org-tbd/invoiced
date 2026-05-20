@@ -77,11 +77,21 @@ function RouteComponent() {
 					<div className='text-sm text-muted-foreground flex flex-col gap-8 items-center justify-center h-full'>
 						<FileIcon className='size-20 text-primary' />
 						<div className='flex flex-col gap-2 items-center justify-center'>
-						  <p className='text-2xl font-medium text-foreground'>{t('invoices.list.emptyState')}</p>
-							<p className='text-sm text-muted-foreground'>{t('invoices.list.emptyStateDescription')}</p>
+							<p className='text-2xl font-medium text-foreground'>
+								{t('invoices.list.emptyState')}
+							</p>
+							<p className='text-sm text-muted-foreground'>
+								{t('invoices.list.emptyStateDescription')}
+							</p>
 						</div>
-						<Button asChild variant='primary' size='lg'>
-							<Link to='/app/contracts'>{t('invoices.list.createInvoice')}</Link>
+						<Button
+							asChild
+							variant='primary'
+							size='lg'
+						>
+							<Link to='/app/contracts'>
+								{t('invoices.list.createInvoice')}
+							</Link>
 						</Button>
 					</div>
 				)}

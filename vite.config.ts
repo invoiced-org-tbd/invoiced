@@ -13,6 +13,15 @@ const config = defineConfig({
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
 		},
 	},
+	server: {
+		// Allow ngrok (and similar) tunnels for local webhook / OAuth testing
+		allowedHosts: [
+			'localhost',
+			'.ngrok-free.dev',
+			'.ngrok-free.app',
+			'.ngrok.io',
+		],
+	},
 	plugins: [
 		devtools(),
 		nitro(),

@@ -9,6 +9,7 @@ import type { ContractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-li
 import type { TranslationFn } from '@/translations/types';
 import { createContractAddress } from './createContractAddress';
 import { createContractInvoiceRecurrenceItems } from './createContractInvoiceRecurrenceItems';
+import { assertCanCreateContract } from '@/api/subscription/subscriptionUtils';
 import { setupContractCreateAutoSend } from './setupContractCreateAutoSend';
 import { ServerError } from '@/utils/serverFnsUtils';
 
@@ -35,6 +36,8 @@ export const createContract = async ({
 			message: t('contracts.server.companySetupRequiredBeforeCreate'),
 		});
 	}
+
+	await assertCanCreateContract(userId);
 
 	const [contract] = await tx
 		.insert(contractTable)

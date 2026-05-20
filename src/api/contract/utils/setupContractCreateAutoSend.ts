@@ -4,6 +4,7 @@ import { contractAutoSendTable } from '@/db/tables/contractAutoSendTable';
 import type { Tx } from '@/db/types';
 import type { ContractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
 import type { TranslationFn } from '@/translations/types';
+import { assertCanUseAutoSend } from '@/api/subscription/subscriptionUtils';
 import { assertContractAutoSendResourcesOwned } from './assertContractAutoSendResourcesOwned';
 
 type SetupContractCreateAutoSendParams = {
@@ -23,6 +24,8 @@ export const setupContractCreateAutoSend = async ({
 	if (!autoSend.enabled) {
 		return;
 	}
+
+	await assertCanUseAutoSend(userId);
 
 	const emailTemplateId = autoSend.emailTemplateId;
 

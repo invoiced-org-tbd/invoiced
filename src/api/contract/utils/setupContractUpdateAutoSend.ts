@@ -5,6 +5,7 @@ import type { Tx } from '@/db/types';
 import type { ContractsUpsertFormSchema } from '@/routes/_auth/app/contracts/-lib/contracts-upsert-form/contractsUpsertFormSchemas';
 import type { TranslationFn } from '@/translations/types';
 import { eq } from 'drizzle-orm';
+import { assertCanUseAutoSend } from '@/api/subscription/subscriptionUtils';
 import { assertContractAutoSendResourcesOwned } from './assertContractAutoSendResourcesOwned';
 
 type SetupContractUpdateAutoSendParams = {
@@ -28,6 +29,8 @@ export const setupContractUpdateAutoSend = async ({
 			.where(eq(contractAutoSendTable.contractId, contractId));
 		return;
 	}
+
+	await assertCanUseAutoSend(userId);
 
 	const emailTemplateId = autoSend.emailTemplateId;
 

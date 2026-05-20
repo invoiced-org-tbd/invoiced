@@ -16,6 +16,11 @@ export const relations = defineRelations(dbTables, (r) => ({
 	},
 
 	userTable: {
+		subscription: r.one.subscriptionTable({
+			from: r.userTable.id,
+			to: r.subscriptionTable.userId,
+			optional: true,
+		}),
 		contracts: r.many.contractTable({
 			from: r.userTable.id,
 			to: r.contractTable.userId,

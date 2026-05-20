@@ -15,6 +15,16 @@ const envServerSchema = z.object({
 	RESEND_API_KEY: z.string().optional(),
 	/** Optional. Defaults to onboarding@resend.dev (sandbox). Use a verified domain address in production. */
 	RESEND_FROM: z.string().optional(),
+	ABACATEPAY_API_KEY: z.string().nonempty('ABACATEPAY_API_KEY is required'),
+	ABACATEPAY_WEBHOOK_SECRET: z
+		.string()
+		.nonempty('ABACATEPAY_WEBHOOK_SECRET is required'),
+	ABACATEPAY_PRODUCT_STARTER: z
+		.string()
+		.nonempty('ABACATEPAY_PRODUCT_STARTER is required'),
+	ABACATEPAY_PRODUCT_PRO: z
+		.string()
+		.nonempty('ABACATEPAY_PRODUCT_PRO is required'),
 });
 
 export const envServer = envServerSchema.parse(process.env);

@@ -25,7 +25,7 @@ export const LandingPricingSection = ({
 		>
 			<LandingSectionHeader title={landingCopy.pricing.title} />
 			<motion.div
-				className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-3'
+				className='mx-auto grid max-w-4xl gap-6 md:grid-cols-2'
 				variants={staggerContainer(0.1)}
 				{...motionInViewProps}
 			>
@@ -47,9 +47,16 @@ export const LandingPricingSection = ({
 								</span>
 							)}
 							<Card.Header>
-								<p className='text-sm font-semibold text-muted-foreground'>
-									{plan.name}
-								</p>
+								<div className='flex items-center justify-between gap-2'>
+									<p className='text-sm font-semibold text-muted-foreground'>
+										{plan.name}
+									</p>
+									{'trialLabel' in plan && plan.trialLabel && (
+										<span className='rounded-full bg-secondary px-2 py-0.5 text-xs font-medium'>
+											{plan.trialLabel}
+										</span>
+									)}
+								</div>
 								<Card.Title className='flex items-end gap-1'>
 									<span className='text-3xl font-extrabold'>{plan.price}</span>
 									{plan.period && (

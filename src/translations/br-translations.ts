@@ -261,38 +261,29 @@ export const brTranslations = {
 			},
 			billingPlans: {
 				title: 'Faturamento e planos',
-				description:
-					'Revise seu plano ativo, método de pagamento e faturas recentes.',
-				paymentMethod: {
-					title: 'Método de pagamento selecionado',
-					description: 'Este é o cartão usado nas renovações da assinatura.',
-					methodLabel: 'Cartão',
-					defaultBadge: 'Padrão',
-					holderLabel: 'Titular do cartão',
-					expiresLabel: 'Validade',
+				description: 'Revise seu plano ativo e gerencie sua assinatura.',
+				noSubscription:
+					'Nenhuma assinatura ativa. Escolha um plano para continuar.',
+				cancelSubscription: 'Cancelar assinatura',
+				cancelSuccess: 'Assinatura cancelada com sucesso.',
+				cancelError: 'Não foi possível cancelar a assinatura.',
+				changePlan: 'Mudar para {plan}',
+				changePlanSuccess: 'Alteração de plano agendada para o próximo ciclo.',
+				changePlanError: 'Não foi possível alterar o plano.',
+				statuses: {
+					active: 'Ativo',
+					trialing: 'Período de teste',
+					cancelled: 'Cancelado',
+					pastDue: 'Pagamento pendente',
 				},
 				selectedPlan: {
-					title: 'Plano selecionado',
-					description: 'Visão geral do seu plano de assinatura atual.',
+					title: 'Plano atual',
+					description: 'Visão geral da sua assinatura.',
 					planLabel: 'Plano',
-					activeBadge: 'Ativo',
 					priceLabel: 'Preço',
+					month: 'mês',
 					renewalLabel: 'Renova em',
-				},
-				history: {
-					title: 'Histórico de faturamento',
-					description: 'Acompanhe sua atividade de cobrança mensal.',
-					period: 'Período',
-					invoice: 'Fatura',
-					issuedAt: 'Emitida em',
-					amount: 'Valor',
-					status: 'Status',
-					statuses: {
-						paid: 'Pago',
-						processing: 'Processando',
-						pending: 'Pendente',
-						failed: 'Falhou',
-					},
+					trialEndsLabel: 'Teste termina em',
 				},
 			},
 		},
@@ -452,6 +443,11 @@ export const brTranslations = {
 				},
 				invalidEmailTemplate:
 					'O template de e-mail selecionado não foi encontrado ou não pertence à sua conta.',
+				proOnly: {
+					title: 'Recurso do plano Pro',
+					description:
+						'O envio automático de faturas está disponível no plano Pro. Faça upgrade em Faturamento e planos.',
+				},
 			},
 		},
 		tabs: {
@@ -625,6 +621,43 @@ export const brTranslations = {
 				label: 'Configure os templates de e-mail',
 				description: 'Defina templates padrão para e-mails de fatura.',
 			},
+		},
+	},
+	planSelection: {
+		title: 'Escolha seu plano',
+		description:
+			'Selecione o plano ideal para sua rotina de cobrança. Você pode mudar a qualquer momento.',
+		trialBadge: '7 dias grátis em todos os planos',
+		recommended: 'Recomendado',
+		perMonth: '/mês',
+		ctaStarter: 'Assinar Starter',
+		ctaPro: 'Assinar Pro',
+		checkoutError: 'Não foi possível iniciar o checkout. Tente novamente.',
+		features: {
+			starter: {
+				contract: '1 contrato ativo',
+				manualSend: 'Envio manual de cobranças',
+				miniErp: 'Mini ERP integrado',
+			},
+			pro: {
+				unlimitedContracts: 'Contratos ilimitados',
+				autoSend: 'Envio automático de cobranças',
+				miniErp: 'Mini ERP integrado',
+			},
+		},
+	},
+	subscription: {
+		server: {
+			subscriptionRequired:
+				'É necessário ter uma assinatura ativa para usar o Invoiced.',
+			contractLimitReached:
+				'Seu plano permite apenas 1 contrato ativo. Faça upgrade para o Pro.',
+			autoSendProOnly:
+				'O envio automático está disponível apenas no plano Pro.',
+			noActiveSubscription: 'Nenhuma assinatura ativa encontrada.',
+			cancelled: 'Assinatura cancelada.',
+			alreadyOnPlan: 'Você já está neste plano.',
+			planChangeScheduled: 'Alteração de plano agendada.',
 		},
 	},
 	pdfCanvasViewer: {

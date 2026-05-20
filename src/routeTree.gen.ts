@@ -13,8 +13,10 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthAppRouteRouteImport } from './routes/_auth/app/route'
 import { Route as AuthAppIndexRouteImport } from './routes/_auth/app/index'
+import { Route as ApiWebhooksAbacatepayRouteImport } from './routes/api/webhooks/abacatepay'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthAppSettingsIndexRouteImport } from './routes/_auth/app/settings/index'
+import { Route as AuthAppPlanIndexRouteImport } from './routes/_auth/app/plan/index'
 import { Route as AuthAppInvoicesIndexRouteImport } from './routes/_auth/app/invoices/index'
 import { Route as AuthAppDashboardIndexRouteImport } from './routes/_auth/app/dashboard/index'
 import { Route as AuthAppContractsIndexRouteImport } from './routes/_auth/app/contracts/index'
@@ -39,6 +41,11 @@ const AuthAppIndexRoute = AuthAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthAppRouteRoute,
 } as any)
+const ApiWebhooksAbacatepayRoute = ApiWebhooksAbacatepayRouteImport.update({
+  id: '/api/webhooks/abacatepay',
+  path: '/api/webhooks/abacatepay',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -47,6 +54,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 const AuthAppSettingsIndexRoute = AuthAppSettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppPlanIndexRoute = AuthAppPlanIndexRouteImport.update({
+  id: '/plan/',
+  path: '/plan/',
   getParentRoute: () => AuthAppRouteRoute,
 } as any)
 const AuthAppInvoicesIndexRoute = AuthAppInvoicesIndexRouteImport.update({
@@ -74,21 +86,25 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AuthAppRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/webhooks/abacatepay': typeof ApiWebhooksAbacatepayRoute
   '/app/': typeof AuthAppIndexRoute
   '/app/cashflow/': typeof AuthAppCashflowIndexRoute
   '/app/contracts/': typeof AuthAppContractsIndexRoute
   '/app/dashboard/': typeof AuthAppDashboardIndexRoute
   '/app/invoices/': typeof AuthAppInvoicesIndexRoute
+  '/app/plan/': typeof AuthAppPlanIndexRoute
   '/app/settings/': typeof AuthAppSettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/webhooks/abacatepay': typeof ApiWebhooksAbacatepayRoute
   '/app': typeof AuthAppIndexRoute
   '/app/cashflow': typeof AuthAppCashflowIndexRoute
   '/app/contracts': typeof AuthAppContractsIndexRoute
   '/app/dashboard': typeof AuthAppDashboardIndexRoute
   '/app/invoices': typeof AuthAppInvoicesIndexRoute
+  '/app/plan': typeof AuthAppPlanIndexRoute
   '/app/settings': typeof AuthAppSettingsIndexRoute
 }
 export interface FileRoutesById {
@@ -97,11 +113,13 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_auth/app': typeof AuthAppRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/webhooks/abacatepay': typeof ApiWebhooksAbacatepayRoute
   '/_auth/app/': typeof AuthAppIndexRoute
   '/_auth/app/cashflow/': typeof AuthAppCashflowIndexRoute
   '/_auth/app/contracts/': typeof AuthAppContractsIndexRoute
   '/_auth/app/dashboard/': typeof AuthAppDashboardIndexRoute
   '/_auth/app/invoices/': typeof AuthAppInvoicesIndexRoute
+  '/_auth/app/plan/': typeof AuthAppPlanIndexRoute
   '/_auth/app/settings/': typeof AuthAppSettingsIndexRoute
 }
 export interface FileRouteTypes {
@@ -110,21 +128,25 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/api/auth/$'
+    | '/api/webhooks/abacatepay'
     | '/app/'
     | '/app/cashflow/'
     | '/app/contracts/'
     | '/app/dashboard/'
     | '/app/invoices/'
+    | '/app/plan/'
     | '/app/settings/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/api/auth/$'
+    | '/api/webhooks/abacatepay'
     | '/app'
     | '/app/cashflow'
     | '/app/contracts'
     | '/app/dashboard'
     | '/app/invoices'
+    | '/app/plan'
     | '/app/settings'
   id:
     | '__root__'
@@ -132,11 +154,13 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_auth/app'
     | '/api/auth/$'
+    | '/api/webhooks/abacatepay'
     | '/_auth/app/'
     | '/_auth/app/cashflow/'
     | '/_auth/app/contracts/'
     | '/_auth/app/dashboard/'
     | '/_auth/app/invoices/'
+    | '/_auth/app/plan/'
     | '/_auth/app/settings/'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +168,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiWebhooksAbacatepayRoute: typeof ApiWebhooksAbacatepayRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -176,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAppIndexRouteImport
       parentRoute: typeof AuthAppRouteRoute
     }
+    '/api/webhooks/abacatepay': {
+      id: '/api/webhooks/abacatepay'
+      path: '/api/webhooks/abacatepay'
+      fullPath: '/api/webhooks/abacatepay'
+      preLoaderRoute: typeof ApiWebhooksAbacatepayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -188,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/app/settings/'
       preLoaderRoute: typeof AuthAppSettingsIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/plan/': {
+      id: '/_auth/app/plan/'
+      path: '/plan'
+      fullPath: '/app/plan/'
+      preLoaderRoute: typeof AuthAppPlanIndexRouteImport
       parentRoute: typeof AuthAppRouteRoute
     }
     '/_auth/app/invoices/': {
@@ -227,6 +266,7 @@ interface AuthAppRouteRouteChildren {
   AuthAppContractsIndexRoute: typeof AuthAppContractsIndexRoute
   AuthAppDashboardIndexRoute: typeof AuthAppDashboardIndexRoute
   AuthAppInvoicesIndexRoute: typeof AuthAppInvoicesIndexRoute
+  AuthAppPlanIndexRoute: typeof AuthAppPlanIndexRoute
   AuthAppSettingsIndexRoute: typeof AuthAppSettingsIndexRoute
 }
 
@@ -236,6 +276,7 @@ const AuthAppRouteRouteChildren: AuthAppRouteRouteChildren = {
   AuthAppContractsIndexRoute: AuthAppContractsIndexRoute,
   AuthAppDashboardIndexRoute: AuthAppDashboardIndexRoute,
   AuthAppInvoicesIndexRoute: AuthAppInvoicesIndexRoute,
+  AuthAppPlanIndexRoute: AuthAppPlanIndexRoute,
   AuthAppSettingsIndexRoute: AuthAppSettingsIndexRoute,
 }
 
@@ -259,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiWebhooksAbacatepayRoute: ApiWebhooksAbacatepayRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
