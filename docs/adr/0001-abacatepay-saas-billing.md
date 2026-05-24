@@ -5,7 +5,39 @@ date: 2026-05-24
 
 # AbacatePay SaaS billing and plan entitlements
 
-Invoiced charges users for SaaS plans only (not client invoice payments). Payments use AbacatePay subscription checkouts (hosted redirect, card only), with `@abacatepay/rest` and `@abacatepay/types`. Subscription state is driven exclusively by verified webhooks (`ABACATEPAY_WEBHOOK_SECRET`); return URLs are UX only. AbacatePay customers are created lazily on first checkout; link users via `abacatepayCustomerId` and `userId` in checkout metadata.
+Invoiced charges users for SaaS plans only (not client invoice payments). Payments use AbacatePay subscription checkouts (hosted redirect, card only), with `@abacatepay/rest` and `@abacatepay/types`. Subscription state is driven exclusively by **verified webhooks** (see [Webhook ingestion](#webhook-ingestion)); return URLs are UX only. AbacatePay customers are created lazily on first checkout; link users via `abacatepayCustomerId` and `userId` in checkout metadata.
+
+## Webhook ingestion
+
+Verified webhooks are the only source of truth for paid subscription state. Implementers must satisfy all of the following before applying state transitions on the subscription record (keyed by `userId`, `abacatepayCustomerId`, and `abacatepaySubscriptionId`):
+
+1. **Verify authenticity** — AbacatePay sends two checks on every delivery; both must pass:
+   - Query param `webhookSecret` must equal `ABACATEPAY_WEBHOOK_SECRET`.
+   - Header `X-Webhook-Signature` must match an HMAC-SHA256 (base64) of the **raw request body** (timing-safe compare). AbacatePay signs with their platform public key, not the webhook secret.
+2. **Idempotency by event id** — Persist each processed webhook's top-level `id` (e.g. `log_abc123xyz`) in a deduplication table. Before handling, look up that id; if already stored, respond `200` and skip processing.
+3. **Ordering by subscription timestamp** — On the subscription record, store `lastWebhookSubscriptionUpdatedAt` (ISO-8601 from `data.subscription.updatedAt`). Apply a state transition only when the incoming event's `data.subscription.updatedAt` is **strictly newer** than the stored value (or the field is unset).
+4. **Duplicate and out-of-order behavior**:
+   - **Duplicate** (same event `id` seen again, e.g. AbacatePay retry): ignore; return `200`.
+   - **Out-of-order** (`data.subscription.updatedAt` ≤ `lastWebhookSubscriptionUpdatedAt`): reject the transition; return `200` without mutating subscription state (log for observability).
+   - **Newer event**: process inside a transaction — update subscription fields, insert event `id`, advance `lastWebhookSubscriptionUpdatedAt`.
+
+Resolve the local user from checkout metadata `userId` and/or `data.customer.id` → `abacatepayCustomerId`. Respond `200` only after persistence succeeds so retries remain safe.
+
+Example payload fields (from AbacatePay subscription webhooks):
+
+```json
+{
+  "id": "log_abc123xyz",
+  "event": "subscription.completed",
+  "data": {
+    "subscription": {
+      "id": "subs_…",
+      "updatedAt": "2024-12-06T20:00:05.000Z"
+    },
+    "customer": { "id": "cust_…" }
+  }
+}
+```
 
 Plans are **Starter** (R$ 19,90/mo, `ABACATEPAY_PRODUCT_STARTER`) and **Pro** (R$ 39,00/mo, `ABACATEPAY_PRODUCT_PRO`). New users get a **30-day trial** starting on first visit to `/app` (`trialing`, `trialEndsAt`). Trial offers near-full product access with abuse caps: **1 contract**, **2 invoices total**. After trial without an active subscription, the account is **read-only** (view data, no mutations). Users may subscribe during trial; on `active`, trial caps lift and paid entitlements apply.
 
